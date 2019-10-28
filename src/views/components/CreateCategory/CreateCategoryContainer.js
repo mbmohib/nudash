@@ -1,7 +1,9 @@
 import React from 'react';
 
+import CreateCategory from './CreateCategory';
+
 const CreateCategoryContainer = () => {
-  return <p>Hello from CreateCategoryContainer</p>;
+  return <CreateCategory />;
 };
 
 export default CreateCategoryContainer;
