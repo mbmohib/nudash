@@ -10,6 +10,7 @@ const CreateCategory = () => {
 
   const onSubmit = data => {
     console.log(data);
+    data.type = 'secondary';
     firestore
       .collection('categories')
       .doc()
@@ -18,7 +19,12 @@ const CreateCategory = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField ref={register} label="Name" name="title" margin="normal" />
+      <TextField
+        inputRef={register}
+        label="Name"
+        name="title"
+        margin="normal"
+      />
 
       <Button variant="contained" color="primary" type="submit">
         Submit
