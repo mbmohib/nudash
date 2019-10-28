@@ -41,8 +41,8 @@ const SelectExtended = ({
         onChange={handleChange}
       >
         {options.map(option => (
-          <MenuItem value={option.value} key={option.value}>
-            {option.label}
+          <MenuItem value={option.id} key={option.id}>
+            {option.title}
           </MenuItem>
         ))}
       </Select>

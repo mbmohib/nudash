@@ -2,7 +2,7 @@ import produce from 'immer';
 import * as types from './types';
 
 const initialState = {
-  categories: {},
+  categories: [],
 };
 
 const metaReducers = function(state = initialState, action) {
@@ -12,7 +12,10 @@ const metaReducers = function(state = initialState, action) {
     switch (type) {
       case types.GET_CATEGORIES_COMPLETED:
         payload.forEach(function(doc) {
-          draft.categories[doc.id] = doc.data();
+          draft.categories.push({
+            id: doc.id,
+            ...doc.data(),
+          });
         });
         break;
       default:

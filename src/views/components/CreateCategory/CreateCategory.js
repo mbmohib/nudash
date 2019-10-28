@@ -1,5 +1,5 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import { Grid, TextField } from '@material-ui/core';
 import useForm from 'react-hook-form';
 
 import { Button } from 'views/ui';
@@ -9,7 +9,6 @@ const CreateCategory = () => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = data => {
-    console.log(data);
     data.type = 'secondary';
     firestore
       .collection('categories')
@@ -19,16 +18,23 @@ const CreateCategory = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        inputRef={register}
-        label="Name"
-        name="title"
-        margin="normal"
-      />
-
-      <Button variant="contained" color="primary" type="submit">
-        Submit
-      </Button>
+      <Grid>
+        <Grid item xs={10}>
+          <TextField
+            inputRef={register}
+            label="Name"
+            name="title"
+            margin="dense"
+            variant="outlined"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={10}>
+          <Button variant="contained" color="primary" type="submit">
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
     </form>
   );
 };

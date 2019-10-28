@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import { apiMiddleware } from 'store/middleware';
+import { apiMiddleware, firebaseMiddlware } from 'store/middleware';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
@@ -30,7 +30,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   persistedReducer,
-  composeEnhancers(applyMiddleware(thunk, apiMiddleware))
+  composeEnhancers(applyMiddleware(thunk, apiMiddleware, firebaseMiddlware))
 );
 export const persistor = persistStore(store);
 
