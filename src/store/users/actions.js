@@ -4,7 +4,7 @@ export const getUsers = ({ param = {}, jwt } = {}) => {
   return {
     type: types.GET_USERS,
     payload: {
-      path: `user/list/`,
+      path: `https://jsonplaceholder.typicode.com/users`,
       method: 'GET',
       data: '',
       param,

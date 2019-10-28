@@ -18,7 +18,7 @@ const UserDetailsPage = () => {
       </Grid>
       <Grid item sm={8} md={8} lg={9}>
         <InfoCards />
-        {/* <Transactions /> */}
+        <Transactions />
       </Grid>
     </Grid>
   );

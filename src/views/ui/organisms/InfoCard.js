@@ -19,9 +19,7 @@ const InfoCard = ({ card: { amount, label, icon } }) => {
         <Typography variant="h5" gutterBottom>
           {amount}
         </Typography>
-        <Typography variant="subtitle1" colorTextSecondary>
-          {label}
-        </Typography>
+        <Typography variant="subtitle1">{label}</Typography>
       </InfoCardMeta>
       {icon}
     </InfoCardWrapper>

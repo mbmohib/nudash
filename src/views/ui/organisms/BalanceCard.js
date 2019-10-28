@@ -41,8 +41,8 @@ const BalanceCard = ({ user, handleCloseDialog }) => (
               primaryText: '3000',
               secondaryText: 'Withdraw Requested',
             },
-          ].map(list => (
-            <List list={list} />
+          ].map((list, index) => (
+            <List key={index} list={list} />
           ))}
         </BalanceCardContent>
         <Button ml={1} mb={2} size="small" variant="contained" color="primary">

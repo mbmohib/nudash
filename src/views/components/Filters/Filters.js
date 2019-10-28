@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grid, TextField } from '@material-ui/core';
 import useForm from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { Button, Wrapper, Select } from 'views/ui';
+import { Select } from 'views/ui';
 import { useQueryParams } from 'hooks';
 
 const Filters = () => {

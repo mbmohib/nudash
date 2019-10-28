@@ -11,8 +11,8 @@ const InfoCards = () => {
         { label: 'Job Posted', amount: 20, icon: <JobIcon /> },
         { label: 'Gig Purchased', amount: 8, icon: <GigIcon /> },
         { label: 'Freelancer Hired', amount: 5, icon: <FreelancerIcon /> },
-      ].map(card => (
-        <Grid item sm={4} md={3}>
+      ].map((card, index) => (
+        <Grid item sm={4} md={3} key={index}>
           <Paper>
             <InfoCard card={card} />
           </Paper>

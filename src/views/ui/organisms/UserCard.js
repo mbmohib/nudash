@@ -55,8 +55,8 @@ const UserCard = ({ user, handleCloseDialog }) => (
               primaryText: '22/3/2018',
               secondaryText: 'Joined',
             },
-          ].map(list => (
-            <List list={list} />
+          ].map((list, index) => (
+            <List key={index} list={list} />
           ))}
         </UserCardContent>
         <Wrapper flex justify="center" pb={3}>

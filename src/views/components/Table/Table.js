@@ -1,13 +1,14 @@
 import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { IconButton } from '@material-ui/core';
 import TablePagination from '@material-ui/core/TablePagination';
 
 import { Wrapper, Typography } from 'views/ui';
 import TableHead from './TableHead';
-import TableCell from './TableCell';
+import Cell from './TableCell';
 
 const TableExtended = ({ title, columns, data, actions }) => {
   const [page, setPage] = React.useState(0);
@@ -31,10 +32,11 @@ const TableExtended = ({ title, columns, data, actions }) => {
         <TableHead columns={columns} actions={actions} />
         <TableBody>
           {data &&
+            data.length > 0 &&
             data.map((item, index) => (
               <TableRow key={index}>
                 {columns.map(({ field, condition, link }) => (
-                  <TableCell
+                  <Cell
                     key={field}
                     item={item}
                     field={field}

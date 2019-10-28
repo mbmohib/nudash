@@ -1,13 +1,13 @@
-import axios from 'axios';
 import { uiActions } from 'store/ui';
 import * as errorTypes from 'store/ui/types';
+import { firestore } from 'firebase/initFirebase';
 
-const apiMiddleware = ({ dispatch }) => next => action => {
+const firebaseMiddleware = ({ dispatch }) => next => action => {
   next(action);
   const { API, label, firebase } = action.meta || {};
-  const { path, method, data } = action.payload || {};
+  const { path, data } = action.payload || {};
 
-  if (!API || firebase) {
+  if (!API || !firebase) {
     return;
   }
 
@@ -18,13 +18,14 @@ const apiMiddleware = ({ dispatch }) => next => action => {
   // Notify request start with passing "label"
   // for handling multiple loading spinner
   dispatch(uiActions.fetchingStart(label));
-  const url = path;
 
-  return axios({ method, url, data })
-    .then(res => {
+  return firestore
+    .collection('categories')
+    .get()
+    .then(querySnapshot => {
       next({
         type: `${action.type}_completed`,
-        payload: res.data,
+        payload: querySnapshot,
         meta: action.meta,
       });
 
@@ -43,4 +44,4 @@ const apiMiddleware = ({ dispatch }) => next => action => {
     });
 };
 
-export default apiMiddleware;
+export default firebaseMiddleware;

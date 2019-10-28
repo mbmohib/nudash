@@ -3,27 +3,6 @@ import * as types from './types';
 
 const initialState = {
   categories: {},
-  locations: {},
-  userTypes: [
-    {
-      value: 1,
-      label: 'Freelancer',
-    },
-    {
-      value: 0,
-      label: 'Employer',
-    },
-  ],
-  userStatus: [
-    {
-      value: 1,
-      label: 'Active',
-    },
-    {
-      value: 0,
-      label: 'Banned',
-    },
-  ],
 };
 
 const metaReducers = function(state = initialState, action) {
@@ -31,8 +10,13 @@ const metaReducers = function(state = initialState, action) {
 
   return produce(state, draft => {
     switch (type) {
-      case types.GET_CATEGORIES:
+      case types.GET_CATEGORIES_COMPLETED:
+        payload.forEach(function(doc) {
+          draft.categories[doc.id] = doc.data();
+        });
         break;
+      default:
+        return;
     }
   });
 };

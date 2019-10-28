@@ -1,27 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { userActions } from 'store/users';
 import { Fetcher } from 'utils';
 import Users from './Users';
 
-const UsersContainer = ({ users, getUsers }) => {
+const UsersContainer = () => {
+  const users = useSelector(({ users }) => users.users);
+  const { getUsers } = userActions;
+
   return (
-    <Fetcher fetchData={getUsers} label="users" jwt>
+    <Fetcher fetchData={getUsers} label="users">
       {() => <Users users={users} />}
     </Fetcher>
   );
 };
 
-const mapActionsToProps = {
-  getUsers: userActions.getUsers,
-};
-
-const mapStateToProps = ({ users }) => ({
-  users: users.users,
-});
-
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(UsersContainer);
+export default UsersContainer;

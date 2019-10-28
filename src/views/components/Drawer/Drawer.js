@@ -8,11 +8,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MenuIcon from '@material-ui/icons/Menu';
 import Dashboard from '@material-ui/icons/Dashboard';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
-import Warning from '@material-ui/icons/Warning';
-import Receipt from '@material-ui/icons/Receipt';
-import ViewCarousel from '@material-ui/icons/ViewCarousel';
-import AttachMoney from '@material-ui/icons/AttachMoney';
-import Ballot from '@material-ui/icons/Ballot';
 import { Typography } from '@material-ui/core';
 
 import { AppDrawer, DrawerToolbar, LinkItem } from './DrawerStyle';
@@ -21,8 +16,8 @@ import { AdminIcon } from 'assets/icons';
 
 const primaryMenu = [
   {
-    label: 'Dashboard',
-    link: '/dashboard',
+    label: 'Login',
+    link: '/login',
     icon: <Dashboard />,
   },
   {
@@ -30,38 +25,13 @@ const primaryMenu = [
     link: '/users',
     icon: <SupervisorAccount />,
   },
-  {
-    label: 'Jobs',
-    link: '/jobs',
-    icon: <Ballot />,
-  },
-  {
-    label: 'Gigs',
-    link: '/gigs',
-    icon: <ViewCarousel />,
-  },
-  {
-    label: 'Disputes',
-    link: '/disputes',
-    icon: <Warning />,
-  },
-  {
-    label: 'Withdraws',
-    link: '/withdraws',
-    icon: <AttachMoney />,
-  },
 ];
 
 const secondaryMenu = [
   {
-    label: 'Reports',
-    link: '/reports',
-    icon: <Receipt />,
-  },
-  {
-    label: 'Restricted Messages',
-    link: '/restricted-messages',
-    icon: <Receipt />,
+    label: 'User',
+    link: '/user',
+    icon: <SupervisorAccount />,
   },
 ];
 

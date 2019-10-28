@@ -4,31 +4,26 @@ import Table from 'views/components/Table';
 export default function Users({ users }) {
   return (
     <>
-      {users && users.results && (
+      {users.length && (
         <Table
-          title={`Showing results ${users.results.length} of ${users.count}`}
+          title={`Showing results ${users.length} of ${users.length}`}
           columns={[
             {
               title: 'Name',
-              field: 'full_name',
+              field: 'name',
               link: {
                 url: 'user',
                 param: 'id',
               },
             },
             {
-              title: 'Type',
-              field: 'is_freelancer',
-              condition: {
-                value: true,
-                isPassed: 'Freelancer',
-                isFailed: 'Employer',
-              },
+              title: 'Website',
+              field: 'website',
             },
-            { title: 'Mobile', field: 'phone' },
+            { title: 'Username', field: 'username' },
             { title: 'Email', field: 'email' },
           ]}
-          data={users.results}
+          data={users}
         />
       )}
     </>

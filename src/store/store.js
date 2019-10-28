@@ -8,6 +8,7 @@ import ui from './ui';
 import auth from './auth';
 import users from './users';
 import meta from './meta';
+import transactions from './transactions';
 
 const persistConfig = {
   key: 'root',
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   auth,
   users,
   meta,
+  transactions,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
