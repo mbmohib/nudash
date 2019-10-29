@@ -12,11 +12,7 @@ const CreateTipsContainer = () => {
     dispatch(metaActions.getCategories());
   }, [dispatch]);
 
-  const onSubmit = values => {
-    console.log(values);
-  };
-
-  return <CreateTips categories={categories} onSubmit={onSubmit} />;
+  return <CreateTips categories={categories} />;
 };
 
 export default CreateTipsContainer;

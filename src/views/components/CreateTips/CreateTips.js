@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { Grid, TextField } from '@material-ui/core';
 import useForm from 'react-hook-form';
+
+import { firestore } from 'firebase/initFirebase';
 import { Button, Wrapper, Select } from 'views/ui';
 
-const CreateTips = ({ onSubmit, categories }) => {
-  const { register, handleSubmit, setValue } = useForm();
+const CreateTips = ({ categories }) => {
+  const { register, handleSubmit, setValue, reset } = useForm();
 
   useEffect(() => {
     register({ name: 'categories' });
@@ -14,17 +16,34 @@ const CreateTips = ({ onSubmit, categories }) => {
     setValue(type, value);
   };
 
+  const onSubmit = values => {
+    firestore
+      .collection('tips')
+      .doc()
+      .set(values, function(error) {
+        if (error) {
+          console.log(error);
+          // The write failed...
+        } else {
+          // Data saved successfully!
+          console.log('Data saved successfully!');
+        }
+      });
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
         <Grid item xs={10}>
           <TextField
+            multiline
             label="Description"
             margin="dense"
             variant="outlined"
             fullWidth
             name="description"
             inputRef={register}
+            rows={4}
           />
         </Grid>
         <Grid item xs={10}>
@@ -40,11 +59,11 @@ const CreateTips = ({ onSubmit, categories }) => {
         <Grid item xs={10}>
           <TextField
             inputRef={register}
-            label="Mobile"
+            label="Source"
             margin="dense"
             variant="outlined"
             fullWidth
-            name="phone"
+            name="source"
           />
         </Grid>
         <Grid item xs={10}>
