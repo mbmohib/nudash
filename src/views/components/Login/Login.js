@@ -3,71 +3,74 @@ import { Form, withFormik } from 'formik';
 import { TextField } from '@material-ui/core';
 import * as yup from 'yup';
 
-import { Button, Typography } from 'views/ui';
+import { Button, Wrapper, FieldErrorMsg } from 'views/ui';
 
-const Login = ({ values, error, handleChange, handleBlur }) => {
+const Login = ({
+  values,
+  errors,
+  touched,
+  loginError,
+  handleChange,
+  handleBlur,
+  loading,
+}) => {
   return (
-    <Form>
-      <TextField
-        fullWidth
-        label="Email"
-        name="emailOrPhone"
-        value={values.emailOrPhone}
-        margin="normal"
-        onChange={handleChange}
-        onBlur={handleBlur}
-      />
-      <TextField
-        fullWidth
-        label="Password"
-        name="password"
-        type="password"
-        value={values.password}
-        margin="normal"
-        onChange={handleChange}
-        onBlur={handleBlur}
-      />
-      {error && <Typography color="error">{error}</Typography>}
-      <Button
-        fullWidth
-        variant="contained"
-        color="primary"
-        justify="flex-start"
-        mt={2}
-        type="submit"
-      >
-        Submit
-      </Button>
-    </Form>
+    <Wrapper textAlign="center">
+      <Form>
+        <TextField
+          fullWidth
+          label="Email"
+          name="email"
+          value={values.email}
+          margin="normal"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={errors.email && touched.email}
+        />
+        <FieldErrorMsg error={errors.email} isTouched={touched.email} />
+        <TextField
+          error={errors.password && touched.password}
+          fullWidth
+          label="Password"
+          name="password"
+          type="password"
+          value={values.password}
+          margin="normal"
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        <FieldErrorMsg error={errors.password} isTouched={touched.password} />
+        <FieldErrorMsg error={loginError} isTouched={!!loginError} />
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          justify="flex-start"
+          mt={2}
+          type="submit"
+          disabled={loading}
+          loading={loading}
+        >
+          Login
+        </Button>
+      </Form>
+    </Wrapper>
   );
 };
 
 const LoginForm = withFormik({
   mapPropsToValues: () => ({
-    emailOrPhone: '',
+    email: '',
     password: '',
   }),
   validationSchema: yup.object().shape({
-    emailOrPhone: yup.string().required(),
-    password: yup.mixed().required(),
+    email: yup
+      .string()
+      .email('Please provide a valid email')
+      .required('Please enter your email'),
+    password: yup.mixed().required('Please enter your password'),
   }),
-  handleSubmit(
-    values,
-    {
-      props: { handleLogin },
-    }
-  ) {
-    const { emailOrPhone } = values;
-
-    if (emailOrPhone.length === 11) {
-      if (
-        emailOrPhone[0] === '0' &&
-        emailOrPhone[1] === '1' &&
-        !emailOrPhone.includes('@')
-      ) {
-        values.emailOrPhone = `+88${emailOrPhone}`;
-      }
-    }
+  handleSubmit(values, { props: { handleLogin } }) {
     handleLogin(values);
   },
 })(Login);

@@ -19,7 +19,7 @@ const metaReducers = function(state = initialState, action) {
         });
         break;
       default:
-        return;
+        return state;
     }
   });
 };

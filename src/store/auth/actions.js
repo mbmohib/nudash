@@ -1,11 +1,12 @@
 import * as types from './types';
 
-export const login = ({ email_or_phone, password }) => ({
+export const login = ({ email, password }) => ({
   type: types.LOGIN,
   payload: {
-    path: `auth/login/`,
+    path: `login`,
     method: 'POST',
-    data: { email_or_phone, password },
+    // For demo purpose
+    data: { email: 'eve.holt@reqres.in', password: 'cityslicka' },
   },
   meta: {
     API: true,
@@ -15,41 +16,25 @@ export const login = ({ email_or_phone, password }) => ({
   },
 });
 
-export const resetPassword = ({ code, password, confirm_password }) => ({
-  type: types.RESET_PASSWORD,
-  meta: {
-    async: true,
-    blocking: true,
-    path: `auth/password-reset/`,
+export const logout = () => ({
+  type: types.LOGOUT,
+  payload: {
+    path: `logout`,
     method: 'POST',
-    body: { code, password, confirm_password },
+  },
+  meta: {
+    API: true,
+    jwt: true,
+    label: 'auth',
+    loadMore: false,
   },
 });
 
-export const logout = jwt => {
-  return {
-    type: types.LOGOUT,
-    meta: {
-      async: true,
-      blocking: true,
-      path: `user/logout/`,
-      method: 'POST',
-      body: {},
-      jwt,
-    },
-  };
-};
-
-export const setUserToken = token => ({
-  type: types.SET_USER_TOKEN,
-  payload: token,
-});
-
-export const setLoggedInUser = user => ({
-  type: types.SET_LOGGED_IN_USER,
-  payload: user,
-});
-
-export const initializeAuth = () => ({
-  type: types.INITIALIZE,
+export const resetStore = () => ({
+  type: types.RESET_STORE,
+  meta: {
+    API: false,
+    label: 'auth',
+    loadMore: false,
+  },
 });

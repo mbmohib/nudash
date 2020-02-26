@@ -3,7 +3,7 @@ import TableCell from '@material-ui/core/TableCell';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { LinkIcon } from 'assets/icons';
+import { LinkIcon } from 'views/ui/icons';
 
 const Url = styled(Link)`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -15,7 +15,7 @@ const Url = styled(Link)`
   }
 `;
 
-const TableCellExtended = ({ item, field, link, condition }) => {
+const TableCellExtended = ({ item, field, link, html, condition }) => {
   return (
     <>
       {link ? (
@@ -29,6 +29,8 @@ const TableCellExtended = ({ item, field, link, condition }) => {
             <LinkIcon />
           </Url>
         </TableCell>
+      ) : html ? (
+        <TableCell dangerouslySetInnerHTML={{ __html: item[field] }} />
       ) : (
         <TableCell>
           {condition

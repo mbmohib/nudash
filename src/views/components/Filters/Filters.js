@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, TextField } from '@material-ui/core';
-import useForm from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
 import { Select } from 'views/ui';
@@ -12,7 +12,7 @@ const Filters = () => {
     userTypes: meta.userTypes,
     userStatus: meta.userStatus,
   }));
-  const [queryParams, handleQueryParamsChange, clearAll] = useQueryParams();
+  const [handleQueryParamsChange] = useQueryParams();
 
   React.useEffect(() => {
     register({ name: 'status' });
@@ -79,7 +79,7 @@ const Filters = () => {
           </Grid>
           <Grid item xs={6} sm={3} md={2}>
             <Select
-              label="skills"
+              label="Role"
               options={userTypes}
               handleSelectMenuChange={handleSelectMenuChange}
             />

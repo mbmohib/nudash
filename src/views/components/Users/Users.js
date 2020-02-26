@@ -9,19 +9,16 @@ export default function Users({ users }) {
           title={`Showing results ${users.length} of ${users.length}`}
           columns={[
             {
-              title: 'Name',
-              field: 'name',
-              link: {
-                url: 'user',
-                param: 'id',
-              },
+              title: 'First Name',
+              field: 'firstName',
             },
             {
-              title: 'Website',
-              field: 'website',
+              title: 'Last Name',
+              field: 'lastName',
             },
-            { title: 'Username', field: 'username' },
+            { title: 'Role', field: 'role' },
             { title: 'Email', field: 'email' },
+            { title: 'Status', field: 'status' },
           ]}
           data={users}
         />

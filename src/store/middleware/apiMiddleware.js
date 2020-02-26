@@ -1,13 +1,14 @@
-import axios from 'axios';
+import { axios } from 'helpers';
 import { uiActions } from 'store/ui';
 import * as errorTypes from 'store/ui/types';
+import * as authTypes from 'store/auth/types';
 
 const apiMiddleware = ({ dispatch }) => next => action => {
   next(action);
-  const { API, label, firebase } = action.meta || {};
+  const { API, label } = action.meta || {};
   const { path, method, data } = action.payload || {};
 
-  if (!API || firebase) {
+  if (!API) {
     return;
   }
 
@@ -23,7 +24,7 @@ const apiMiddleware = ({ dispatch }) => next => action => {
   return axios({ method, url, data })
     .then(res => {
       next({
-        type: `${action.type}_completed`,
+        type: `${action.type}_COMPLETED`,
         payload: res.data,
         meta: action.meta,
       });
@@ -32,9 +33,15 @@ const apiMiddleware = ({ dispatch }) => next => action => {
       dispatch(uiActions.fetchingEnd(label));
     })
     .catch(err => {
+      if (err.response && err.response.status === 401) {
+        next({
+          type: authTypes.RESET_STORE,
+        });
+      }
+
       next({
         type: errorTypes.SET_ERROR_MESSAGE,
-        payload: err,
+        payload: err.response && err.response.data,
         meta: action.meta,
       });
 

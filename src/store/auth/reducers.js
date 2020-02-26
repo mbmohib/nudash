@@ -12,9 +12,13 @@ const authReducers = function(state = initialState, action) {
   return produce(state, draft => {
     switch (type) {
       case types.LOGIN_COMPLETED:
-        draft.user = payload.user;
         draft.jwt = payload.token;
+        draft.user = {
+          fullName: 'John Doe',
+        };
         break;
+      default:
+        return state;
     }
   });
 };

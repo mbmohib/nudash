@@ -14,6 +14,8 @@ const userReducers = function(state = initialState, action) {
       case types.GET_USERS_COMPLETED:
         draft.users = payload;
         break;
+      default:
+        return state;
     }
   });
 };

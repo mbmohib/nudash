@@ -1,4 +1,4 @@
 import apiMiddleware from './apiMiddleware';
-import firebaseMiddlware from './firebaseMiddlware';
+import authMiddleware from './authMiddleware';
 
-export { apiMiddleware, firebaseMiddlware };
+export { apiMiddleware, authMiddleware };

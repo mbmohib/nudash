@@ -2,7 +2,7 @@ import produce from 'immer';
 import * as types from './types';
 
 const initialState = {
-  error: '',
+  error: {},
   loading: {},
 };
 
@@ -12,7 +12,9 @@ const uiReducers = (state = initialState, action) => {
   return produce(state, draft => {
     switch (type) {
       case types.SET_ERROR_MESSAGE:
-        draft.error = payload.message;
+        draft.error = {
+          [action.meta.label]: payload.error,
+        };
         break;
       case types.CLEAR_ERROR_MESSAGE:
         draft.error = '';
@@ -27,6 +29,8 @@ const uiReducers = (state = initialState, action) => {
           [payload.label]: false,
         };
         break;
+      default:
+        return state;
     }
   });
 };

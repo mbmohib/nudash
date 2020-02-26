@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { useToggle } from 'hooks';
 import Header from 'views/components/Header';
@@ -13,18 +14,22 @@ import {
 } from './LayoutStyle';
 
 const Layout = ({ children }) => {
-  const [open, handleToggleChange] = useToggle(false);
+  const auth = useSelector(({ auth }) => auth.jwt);
+  const [open, handleToggleChange] = useToggle(true);
 
   return (
     <PageWrapper>
-      <Drawer
-        handleToggleChange={handleToggleChange}
-        drawerOpenWidth={drawerOpenWidth}
-        drawerCloseWidth={drawerCloseWidth}
-        open={open}
-      />
+      {auth && (
+        <Drawer
+          handleToggleChange={handleToggleChange}
+          drawerOpenWidth={drawerOpenWidth}
+          drawerCloseWidth={drawerCloseWidth}
+          open={open}
+        />
+      )}
       <Main>
         <Header
+          auth={auth}
           open={open}
           drawerOpenWidth={drawerOpenWidth}
           drawerCloseWidth={drawerCloseWidth}

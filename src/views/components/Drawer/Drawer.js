@@ -1,45 +1,57 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import List from '@material-ui/core/List';
-import IconButton from '@material-ui/core/IconButton';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import MenuIcon from '@material-ui/icons/Menu';
-import Dashboard from '@material-ui/icons/Dashboard';
-import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
-import { Typography } from '@material-ui/core';
+import React from "react";
+import { Link } from "react-router-dom";
+import List from "@material-ui/core/List";
+import IconButton from "@material-ui/core/IconButton";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import MenuIcon from "@material-ui/icons/Menu";
+import Dashboard from "@material-ui/icons/Dashboard";
+import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
+import ScatterPlot from "@material-ui/icons/ScatterPlot";
+import Web from "@material-ui/icons/Web";
+import { Typography } from "@material-ui/core";
 
-import { AppDrawer, DrawerToolbar, LinkItem } from './DrawerStyle';
-import { Divider } from 'views/ui';
-import { AdminIcon } from 'assets/icons';
+import { AppDrawer, DrawerToolbar, LinkItem } from "./DrawerStyle";
+import { Divider } from "views/ui";
+import { variables } from "helpers";
 
 const primaryMenu = [
   {
-    label: 'Login',
-    link: '/login',
-    icon: <Dashboard />,
+    label: "Dashboard",
+    link: "/dashboard",
+    icon: <Dashboard />
   },
   {
-    label: 'Users',
-    link: '/users',
-    icon: <SupervisorAccount />,
+    label: "Orocube",
+    link: "/sites/orocube",
+    icon: <Web />
   },
+  {
+    label: "Florent",
+    link: "/dashboard",
+    icon: <Web />
+  }
 ];
 
 const secondaryMenu = [
   {
-    label: 'User',
-    link: '/user',
-    icon: <SupervisorAccount />,
+    label: "Users",
+    link: "/users",
+    icon: <SupervisorAccount />
   },
+  {
+    label: "Features",
+    link: "/features",
+    icon: <ScatterPlot />
+  }
 ];
 
 const AdminDrawer = ({
   open,
   drawerOpenWidth,
   drawerCloseWidth,
-  handleToggleChange,
+  handleToggleChange
 }) => {
   return (
     <AppDrawer
@@ -51,9 +63,9 @@ const AdminDrawer = ({
       <DrawerToolbar>
         {open ? (
           <>
-            <AdminIcon />
+            {/* <AdminIcon /> */}
             <Typography color="secondary" variant="h6">
-              Kajkey Admin
+              {variables.appName}
             </Typography>
             <IconButton onClick={handleToggleChange}>
               <ChevronLeftIcon color="secondary" />

@@ -13,7 +13,7 @@ const Fetcher = ({ fetchData, label, children }) => {
 
   useEffect(() => {
     dispatch(fetchData());
-  }, [fetchData]);
+  }, [fetchData, dispatch]);
 
   if (loading[label]) return <PreLoader />;
   if (error) return <Error message={error} />;

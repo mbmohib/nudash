@@ -1,16 +1,23 @@
 import React from 'react';
 import Table from '@material-ui/core/Table';
+import Grid from '@material-ui/core/Grid';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { IconButton } from '@material-ui/core';
 import TablePagination from '@material-ui/core/TablePagination';
 
-import { Wrapper, Typography } from 'views/ui';
+import { Wrapper, Typography, Button } from 'views/ui';
 import TableHead from './TableHead';
 import Cell from './TableCell';
 
-const TableExtended = ({ title, columns, data, actions }) => {
+const TableExtended = ({
+  title,
+  columns,
+  data,
+  actions,
+  handleTitleAction,
+}) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -25,9 +32,28 @@ const TableExtended = ({ title, columns, data, actions }) => {
 
   return (
     <Wrapper>
-      <Typography variant="body1" mb={3}>
-        {title}
-      </Typography>
+      <Grid container>
+        <Grid item xs={11}>
+          <Typography variant="body1" mb={3}>
+            {title}
+          </Typography>
+        </Grid>
+        <Grid item xs={1}>
+          {handleTitleAction && (
+            <Wrapper display="flex" justifyContent="flex-end">
+              <Button
+                onClick={handleTitleAction}
+                variant="contained"
+                color="primary"
+                size="small"
+              >
+                Add
+              </Button>
+            </Wrapper>
+          )}
+        </Grid>
+      </Grid>
+
       <Table size="small">
         <TableHead columns={columns} actions={actions} />
         <TableBody>
@@ -35,12 +61,13 @@ const TableExtended = ({ title, columns, data, actions }) => {
             data.length > 0 &&
             data.map((item, index) => (
               <TableRow key={index}>
-                {columns.map(({ field, condition, link }) => (
+                {columns.map(({ field, condition, link, html }) => (
                   <Cell
                     key={field}
                     item={item}
                     field={field}
                     link={link}
+                    html={html}
                     condition={condition}
                   />
                 ))}
@@ -49,8 +76,8 @@ const TableExtended = ({ title, columns, data, actions }) => {
                     {actions.map((action, index) => (
                       <IconButton
                         key={index}
-                        onClick={action.handleClick}
-                        disabled={eval(action.disabled)}
+                        onClick={() => action.handleClick(item)}
+                        disabled={action.disabled}
                       >
                         {action.icon}
                       </IconButton>
