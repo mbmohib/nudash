@@ -1,5 +1,5 @@
 import React from 'react'
 
 export default function Page() {
-  return 'Hello from Page!'
+  return <p>Hello from Page!</p>
 }
