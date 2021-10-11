@@ -8,7 +8,7 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <Grid templateColumns="300px 1fr">
+    <Grid templateColumns="250px 1fr">
       <Sidebar />
       <Content>
         <Header></Header>

@@ -16,8 +16,8 @@ export default function Sidebar() {
           </Text>
         </Box>
         <Box
-          borderTop="1px"
           display="flex"
+          borderTop="1px"
           borderColor="gray.500"
           flexDirection="column"
           alignItems="center"
