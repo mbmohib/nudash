@@ -11,7 +11,8 @@ const styles = {
     a: {
       color: 'teal.500',
       _hover: {
-        textDecoration: 'underline',
+        textDecoration: 'none',
+        color: 'teal.700',
       },
     },
   },
@@ -20,11 +21,28 @@ const styles = {
 const colors = {
   primary: '#51459f',
   secondary: '#23243d',
+  tertiary: '#2e3039',
+}
+
+const space = {
+  px: '1px',
+  0.5: '4px',
+  1: '8px',
+  2: '16px',
+  3: '32px',
+  4: '40px',
+  5: '48px',
+  6: '56px',
+  7: '62px',
+  8: '80px',
+  9: '88px',
+  10: '100px',
 }
 
 const overrides = {
   styles,
   colors,
+  space,
 }
 
 export const theme = extendTheme(overrides)
