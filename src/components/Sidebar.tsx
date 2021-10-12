@@ -4,7 +4,7 @@ import { Button } from '@chakra-ui/button'
 import { PageIcon } from '../assets/icons'
 import { Link } from 'react-router-dom'
 import { FiUser } from 'react-icons/fi'
-import { MdNotificationsNone } from 'react-icons/md'
+import { MdNotificationsNone, MdSchema } from 'react-icons/md'
 
 export default function Sidebar() {
   return (
@@ -30,8 +30,18 @@ export default function Sidebar() {
             variant="link"
             bg="primary.light"
             color="white"
+            mb="2"
           >
-            <PageIcon />
+            <Icon as={PageIcon} width="24px" height="24px" />
+          </Button>
+          <Button
+            as={Link}
+            to="/pages"
+            variant="link"
+            bg="primary.light"
+            color="white"
+          >
+            <Icon as={MdSchema} width="24px" height="24px" />
           </Button>
         </Box>
         <Flex flexDirection="column" alignItems="center" pb={2}>
