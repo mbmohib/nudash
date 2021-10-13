@@ -21,8 +21,8 @@ export enum HandleRowType {
 }
 interface DropZoneProps {
   fieldType: FieldType | null;
-  id: number;
-  handleRow: (type: HandleRowType, id: number) => void;
+  id: string;
+  handleRow: (type: HandleRowType, id: string) => void;
 }
 
 export default function DropZone({ fieldType, handleRow, id }: DropZoneProps) {

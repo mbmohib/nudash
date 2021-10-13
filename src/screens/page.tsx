@@ -1,44 +1,53 @@
-import { Container, Grid } from '@chakra-ui/react';
+import { Container, Grid, Box } from '@chakra-ui/react';
 import { PageAside, DropZone } from '../components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useState } from 'react';
 import { FieldType } from '../types/FieldType';
 import { HandleRowType } from '../components/DropZone';
+import { nanoid } from 'nanoid';
 
 interface Row {
-  id: number;
+  id: string;
   fieldType: FieldType | null;
 }
 
 const initialRowState: Row = {
-  id: 0,
+  id: nanoid(),
   fieldType: null,
 };
 
 export default function Page() {
   const [rows, setRow] = useState<Row[]>([initialRowState]);
 
-  const onFieldDrop = (type: FieldType, rowId: number): void => {
-    const rowsCopy = [...rows];
-    rowsCopy[rowId].fieldType = type;
-    setRow(rowsCopy);
+  const onFieldDrop = (type: FieldType, rowId: string): void => {
+    const item = rows.find(row => row.id === rowId) as Row;
+
+    const updatedItem = {
+      ...item,
+      fieldType: type,
+    };
+
+    setRow({
+      ...rows,
+      ...updatedItem,
+    });
   };
 
-  const handleRow = (type: HandleRowType, index: number): void => {
+  const handleRow = (type: HandleRowType, rowId: string): void => {
     if (type === HandleRowType.Add) {
       const rowsCopy = [...rows];
-      const position = index + 1;
+      const position = rows.findIndex(row => row.id === rowId) + 1;
 
       rowsCopy.splice(position, 0, {
         ...initialRowState,
-        id: rows.length,
+        id: nanoid(),
       });
       setRow(rowsCopy);
     }
 
     if (type === HandleRowType.Delete) {
-      setRow(rows.filter(row => row.id !== index));
+      setRow(rows.filter(row => row.id !== rowId));
     }
   };
 

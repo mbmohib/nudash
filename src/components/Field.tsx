@@ -6,12 +6,12 @@ import { FieldType } from '../types/FieldType';
 import { DraggableField } from '../types/DraggableField';
 
 interface FieldProps extends DraggableField {
-  onFieldDrop: (type: FieldType, rowId: number) => void;
+  onFieldDrop: (type: FieldType, rowId: string) => void;
   isRerender: number;
 }
 
 interface DropResult {
-  id: number;
+  id: string;
 }
 
 export default function Field({
