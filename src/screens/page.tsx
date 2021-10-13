@@ -4,7 +4,8 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useState } from 'react';
 import { FieldType } from '../types/FieldType';
-import { RowActionType } from '../components/DropZone';
+import { RowActionType } from '../types/RowActionType';
+import { HandleDropZoneType } from '../types/HandleDropZoneType';
 import { nanoid } from 'nanoid';
 import {
   MdOutlinePlaylistAdd,
@@ -60,12 +61,12 @@ export default function Page() {
     }
   };
 
-  const handleDropZone = (
-    type: RowActionType,
-    rowId: string,
-    sectionId: number,
-    columnId: number,
-  ): void => {
+  const handleDropZone: HandleDropZoneType = (
+    type,
+    rowId,
+    sectionId,
+    columnId,
+  ) => {
     const section = sections.find(section => section.id === sectionId);
     const columnIndex =
       section?.columns.findIndex((_, index) => index === columnId) || 0;

@@ -10,26 +10,19 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { FieldType } from '../types/FieldType';
+import { RowActionType } from '../types/RowActionType';
+import { HandleDropZoneType } from '../types/HandleDropZoneType';
 import {
   MdOutlinePlaylistAdd,
   MdOutlineRemoveCircleOutline,
 } from 'react-icons/md';
 
-export enum RowActionType {
-  Add = 'add',
-  Delete = 'delete',
-}
 interface DropZoneProps {
   fieldType: FieldType | null;
   id: string;
   sectionId: number;
   columnId: number;
-  handleDropZone: (
-    type: RowActionType,
-    id: string,
-    sectionId: number,
-    columnId: number,
-  ) => void;
+  handleDropZone: HandleDropZoneType;
 }
 
 export default function DropZone({
