@@ -3,12 +3,8 @@ import { PageAside, DropZone } from '../components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useState } from 'react';
-import { FieldType } from '../components/Field';
+import { FieldType } from '../types/FieldType';
 import { HandleRowType } from '../components/DropZone';
-
-export const ItemTypes = {
-  BOX: 'box',
-};
 
 export default function Page() {
   const [fieldType, setFieldType] = useState<FieldType | null>(null);

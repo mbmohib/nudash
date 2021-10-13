@@ -1,35 +1,21 @@
 import { Text, Box, Icon, Grid } from '@chakra-ui/react';
 import { FiType } from 'react-icons/fi';
 import { useDrag } from 'react-dnd';
-import { ItemTypes } from '../screens/page';
+import { ItemTypes } from '../types/ItemTypes';
+import { FieldType } from '../types/FieldType';
+import { DraggableField } from '../types/DraggableField';
 
-export enum FieldType {
-  Text = 'text',
-  MultilineText = 'multilineText',
-  RichText = 'richText',
-  Image = 'image',
-  Number = 'number',
-}
-
-export interface FieldProps {
-  type: FieldType;
-  info: {
-    title: string;
-    subtitle: string;
-  };
+interface FieldProps extends DraggableField {
+  onFieldDrop: (type: FieldType) => void;
 }
 
 interface DropResult {
   name: string;
 }
 
-export default function Field({
-  type,
-  info,
-  onFieldDrop,
-}: FieldProps & { onFieldDrop: (type: FieldType) => void }) {
+export default function Field({ type, info, onFieldDrop }: FieldProps) {
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.BOX,
+    type: ItemTypes.Field,
     item: { type },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>();

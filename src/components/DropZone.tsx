@@ -1,5 +1,5 @@
 import { useDrop } from 'react-dnd';
-import { ItemTypes } from '../screens/page';
+import { ItemTypes } from '../types/ItemTypes';
 import {
   Textarea,
   FormControl,
@@ -9,7 +9,7 @@ import {
   Icon,
   Flex,
 } from '@chakra-ui/react';
-import { FieldType } from './Field';
+import { FieldType } from '../types/FieldType';
 import {
   MdOutlinePlaylistAdd,
   MdOutlineRemoveCircleOutline,
@@ -31,7 +31,7 @@ export default function DropZone({
   index,
 }: DropZoneProps) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: ItemTypes.BOX,
+    accept: ItemTypes.Field,
     drop: () => ({ name: 'DropZone' }),
     collect: monitor => ({
       isOver: monitor.isOver(),
