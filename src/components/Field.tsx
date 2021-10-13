@@ -1,7 +1,7 @@
-import { Text, Box, Icon, Grid } from '@chakra-ui/react'
-import { FiType } from 'react-icons/fi'
-import { useDrag } from 'react-dnd'
-import { ItemTypes } from '../screens/page'
+import { Text, Box, Icon, Grid } from '@chakra-ui/react';
+import { FiType } from 'react-icons/fi';
+import { useDrag } from 'react-dnd';
+import { ItemTypes } from '../screens/page';
 
 export enum FieldType {
   Text = 'text',
@@ -12,15 +12,15 @@ export enum FieldType {
 }
 
 export interface FieldProps {
-  type: FieldType
+  type: FieldType;
   info: {
-    title: string
-    subtitle: string
-  }
+    title: string;
+    subtitle: string;
+  };
 }
 
 interface DropResult {
-  name: string
+  name: string;
 }
 
 export default function Field({
@@ -32,16 +32,16 @@ export default function Field({
     type: ItemTypes.BOX,
     item: { type },
     end: (item, monitor) => {
-      const dropResult = monitor.getDropResult<DropResult>()
+      const dropResult = monitor.getDropResult<DropResult>();
       if (item && dropResult) {
-        onFieldDrop(item.type)
+        onFieldDrop(item.type);
       }
     },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
       handlerId: monitor.getHandlerId(),
     }),
-  }))
+  }));
 
   return (
     <div ref={drag} data-testid={`box-${type}`}>
@@ -73,5 +73,5 @@ export default function Field({
         </Box>
       </Grid>
     </div>
-  )
+  );
 }

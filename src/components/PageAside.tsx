@@ -1,6 +1,6 @@
-import { Box, Heading } from '@chakra-ui/react'
-import { Field } from './'
-import { FieldType, FieldProps } from './Field'
+import { Box, Heading } from '@chakra-ui/react';
+import { Field } from './';
+import { FieldType, FieldProps } from './Field';
 
 const fields: FieldProps[] = [
   {
@@ -17,10 +17,10 @@ const fields: FieldProps[] = [
       subtitle: 'Description',
     },
   },
-]
+];
 
 interface AsideProps {
-  onFieldDrop: (type: FieldType) => void
+  onFieldDrop: (type: FieldType) => void;
 }
 
 export default function Aside({ onFieldDrop }: AsideProps) {
@@ -28,10 +28,10 @@ export default function Aside({ onFieldDrop }: AsideProps) {
     <Box p="2" bgColor="secondary" height="100vh">
       <Heading size="sm">Add fields</Heading>
       <Box mt="3">
-        {fields.map(field => (
-          <Field {...field} onFieldDrop={onFieldDrop} />
+        {fields.map((field, index) => (
+          <Field key={index} {...field} onFieldDrop={onFieldDrop} />
         ))}
       </Box>
     </Box>
-  )
+  );
 }

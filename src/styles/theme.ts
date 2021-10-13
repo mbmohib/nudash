@@ -1,4 +1,4 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme } from '@chakra-ui/react';
 
 const styles = {
   global: {
@@ -16,13 +16,16 @@ const styles = {
       },
     },
   },
-}
+};
 
 const colors = {
+  transparent: 'transparent',
+  black: '#000',
+  white: '#fff',
   primary: '#51459f',
   secondary: '#23243d',
   tertiary: '#2e3039',
-}
+};
 
 const space = {
   px: '1px',
@@ -37,12 +40,23 @@ const space = {
   8: '80px',
   9: '88px',
   10: '100px',
-}
+};
 
-const overrides = {
+const radii = {
+  none: '0',
+  sm: '4px',
+  base: '8px',
+  md: '12px',
+  lg: '16px',
+  xl: '20px',
+  '2xl': '24px',
+  '3xl': '48px',
+  full: '9999px',
+};
+
+export const theme = extendTheme({
   styles,
   colors,
   space,
-}
-
-export const theme = extendTheme(overrides)
+  radii,
+});

@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 type MainProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 export default function Main({ children }: MainProps) {
-  return <div>{children}</div>
+  return <div>{children}</div>;
 }

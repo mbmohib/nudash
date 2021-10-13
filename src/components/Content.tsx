@@ -1,10 +1,10 @@
-import { Box, Grid } from '@chakra-ui/layout'
-import React from 'react'
+import { Box } from '@chakra-ui/layout';
+import React from 'react';
 
 type ContentProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 export default function Content({ children }: ContentProps) {
-  return <Box>{children}</Box>
+  return <Box>{children}</Box>;
 }

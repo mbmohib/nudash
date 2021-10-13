@@ -1,10 +1,10 @@
-import { Grid, Box, Text, Flex, Heading } from '@chakra-ui/layout'
-import { Icon } from '@chakra-ui/react'
-import { Button } from '@chakra-ui/button'
-import { PageIcon } from '../assets/icons'
-import { Link } from 'react-router-dom'
-import { FiUser } from 'react-icons/fi'
-import { MdNotificationsNone, MdSchema } from 'react-icons/md'
+import { Grid, Box, Text, Flex, Heading } from '@chakra-ui/layout';
+import { Icon } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/button';
+import { PageIcon } from '../assets/icons';
+import { Link } from 'react-router-dom';
+import { FiUser } from 'react-icons/fi';
+import { MdNotificationsNone, MdSchema } from 'react-icons/md';
 
 export default function Sidebar() {
   return (
@@ -69,5 +69,5 @@ export default function Sidebar() {
         </Box>
       </Box>
     </Grid>
-  )
+  );
 }

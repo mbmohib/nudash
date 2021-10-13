@@ -1,7 +1,7 @@
-import React from 'react'
-import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
-import { Page, NotFoundPage } from '../screens'
-import { Layout } from '../components'
+import React from 'react';
+import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
+import { Page, NotFoundPage } from '../screens';
+import { Layout } from '../components';
 
 const Routes = () => (
   <BrowserRouter>
@@ -13,6 +13,6 @@ const Routes = () => (
       </Switch>
     </Layout>
   </BrowserRouter>
-)
+);
 
-export default Routes
+export default Routes;
