@@ -21,18 +21,14 @@ export enum HandleRowType {
 }
 interface DropZoneProps {
   fieldType: FieldType | null;
-  index: number;
-  handleRow: (type: HandleRowType, index: number) => void;
+  id: number;
+  handleRow: (type: HandleRowType, id: number) => void;
 }
 
-export default function DropZone({
-  fieldType,
-  handleRow,
-  index,
-}: DropZoneProps) {
+export default function DropZone({ fieldType, handleRow, id }: DropZoneProps) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.Field,
-    drop: () => ({ name: 'DropZone' }),
+    drop: () => ({ id }),
     collect: monitor => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
@@ -40,7 +36,7 @@ export default function DropZone({
   }));
 
   const isActive = canDrop && isOver;
-  const placeholder = isActive ? `Release to drop` : `Drag a box here ${index}`;
+  const placeholder = isActive ? `Release to drop` : `Drag a box here ${id}`;
 
   return (
     // eslint-disable-next-line jsx-a11y/aria-role
@@ -71,13 +67,13 @@ export default function DropZone({
       <Flex justifyContent="center">
         <Button
           variant="primary"
-          onClick={() => handleRow(HandleRowType.Add, index)}
+          onClick={() => handleRow(HandleRowType.Add, id)}
         >
           <Icon as={MdOutlinePlaylistAdd} width="24px" height="24px" />
         </Button>
         <Button
           variant="primary"
-          onClick={() => handleRow(HandleRowType.Delete, index)}
+          onClick={() => handleRow(HandleRowType.Delete, id)}
         >
           <Icon as={MdOutlineRemoveCircleOutline} width="24px" height="24px" />
         </Button>

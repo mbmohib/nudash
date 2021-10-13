@@ -6,23 +6,39 @@ import { useState } from 'react';
 import { FieldType } from '../types/FieldType';
 import { HandleRowType } from '../components/DropZone';
 
-export default function Page() {
-  const [fieldType, setFieldType] = useState<FieldType | null>(null);
-  const [rows, setRow] = useState<number[]>([0]);
+interface Row {
+  id: number;
+  fieldType: FieldType | null;
+}
 
-  const onFieldDrop = (type: FieldType): void => {
-    setFieldType(type);
+const initialRowState: Row = {
+  id: 0,
+  fieldType: null,
+};
+
+export default function Page() {
+  const [rows, setRow] = useState<Row[]>([initialRowState]);
+
+  const onFieldDrop = (type: FieldType, rowId: number): void => {
+    const rowsCopy = [...rows];
+    rowsCopy[rowId].fieldType = type;
+    setRow(rowsCopy);
   };
 
   const handleRow = (type: HandleRowType, index: number): void => {
     if (type === HandleRowType.Add) {
       const rowsCopy = [...rows];
-      rowsCopy.splice(index + 1, 0, rows.length);
+      const position = index + 1;
+
+      rowsCopy.splice(position, 0, {
+        ...initialRowState,
+        id: rows.length,
+      });
       setRow(rowsCopy);
     }
 
     if (type === HandleRowType.Delete) {
-      setRow(rows.filter(row => row !== index));
+      setRow(rows.filter(row => row.id !== index));
     }
   };
 
@@ -30,16 +46,16 @@ export default function Page() {
     <DndProvider backend={HTML5Backend}>
       <Grid gridTemplateColumns="1fr 300px">
         <Container py="2" maxW="container.md">
-          {rows.map(index => (
+          {rows.map(row => (
             <DropZone
-              key={index}
-              index={index}
+              key={row.id}
+              id={row.id}
               handleRow={handleRow}
-              fieldType={fieldType}
+              fieldType={row.fieldType}
             />
           ))}
         </Container>
-        <PageAside onFieldDrop={onFieldDrop} />
+        <PageAside isRerender={rows.length} onFieldDrop={onFieldDrop} />
       </Grid>
     </DndProvider>
   );

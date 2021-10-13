@@ -6,28 +6,37 @@ import { FieldType } from '../types/FieldType';
 import { DraggableField } from '../types/DraggableField';
 
 interface FieldProps extends DraggableField {
-  onFieldDrop: (type: FieldType) => void;
+  onFieldDrop: (type: FieldType, rowId: number) => void;
+  isRerender: number;
 }
 
 interface DropResult {
-  name: string;
+  id: number;
 }
 
-export default function Field({ type, info, onFieldDrop }: FieldProps) {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.Field,
-    item: { type },
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult<DropResult>();
-      if (item && dropResult) {
-        onFieldDrop(item.type);
-      }
-    },
-    collect: monitor => ({
-      isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId(),
+export default function Field({
+  type,
+  info,
+  onFieldDrop,
+  isRerender,
+}: FieldProps) {
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: ItemTypes.Field,
+      item: { type },
+      end: (item, monitor) => {
+        const dropResult = monitor.getDropResult<DropResult>();
+        if (item && dropResult) {
+          onFieldDrop(item.type, dropResult.id);
+        }
+      },
+      collect: monitor => ({
+        isDragging: monitor.isDragging(),
+        handlerId: monitor.getHandlerId(),
+      }),
     }),
-  }));
+    [type, isRerender],
+  );
 
   return (
     <div ref={drag} data-testid={`box-${type}`}>
