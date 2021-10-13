@@ -21,7 +21,7 @@ const fields: DraggableField[] = [
 ];
 
 interface AsideProps {
-  onFieldDrop: (type: FieldType, rowId: string) => void;
+  onFieldDrop: (type: FieldType, dropZoneId: string) => void;
   isRerender: number;
 }
 

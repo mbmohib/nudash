@@ -1,53 +1,104 @@
-import { Container, Grid, Box } from '@chakra-ui/react';
+import { Container, Grid, Flex, Box, Button, Icon } from '@chakra-ui/react';
 import { PageAside, DropZone } from '../components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useState } from 'react';
 import { FieldType } from '../types/FieldType';
-import { HandleRowType } from '../components/DropZone';
+import { RowActionType } from '../components/DropZone';
 import { nanoid } from 'nanoid';
+import {
+  MdOutlinePlaylistAdd,
+  MdOutlineRemoveCircleOutline,
+} from 'react-icons/md';
 
-interface Row {
+interface DraggableItem {
   id: string;
   fieldType: FieldType | null;
 }
 
-const initialRowState: Row = {
+interface Section {
+  id: number;
+  columns: DraggableItem[][];
+}
+
+const initialRowState: DraggableItem = {
   id: nanoid(),
   fieldType: null,
 };
 
 export default function Page() {
-  const [rows, setRow] = useState<Row[]>([initialRowState]);
+  const [sections, setSections] = useState<Section[]>([
+    { id: 0, columns: [[initialRowState], [initialRowState]] },
+  ]);
 
-  const onFieldDrop = (type: FieldType, rowId: string): void => {
-    const item = rows.find(row => row.id === rowId) as Row;
-
-    const updatedItem = {
-      ...item,
-      fieldType: type,
-    };
-
-    setRow({
-      ...rows,
-      ...updatedItem,
-    });
+  const onFieldDrop = (type: FieldType, dropZoneId: string): void => {
+    // const item = rows.find(row => row.id === rowId) as Row;
+    // const updatedItem = {
+    //   ...item,
+    //   fieldType: type,
+    // };
+    // setRow({
+    //   ...rows,
+    //   ...updatedItem,
+    // });
   };
 
-  const handleRow = (type: HandleRowType, rowId: string): void => {
-    if (type === HandleRowType.Add) {
-      const rowsCopy = [...rows];
-      const position = rows.findIndex(row => row.id === rowId) + 1;
+  const handleSection = (type: RowActionType, id: number): void => {
+    if (type === RowActionType.Add) {
+      const rowsCopy = [...sections];
+      const position = id + 1;
 
       rowsCopy.splice(position, 0, {
+        id: sections.length,
+        columns: [[{ ...initialRowState, id: nanoid() }]],
+      });
+      setSections(rowsCopy);
+    }
+
+    if (type === RowActionType.Delete) {
+      setSections(sections.filter(section => section.id !== id));
+    }
+  };
+
+  const handleDropZone = (
+    type: RowActionType,
+    rowId: string,
+    sectionId: number,
+    columnId: number,
+  ): void => {
+    const section = sections.find(section => section.id === sectionId);
+    const columnIndex =
+      section?.columns.findIndex((_, index) => index === columnId) || 0;
+    const column = section?.columns[columnIndex]!;
+    const dropZoneIndex = column?.findIndex(column => column.id === rowId) || 0;
+
+    if (type === RowActionType.Add) {
+      const columnCopy = [...column];
+      columnCopy.splice(dropZoneIndex + 1, 0, {
         ...initialRowState,
         id: nanoid(),
       });
-      setRow(rowsCopy);
+
+      const updatedColumn = [...(section?.columns as DraggableItem[][])];
+      updatedColumn[columnIndex] = columnCopy;
+
+      const updatedSection = { ...section, columns: updatedColumn };
+      const updatedSections = [...sections];
+      updatedSections[sectionId] = updatedSection as Section;
+
+      setSections(updatedSections);
     }
 
-    if (type === HandleRowType.Delete) {
-      setRow(rows.filter(row => row.id !== rowId));
+    if (type === RowActionType.Delete) {
+      const updatedColumn = column.filter(dropZone => dropZone.id !== rowId);
+      const updatedColumns = [...(section?.columns as DraggableItem[][])];
+      updatedColumns[columnIndex] = updatedColumn;
+
+      const updatedSection = { ...section, columns: updatedColumns };
+      const updatedSections = [...sections];
+      updatedSections[sectionId] = updatedSection as Section;
+
+      setSections(updatedSections);
     }
   };
 
@@ -55,16 +106,56 @@ export default function Page() {
     <DndProvider backend={HTML5Backend}>
       <Grid gridTemplateColumns="1fr 300px">
         <Container py="2" maxW="container.md">
-          {rows.map(row => (
-            <DropZone
-              key={row.id}
-              id={row.id}
-              handleRow={handleRow}
-              fieldType={row.fieldType}
-            />
+          {sections.map((section, index) => (
+            <Box
+              width="100%"
+              minHeight="200px"
+              bgColor="gray.400"
+              rounded="base"
+              p="2"
+              key={index}
+              mb="2"
+            >
+              <Flex alignItems="center">
+                {section.columns.map((column, index) => (
+                  <Box width="100%" key={index} m="1">
+                    {column.map(row => (
+                      <DropZone
+                        id={row.id}
+                        key={row.id}
+                        columnId={index}
+                        sectionId={section.id}
+                        handleDropZone={handleDropZone}
+                        fieldType={row.fieldType}
+                      />
+                    ))}
+                  </Box>
+                ))}
+              </Flex>
+              <Flex justifyContent="center">
+                <Button
+                  variant="primary"
+                  onClick={() => handleSection(RowActionType.Add, section.id)}
+                >
+                  <Icon as={MdOutlinePlaylistAdd} width="24px" height="24px" />
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={() =>
+                    handleSection(RowActionType.Delete, section.id)
+                  }
+                >
+                  <Icon
+                    as={MdOutlineRemoveCircleOutline}
+                    width="24px"
+                    height="24px"
+                  />
+                </Button>
+              </Flex>
+            </Box>
           ))}
         </Container>
-        <PageAside isRerender={rows.length} onFieldDrop={onFieldDrop} />
+        <PageAside isRerender={sections.length} onFieldDrop={onFieldDrop} />
       </Grid>
     </DndProvider>
   );

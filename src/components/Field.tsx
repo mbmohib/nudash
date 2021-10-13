@@ -6,7 +6,7 @@ import { FieldType } from '../types/FieldType';
 import { DraggableField } from '../types/DraggableField';
 
 interface FieldProps extends DraggableField {
-  onFieldDrop: (type: FieldType, rowId: string) => void;
+  onFieldDrop: (type: FieldType, dropZoneId: string) => void;
   isRerender: number;
 }
 

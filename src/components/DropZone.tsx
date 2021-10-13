@@ -15,17 +15,30 @@ import {
   MdOutlineRemoveCircleOutline,
 } from 'react-icons/md';
 
-export enum HandleRowType {
+export enum RowActionType {
   Add = 'add',
   Delete = 'delete',
 }
 interface DropZoneProps {
   fieldType: FieldType | null;
   id: string;
-  handleRow: (type: HandleRowType, id: string) => void;
+  sectionId: number;
+  columnId: number;
+  handleDropZone: (
+    type: RowActionType,
+    id: string,
+    sectionId: number,
+    columnId: number,
+  ) => void;
 }
 
-export default function DropZone({ fieldType, handleRow, id }: DropZoneProps) {
+export default function DropZone({
+  fieldType,
+  handleDropZone,
+  id,
+  sectionId,
+  columnId,
+}: DropZoneProps) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.Field,
     drop: () => ({ id }),
@@ -36,7 +49,7 @@ export default function DropZone({ fieldType, handleRow, id }: DropZoneProps) {
   }));
 
   const isActive = canDrop && isOver;
-  const placeholder = isActive ? `Release to drop` : `Drag a box here ${id}`;
+  const placeholder = isActive ? `Release to drop` : `Drag a box here`;
 
   return (
     // eslint-disable-next-line jsx-a11y/aria-role
@@ -67,13 +80,17 @@ export default function DropZone({ fieldType, handleRow, id }: DropZoneProps) {
       <Flex justifyContent="center">
         <Button
           variant="primary"
-          onClick={() => handleRow(HandleRowType.Add, id)}
+          onClick={() =>
+            handleDropZone(RowActionType.Add, id, sectionId, columnId)
+          }
         >
           <Icon as={MdOutlinePlaylistAdd} width="24px" height="24px" />
         </Button>
         <Button
           variant="primary"
-          onClick={() => handleRow(HandleRowType.Delete, id)}
+          onClick={() =>
+            handleDropZone(RowActionType.Delete, id, sectionId, columnId)
+          }
         >
           <Icon as={MdOutlineRemoveCircleOutline} width="24px" height="24px" />
         </Button>
