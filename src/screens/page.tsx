@@ -92,43 +92,45 @@ export default function Page() {
 
   const handleDropZone: HandleDropZoneType = (
     type,
-    rowId,
+    dropZoneId,
     sectionId,
     columnId,
   ) => {
-    const section = sections.find(section => section.id === sectionId);
+    const sectionIndex = sections.findIndex(
+      section => section.id === sectionId,
+    );
+
     const columnIndex =
-      section?.columns.findIndex((_, index) => index === columnId) || 0;
-    const column = section?.columns[columnIndex]!;
-    const dropZoneIndex = column?.findIndex(column => column.id === rowId) || 0;
+      sections[sectionIndex].columns.findIndex(
+        (_, index) => index === columnId,
+      ) || 0;
+
+    const dropZoneIndex =
+      sections[sectionIndex].columns[columnIndex].findIndex(
+        dropZone => dropZone.id === dropZoneId,
+      ) || 0;
 
     if (type === RowActionType.Add) {
-      const columnCopy = [...column];
-      columnCopy.splice(dropZoneIndex + 1, 0, {
-        ...initialRowState,
-        id: nanoid(),
-      });
-
-      const updatedColumn = [...(section?.columns as DraggableItem[][])];
-      updatedColumn[columnIndex] = columnCopy;
-
-      const updatedSection = { ...section, columns: updatedColumn };
-      const updatedSections = [...sections];
-      updatedSections[sectionId] = updatedSection as Section;
-
-      setSections(updatedSections);
+      setSections(
+        produce(draft => {
+          draft[sectionIndex].columns[columnIndex].splice(
+            dropZoneIndex + 1,
+            0,
+            {
+              ...initialRowState,
+              id: nanoid(),
+            },
+          );
+        }),
+      );
     }
 
     if (type === RowActionType.Delete) {
-      const updatedColumn = column.filter(dropZone => dropZone.id !== rowId);
-      const updatedColumns = [...(section?.columns as DraggableItem[][])];
-      updatedColumns[columnIndex] = updatedColumn;
-
-      const updatedSection = { ...section, columns: updatedColumns };
-      const updatedSections = [...sections];
-      updatedSections[sectionId] = updatedSection as Section;
-
-      setSections(updatedSections);
+      setSections(
+        produce(draft => {
+          draft[sectionIndex].columns[columnIndex].splice(dropZoneIndex, 1);
+        }),
+      );
     }
   };
 
