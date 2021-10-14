@@ -6,7 +6,7 @@ import { FieldType } from '../types/FieldType';
 import { DraggableField } from '../types/DraggableField';
 
 interface FieldProps extends DraggableField {
-  onFieldDrop: (type: FieldType, dropZoneId: string) => void;
+  handleFieldDrop: (type: FieldType, dropZoneId: string) => void;
   isRerender: number;
 }
 
@@ -17,7 +17,7 @@ interface DropResult {
 export default function Field({
   type,
   info,
-  onFieldDrop,
+  handleFieldDrop,
   isRerender,
 }: FieldProps) {
   const [{ isDragging }, drag] = useDrag(
@@ -27,7 +27,7 @@ export default function Field({
       end: (item, monitor) => {
         const dropResult = monitor.getDropResult<DropResult>();
         if (item && dropResult) {
-          onFieldDrop(item.type, dropResult.id);
+          handleFieldDrop(item.type, dropResult.id);
         }
       },
       collect: monitor => ({

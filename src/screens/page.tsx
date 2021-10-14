@@ -28,12 +28,20 @@ const initialRowState: DraggableItem = {
   fieldType: null,
 };
 
+enum ColumnCount {
+  oneColumn = 1,
+  twoColumns = 2,
+  threeColumns = 3,
+  fourColumns = 4,
+  sixColumns = 6,
+}
+
 export default function Page() {
   const [sections, setSections] = useState<Section[]>([
     { id: 0, columns: [[initialRowState]] },
   ]);
 
-  const onFieldDrop = (type: FieldType, dropZoneId: string): void => {
+  const handleFieldDrop = (type: FieldType, dropZoneId: string): void => {
     // const item = rows.find(row => row.id === rowId) as Row;
     // const updatedItem = {
     //   ...item,
@@ -72,21 +80,41 @@ export default function Page() {
     type: RowActionType,
     sectionId: number,
     columnId: number,
+    columnCount: number = 3,
   ): void => {
-    const sectionsCopy = [...sections];
-    const section = sectionsCopy.find(section => section.id === sectionId);
-    const totalColumns = section?.columns.length;
+    const sectionIndex = sections.findIndex(
+      section => section.id === sectionId,
+    );
+
+    const columnIndex =
+      sections[sectionIndex].columns.findIndex(
+        (_, index) => index === columnId,
+      ) || 0;
 
     if (type === RowActionType.Add) {
-      if (totalColumns === 1) {
-        section?.columns.push([{ ...initialRowState, id: nanoid() }]);
+      const newColumns: DraggableItem[][] = [];
+      for (let i = 0; i < columnCount; i++) {
+        newColumns.push([
+          {
+            ...initialRowState,
+            id: nanoid(),
+          },
+        ]);
       }
 
-      sectionsCopy[sectionId] = section as Section;
-      setSections(sectionsCopy);
+      setSections(
+        produce(draft => {
+          draft[sectionIndex].columns.splice(columnIndex + 1, 0, ...newColumns);
+        }),
+      );
     }
 
     if (type === RowActionType.Delete) {
+      setSections(
+        produce(draft => {
+          draft[sectionIndex].columns.splice(columnIndex, 1);
+        }),
+      );
     }
   };
 
@@ -228,7 +256,10 @@ export default function Page() {
             </Box>
           ))}
         </Container>
-        <PageAside isRerender={sections.length} onFieldDrop={onFieldDrop} />
+        <PageAside
+          isRerender={sections.length}
+          handleFieldDrop={handleFieldDrop}
+        />
       </Grid>
     </DndProvider>
   );

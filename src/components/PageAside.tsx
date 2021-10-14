@@ -21,11 +21,11 @@ const fields: DraggableField[] = [
 ];
 
 interface AsideProps {
-  onFieldDrop: (type: FieldType, dropZoneId: string) => void;
+  handleFieldDrop: (type: FieldType, dropZoneId: string) => void;
   isRerender: number;
 }
 
-export default function Aside({ onFieldDrop, isRerender }: AsideProps) {
+export default function Aside({ handleFieldDrop, isRerender }: AsideProps) {
   return (
     <Box p="2" bgColor="secondary" height="100vh">
       <Heading size="sm">Add fields</Heading>
@@ -35,7 +35,7 @@ export default function Aside({ onFieldDrop, isRerender }: AsideProps) {
             key={index}
             {...field}
             isRerender={isRerender}
-            onFieldDrop={onFieldDrop}
+            handleFieldDrop={handleFieldDrop}
           />
         ))}
       </Box>
