@@ -42,7 +42,6 @@ export default function Page() {
     { ...initialRowState, data: null },
   ]);
 
-  // FIXME: fix field drop for multiple sections and columns
   const handleFieldDrop = (type: FieldType, dropZoneId: string): void => {
     setDropZones(
       produce(draft => {
@@ -345,3 +344,38 @@ export default function Page() {
     </>
   );
 }
+
+// const sections = [
+//   {
+//     id: 0,
+//     rows: [
+//       {
+//         id: 0,
+//         columns: [
+//           [{ id: 'drag zone 0' }, { id: 'drag zone 1' }],
+//           [{ id: 'drag zone 0' }, { id: 'drag zone 1' }, { id: 'drag zone 2' }],
+//         ],
+//       },
+//       {
+//         id: 0,
+//         columns: [[{ id: 'drag zone 0' }]],
+//       },
+//     ],
+//   },
+//   {
+//     id: 0,
+//     rows: [
+//       {
+//         id: 0,
+//         columns: [
+//           [{ id: 'drag zone 0' }, { id: 'drag zone 1' }],
+//           [{ id: 'drag zone 0' }, { id: 'drag zone 1' }, { id: 'drag zone 2' }],
+//         ],
+//       },
+//       {
+//         id: 0,
+//         columns: [[{ id: 'drag zone 0' }]],
+//       },
+//     ],
+//   },
+// ];
