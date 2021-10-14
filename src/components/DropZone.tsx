@@ -18,19 +18,23 @@ import {
 } from 'react-icons/md';
 
 interface DropZoneProps {
-  fieldType: FieldType | null;
   id: string;
   sectionId: number;
   columnId: number;
   handleDropZone: HandleDropZoneType;
+  dropZone: {
+    id: string;
+    fieldType?: FieldType;
+    data?: any;
+  };
 }
 
 export default function DropZone({
-  fieldType,
-  handleDropZone,
   id,
+  handleDropZone,
   sectionId,
   columnId,
+  dropZone,
 }: DropZoneProps) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.Field,
@@ -40,6 +44,7 @@ export default function DropZone({
       canDrop: monitor.canDrop(),
     }),
   }));
+  const { fieldType, data } = dropZone || {};
 
   const isActive = canDrop && isOver;
   const placeholder = isActive ? `Release to drop` : `Drag a box here`;

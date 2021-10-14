@@ -13,19 +13,21 @@ import {
 } from 'react-icons/md';
 import produce from 'immer';
 
-interface DraggableItem {
-  id: string;
-  fieldType: FieldType | null;
-}
-
 interface Section {
   id: number;
   columns: DraggableItem[][];
 }
 
+interface DraggableItem {
+  id: string;
+  fieldType?: FieldType;
+  data?: any;
+}
+
 const initialRowState: DraggableItem = {
   id: nanoid(),
-  fieldType: null,
+  fieldType: undefined,
+  data: null,
 };
 
 enum ColumnCount {
@@ -38,19 +40,31 @@ enum ColumnCount {
 
 export default function Page() {
   const [sections, setSections] = useState<Section[]>([
-    { id: 0, columns: [[initialRowState]] },
+    { id: 0, columns: [[{ id: initialRowState.id }]] },
+  ]);
+
+  const [dropZones, setDropZones] = useState<DraggableItem[]>([
+    { ...initialRowState, data: null },
   ]);
 
   const handleFieldDrop = (type: FieldType, dropZoneId: string): void => {
-    // const item = rows.find(row => row.id === rowId) as Row;
-    // const updatedItem = {
-    //   ...item,
-    //   fieldType: type,
-    // };
-    // setRow({
-    //   ...rows,
-    //   ...updatedItem,
-    // });
+    console.log('dropZoneId :>> ', dropZoneId);
+    console.log('type :>> ', type);
+    setDropZones(
+      produce(draft => {
+        // TODO: need to add proper return type
+        return draft.map((dropZone: DraggableItem) => {
+          if (dropZone.id === dropZoneId) {
+            return {
+              ...dropZone,
+              fieldType: type,
+            };
+          }
+
+          return dropZone;
+        });
+      }),
+    );
   };
 
   const handleSection = (type: RowActionType, id: number): void => {
@@ -61,7 +75,7 @@ export default function Page() {
         produce(draft => {
           draft.splice(position, 0, {
             id: sections.length,
-            columns: [[{ ...initialRowState, id: nanoid() }]],
+            columns: [[{ id: nanoid() }]],
           });
         }),
       );
@@ -96,7 +110,6 @@ export default function Page() {
       for (let i = 0; i < columnCount; i++) {
         newColumns.push([
           {
-            ...initialRowState,
             id: nanoid(),
           },
         ]);
@@ -124,6 +137,7 @@ export default function Page() {
     sectionId,
     columnId,
   ) => {
+    const newDropZoneId = nanoid();
     const sectionIndex = sections.findIndex(
       section => section.id === sectionId,
     );
@@ -139,14 +153,22 @@ export default function Page() {
       ) || 0;
 
     if (type === RowActionType.Add) {
+      setDropZones(
+        produce(draft => {
+          draft?.push({
+            ...initialRowState,
+            id: newDropZoneId,
+          });
+        }),
+      );
+
       setSections(
         produce(draft => {
           draft[sectionIndex].columns[columnIndex].splice(
             dropZoneIndex + 1,
             0,
             {
-              ...initialRowState,
-              id: nanoid(),
+              id: newDropZoneId,
             },
           );
         }),
@@ -180,14 +202,18 @@ export default function Page() {
                 {section.columns.map((column, index) => (
                   <Box width="100%" key={index} m="1" position="relative">
                     <Box>
-                      {column.map(row => (
+                      {column.map(dropZone => (
                         <DropZone
-                          id={row.id}
-                          key={row.id}
+                          id={dropZone.id}
+                          key={dropZone.id}
                           columnId={index}
                           sectionId={section.id}
                           handleDropZone={handleDropZone}
-                          fieldType={row.fieldType}
+                          dropZone={
+                            dropZones.find(
+                              item => item.id === dropZone.id,
+                            ) as DraggableItem
+                          }
                         />
                       ))}
                     </Box>
@@ -257,7 +283,7 @@ export default function Page() {
           ))}
         </Container>
         <PageAside
-          isRerender={sections.length}
+          isRerender={dropZones.length}
           handleFieldDrop={handleFieldDrop}
         />
       </Grid>
