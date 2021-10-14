@@ -1,7 +1,7 @@
 import { Grid, Box, Text, Flex, Heading } from '@chakra-ui/layout';
 import { Icon } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/button';
-import { PageIcon } from '../assets/icons';
+import { PageIcon, LightIcon } from '../assets/icons';
 import { Link } from 'react-router-dom';
 import { FiUser } from 'react-icons/fi';
 import { MdNotificationsNone, MdSchema } from 'react-icons/md';
@@ -46,6 +46,7 @@ export default function Sidebar() {
         </Box>
         <Flex flexDirection="column" alignItems="center" pb={2}>
           <Icon as={MdNotificationsNone} width="24px" height="24px" />
+          <Icon as={LightIcon} width="24px" height="24px" mt="2" />
           <Icon as={FiUser} width="24px" height="24px" mt="2" />
         </Flex>
       </Flex>

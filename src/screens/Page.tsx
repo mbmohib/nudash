@@ -12,6 +12,7 @@ import {
   MdOutlineRemoveCircleOutline,
 } from 'react-icons/md';
 import produce from 'immer';
+import { AiOutlineHolder } from 'react-icons/ai';
 
 interface Section {
   id: number;
@@ -47,6 +48,7 @@ export default function Page() {
     { ...initialRowState, data: null },
   ]);
 
+  // FIXME: fix field drop for multiple sections and columns
   const handleFieldDrop = (type: FieldType, dropZoneId: string): void => {
     setDropZones(
       produce(draft => {
@@ -92,7 +94,7 @@ export default function Page() {
     type: ActionType,
     sectionId: number,
     columnId: number,
-    columnCount: number = 3,
+    columnCount: number = 1,
   ): void => {
     const sectionIndex = sections.findIndex(
       section => section.id === sectionId,
@@ -189,6 +191,7 @@ export default function Page() {
         <Container py="2" maxW="container.md">
           {sections.map((section, index) => (
             <Box
+              position="relative"
               width="100%"
               minHeight="200px"
               bgColor="gray.400"
@@ -197,63 +200,92 @@ export default function Page() {
               key={index}
               mb="2"
             >
-              <Flex alignItems="center">
-                {section.columns.map((column, index) => (
-                  <Box width="100%" key={index} m="1" position="relative">
-                    <Box>
+              <Box width="100%" key={index} m="1" position="relative">
+                <Flex alignItems="center">
+                  {section.columns.map((column, index) => (
+                    <Box width="100%">
                       {column.map(dropZone => (
-                        <DropZone
-                          id={dropZone.id}
-                          key={dropZone.id}
-                          columnId={index}
-                          sectionId={section.id}
-                          handleDropZone={handleDropZone}
-                          dropZone={
-                            dropZones.find(
-                              item => item.id === dropZone.id,
-                            ) as DraggableItem
-                          }
-                        />
+                        <Box
+                          border="1px"
+                          borderColor="gray.500"
+                          mb="2"
+                          position="relative"
+                        >
+                          <DropZone
+                            id={dropZone.id}
+                            key={dropZone.id}
+                            columnId={index}
+                            sectionId={section.id}
+                            handleDropZone={handleDropZone}
+                            dropZone={
+                              dropZones.find(
+                                item => item.id === dropZone.id,
+                              ) as DraggableItem
+                            }
+                          />
+                          <Box
+                            position="absolute"
+                            left="-4"
+                            sx={{
+                              top: '50%',
+                              transform: 'translateY(-50%)',
+                            }}
+                          >
+                            <Button
+                              variant="primary"
+                              onClick={() =>
+                                handleSection(ActionType.Drag, section.id)
+                              }
+                            >
+                              <Icon
+                                as={AiOutlineHolder}
+                                width="24px"
+                                height="24px"
+                              />
+                            </Button>
+                          </Box>
+                        </Box>
                       ))}
                     </Box>
-                    <Box
-                      position="absolute"
-                      right="-3"
-                      sx={{
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                      }}
+                  ))}
+                </Flex>
+                <Box
+                  position="absolute"
+                  right="-3"
+                  sx={{
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                  }}
+                >
+                  <Flex flexDirection="column">
+                    <Button
+                      variant="link"
+                      onClick={() =>
+                        handleColumn(ActionType.Add, section.id, index)
+                      }
                     >
-                      <Flex flexDirection="column">
-                        <Button
-                          variant="link"
-                          onClick={() =>
-                            handleColumn(ActionType.Add, section.id, index)
-                          }
-                        >
-                          <Icon
-                            as={MdOutlinePlaylistAdd}
-                            width="24px"
-                            height="24px"
-                          />
-                        </Button>
-                        <Button
-                          variant="link"
-                          onClick={() =>
-                            handleColumn(ActionType.Delete, section.id, index)
-                          }
-                        >
-                          <Icon
-                            as={MdOutlineRemoveCircleOutline}
-                            width="24px"
-                            height="24px"
-                          />
-                        </Button>
-                      </Flex>
-                    </Box>
-                  </Box>
-                ))}
-              </Flex>
+                      <Icon
+                        as={MdOutlinePlaylistAdd}
+                        width="24px"
+                        height="24px"
+                      />
+                    </Button>
+                    <Button
+                      variant="link"
+                      onClick={() =>
+                        handleColumn(ActionType.Delete, section.id, index)
+                      }
+                    >
+                      <Icon
+                        as={MdOutlineRemoveCircleOutline}
+                        width="24px"
+                        height="24px"
+                      />
+                    </Button>
+                  </Flex>
+                </Box>
+              </Box>
+              {/* Section Action start */}
               <Flex justifyContent="center">
                 <Button
                   variant="primary"
@@ -272,6 +304,22 @@ export default function Page() {
                   />
                 </Button>
               </Flex>
+              <Box
+                position="absolute"
+                left="-4"
+                sx={{
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                }}
+              >
+                <Button
+                  variant="primary"
+                  onClick={() => handleSection(ActionType.Drag, section.id)}
+                >
+                  <Icon as={AiOutlineHolder} width="24px" height="24px" />
+                </Button>
+              </Box>
+              {/* Section action end */}
             </Box>
           ))}
         </Container>
