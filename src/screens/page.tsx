@@ -11,6 +11,7 @@ import {
   MdOutlinePlaylistAdd,
   MdOutlineRemoveCircleOutline,
 } from 'react-icons/md';
+import produce from 'immer';
 
 interface DraggableItem {
   id: string;
@@ -29,7 +30,7 @@ const initialRowState: DraggableItem = {
 
 export default function Page() {
   const [sections, setSections] = useState<Section[]>([
-    { id: 0, columns: [[initialRowState], [initialRowState]] },
+    { id: 0, columns: [[initialRowState]] },
   ]);
 
   const onFieldDrop = (type: FieldType, dropZoneId: string): void => {
@@ -46,18 +47,46 @@ export default function Page() {
 
   const handleSection = (type: RowActionType, id: number): void => {
     if (type === RowActionType.Add) {
-      const rowsCopy = [...sections];
       const position = id + 1;
 
-      rowsCopy.splice(position, 0, {
-        id: sections.length,
-        columns: [[{ ...initialRowState, id: nanoid() }]],
-      });
-      setSections(rowsCopy);
+      setSections(
+        produce(draft => {
+          draft.splice(position, 0, {
+            id: sections.length,
+            columns: [[{ ...initialRowState, id: nanoid() }]],
+          });
+        }),
+      );
     }
 
     if (type === RowActionType.Delete) {
-      setSections(sections.filter(section => section.id !== id));
+      setSections(
+        produce(draft => {
+          return draft.filter(section => section.id !== id);
+        }),
+      );
+    }
+  };
+
+  const handleColumn = (
+    type: RowActionType,
+    sectionId: number,
+    columnId: number,
+  ): void => {
+    const sectionsCopy = [...sections];
+    const section = sectionsCopy.find(section => section.id === sectionId);
+    const totalColumns = section?.columns.length;
+
+    if (type === RowActionType.Add) {
+      if (totalColumns === 1) {
+        section?.columns.push([{ ...initialRowState, id: nanoid() }]);
+      }
+
+      sectionsCopy[sectionId] = section as Section;
+      setSections(sectionsCopy);
+    }
+
+    if (type === RowActionType.Delete) {
     }
   };
 
@@ -119,17 +148,58 @@ export default function Page() {
             >
               <Flex alignItems="center">
                 {section.columns.map((column, index) => (
-                  <Box width="100%" key={index} m="1">
-                    {column.map(row => (
-                      <DropZone
-                        id={row.id}
-                        key={row.id}
-                        columnId={index}
-                        sectionId={section.id}
-                        handleDropZone={handleDropZone}
-                        fieldType={row.fieldType}
-                      />
-                    ))}
+                  <Box width="100%" key={index} m="1" position="relative">
+                    <Box>
+                      {column.map(row => (
+                        <DropZone
+                          id={row.id}
+                          key={row.id}
+                          columnId={index}
+                          sectionId={section.id}
+                          handleDropZone={handleDropZone}
+                          fieldType={row.fieldType}
+                        />
+                      ))}
+                    </Box>
+                    <Box
+                      position="absolute"
+                      right="-3"
+                      sx={{
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                      }}
+                    >
+                      <Flex flexDirection="column">
+                        <Button
+                          variant="link"
+                          onClick={() =>
+                            handleColumn(RowActionType.Add, section.id, index)
+                          }
+                        >
+                          <Icon
+                            as={MdOutlinePlaylistAdd}
+                            width="24px"
+                            height="24px"
+                          />
+                        </Button>
+                        <Button
+                          variant="link"
+                          onClick={() =>
+                            handleColumn(
+                              RowActionType.Delete,
+                              section.id,
+                              index,
+                            )
+                          }
+                        >
+                          <Icon
+                            as={MdOutlineRemoveCircleOutline}
+                            width="24px"
+                            height="24px"
+                          />
+                        </Button>
+                      </Flex>
+                    </Box>
                   </Box>
                 ))}
               </Flex>

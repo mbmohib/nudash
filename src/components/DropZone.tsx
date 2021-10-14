@@ -49,7 +49,7 @@ export default function DropZone({
     <div ref={drop} role={'DropZone'}>
       <Flex
         width="100%"
-        minHeight="200px"
+        minHeight="100px"
         bgColor={isActive ? 'gray.400' : 'gray.600'}
         justifyContent="center"
         alignItems="center"
