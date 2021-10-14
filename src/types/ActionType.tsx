@@ -1,4 +1,4 @@
-export enum RowActionType {
+export enum ActionType {
   Add = 'add',
   Delete = 'delete',
 }

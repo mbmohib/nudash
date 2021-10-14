@@ -10,7 +10,7 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { FieldType } from '../types/FieldType';
-import { RowActionType } from '../types/RowActionType';
+import { ActionType } from '../types/ActionType';
 import { HandleDropZoneType } from '../types/HandleDropZoneType';
 import {
   MdOutlinePlaylistAdd,
@@ -79,7 +79,7 @@ export default function DropZone({
         <Button
           variant="primary"
           onClick={() =>
-            handleDropZone(RowActionType.Add, id, sectionId, columnId)
+            handleDropZone(ActionType.Add, id, sectionId, columnId)
           }
         >
           <Icon as={MdOutlinePlaylistAdd} width="24px" height="24px" />
@@ -87,7 +87,7 @@ export default function DropZone({
         <Button
           variant="primary"
           onClick={() =>
-            handleDropZone(RowActionType.Delete, id, sectionId, columnId)
+            handleDropZone(ActionType.Delete, id, sectionId, columnId)
           }
         >
           <Icon as={MdOutlineRemoveCircleOutline} width="24px" height="24px" />

@@ -4,7 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useState } from 'react';
 import { FieldType } from '../types/FieldType';
-import { RowActionType } from '../types/RowActionType';
+import { ActionType } from '../types/ActionType';
 import { HandleDropZoneType } from '../types/HandleDropZoneType';
 import { nanoid } from 'nanoid';
 import {
@@ -48,8 +48,6 @@ export default function Page() {
   ]);
 
   const handleFieldDrop = (type: FieldType, dropZoneId: string): void => {
-    console.log('dropZoneId :>> ', dropZoneId);
-    console.log('type :>> ', type);
     setDropZones(
       produce(draft => {
         // TODO: need to add proper return type
@@ -67,8 +65,8 @@ export default function Page() {
     );
   };
 
-  const handleSection = (type: RowActionType, id: number): void => {
-    if (type === RowActionType.Add) {
+  const handleSection = (type: ActionType, id: number): void => {
+    if (type === ActionType.Add) {
       const position = id + 1;
 
       setSections(
@@ -81,7 +79,7 @@ export default function Page() {
       );
     }
 
-    if (type === RowActionType.Delete) {
+    if (type === ActionType.Delete) {
       setSections(
         produce(draft => {
           return draft.filter(section => section.id !== id);
@@ -91,7 +89,7 @@ export default function Page() {
   };
 
   const handleColumn = (
-    type: RowActionType,
+    type: ActionType,
     sectionId: number,
     columnId: number,
     columnCount: number = 3,
@@ -105,8 +103,9 @@ export default function Page() {
         (_, index) => index === columnId,
       ) || 0;
 
-    if (type === RowActionType.Add) {
+    if (type === ActionType.Add) {
       const newColumns: DraggableItem[][] = [];
+
       for (let i = 0; i < columnCount; i++) {
         newColumns.push([
           {
@@ -122,7 +121,7 @@ export default function Page() {
       );
     }
 
-    if (type === RowActionType.Delete) {
+    if (type === ActionType.Delete) {
       setSections(
         produce(draft => {
           draft[sectionIndex].columns.splice(columnIndex, 1);
@@ -152,7 +151,7 @@ export default function Page() {
         dropZone => dropZone.id === dropZoneId,
       ) || 0;
 
-    if (type === RowActionType.Add) {
+    if (type === ActionType.Add) {
       setDropZones(
         produce(draft => {
           draft?.push({
@@ -175,7 +174,7 @@ export default function Page() {
       );
     }
 
-    if (type === RowActionType.Delete) {
+    if (type === ActionType.Delete) {
       setSections(
         produce(draft => {
           draft[sectionIndex].columns[columnIndex].splice(dropZoneIndex, 1);
@@ -229,7 +228,7 @@ export default function Page() {
                         <Button
                           variant="link"
                           onClick={() =>
-                            handleColumn(RowActionType.Add, section.id, index)
+                            handleColumn(ActionType.Add, section.id, index)
                           }
                         >
                           <Icon
@@ -241,11 +240,7 @@ export default function Page() {
                         <Button
                           variant="link"
                           onClick={() =>
-                            handleColumn(
-                              RowActionType.Delete,
-                              section.id,
-                              index,
-                            )
+                            handleColumn(ActionType.Delete, section.id, index)
                           }
                         >
                           <Icon
@@ -262,15 +257,13 @@ export default function Page() {
               <Flex justifyContent="center">
                 <Button
                   variant="primary"
-                  onClick={() => handleSection(RowActionType.Add, section.id)}
+                  onClick={() => handleSection(ActionType.Add, section.id)}
                 >
                   <Icon as={MdOutlinePlaylistAdd} width="24px" height="24px" />
                 </Button>
                 <Button
                   variant="primary"
-                  onClick={() =>
-                    handleSection(RowActionType.Delete, section.id)
-                  }
+                  onClick={() => handleSection(ActionType.Delete, section.id)}
                 >
                   <Icon
                     as={MdOutlineRemoveCircleOutline}

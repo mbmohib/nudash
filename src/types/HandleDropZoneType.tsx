@@ -1,8 +1,8 @@
-import { RowActionType } from './RowActionType';
+import { ActionType } from './ActionType';
 
 export interface HandleDropZoneType {
   (
-    type: RowActionType,
+    type: ActionType,
     dropZoneId: string,
     sectionId: number,
     columnId: number,
