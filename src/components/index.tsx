@@ -7,3 +7,4 @@ export { default as Footer } from './Footer';
 export { default as PageAside } from './PageAside';
 export { default as Field } from './Field';
 export { default as DropZone } from './DropZone';
+export { default as ColumnLayout } from './ColumnLayout';

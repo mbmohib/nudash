@@ -50,9 +50,10 @@ export default function DropZone({
   const placeholder = isActive ? `Release to drop` : `Drag a box here`;
 
   return (
-    // eslint-disable-next-line jsx-a11y/aria-role
-    <div ref={drop} role={'DropZone'}>
+    <>
       <Flex
+        ref={drop}
+        role={'DropZone'}
         width="100%"
         minHeight="100px"
         bgColor={isActive ? 'gray.400' : 'gray.600'}
@@ -93,6 +94,6 @@ export default function DropZone({
           <Icon as={MdOutlineRemoveCircleOutline} width="24px" height="24px" />
         </Button>
       </Flex>
-    </div>
+    </>
   );
 }

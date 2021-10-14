@@ -2,4 +2,6 @@ export enum ActionType {
   Add = 'add',
   Delete = 'delete',
   Drag = 'drag',
+  Open = 'open',
+  Modify = 'modify',
 }
