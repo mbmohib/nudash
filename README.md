@@ -2,7 +2,7 @@
 
 ## An open source Dashboard ✨ to use as a backend for GatsbyJS, ReactJS, NestJS
 
-### `Features`
+### Features
 
 - Create row/column
 - Drag HTML Element to specific column
@@ -16,7 +16,7 @@
 - React DnD
 - Immer
 
-### `TODO`
+### TODO
 
 - Implement drag feature for changing order
 - Implement resize feature for column
