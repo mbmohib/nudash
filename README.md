@@ -2,6 +2,8 @@
 
 ## An open source Dashboard ✨ to use as a backend for GatsbyJS, ReactJS, NestJS
 
+## Live URL: https://heuristic-brattain-1611d1.netlify.app/
+
 ### Features
 
 - Create row/column
