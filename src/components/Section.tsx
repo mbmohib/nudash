@@ -29,10 +29,9 @@ interface DraggableItem {
 
 interface SectionProps {
   section: SectionTypes;
-  handleDropZone: HandleDropZoneType;
 }
 
-export default function Section({ section, handleDropZone }: SectionProps) {
+export default function Section({ section }: SectionProps) {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [rowId, setRow] = useState<number>(0);
@@ -67,7 +66,6 @@ export default function Section({ section, handleDropZone }: SectionProps) {
                 sectionId={section.id}
                 column={column}
                 id={columnIndex}
-                handleDropZone={handleDropZone}
               />
             ))}
           </Flex>

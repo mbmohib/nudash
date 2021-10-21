@@ -1,9 +1,13 @@
-import { Box, Button, Icon } from '@chakra-ui/react';
+import { Box, Button, Icon, Flex } from '@chakra-ui/react';
 import { FieldType } from '../types/FieldType';
 import { DropZone } from './';
-import { HandleDropZoneType } from '../types/HandleDropZoneType';
 import { AiOutlineHolder } from 'react-icons/ai';
+import { handleDropZone } from '../store/sectionSlice';
 import { useSelector } from '../hooks/useRedux';
+import {
+  MdOutlinePlaylistAdd,
+  MdOutlineRemoveCircleOutline,
+} from 'react-icons/md';
 
 interface DraggableItem {
   id: string;
@@ -16,20 +20,13 @@ interface ColumnProps {
   id: number;
   rowId: number;
   sectionId: number;
-  handleDropZone: HandleDropZoneType;
 }
 
-export default function Column({
-  column,
-  id,
-  rowId,
-  sectionId,
-  handleDropZone,
-}: ColumnProps) {
+export default function Column({ column, id, rowId, sectionId }: ColumnProps) {
   const { dropZones } = useSelector(state => state.section);
 
   return (
-    <Box width="100%">
+    <Box width="100%" row="column">
       {column.map(dropZone => (
         <Box
           border="1px"
@@ -42,11 +39,44 @@ export default function Column({
             id={dropZone.id}
             columnId={id}
             sectionId={sectionId}
-            handleDropZone={handleDropZone}
             dropZone={
               dropZones.find(item => item.id === dropZone.id) as DraggableItem
             }
           />
+          <Flex justifyContent="center">
+            <Button
+              variant="primary"
+              // onClick={() =>
+              //   dispatch(
+              //     handleRow({
+              //       actionType: ActionType.Add,
+              //       sectionId: section.id,
+              //       rowId: row.id,
+              //     }),
+              //   )
+              // }
+            >
+              <Icon as={MdOutlinePlaylistAdd} width="24px" height="24px" />
+            </Button>
+            <Button
+              variant="primary"
+              // onClick={() =>
+              //   dispatch(
+              //     handleRow({
+              //       actionType: ActionType.Delete,
+              //       sectionId: section.id,
+              //       rowId: row.id,
+              //     }),
+              //   )
+              // }
+            >
+              <Icon
+                as={MdOutlineRemoveCircleOutline}
+                width="24px"
+                height="24px"
+              />
+            </Button>
+          </Flex>
           <Box
             position="absolute"
             left="-4"

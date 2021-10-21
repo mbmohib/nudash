@@ -3,7 +3,6 @@ import { PageAside, Section } from '../components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ActionType } from '../types/ActionType';
-import { HandleDropZoneType } from '../types/HandleDropZoneType';
 import {
   MdOutlinePlaylistAdd,
   MdOutlineRemoveCircleOutline,
@@ -15,54 +14,6 @@ import { handleSection } from '../store/sectionSlice';
 export default function Page() {
   const dispatch = useDispatch();
   const { sections } = useSelector(state => state.section);
-
-  const handleDropZone: HandleDropZoneType = (
-    type,
-    dropZoneId,
-    sectionId,
-    columnId,
-  ) => {
-    // const newDropZoneId = nanoid();
-    // const sectionIndex = sections.findIndex(
-    //   section => section.id === sectionId,
-    // );
-    // const columnIndex =
-    //   sections[sectionIndex].columns.findIndex(
-    //     (_, index) => index === columnId,
-    //   ) || 0;
-    // const dropZoneIndex =
-    //   sections[sectionIndex].columns[columnIndex].findIndex(
-    //     dropZone => dropZone.id === dropZoneId,
-    //   ) || 0;
-    // if (type === ActionType.Add) {
-    //   setDropZones(
-    //     produce(draft => {
-    //       draft?.push({
-    //         ...initialDraggableState,
-    //         id: newDropZoneId,
-    //       });
-    //     }),
-    //   );
-    //   setSections(
-    //     produce(draft => {
-    //       draft[sectionIndex].columns[columnIndex].splice(
-    //         dropZoneIndex + 1,
-    //         0,
-    //         {
-    //           id: newDropZoneId,
-    //         },
-    //       );
-    //     }),
-    //   );
-    // }
-    // if (type === ActionType.Delete) {
-    //   setSections(
-    //     produce(draft => {
-    //       draft[sectionIndex].columns[columnIndex].splice(dropZoneIndex, 1);
-    //     }),
-    //   );
-    // }
-  };
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -79,11 +30,7 @@ export default function Page() {
               key={index}
               mb="2"
             >
-              <Section
-                handleDropZone={handleDropZone}
-                section={section}
-                key={index}
-              />
+              <Section section={section} key={index} />
 
               {/* Section Action start */}
               <Flex justifyContent="center">

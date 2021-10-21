@@ -180,9 +180,64 @@ const sectionSlice = createSlice({
         return dropZone;
       });
     },
+    handleDropZone(
+      state,
+      action: PayloadAction<{
+        actionType: ActionType;
+        dropZoneId: string;
+        sectionId: number;
+        columnId: number;
+      }>,
+    ) {
+      // const newDropZoneId = nanoid();
+      // const sectionIndex = sections.findIndex(
+      //   section => section.id === sectionId,
+      // );
+      // const columnIndex =
+      //   sections[sectionIndex].columns.findIndex(
+      //     (_, index) => index === columnId,
+      //   ) || 0;
+      // const dropZoneIndex =
+      //   sections[sectionIndex].columns[columnIndex].findIndex(
+      //     dropZone => dropZone.id === dropZoneId,
+      //   ) || 0;
+      // if (type === ActionType.Add) {
+      //   setDropZones(
+      //     produce(draft => {
+      //       draft?.push({
+      //         ...initialDraggableState,
+      //         id: newDropZoneId,
+      //       });
+      //     }),
+      //   );
+      //   setSections(
+      //     produce(draft => {
+      //       draft[sectionIndex].columns[columnIndex].splice(
+      //         dropZoneIndex + 1,
+      //         0,
+      //         {
+      //           id: newDropZoneId,
+      //         },
+      //       );
+      //     }),
+      //   );
+      // }
+      // if (type === ActionType.Delete) {
+      //   setSections(
+      //     produce(draft => {
+      //       draft[sectionIndex].columns[columnIndex].splice(dropZoneIndex, 1);
+      //     }),
+      //   );
+      // }
+    },
   },
 });
 
-export const { handleSection, handleRow, handleColumn, handleFieldDrop } =
-  sectionSlice.actions;
+export const {
+  handleSection,
+  handleRow,
+  handleColumn,
+  handleFieldDrop,
+  handleDropZone,
+} = sectionSlice.actions;
 export default sectionSlice.reducer;

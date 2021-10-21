@@ -14,7 +14,6 @@ interface DropZoneProps {
   id: string;
   sectionId: number;
   columnId: number;
-  handleDropZone: HandleDropZoneType;
   dropZone: {
     id: string;
     fieldType?: FieldType;
@@ -24,7 +23,6 @@ interface DropZoneProps {
 
 export default function DropZone({
   id,
-  handleDropZone,
   sectionId,
   columnId,
   dropZone,
