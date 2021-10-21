@@ -1,5 +1,5 @@
 import { Container, Grid, Flex, Box, Button, Icon } from '@chakra-ui/react';
-import { PageAside, DropZone, ColumnLayout } from '../components';
+import { PageAside, Section } from '../components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useState } from 'react';
@@ -17,7 +17,10 @@ import { useDisclosure } from '@chakra-ui/hooks';
 
 interface Section {
   id: number;
-  columns: DraggableItem[][];
+  rows: {
+    id: number;
+    columns: DraggableItem[][];
+  }[];
 }
 
 interface DraggableItem {
@@ -26,20 +29,28 @@ interface DraggableItem {
   data?: any;
 }
 
-const initialRowState: DraggableItem = {
+const initialDraggableState: DraggableItem = {
   id: nanoid(),
   fieldType: undefined,
   data: null,
 };
 
+const initialSectionState: Section = {
+  id: 0,
+  rows: [
+    {
+      id: 0,
+      columns: [[{ id: initialDraggableState.id }]],
+    },
+  ],
+};
+
 export default function Page() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [sections, setSections] = useState<Section[]>([
-    { id: 0, columns: [[{ id: initialRowState.id }]] },
-  ]);
+  const [sections, setSections] = useState<Section[]>([initialSectionState]);
 
   const [dropZones, setDropZones] = useState<DraggableItem[]>([
-    { ...initialRowState, data: null },
+    { ...initialDraggableState, data: null },
   ]);
 
   const handleFieldDrop = (type: FieldType, dropZoneId: string): void => {
@@ -69,7 +80,12 @@ export default function Page() {
         produce(draft => {
           draft.splice(position, 0, {
             id: sections.length,
-            columns: [[{ id: newDropZoneId }]],
+            rows: [
+              {
+                id: 0,
+                columns: [[{ id: newDropZoneId }]],
+              },
+            ],
           });
         }),
       );
@@ -77,7 +93,7 @@ export default function Page() {
       setDropZones(
         produce(draft => {
           draft?.push({
-            ...initialRowState,
+            ...initialDraggableState,
             id: newDropZoneId,
           });
         }),
@@ -93,51 +109,87 @@ export default function Page() {
     }
   };
 
-  const handleColumn = (
+  const handleRow = (
     type: ActionType,
     sectionId: number,
-    columnId: number,
-    columnCount: number,
+    rowId: number,
   ): void => {
     const sectionIndex = sections.findIndex(
       section => section.id === sectionId,
     );
 
-    const columnIndex =
-      sections[sectionIndex].columns.findIndex(
-        (_, index) => index === columnId,
-      ) || 0;
-
-    if (type === ActionType.Modify) {
+    if (type === ActionType.Add) {
       const newDropZoneId = nanoid();
-      const newColumns: DraggableItem[][] = [];
-      const totalColumn = columnCount - sections[sectionIndex].columns.length;
-
-      for (let i = 0; i < totalColumn; i++) {
-        newColumns.push([
-          {
-            id: newDropZoneId,
-          },
-        ]);
-      }
+      const position = rowId + 1;
 
       setSections(
         produce(draft => {
-          draft[sectionIndex].columns.splice(columnIndex + 1, 0, ...newColumns);
+          draft[sectionIndex].rows.splice(position, 0, {
+            id: draft[sectionIndex].rows.length,
+            columns: [[{ id: newDropZoneId }]],
+          });
         }),
       );
 
       setDropZones(
         produce(draft => {
           draft?.push({
-            ...initialRowState,
+            ...initialDraggableState,
             id: newDropZoneId,
           });
         }),
       );
     }
 
-    onClose();
+    if (type === ActionType.Delete) {
+      const rows = sections[sectionIndex].rows.filter(row => row.id !== rowId);
+      setSections(
+        produce(draft => {
+          draft[sectionIndex].rows = rows;
+        }),
+      );
+    }
+  };
+
+  const handleColumn = (
+    type: ActionType,
+    sectionId: number,
+    columnId: number,
+    columnCount: number,
+  ): void => {
+    // const sectionIndex = sections.findIndex(
+    //   section => section.id === sectionId,
+    // );
+    // const columnIndex =
+    //   sections[sectionIndex].columns.findIndex(
+    //     (_, index) => index === columnId,
+    //   ) || 0;
+    // if (type === ActionType.Modify) {
+    //   const newDropZoneId = nanoid();
+    //   const newColumns: DraggableItem[][] = [];
+    //   const totalColumn = columnCount - sections[sectionIndex].columns.length;
+    //   for (let i = 0; i < totalColumn; i++) {
+    //     newColumns.push([
+    //       {
+    //         id: newDropZoneId,
+    //       },
+    //     ]);
+    //   }
+    //   setSections(
+    //     produce(draft => {
+    //       draft[sectionIndex].columns.splice(columnIndex + 1, 0, ...newColumns);
+    //     }),
+    //   );
+    //   setDropZones(
+    //     produce(draft => {
+    //       draft?.push({
+    //         ...initialDraggableState,
+    //         id: newDropZoneId,
+    //       });
+    //     }),
+    //   );
+    // }
+    // onClose();
   };
 
   const handleColumnLayout = (
@@ -154,51 +206,46 @@ export default function Page() {
     sectionId,
     columnId,
   ) => {
-    const newDropZoneId = nanoid();
-    const sectionIndex = sections.findIndex(
-      section => section.id === sectionId,
-    );
-
-    const columnIndex =
-      sections[sectionIndex].columns.findIndex(
-        (_, index) => index === columnId,
-      ) || 0;
-
-    const dropZoneIndex =
-      sections[sectionIndex].columns[columnIndex].findIndex(
-        dropZone => dropZone.id === dropZoneId,
-      ) || 0;
-
-    if (type === ActionType.Add) {
-      setDropZones(
-        produce(draft => {
-          draft?.push({
-            ...initialRowState,
-            id: newDropZoneId,
-          });
-        }),
-      );
-
-      setSections(
-        produce(draft => {
-          draft[sectionIndex].columns[columnIndex].splice(
-            dropZoneIndex + 1,
-            0,
-            {
-              id: newDropZoneId,
-            },
-          );
-        }),
-      );
-    }
-
-    if (type === ActionType.Delete) {
-      setSections(
-        produce(draft => {
-          draft[sectionIndex].columns[columnIndex].splice(dropZoneIndex, 1);
-        }),
-      );
-    }
+    // const newDropZoneId = nanoid();
+    // const sectionIndex = sections.findIndex(
+    //   section => section.id === sectionId,
+    // );
+    // const columnIndex =
+    //   sections[sectionIndex].columns.findIndex(
+    //     (_, index) => index === columnId,
+    //   ) || 0;
+    // const dropZoneIndex =
+    //   sections[sectionIndex].columns[columnIndex].findIndex(
+    //     dropZone => dropZone.id === dropZoneId,
+    //   ) || 0;
+    // if (type === ActionType.Add) {
+    //   setDropZones(
+    //     produce(draft => {
+    //       draft?.push({
+    //         ...initialDraggableState,
+    //         id: newDropZoneId,
+    //       });
+    //     }),
+    //   );
+    //   setSections(
+    //     produce(draft => {
+    //       draft[sectionIndex].columns[columnIndex].splice(
+    //         dropZoneIndex + 1,
+    //         0,
+    //         {
+    //           id: newDropZoneId,
+    //         },
+    //       );
+    //     }),
+    //   );
+    // }
+    // if (type === ActionType.Delete) {
+    //   setSections(
+    //     produce(draft => {
+    //       draft[sectionIndex].columns[columnIndex].splice(dropZoneIndex, 1);
+    //     }),
+    //   );
+    // }
   };
 
   return (
@@ -217,81 +264,17 @@ export default function Page() {
                 key={index}
                 mb="2"
               >
-                <Box width="100%" m="1" position="relative">
-                  <Flex alignItems="center" overflowX="scroll" gridGap="2">
-                    {section.columns.map((column, index) => (
-                      <Box width="100%" key={index}>
-                        {column.map(dropZone => (
-                          <Box
-                            border="1px"
-                            borderColor="gray.500"
-                            mb="2"
-                            position="relative"
-                            key={dropZone.id}
-                          >
-                            <DropZone
-                              id={dropZone.id}
-                              columnId={index}
-                              sectionId={section.id}
-                              handleDropZone={handleDropZone}
-                              dropZone={
-                                dropZones.find(
-                                  item => item.id === dropZone.id,
-                                ) as DraggableItem
-                              }
-                            />
-                            <Box
-                              position="absolute"
-                              left="-4"
-                              sx={{
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                              }}
-                            >
-                              <Button
-                                variant="primary"
-                                onClick={() =>
-                                  handleSection(ActionType.Drag, section.id)
-                                }
-                              >
-                                <Icon
-                                  as={AiOutlineHolder}
-                                  width="24px"
-                                  height="24px"
-                                />
-                              </Button>
-                            </Box>
-                          </Box>
-                        ))}
-                        <ColumnLayout
-                          columnId={index}
-                          sectionId={section.id}
-                          isOpen={isOpen}
-                          onClose={onClose}
-                          handleColumnLayout={handleColumnLayout}
-                        />
-                      </Box>
-                    ))}
-                  </Flex>
-                  <Box
-                    position="absolute"
-                    right="-3"
-                    sx={{
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                    }}
-                  >
-                    <Flex flexDirection="column">
-                      <Button variant="link" onClick={onOpen}>
-                        <Icon
-                          as={AiOutlineInsertRowRight}
-                          width="24px"
-                          height="24px"
-                        />
-                      </Button>
-                    </Flex>
-                  </Box>
-                </Box>
+                <Section
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  onOpen={onOpen}
+                  handleColumnLayout={handleColumnLayout}
+                  handleDropZone={handleDropZone}
+                  handleRow={handleRow}
+                  section={section}
+                  key={index}
+                  dropZones={dropZones}
+                />
 
                 {/* Section Action start */}
                 <Flex justifyContent="center">

@@ -5,17 +5,10 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Button,
-  Icon,
   Flex,
 } from '@chakra-ui/react';
 import { FieldType } from '../types/FieldType';
-import { ActionType } from '../types/ActionType';
 import { HandleDropZoneType } from '../types/HandleDropZoneType';
-import {
-  MdOutlinePlaylistAdd,
-  MdOutlineRemoveCircleOutline,
-} from 'react-icons/md';
 
 interface DropZoneProps {
   id: string;
@@ -75,24 +68,6 @@ export default function DropZone({
             <Textarea />
           </FormControl>
         )}
-      </Flex>
-      <Flex justifyContent="center">
-        <Button
-          variant="primary"
-          onClick={() =>
-            handleDropZone(ActionType.Add, id, sectionId, columnId)
-          }
-        >
-          <Icon as={MdOutlinePlaylistAdd} width="24px" height="24px" />
-        </Button>
-        <Button
-          variant="primary"
-          onClick={() =>
-            handleDropZone(ActionType.Delete, id, sectionId, columnId)
-          }
-        >
-          <Icon as={MdOutlineRemoveCircleOutline} width="24px" height="24px" />
-        </Button>
       </Flex>
     </>
   );
