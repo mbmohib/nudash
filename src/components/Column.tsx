@@ -2,8 +2,6 @@ import { Box, Button, Icon, Flex } from '@chakra-ui/react';
 import { FieldType } from '../types/FieldType';
 import { DropZone } from './';
 import { AiOutlineHolder } from 'react-icons/ai';
-import { handleDropZone } from '../store/sectionSlice';
-import { useSelector } from '../hooks/useRedux';
 import {
   MdOutlinePlaylistAdd,
   MdOutlineRemoveCircleOutline,
@@ -23,8 +21,6 @@ interface ColumnProps {
 }
 
 export default function Column({ column, id, rowId, sectionId }: ColumnProps) {
-  const { dropZones } = useSelector(state => state.section);
-
   return (
     <Box width="100%" row="column">
       {column.map(dropZone => (
@@ -35,14 +31,7 @@ export default function Column({ column, id, rowId, sectionId }: ColumnProps) {
           position="relative"
           key={dropZone.id}
         >
-          <DropZone
-            id={dropZone.id}
-            columnId={id}
-            sectionId={sectionId}
-            dropZone={
-              dropZones.find(item => item.id === dropZone.id) as DraggableItem
-            }
-          />
+          <DropZone id={dropZone.id} />
           <Flex justifyContent="center">
             <Button
               variant="primary"

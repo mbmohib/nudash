@@ -8,25 +8,21 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { FieldType } from '../types/FieldType';
-import { HandleDropZoneType } from '../types/HandleDropZoneType';
-
+import { useSelector } from '../hooks/useRedux';
 interface DropZoneProps {
   id: string;
-  sectionId: number;
-  columnId: number;
-  dropZone: {
-    id: string;
-    fieldType?: FieldType;
-    data?: any;
-  };
 }
 
-export default function DropZone({
-  id,
-  sectionId,
-  columnId,
-  dropZone,
-}: DropZoneProps) {
+interface DraggableItem {
+  id: string;
+  fieldType?: FieldType;
+  data?: any;
+}
+
+export default function DropZone({ id }: DropZoneProps) {
+  const { dropZones } = useSelector(state => state.section);
+  const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
+
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.Field,
     drop: () => ({ id }),
