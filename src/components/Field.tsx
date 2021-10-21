@@ -2,24 +2,17 @@ import { Text, Box, Icon, Grid } from '@chakra-ui/react';
 import { FiType } from 'react-icons/fi';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../types/ItemTypes';
-import { FieldType } from '../types/FieldType';
 import { DraggableField } from '../types/DraggableField';
-
-interface FieldProps extends DraggableField {
-  handleFieldDrop: (type: FieldType, dropZoneId: string) => void;
-  isRerender: number;
-}
+import { useDispatch, useSelector } from '../hooks/useRedux';
+import { handleFieldDrop } from '../store/sectionSlice';
 
 interface DropResult {
   id: string;
 }
 
-export default function Field({
-  type,
-  info,
-  handleFieldDrop,
-  isRerender,
-}: FieldProps) {
+export default function Field({ type, info }: DraggableField) {
+  const dispatch = useDispatch();
+  const { dropZones } = useSelector(state => state.section);
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.Field,
@@ -27,7 +20,12 @@ export default function Field({
       end: (item, monitor) => {
         const dropResult = monitor.getDropResult<DropResult>();
         if (item && dropResult) {
-          handleFieldDrop(item.type, dropResult.id);
+          dispatch(
+            handleFieldDrop({
+              fieldType: item.type,
+              dropZoneId: dropResult.id,
+            }),
+          );
         }
       },
       collect: monitor => ({
@@ -35,7 +33,7 @@ export default function Field({
         handlerId: monitor.getHandlerId(),
       }),
     }),
-    [type, isRerender],
+    [type, dropZones.length],
   );
 
   return (

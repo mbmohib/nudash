@@ -3,6 +3,7 @@ import { FieldType } from '../types/FieldType';
 import { DropZone } from './';
 import { HandleDropZoneType } from '../types/HandleDropZoneType';
 import { AiOutlineHolder } from 'react-icons/ai';
+import { useSelector } from '../hooks/useRedux';
 
 interface DraggableItem {
   id: string;
@@ -16,7 +17,6 @@ interface ColumnProps {
   rowId: number;
   sectionId: number;
   handleDropZone: HandleDropZoneType;
-  dropZones: DraggableItem[];
 }
 
 export default function Column({
@@ -25,10 +25,11 @@ export default function Column({
   rowId,
   sectionId,
   handleDropZone,
-  dropZones,
 }: ColumnProps) {
+  const { dropZones } = useSelector(state => state.section);
+
   return (
-    <Box>
+    <Box width="100%">
       {column.map(dropZone => (
         <Box
           border="1px"
