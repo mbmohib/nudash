@@ -61,15 +61,17 @@ export default function Column({
             </Button>
             <Button
               variant="primary"
-              // onClick={() =>
-              //   dispatch(
-              //     handleRow({
-              //       actionType: ActionType.Delete,
-              //       sectionId: section.id,
-              //       rowId: row.id,
-              //     }),
-              //   )
-              // }
+              onClick={() =>
+                dispatch(
+                  handleDropZone({
+                    actionType: ActionType.Delete,
+                    sectionId: sectionId,
+                    rowId: rowId,
+                    columnId: columnId,
+                    dropZoneId: dropZone.id,
+                  }),
+                )
+              }
             >
               <Icon
                 as={MdOutlineRemoveCircleOutline}

@@ -209,14 +209,13 @@ const sectionSlice = createSlice({
         columnIndex
       ].findIndex(dropZone => dropZone.id === dropZoneId);
 
+      const currentColumn =
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex];
+
       if (actionType === ActionType.Add) {
-        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].splice(
-          dropZoneIndex + 1,
-          0,
-          {
-            id: newDropZoneId,
-          },
-        );
+        currentColumn.splice(dropZoneIndex + 1, 0, {
+          id: newDropZoneId,
+        });
 
         state.dropZones.push({
           ...initialDraggableState,
@@ -225,10 +224,7 @@ const sectionSlice = createSlice({
       }
 
       if (actionType === ActionType.Delete) {
-        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].splice(
-          dropZoneIndex,
-          1,
-        );
+        currentColumn.splice(dropZoneIndex, 1);
       }
     },
   },

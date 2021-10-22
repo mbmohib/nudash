@@ -4,7 +4,6 @@ import { ActionType } from '../types/ActionType';
 import { Column, PredefinedColumns } from './';
 import { useDispatch } from '../hooks/useRedux';
 import { handleRow, handleColumn } from '../store/sectionSlice';
-import { HandleDropZoneType } from '../types/HandleDropZoneType';
 import {
   MdOutlinePlaylistAdd,
   MdOutlineRemoveCircleOutline,
