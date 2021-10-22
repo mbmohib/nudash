@@ -1,8 +1,8 @@
 import { Text, Box, Icon, Grid } from '@chakra-ui/react';
 import { FiType } from 'react-icons/fi';
 import { useDrag } from 'react-dnd';
-import { ItemTypes } from '../types/ItemTypes';
-import { DraggableField } from '../types/DraggableField';
+import { ItemTypes } from '../config';
+import { DraggableField } from '../types';
 import { useDispatch, useSelector } from '../hooks/useRedux';
 import { handleFieldDrop } from '../store/sectionSlice';
 

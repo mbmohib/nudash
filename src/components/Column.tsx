@@ -1,6 +1,5 @@
 import { Box, Button, Icon, Flex } from '@chakra-ui/react';
-import { FieldType } from '../types/FieldType';
-import { ActionType } from '../types/ActionType';
+import { ActionType, FieldType } from '../config';
 import { DropZone } from './';
 import { AiOutlineHolder } from 'react-icons/ai';
 import {

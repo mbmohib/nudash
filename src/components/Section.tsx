@@ -1,6 +1,5 @@
 import { Box, Flex, Button, Icon } from '@chakra-ui/react';
-import { FieldType } from '../types/FieldType';
-import { ActionType } from '../types/ActionType';
+import { ActionType, FieldType } from '../config';
 import { Column, PredefinedColumns } from './';
 import { useDispatch } from '../hooks/useRedux';
 import { handleRow, handleColumn } from '../store/sectionSlice';

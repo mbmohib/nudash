@@ -1,6 +1,6 @@
-import { FieldType } from './FieldType';
+import { FieldType } from '../config';
 
-export interface DraggableField {
+export default interface DraggableField {
   type: FieldType;
   info: {
     title: string;

@@ -2,7 +2,7 @@ import { Container, Grid, Flex, Box, Button, Icon } from '@chakra-ui/react';
 import { PageAside, Section } from '../components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { ActionType } from '../types/ActionType';
+import { ActionType } from '../config';
 import {
   MdOutlinePlaylistAdd,
   MdOutlineRemoveCircleOutline,

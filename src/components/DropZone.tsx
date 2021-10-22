@@ -1,5 +1,5 @@
 import { useDrop } from 'react-dnd';
-import { ItemTypes } from '../types/ItemTypes';
+import { ItemTypes, FieldType } from '../config';
 import {
   Textarea,
   FormControl,
@@ -7,7 +7,6 @@ import {
   Input,
   Flex,
 } from '@chakra-ui/react';
-import { FieldType } from '../types/FieldType';
 import { useSelector } from '../hooks/useRedux';
 interface DropZoneProps {
   id: string;

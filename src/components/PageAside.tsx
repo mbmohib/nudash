@@ -1,7 +1,7 @@
 import { Box, Heading } from '@chakra-ui/react';
 import { Field } from './';
-import { DraggableField } from '../types/DraggableField';
-import { FieldType } from '../types/FieldType';
+import { DraggableField } from '../types';
+import { FieldType } from '../config';
 
 const fields: DraggableField[] = [
   {

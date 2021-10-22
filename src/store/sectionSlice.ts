@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FieldType } from '../types/FieldType';
-import { ActionType } from '../types/ActionType';
+import { ActionType, FieldType } from '../config';
 import { nanoid } from 'nanoid';
 
 const initialDropZoneId = nanoid();
