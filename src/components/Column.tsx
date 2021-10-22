@@ -1,11 +1,14 @@
 import { Box, Button, Icon, Flex } from '@chakra-ui/react';
 import { FieldType } from '../types/FieldType';
+import { ActionType } from '../types/ActionType';
 import { DropZone } from './';
 import { AiOutlineHolder } from 'react-icons/ai';
 import {
   MdOutlinePlaylistAdd,
   MdOutlineRemoveCircleOutline,
 } from 'react-icons/md';
+import { handleDropZone } from '../store/sectionSlice';
+import { useDispatch } from '../hooks/useRedux';
 
 interface DraggableItem {
   id: string;
@@ -15,12 +18,19 @@ interface DraggableItem {
 
 interface ColumnProps {
   column: DraggableItem[];
-  id: number;
+  columnId: number;
   rowId: number;
   sectionId: number;
 }
 
-export default function Column({ column, id, rowId, sectionId }: ColumnProps) {
+export default function Column({
+  column,
+  columnId,
+  rowId,
+  sectionId,
+}: ColumnProps) {
+  const dispatch = useDispatch();
+
   return (
     <Box width="100%" row="column">
       {column.map(dropZone => (
@@ -35,15 +45,17 @@ export default function Column({ column, id, rowId, sectionId }: ColumnProps) {
           <Flex justifyContent="center">
             <Button
               variant="primary"
-              // onClick={() =>
-              //   dispatch(
-              //     handleRow({
-              //       actionType: ActionType.Add,
-              //       sectionId: section.id,
-              //       rowId: row.id,
-              //     }),
-              //   )
-              // }
+              onClick={() =>
+                dispatch(
+                  handleDropZone({
+                    actionType: ActionType.Add,
+                    sectionId: sectionId,
+                    rowId: rowId,
+                    columnId: columnId,
+                    dropZoneId: dropZone.id,
+                  }),
+                )
+              }
             >
               <Icon as={MdOutlinePlaylistAdd} width="24px" height="24px" />
             </Button>

@@ -186,49 +186,50 @@ const sectionSlice = createSlice({
         actionType: ActionType;
         dropZoneId: string;
         sectionId: number;
+        rowId: number;
         columnId: number;
       }>,
     ) {
-      // const newDropZoneId = nanoid();
-      // const sectionIndex = sections.findIndex(
-      //   section => section.id === sectionId,
-      // );
-      // const columnIndex =
-      //   sections[sectionIndex].columns.findIndex(
-      //     (_, index) => index === columnId,
-      //   ) || 0;
-      // const dropZoneIndex =
-      //   sections[sectionIndex].columns[columnIndex].findIndex(
-      //     dropZone => dropZone.id === dropZoneId,
-      //   ) || 0;
-      // if (type === ActionType.Add) {
-      //   setDropZones(
-      //     produce(draft => {
-      //       draft?.push({
-      //         ...initialDraggableState,
-      //         id: newDropZoneId,
-      //       });
-      //     }),
-      //   );
-      //   setSections(
-      //     produce(draft => {
-      //       draft[sectionIndex].columns[columnIndex].splice(
-      //         dropZoneIndex + 1,
-      //         0,
-      //         {
-      //           id: newDropZoneId,
-      //         },
-      //       );
-      //     }),
-      //   );
-      // }
-      // if (type === ActionType.Delete) {
-      //   setSections(
-      //     produce(draft => {
-      //       draft[sectionIndex].columns[columnIndex].splice(dropZoneIndex, 1);
-      //     }),
-      //   );
-      // }
+      const { actionType, dropZoneId, rowId, sectionId, columnId } =
+        action.payload;
+      const newDropZoneId = nanoid();
+
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+      const rowIndex = state.sections[sectionIndex].rows.findIndex(
+        row => row.id === rowId,
+      );
+
+      const columnIndex = state.sections[sectionIndex].rows[
+        rowIndex
+      ].columns.findIndex((_, index) => index === columnId);
+
+      const dropZoneIndex = state.sections[sectionIndex].rows[rowIndex].columns[
+        columnIndex
+      ].findIndex(dropZone => dropZone.id === dropZoneId);
+
+      if (actionType === ActionType.Add) {
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].splice(
+          dropZoneIndex + 1,
+          0,
+          {
+            id: newDropZoneId,
+          },
+        );
+
+        state.dropZones.push({
+          ...initialDraggableState,
+          id: newDropZoneId,
+        });
+      }
+
+      if (actionType === ActionType.Delete) {
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].splice(
+          dropZoneIndex,
+          1,
+        );
+      }
     },
   },
 });

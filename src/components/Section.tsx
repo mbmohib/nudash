@@ -65,7 +65,7 @@ export default function Section({ section }: SectionProps) {
                 rowId={row.id}
                 sectionId={section.id}
                 column={column}
-                id={columnIndex}
+                columnId={columnIndex}
               />
             ))}
           </Flex>
