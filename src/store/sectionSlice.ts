@@ -1,14 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActionType, FieldType } from '../config';
 import { nanoid } from 'nanoid';
+import { DraggableItem } from '../types';
 
 const initialDropZoneId = nanoid();
-
-interface DraggableItem {
-  id: string;
-  fieldType?: FieldType;
-  data?: any;
-}
 
 interface SectionState {
   sections: {

@@ -8,14 +8,10 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { useSelector } from '../hooks/useRedux';
+import { DraggableItem } from '../types';
+
 interface DropZoneProps {
   id: string;
-}
-
-interface DraggableItem {
-  id: string;
-  fieldType?: FieldType;
-  data?: any;
 }
 
 export default function DropZone({ id }: DropZoneProps) {

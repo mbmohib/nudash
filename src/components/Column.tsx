@@ -1,5 +1,5 @@
 import { Box, Button, Icon, Flex } from '@chakra-ui/react';
-import { ActionType, FieldType } from '../config';
+import { ActionType } from '../config';
 import { DropZone } from './';
 import { AiOutlineHolder } from 'react-icons/ai';
 import {
@@ -8,12 +8,7 @@ import {
 } from 'react-icons/md';
 import { handleDropZone } from '../store/sectionSlice';
 import { useDispatch } from '../hooks/useRedux';
-
-interface DraggableItem {
-  id: string;
-  fieldType?: FieldType;
-  data?: any;
-}
+import { DraggableItem } from '../types';
 
 interface ColumnProps {
   column: DraggableItem[];

@@ -1,5 +1,5 @@
 import { Box, Flex, Button, Icon } from '@chakra-ui/react';
-import { ActionType, FieldType } from '../config';
+import { ActionType } from '../config';
 import { Column, PredefinedColumns } from './';
 import { useDispatch } from '../hooks/useRedux';
 import { handleRow, handleColumn } from '../store/sectionSlice';
@@ -10,6 +10,7 @@ import {
 import { useDisclosure } from '@chakra-ui/hooks';
 import { AiOutlineInsertRowRight } from 'react-icons/ai';
 import { useState } from 'react';
+import { DraggableItem } from '../types';
 
 interface SectionTypes {
   id: number;
@@ -17,12 +18,6 @@ interface SectionTypes {
     id: number;
     columns: DraggableItem[][];
   }[];
-}
-
-interface DraggableItem {
-  id: string;
-  fieldType?: FieldType;
-  data?: any;
 }
 
 interface SectionProps {
