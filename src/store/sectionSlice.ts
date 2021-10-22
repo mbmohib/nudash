@@ -5,6 +5,8 @@ import { DraggableItem } from '../types';
 
 const initialDropZoneId = nanoid();
 
+// TODO: remove dropzone from dropzones state
+
 interface SectionState {
   sections: {
     id: number;
@@ -130,10 +132,10 @@ const sectionSlice = createSlice({
       if (actionType === ActionType.Modify) {
         const newColumns: DraggableItem[][] = [];
         const totalColumn =
-          columnCount -
           state.sections[sectionIndex].rows[rowIndex].columns.length;
+        const columnsToAdd = columnCount - totalColumn;
 
-        for (let i = 0; i < totalColumn; i++) {
+        for (let i = 0; i < columnsToAdd; i++) {
           const newDropZoneId = nanoid();
 
           newColumns.push([

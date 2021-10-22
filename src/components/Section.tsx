@@ -51,7 +51,7 @@ export default function Section({ section }: SectionProps) {
     <Box width="100%" m="1" position="relative">
       {section.rows.map((row, index) => (
         <Box width="100%" key={index} role="row" position="relative">
-          <Flex width="100%" gridGap="2">
+          <Flex width="100%" gridGap="2" overflowX="scroll">
             {row.columns.map((column, columnIndex) => (
               <Column
                 key={columnIndex}

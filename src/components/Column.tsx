@@ -36,6 +36,7 @@ export default function Column({
           key={dropZone.id}
         >
           <DropZone id={dropZone.id} />
+
           <Flex justifyContent="center">
             <Button
               variant="primary"
