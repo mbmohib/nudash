@@ -37,7 +37,7 @@ export default function Column({
         >
           <DropZone id={dropZone.id} />
 
-          <Flex justifyContent="center">
+          {/* <Flex justifyContent="center">
             <Button
               variant="primary"
               onClick={() =>
@@ -74,7 +74,7 @@ export default function Column({
                 height="24px"
               />
             </Button>
-          </Flex>
+          </Flex> */}
           <Box
             position="absolute"
             left="-4"

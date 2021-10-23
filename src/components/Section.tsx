@@ -62,7 +62,7 @@ export default function Section({ section }: SectionProps) {
               />
             ))}
           </Flex>
-          <Flex justifyContent="center">
+          {/* <Flex justifyContent="center">
             <Button
               variant="primary"
               onClick={() =>
@@ -95,7 +95,7 @@ export default function Section({ section }: SectionProps) {
                 height="24px"
               />
             </Button>
-          </Flex>
+          </Flex> */}
           <Box
             position="absolute"
             right="-3"
