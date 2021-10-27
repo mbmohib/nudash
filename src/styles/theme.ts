@@ -32,8 +32,6 @@ const colors = {
   secondary400: '#191934',
   secondary500: '#141430',
   secondary600: '#101026',
-  secondary1000:
-    'linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), #141430',
   tertiary: '#2e3039',
 };
 
