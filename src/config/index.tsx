@@ -7,11 +7,15 @@ export enum ActionType {
 }
 
 export enum FieldType {
+  Column = 'column',
   Text = 'text',
   MultilineText = 'multilineText',
   RichText = 'richText',
   Image = 'image',
   Number = 'number',
+  Date = 'date',
+  Switch = 'switch',
+  Button = 'button',
 }
 
 export const ItemTypes = {

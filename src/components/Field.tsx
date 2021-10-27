@@ -1,4 +1,4 @@
-import { Text, Box, Icon, Grid } from '@chakra-ui/react';
+import { Text, Box, Flex } from '@chakra-ui/react';
 import { FiType } from 'react-icons/fi';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../config';
@@ -37,34 +37,30 @@ export default function Field({ type, info }: DraggableField) {
   );
 
   return (
-    <div ref={drag} data-testid={`box-${type}`}>
-      <Grid
-        gridTemplateColumns="1fr 3fr"
-        gap="2"
+    <Flex
+      alignItems="center"
+      flexDirection="column"
+      px="1"
+      py="2"
+      cursor="pointer"
+      borderRadius="4"
+      bg="secondary500"
+      boxShadow="sm"
+      ref={drag}
+      data-testid={`box-${type}`}
+    >
+      <Box
+        bgGradient="linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), #141430"
+        display="flex"
         alignItems="center"
-        border="1px"
-        borderColor={isDragging ? 'gray.100' : 'gray.500'}
-        p="1"
-        cursor="pointer"
-        borderRadius="4"
-        my="2"
+        justifyContent="center"
+        height="80px"
+        width="80%"
+        mb="1"
       >
-        <Box
-          bgColor="white"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          height="40px"
-        >
-          <Icon as={FiType} color="primary" width="24px" height="24px" />
-        </Box>
-        <Box>
-          <Text>{info.title}</Text>
-          <Text fontSize="xs" color="gray.400">
-            {info.subtitle}
-          </Text>
-        </Box>
-      </Grid>
-    </div>
+        {info.icon}
+      </Box>
+      <Text>{info.title}</Text>
+    </Flex>
   );
 }

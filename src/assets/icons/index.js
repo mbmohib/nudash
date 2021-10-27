@@ -1,2 +1,15 @@
 export { default as PageIcon } from './PageIcon';
 export { default as LightIcon } from './LightIcon';
+export { default as DeleteIcon } from './DeleteIcon';
+export { default as FilePlusIcons } from './FilePlusIcons';
+export { default as FileMinusIcons } from './FileMinusIcons';
+export { default as NotificationIcon } from './NotificationIcon';
+export { default as PlusIcon } from './PlusIcon';
+export { default as SchemaIcon } from './SchemaIcon';
+export { default as SingleLineTextIcon } from './SingleLineTextIcon';
+export { default as ButtonIcon } from './ButtonIcon';
+export { default as MultilineIcon } from './MultilineIcon';
+export { default as TextIcon } from './TextIcon';
+export { default as SwitchIcon } from './SwitchIcon';
+export { default as CalenderIcon } from './CalenderIcon';
+export { default as NumberIcon } from './NumberIcon';

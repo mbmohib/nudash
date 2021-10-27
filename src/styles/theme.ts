@@ -4,12 +4,12 @@ const styles = {
   global: {
     // styles for the `body`
     body: {
-      bg: '#1b1c30',
+      bg: 'linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #141430;',
       color: 'white',
     },
     // styles for the `a`
     a: {
-      color: 'teal.500',
+      color: 'white',
       _hover: {
         textDecoration: 'none',
         color: 'teal.700',
@@ -18,12 +18,22 @@ const styles = {
   },
 };
 
+const fonts = {
+  heading: 'Zen Kaku Gothic Antique',
+  body: 'Zen Kaku Gothic Antique',
+};
+
 const colors = {
   transparent: 'transparent',
   black: '#000',
   white: '#fff',
   primary: '#51459f',
-  secondary: '#23243d',
+  secondary100: '#2D2D6A',
+  secondary400: '#191934',
+  secondary500: '#141430',
+  secondary600: '#101026',
+  secondary1000:
+    'linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), #141430',
   tertiary: '#2e3039',
 };
 
@@ -54,9 +64,15 @@ const radii = {
   full: '9999px',
 };
 
+const shadows = {
+  md: '0px 1px 8px rgba(0, 0, 0, 0.16)',
+};
+
 export const theme = extendTheme({
   styles,
+  fonts,
   colors,
   space,
   radii,
+  shadows,
 });

@@ -29,35 +29,35 @@ export default function DropZone({ id }: DropZoneProps) {
   const { fieldType, data } = dropZone || {};
 
   const isActive = canDrop && isOver;
-  const placeholder = isActive ? `Release to drop` : `Drag a box here`;
+  const placeholder = isActive ? `Release to drop` : `Drop a column block here`;
 
   return (
-    <>
-      <Flex
-        ref={drop}
-        role={'DropZone'}
-        width="100%"
-        minHeight="100px"
-        bgColor={isActive ? 'gray.400' : 'gray.600'}
-        justifyContent="center"
-        alignItems="center"
-        rounded="base"
-        p="2"
-      >
-        {!fieldType && placeholder}
-        {fieldType === FieldType.Text && (
-          <FormControl id="text">
-            <FormLabel>Single line Text</FormLabel>
-            <Input type="text" />
-          </FormControl>
-        )}
-        {fieldType === FieldType.MultilineText && (
-          <FormControl id="text">
-            <FormLabel>Multi line Text</FormLabel>
-            <Textarea />
-          </FormControl>
-        )}
-      </Flex>
-    </>
+    <Flex
+      ref={drop}
+      role={'DropZone'}
+      width="80%"
+      mx="auto"
+      minHeight="100px"
+      bgColor={isActive ? 'gray.400' : 'transparent'}
+      justifyContent="center"
+      alignItems="center"
+      rounded="base"
+      border="1px dashed #2D2D6A"
+      p="2"
+    >
+      {!fieldType && placeholder}
+      {fieldType === FieldType.Text && (
+        <FormControl id="text">
+          <FormLabel>Single line Text</FormLabel>
+          <Input type="text" />
+        </FormControl>
+      )}
+      {fieldType === FieldType.MultilineText && (
+        <FormControl id="text">
+          <FormLabel>Multi line Text</FormLabel>
+          <Textarea />
+        </FormControl>
+      )}
+    </Flex>
   );
 }

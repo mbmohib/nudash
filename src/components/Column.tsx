@@ -28,13 +28,7 @@ export default function Column({
   return (
     <Box width="100%" row="column">
       {column.map(dropZone => (
-        <Box
-          border="1px"
-          borderColor="gray.500"
-          mb="2"
-          position="relative"
-          key={dropZone.id}
-        >
+        <Box position="relative" key={dropZone.id}>
           <DropZone id={dropZone.id} />
 
           {/* <Flex justifyContent="center">
@@ -75,7 +69,7 @@ export default function Column({
               />
             </Button>
           </Flex> */}
-          <Box
+          {/* <Box
             position="absolute"
             left="-4"
             sx={{
@@ -86,7 +80,7 @@ export default function Column({
             <Button variant="primary" role="drag-row">
               <Icon as={AiOutlineHolder} width="24px" height="24px" />
             </Button>
-          </Box>
+          </Box> */}
         </Box>
       ))}
     </Box>

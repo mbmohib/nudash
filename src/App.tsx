@@ -4,6 +4,7 @@ import { theme } from './styles/theme';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import Routes from './routes';
+import '@fontsource/zen-kaku-gothic-antique';
 
 export default function App() {
   return (

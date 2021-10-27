@@ -1,27 +1,27 @@
 import { Grid, Box, Text, Flex, Heading } from '@chakra-ui/layout';
-import { Icon } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/button';
-import { PageIcon, LightIcon } from '../assets/icons';
+import {
+  PageIcon,
+  LightIcon,
+  NotificationIcon,
+  SchemaIcon,
+  PlusIcon,
+} from '../assets/icons';
 import { Link } from 'react-router-dom';
-import { FiUser } from 'react-icons/fi';
-import { MdNotificationsNone, MdSchema } from 'react-icons/md';
 
 export default function Sidebar() {
   return (
     <Grid gridTemplateColumns="60px 1fr" height="100vh">
-      <Flex flexDirection="column" minHeight="100vh" bgColor="tertiary">
-        <Box py="2">
-          <Text fontSize="lg" align="center">
-            ND
-          </Text>
-        </Box>
-        <Box
-          display="flex"
+      <Flex flexDirection="column" minHeight="100vh" bgColor="secondary500">
+        <Flex height="80px" alignItems="center" justifyContent="center">
+          <Text fontSize="lg">ND</Text>
+        </Flex>
+        <Flex
           borderTop="1px"
           borderColor="gray.500"
           flexDirection="column"
           alignItems="center"
-          pt="2"
+          pt="4"
           sx={{ flexGrow: 1 }}
         >
           <Button
@@ -30,9 +30,9 @@ export default function Sidebar() {
             variant="link"
             bg="primary.light"
             color="white"
-            mb="2"
+            mb="3"
           >
-            <Icon as={PageIcon} width="24px" height="24px" />
+            <PageIcon />
           </Button>
           <Button
             as={Link}
@@ -40,24 +40,44 @@ export default function Sidebar() {
             variant="link"
             bg="primary.light"
             color="white"
+            mb="3"
           >
-            <Icon as={MdSchema} width="24px" height="24px" />
+            <SchemaIcon />
           </Button>
-        </Box>
+        </Flex>
         <Flex flexDirection="column" alignItems="center" pb={2}>
-          <Icon as={MdNotificationsNone} width="24px" height="24px" />
-          <Icon as={LightIcon} width="24px" height="24px" mt="2" />
-          <Icon as={FiUser} width="24px" height="24px" mt="2" />
+          <Button
+            as={Link}
+            to="/pages"
+            variant="link"
+            bg="primary.light"
+            color="white"
+            mb="3"
+          >
+            <NotificationIcon />
+          </Button>
+          <Button
+            as={Link}
+            to="/pages"
+            variant="link"
+            bg="primary.light"
+            color="white"
+            mb="3"
+          >
+            <LightIcon />
+          </Button>
         </Flex>
       </Flex>
-      <Box bgColor="secondary" p={2}>
-        <Flex justifyContent="space-between">
+      <Box bgColor="secondary400" px={2}>
+        <Flex justifyContent="space-between" alignItems="center" height="80px">
           <Heading as="h2" size="md">
             Pages
           </Heading>
-          <Button variant="link">Add</Button>
+          <Button variant="link">
+            <PlusIcon />
+          </Button>
         </Flex>
-        <Box as="ul" mt="4" sx={{ listStyle: 'none' }}>
+        <Box as="ul" mt="28px" sx={{ listStyle: 'none' }}>
           <Box as="li" py="0.5">
             <Link to="/">Home Page</Link>
           </Box>

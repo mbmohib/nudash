@@ -4,6 +4,6 @@ export default interface DraggableField {
   type: FieldType;
   info: {
     title: string;
-    subtitle: string;
+    icon: React.ReactNode;
   };
 }

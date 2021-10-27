@@ -1,5 +1,5 @@
 import { Box, Heading, Icon, Flex } from '@chakra-ui/react';
-import { FiTrash } from 'react-icons/fi';
+import { DeleteIcon } from '../assets/icons';
 
 export default function Header() {
   return (
@@ -14,7 +14,7 @@ export default function Header() {
         <Heading size="lg">Home</Heading>
       </Box>
       <Box>
-        <Icon as={FiTrash} width="24px" height="24px" mt="2" />
+        <DeleteIcon />
       </Box>
     </Flex>
   );

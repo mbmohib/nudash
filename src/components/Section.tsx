@@ -2,7 +2,7 @@ import { Box, Flex, Button, Icon } from '@chakra-ui/react';
 import { ActionType } from '../config';
 import { Column, PredefinedColumns } from './';
 import { useDispatch } from '../hooks/useRedux';
-import { handleRow, handleColumn } from '../store/sectionSlice';
+import { handleRow, handleColumn, handleSection } from '../store/sectionSlice';
 import {
   MdOutlinePlaylistAdd,
   MdOutlineRemoveCircleOutline,
@@ -11,6 +11,8 @@ import { useDisclosure } from '@chakra-ui/hooks';
 import { AiOutlineInsertRowRight } from 'react-icons/ai';
 import { useState } from 'react';
 import { DraggableItem } from '../types';
+import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
+import { AiOutlineHolder } from 'react-icons/ai';
 
 interface SectionTypes {
   id: number;
@@ -48,10 +50,17 @@ export default function Section({ section }: SectionProps) {
   };
 
   return (
-    <Box width="100%" m="1" position="relative">
+    <Box
+      width="100%"
+      m="1"
+      position="relative"
+      bgColor="secondary500"
+      rounded="base"
+      mb="2"
+    >
       {section.rows.map((row, index) => (
         <Box width="100%" key={index} role="row" position="relative">
-          <Flex width="100%" gridGap="2" overflowX="scroll">
+          <Flex width="100%" gridGap="2" p="2">
             {row.columns.map((column, columnIndex) => (
               <Column
                 key={columnIndex}
@@ -96,7 +105,7 @@ export default function Section({ section }: SectionProps) {
               />
             </Button>
           </Flex> */}
-          <Box
+          {/* <Box
             position="absolute"
             right="-3"
             sx={{
@@ -112,7 +121,7 @@ export default function Section({ section }: SectionProps) {
                 <Icon as={AiOutlineInsertRowRight} width="24px" height="24px" />
               </Button>
             </Flex>
-          </Box>
+          </Box> */}
           <PredefinedColumns
             sectionId={section.id}
             isOpen={isOpen}
@@ -121,6 +130,64 @@ export default function Section({ section }: SectionProps) {
           />
         </Box>
       ))}
+
+      <Flex justifyContent="center" borderTop="0.5px solid #2D2D6A" py="2">
+        <Button
+          fontWeight="normal"
+          variant="link"
+          leftIcon={<FilePlusIcons />}
+          onClick={() =>
+            dispatch(
+              handleSection({
+                actionType: ActionType.Add,
+                id: section.id,
+              }),
+            )
+          }
+        >
+          Add Section
+        </Button>
+        <Button
+          fontWeight="normal"
+          leftIcon={<FileMinusIcons />}
+          variant="link"
+          ml="2"
+          onClick={() =>
+            dispatch(
+              handleSection({
+                actionType: ActionType.Delete,
+                id: section.id,
+              }),
+            )
+          }
+        >
+          Delete Section
+        </Button>
+      </Flex>
+
+      <Box
+        role="drag-row"
+        position="absolute"
+        left="-7"
+        sx={{
+          top: '50%',
+          transform: 'translateY(-50%)',
+        }}
+      >
+        <Button
+          variant="primary"
+          onClick={() =>
+            dispatch(
+              handleSection({
+                actionType: ActionType.Drag,
+                id: section.id,
+              }),
+            )
+          }
+        >
+          <Icon as={AiOutlineHolder} width="24px" height="24px" />
+        </Button>
+      </Box>
     </Box>
   );
 }
