@@ -16,7 +16,7 @@ function FilePlusIcon(props) {
         strokeLinejoin="round"
       />
       <path
-        d="M14.474 2.75v2.91a2.575 2.575 0 002.569 2.574c1.316.003 2.663.004 2.754-.002m-5.502 4.682H9.394m2.45 2.452v-4.902"
+        d="M14.474 2.75v2.91a2.575 2.575 0 002.569 2.574c1.316.003 2.663.004 2.754-.002M14.295 12.914H9.394M11.844 15.366v-4.902"
         stroke="#fff"
         strokeWidth={1.5}
         strokeLinecap="round"

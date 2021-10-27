@@ -1,5 +1,4 @@
 import { Text, Box, Flex } from '@chakra-ui/react';
-import { FiType } from 'react-icons/fi';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../config';
 import { DraggableField } from '../types';
