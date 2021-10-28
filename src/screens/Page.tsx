@@ -9,7 +9,7 @@ export default function Page() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Grid gridTemplateColumns="1fr 400px">
+      <Grid gridTemplateColumns="1fr 350px">
         <Container py="2" maxW="container.lg">
           {sections.map((section, index) => (
             <Section section={section} key={index} />

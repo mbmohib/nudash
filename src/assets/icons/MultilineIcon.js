@@ -1,8 +1,9 @@
 function MultilineIcon(props) {
   return (
     <svg
-      width={30}
-      height={37}
+      width={24}
+      height={28}
+      viewBox="0 0 30 37"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}

@@ -54,7 +54,7 @@ export default function Field({ type, info }: DraggableField) {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        height="60px"
+        height="50px"
         width="80%"
         mb="1"
       >
