@@ -6,12 +6,35 @@ import {
   FormLabel,
   Input,
   Flex,
+  Box,
+  Text,
 } from '@chakra-ui/react';
 import { useSelector } from '../hooks/useRedux';
 import { DraggableItem } from '../types';
 
 interface DropZoneProps {
   id: string;
+}
+
+interface DropZonePlaceholderProps {
+  isActive: boolean;
+}
+
+function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
+  return (
+    <Box
+      border="1px dashed"
+      borderColor="secondary100"
+      width="80%"
+      mx="auto"
+      height="80px"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Text>{isActive ? `Release to drop` : `Drop a column block here`}</Text>
+    </Box>
+  );
 }
 
 export default function DropZone({ id }: DropZoneProps) {
@@ -29,23 +52,19 @@ export default function DropZone({ id }: DropZoneProps) {
   const { fieldType, data } = dropZone || {};
 
   const isActive = canDrop && isOver;
-  const placeholder = isActive ? `Release to drop` : `Drop a column block here`;
 
   return (
     <Flex
       ref={drop}
       role={'DropZone'}
-      width="80%"
-      mx="auto"
       minHeight="100px"
-      bgColor={isActive ? 'gray.400' : 'transparent'}
+      width="100%"
       justifyContent="center"
       alignItems="center"
       rounded="base"
-      border="1px dashed #2D2D6A"
       p="2"
     >
-      {!fieldType && placeholder}
+      {!fieldType && <DropZonePlaceholder isActive={isActive} />}
       {fieldType === FieldType.Text && (
         <FormControl id="text">
           <FormLabel>Single line Text</FormLabel>

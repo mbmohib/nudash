@@ -1,4 +1,4 @@
-import { Box, Heading, Icon, Flex } from '@chakra-ui/react';
+import { Box, Heading, Flex } from '@chakra-ui/react';
 import { DeleteIcon } from '../assets/icons';
 
 export default function Header() {
