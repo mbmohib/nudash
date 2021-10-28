@@ -82,7 +82,20 @@ const ColumnIcon = () => (
 
 export default function Aside() {
   return (
-    <Box p="2" bgColor="secondary" height="100vh">
+    <Box
+      p="2"
+      height="100vh"
+      position="sticky"
+      top="80px"
+      overflowY="scroll"
+      sx={{
+        'scrollbar-width': 'none',
+        '-ms-overflow-style': 'none',
+        '::-webkit-scrollbar': {
+          display: 'none',
+        },
+      }}
+    >
       <Heading size="sm">Drag & Drop Contents</Heading>
       <Box mt="2">
         <Field

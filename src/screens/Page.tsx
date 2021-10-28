@@ -1,9 +1,8 @@
-import { Container, Grid, Box } from '@chakra-ui/react';
+import { Container, Grid } from '@chakra-ui/react';
 import { PageAside, Section } from '../components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-
-import { useSelector, useDispatch } from '../hooks/useRedux';
+import { useSelector } from '../hooks/useRedux';
 
 export default function Page() {
   const { sections } = useSelector(state => state.section);
