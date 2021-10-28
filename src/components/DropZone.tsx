@@ -1,5 +1,5 @@
 import { useDrop } from 'react-dnd';
-import { ItemTypes, FieldType } from '../config';
+import { ItemTypes, FieldType, ActionType } from '../config';
 import {
   Textarea,
   FormControl,
@@ -9,7 +9,8 @@ import {
   Box,
   Text,
 } from '@chakra-ui/react';
-import { useSelector } from '../hooks/useRedux';
+import { useSelector, useDispatch } from '../hooks/useRedux';
+import { handleDropZone } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
 
 interface DropZoneProps {
@@ -38,17 +39,44 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
 }
 
 export default function DropZone({ id }: DropZoneProps) {
+  const dispatch = useDispatch();
   const { dropZones } = useSelector(state => state.section);
   const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
+  const dropZoneIndex = dropZones.findIndex(item => item.id === id);
 
-  const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: ItemTypes.Field,
-    drop: () => ({ id }),
-    collect: monitor => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
+  const [{ canDrop, isOver }, drop] = useDrop(
+    () => ({
+      accept: ItemTypes.Field,
+      drop: () => ({ id }),
+      hover() {
+        if (dropZone.fieldType && !dropZones[dropZoneIndex + 1]?.fieldType) {
+          // console.log('dropZone :>> ', dropZone);
+          dispatch(
+            handleDropZone({
+              actionType: ActionType.Add,
+              dropZoneId: dropZone.id,
+              sectionId: 0,
+              rowId: 0,
+              columnId: 0,
+            }),
+          );
+        }
+      },
+      canDrop() {
+        if (dropZone.fieldType) {
+          return false;
+        }
+        return true;
+      },
+      collect: monitor => {
+        return {
+          isOver: monitor.isOver(),
+          canDrop: monitor.canDrop(),
+        };
+      },
     }),
-  }));
+    [dropZone],
+  );
   const { fieldType, data } = dropZone || {};
 
   const isActive = canDrop && isOver;

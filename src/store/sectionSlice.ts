@@ -208,7 +208,13 @@ const sectionSlice = createSlice({
       const currentColumn =
         state.sections[sectionIndex].rows[rowIndex].columns[columnIndex];
 
-      if (actionType === ActionType.Add) {
+      const isAlreadyEmptyDropZoneExist = currentColumn.find(column => {
+        return state.dropZones.find(
+          dropZone => dropZone.id === column.id && !dropZone.fieldType,
+        ) as DraggableItem;
+      });
+
+      if (actionType === ActionType.Add && !isAlreadyEmptyDropZoneExist) {
         currentColumn.splice(dropZoneIndex + 1, 0, {
           id: newDropZoneId,
         });

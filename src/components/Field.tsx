@@ -12,7 +12,7 @@ interface DropResult {
 export default function Field({ type, info }: DraggableField) {
   const dispatch = useDispatch();
   const { dropZones } = useSelector(state => state.section);
-  const [{ isDragging }, drag] = useDrag(
+  const [collected, drag, dragPreview] = useDrag(
     () => ({
       type: ItemTypes.Field,
       item: { type },
@@ -27,13 +27,19 @@ export default function Field({ type, info }: DraggableField) {
           );
         }
       },
-      collect: monitor => ({
-        isDragging: monitor.isDragging(),
-        handlerId: monitor.getHandlerId(),
-      }),
+      collect: monitor => {
+        // console.log('source', monitor);
+        return {
+          isDragging: monitor.isDragging(),
+          handlerId: monitor.getHandlerId(),
+        };
+      },
     }),
     [type, dropZones.length],
   );
+
+  // console.log('collected :>> ', collected);
+  // console.log('collected :>> ', dragPreview);
 
   return (
     <Flex

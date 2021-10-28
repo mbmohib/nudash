@@ -89,8 +89,8 @@ export default function Aside() {
       top="80px"
       overflowY="scroll"
       sx={{
-        'scrollbar-width': 'none',
-        '-ms-overflow-style': 'none',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
         '::-webkit-scrollbar': {
           display: 'none',
         },
