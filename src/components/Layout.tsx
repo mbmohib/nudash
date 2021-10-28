@@ -1,6 +1,6 @@
 import React from 'react';
-import { Sidebar, Content, Header, Main, Footer } from './';
-import { Grid } from '@chakra-ui/layout';
+import { Sidebar, Header, Footer } from './';
+import { Box } from '@chakra-ui/layout';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -8,13 +8,13 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <Grid templateColumns="250px 1fr">
+    <Box>
       <Sidebar />
-      <Content>
-        <Header></Header>
-        <Main>{children}</Main>
-        <Footer></Footer>
-      </Content>
-    </Grid>
+      <Box ml="250px">
+        <Header />
+        <Box pt="80px">{children}</Box>
+        <Footer />
+      </Box>
+    </Box>
   );
 }

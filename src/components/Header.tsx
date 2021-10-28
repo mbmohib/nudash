@@ -9,6 +9,11 @@ export default function Header() {
       borderColor="gray.500"
       justifyContent="space-between"
       alignItems="center"
+      position="fixed"
+      height="80px"
+      width="calc(100% - 250px)"
+      zIndex="docked"
+      background="secondary600"
     >
       <Box>
         <Heading size="lg">Home</Heading>

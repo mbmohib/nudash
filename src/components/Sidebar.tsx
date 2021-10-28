@@ -11,7 +11,12 @@ import { Link } from 'react-router-dom';
 
 export default function Sidebar() {
   return (
-    <Grid gridTemplateColumns="60px 1fr" height="100vh">
+    <Grid
+      gridTemplateColumns="60px 1fr"
+      height="100vh"
+      position="fixed"
+      width="250px"
+    >
       <Flex flexDirection="column" minHeight="100vh" bgColor="secondary500">
         <Flex height="80px" alignItems="center" justifyContent="center">
           <Text fontSize="lg">ND</Text>

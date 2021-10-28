@@ -4,7 +4,7 @@ const styles = {
   global: {
     // styles for the `body`
     body: {
-      bg: 'linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #141430;',
+      bg: '#101026',
       color: 'white',
     },
     // styles for the `a`
@@ -66,6 +66,22 @@ const shadows = {
   md: '0px 1px 8px rgba(0, 0, 0, 0.16)',
 };
 
+const zIndices = {
+  hide: -1,
+  auto: 'auto',
+  base: 0,
+  docked: 10,
+  dropdown: 1000,
+  sticky: 1100,
+  banner: 1200,
+  overlay: 1300,
+  modal: 1400,
+  popover: 1500,
+  skipLink: 1600,
+  toast: 1700,
+  tooltip: 1800,
+};
+
 export const theme = extendTheme({
   styles,
   fonts,
@@ -73,4 +89,5 @@ export const theme = extendTheme({
   space,
   radii,
   shadows,
+  zIndices,
 });
