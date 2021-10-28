@@ -40,7 +40,8 @@ export default function Field({ type, info }: DraggableField) {
       alignItems="center"
       flexDirection="column"
       px="1"
-      py="2"
+      pb="1"
+      pt="2"
       cursor="pointer"
       borderRadius="4"
       bg="secondary500"
@@ -49,11 +50,11 @@ export default function Field({ type, info }: DraggableField) {
       data-testid={`box-${type}`}
     >
       <Box
-        bgGradient="linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), #141430"
+        bg="secondary400"
         display="flex"
         alignItems="center"
         justifyContent="center"
-        height="80px"
+        height="60px"
         width="80%"
         mb="1"
       >

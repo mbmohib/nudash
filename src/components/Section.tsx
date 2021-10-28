@@ -3,12 +3,7 @@ import { ActionType } from '../config';
 import { Column, PredefinedColumns } from './';
 import { useDispatch } from '../hooks/useRedux';
 import { handleRow, handleColumn, handleSection } from '../store/sectionSlice';
-import {
-  MdOutlinePlaylistAdd,
-  MdOutlineRemoveCircleOutline,
-} from 'react-icons/md';
 import { useDisclosure } from '@chakra-ui/hooks';
-import { AiOutlineInsertRowRight } from 'react-icons/ai';
 import { useState } from 'react';
 import { DraggableItem } from '../types';
 import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
@@ -131,7 +126,7 @@ export default function Section({ section }: SectionProps) {
         </Box>
       ))}
 
-      <Flex justifyContent="center" borderTop="0.5px solid #2D2D6A" py="2">
+      <Flex justifyContent="center" py="2">
         <Button
           fontWeight="normal"
           variant="link"

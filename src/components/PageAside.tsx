@@ -92,7 +92,7 @@ export default function Aside() {
             icon: <ColumnIcon />,
           }}
         />
-        <Grid gridTemplateColumns="1fr 1fr" gap="2" mt="3">
+        <Grid gridTemplateColumns="1fr 1fr" gap="2" mt="2">
           {fields.map((field, index) => (
             <Field key={index} {...field} />
           ))}
