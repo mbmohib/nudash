@@ -16,6 +16,13 @@ interface SectionState {
     }[];
   }[];
   dropZones: DraggableItem[];
+  lastDropItemInfo?: {
+    dropZoneId: string;
+    sectionId: number;
+    columnId: number;
+    rowId: number;
+    hasField: boolean;
+  };
 }
 
 const initialDraggableState: DraggableItem = {
@@ -166,6 +173,10 @@ const sectionSlice = createSlice({
     ) {
       const { fieldType, dropZoneId } = action.payload;
 
+      if (state.lastDropItemInfo) {
+        state.lastDropItemInfo.hasField = true;
+      }
+
       state.dropZones = state.dropZones.map((dropZone: DraggableItem) => {
         if (dropZone.id === dropZoneId) {
           return {
@@ -193,6 +204,7 @@ const sectionSlice = createSlice({
       const sectionIndex = state.sections.findIndex(
         section => section.id === sectionId,
       );
+
       const rowIndex = state.sections[sectionIndex].rows.findIndex(
         row => row.id === rowId,
       );
@@ -218,6 +230,14 @@ const sectionSlice = createSlice({
         currentColumn.splice(dropZoneIndex + 1, 0, {
           id: newDropZoneId,
         });
+
+        state.lastDropItemInfo = {
+          dropZoneId: newDropZoneId,
+          columnId,
+          sectionId,
+          rowId,
+          hasField: false,
+        };
 
         state.dropZones.push({
           ...initialDraggableState,

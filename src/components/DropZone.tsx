@@ -42,15 +42,13 @@ export default function DropZone({ id }: DropZoneProps) {
   const dispatch = useDispatch();
   const { dropZones } = useSelector(state => state.section);
   const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
-  const dropZoneIndex = dropZones.findIndex(item => item.id === id);
 
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
       accept: ItemTypes.Field,
       drop: () => ({ id }),
       hover() {
-        if (dropZone.fieldType && !dropZones[dropZoneIndex + 1]?.fieldType) {
-          // console.log('dropZone :>> ', dropZone);
+        if (dropZone.fieldType) {
           dispatch(
             handleDropZone({
               actionType: ActionType.Add,

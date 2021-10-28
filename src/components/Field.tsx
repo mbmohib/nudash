@@ -1,9 +1,10 @@
 import { Text, Box, Flex } from '@chakra-ui/react';
 import { useDrag } from 'react-dnd';
-import { ItemTypes } from '../config';
+import { ItemTypes, ActionType } from '../config';
 import { DraggableField } from '../types';
 import { useDispatch, useSelector } from '../hooks/useRedux';
-import { handleFieldDrop } from '../store/sectionSlice';
+import { handleFieldDrop, handleDropZone } from '../store/sectionSlice';
+import { useEffect } from 'react';
 
 interface DropResult {
   id: string;
@@ -11,8 +12,9 @@ interface DropResult {
 
 export default function Field({ type, info }: DraggableField) {
   const dispatch = useDispatch();
-  const { dropZones } = useSelector(state => state.section);
-  const [collected, drag, dragPreview] = useDrag(
+  const { dropZones, lastDropItemInfo } = useSelector(state => state.section);
+
+  const [{ didDrop, isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.Field,
       item: { type },
@@ -28,8 +30,8 @@ export default function Field({ type, info }: DraggableField) {
         }
       },
       collect: monitor => {
-        // console.log('source', monitor);
         return {
+          didDrop: monitor.didDrop(),
           isDragging: monitor.isDragging(),
           handlerId: monitor.getHandlerId(),
         };
@@ -38,8 +40,21 @@ export default function Field({ type, info }: DraggableField) {
     [type, dropZones.length],
   );
 
-  // console.log('collected :>> ', collected);
-  // console.log('collected :>> ', dragPreview);
+  useEffect(() => {
+    if (
+      !didDrop &&
+      !isDragging &&
+      lastDropItemInfo &&
+      !lastDropItemInfo.hasField
+    ) {
+      dispatch(
+        handleDropZone({
+          actionType: ActionType.Delete,
+          ...lastDropItemInfo!,
+        }),
+      );
+    }
+  }, [dispatch, isDragging]);
 
   return (
     <Flex
