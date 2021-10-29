@@ -43,11 +43,13 @@ export default function DropZone({ id }: DropZoneProps) {
   const { dropZones } = useSelector(state => state.section);
   const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
 
-  const [{ canDrop, isOver }, drop] = useDrop(
+  const [{ canDrop, isOver, handlerId }, drop] = useDrop(
     () => ({
       accept: ItemTypes.Field,
-      drop: () => ({ id }),
-      hover() {
+      drop: (item, monitor) => ({ id, targetId: monitor.getHandlerId() }),
+      hover(item, monitor) {
+        const handlerId = monitor.getHandlerId();
+
         if (dropZone.fieldType) {
           dispatch(
             handleDropZone({
@@ -68,6 +70,7 @@ export default function DropZone({ id }: DropZoneProps) {
       },
       collect: monitor => {
         return {
+          handlerId: monitor.getHandlerId(),
           isOver: monitor.isOver(),
           canDrop: monitor.canDrop(),
         };
@@ -78,6 +81,8 @@ export default function DropZone({ id }: DropZoneProps) {
   const { fieldType, data } = dropZone || {};
 
   const isActive = canDrop && isOver;
+
+  console.log('handlerId :>> ', handlerId);
 
   return (
     <Flex
