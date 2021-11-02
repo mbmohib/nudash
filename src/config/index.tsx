@@ -20,4 +20,5 @@ export enum FieldType {
 
 export const ItemTypes = {
   Field: 'field',
+  Column: 'column',
 };

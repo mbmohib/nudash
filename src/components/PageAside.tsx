@@ -11,6 +11,7 @@ import {
   CalenderIcon,
   SwitchIcon,
 } from '../assets/icons';
+import { ColumnField } from './';
 
 const fields: DraggableField[] = [
   {
@@ -64,23 +65,11 @@ const fields: DraggableField[] = [
   },
 ];
 
-const ColumnIcon = () => (
-  <Grid
-    border="1px solid #2D2D6A"
-    gridTemplateColumns="1fr 1fr"
-    bg="secondary500"
-    gap="1"
-    width="100%"
-    height="100%"
-    p="1"
-    rounded="sm"
-  >
-    <Box bg="secondary400"></Box>
-    <Box bg="secondary400"></Box>
-  </Grid>
-);
+interface AsideProps {
+  handleOpenColumnLayout: (id: number, sectionId: number) => void;
+}
 
-export default function Aside() {
+export default function Aside({ handleOpenColumnLayout }: AsideProps) {
   return (
     <Box
       p="2"
@@ -98,13 +87,7 @@ export default function Aside() {
     >
       <Heading size="sm">Drag & Drop Contents</Heading>
       <Box mt="2">
-        <Field
-          type={FieldType.Column}
-          info={{
-            title: 'Add Columns',
-            icon: <ColumnIcon />,
-          }}
-        />
+        <ColumnField handleOpenColumnLayout={handleOpenColumnLayout} />
         <Grid gridTemplateColumns="1fr 1fr" gap="2" mt="2">
           {fields.map((field, index) => (
             <Field key={index} {...field} />

@@ -49,14 +49,19 @@ export default function DropZone({
   columnId,
 }: DropZoneProps) {
   const dispatch = useDispatch();
-  const { dropZones } = useSelector(state => state.section);
+  const { dropZones, sections } = useSelector(state => state.section);
   const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
+  const sectionIndex = sections.findIndex(section => section.id === sectionId);
+  const rowIndex = sections[sectionIndex].rows.findIndex(
+    row => row.id === rowId,
+  );
+  const currentColumn = sections[sectionIndex].rows[rowIndex].columns;
 
   const [{ canDrop, isOver, handlerId }, drop] = useDrop(
     () => ({
       accept: ItemTypes.Field,
-      drop: (item, monitor) => ({ id, targetId: monitor.getHandlerId() }),
-      hover(item, monitor) {
+      drop: (_, monitor) => ({ id, targetId: monitor.getHandlerId() }),
+      hover(_, monitor) {
         const hoveredHandlerId = monitor.getHandlerId();
 
         if (dropZone.fieldType) {

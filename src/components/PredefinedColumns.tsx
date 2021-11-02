@@ -12,10 +12,9 @@ import {
 } from '@chakra-ui/react';
 
 interface PredefinedColumnsProps {
-  sectionId: number;
   isOpen: boolean;
   onClose: () => void;
-  handleColumnLayout: (count: number, sectionId: number) => void;
+  handleColumnLayout: (count: number) => void;
 }
 
 interface ColumnProps {
@@ -56,7 +55,6 @@ function Column({ count, handleColumn }: ColumnProps) {
 }
 
 export default function PredefinedColumns({
-  sectionId,
   isOpen,
   onClose,
   handleColumnLayout,
@@ -71,33 +69,23 @@ export default function PredefinedColumns({
           <Flex flexWrap="wrap" gridGap="2">
             <Column
               count={ColumnCount.oneColumn}
-              handleColumn={(count: number) =>
-                handleColumnLayout(count, sectionId)
-              }
+              handleColumn={(count: number) => handleColumnLayout(count)}
             />
             <Column
               count={ColumnCount.twoColumns}
-              handleColumn={(count: number) =>
-                handleColumnLayout(count, sectionId)
-              }
+              handleColumn={(count: number) => handleColumnLayout(count)}
             />
             <Column
               count={ColumnCount.threeColumns}
-              handleColumn={(count: number) =>
-                handleColumnLayout(count, sectionId)
-              }
+              handleColumn={(count: number) => handleColumnLayout(count)}
             />
             <Column
               count={ColumnCount.fourColumns}
-              handleColumn={(count: number) =>
-                handleColumnLayout(count, sectionId)
-              }
+              handleColumn={(count: number) => handleColumnLayout(count)}
             />
             <Column
               count={ColumnCount.sixColumns}
-              handleColumn={(count: number) =>
-                handleColumnLayout(count, sectionId)
-              }
+              handleColumn={(count: number) => handleColumnLayout(count)}
             />
           </Flex>
         </ModalBody>

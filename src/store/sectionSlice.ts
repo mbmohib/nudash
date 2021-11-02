@@ -5,8 +5,6 @@ import { DraggableItem } from '../types';
 
 const initialDropZoneId = nanoid();
 
-// TODO: remove dropzone from dropzones state
-
 interface SectionState {
   sections: {
     id: number;
@@ -36,12 +34,12 @@ const initialState: SectionState = {
       rows: [
         {
           id: 0,
-          columns: [[{ id: initialDropZoneId }]],
+          columns: [[]],
         },
       ],
     },
   ],
-  dropZones: [initialDraggableState],
+  dropZones: [],
 };
 
 const sectionSlice = createSlice({
@@ -90,22 +88,17 @@ const sectionSlice = createSlice({
       }>,
     ) {
       const { actionType, sectionId, rowId } = action.payload;
+      const position = rowId + 1;
       const sectionIndex = state.sections.findIndex(
         section => section.id === sectionId,
       );
+      const nextRow = state.sections[sectionIndex].rows[position];
+      const isAddRow = !nextRow || nextRow.columns[0].length > 0;
 
-      if (actionType === ActionType.Add) {
-        const newDropZoneId = nanoid();
-        const position = rowId + 1;
-
+      if (actionType === ActionType.Add && isAddRow) {
         state.sections[sectionIndex].rows.splice(position, 0, {
           id: state.sections[sectionIndex].rows.length,
-          columns: [[{ id: newDropZoneId }]],
-        });
-
-        state.dropZones.push({
-          ...initialDraggableState,
-          id: newDropZoneId,
+          columns: [[]],
         });
       }
 
@@ -136,11 +129,8 @@ const sectionSlice = createSlice({
 
       if (actionType === ActionType.Modify) {
         const newColumns: DraggableItem[][] = [];
-        const totalColumn =
-          state.sections[sectionIndex].rows[rowIndex].columns.length;
-        const columnsToAdd = columnCount - totalColumn;
 
-        for (let i = 0; i < columnsToAdd; i++) {
+        for (let i = 0; i < columnCount; i++) {
           const newDropZoneId = nanoid();
 
           newColumns.push([
@@ -155,11 +145,7 @@ const sectionSlice = createSlice({
           });
         }
 
-        state.sections[sectionIndex].rows[rowIndex].columns.splice(
-          1,
-          0,
-          ...newColumns,
-        );
+        state.sections[sectionIndex].rows[rowIndex].columns = newColumns;
       }
     },
     handleFieldDrop(
@@ -241,6 +227,7 @@ const sectionSlice = createSlice({
         });
       }
 
+      // TODO: make it work
       if (actionType === ActionType.Delete) {
         currentColumn.splice(dropZoneIndex, 1);
       }

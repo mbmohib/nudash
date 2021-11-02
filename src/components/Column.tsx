@@ -1,14 +1,14 @@
-import { Box, Button, Icon, Flex } from '@chakra-ui/react';
-import { ActionType } from '../config';
+import { Box } from '@chakra-ui/react';
 import { DropZone } from './';
-import { AiOutlineHolder } from 'react-icons/ai';
-import {
-  MdOutlinePlaylistAdd,
-  MdOutlineRemoveCircleOutline,
-} from 'react-icons/md';
-import { handleDropZone } from '../store/sectionSlice';
-import { useDispatch } from '../hooks/useRedux';
 import { DraggableItem } from '../types';
+import { useDrop } from 'react-dnd';
+import { ItemTypes, FieldType, ActionType } from '../config';
+import { useSelector, useDispatch } from '../hooks/useRedux';
+import {
+  handleDropZone,
+  attachDropZoneId,
+  handleRow,
+} from '../store/sectionSlice';
 
 interface ColumnProps {
   column: DraggableItem[];
@@ -24,9 +24,49 @@ export default function Column({
   sectionId,
 }: ColumnProps) {
   const dispatch = useDispatch();
+  const { sections } = useSelector(state => state.section);
+  const sectionIndex = sections.findIndex(section => section.id === sectionId);
+  const rowIndex = sections[sectionIndex].rows.findIndex(
+    row => row.id === rowId,
+  );
+  const columnIndex = sections[sectionIndex].rows[rowIndex].columns.findIndex(
+    (_, index) => index === columnId,
+  );
+  const currentColumn =
+    sections[sectionIndex].rows[rowIndex].columns[columnIndex];
+
+  const [{ canDrop, isOver, handlerId }, drop] = useDrop(
+    () => ({
+      accept: ItemTypes.Column,
+      drop: (_, monitor) => ({
+        id: rowId,
+        sectionId: sectionId,
+        targetId: monitor.getHandlerId(),
+      }),
+      hover(_, monitor) {
+        const hoveredHandlerId = monitor.getHandlerId();
+
+        dispatch(
+          handleRow({
+            actionType: ActionType.Add,
+            sectionId,
+            rowId,
+          }),
+        );
+      },
+      collect: monitor => {
+        return {
+          handlerId: monitor.getHandlerId(),
+          isOver: monitor.isOver(),
+          canDrop: monitor.canDrop(),
+        };
+      },
+    }),
+    [],
+  );
 
   return (
-    <Box width="100%" row="column">
+    <Box width="100%" ref={drop} role={'DropZone'} minHeight="80px">
       {column.map(dropZone => (
         <Box position="relative" key={dropZone.id}>
           <DropZone
@@ -35,57 +75,6 @@ export default function Column({
             columnId={columnId}
             id={dropZone.id}
           />
-
-          {/* <Flex justifyContent="center">
-            <Button
-              variant="primary"
-              onClick={() =>
-                dispatch(
-                  handleDropZone({
-                    actionType: ActionType.Add,
-                    sectionId: sectionId,
-                    rowId: rowId,
-                    columnId: columnId,
-                    dropZoneId: dropZone.id,
-                  }),
-                )
-              }
-            >
-              <Icon as={MdOutlinePlaylistAdd} width="24px" height="24px" />
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() =>
-                dispatch(
-                  handleDropZone({
-                    actionType: ActionType.Delete,
-                    sectionId: sectionId,
-                    rowId: rowId,
-                    columnId: columnId,
-                    dropZoneId: dropZone.id,
-                  }),
-                )
-              }
-            >
-              <Icon
-                as={MdOutlineRemoveCircleOutline}
-                width="24px"
-                height="24px"
-              />
-            </Button>
-          </Flex> */}
-          {/* <Box
-            position="absolute"
-            left="-4"
-            sx={{
-              top: '50%',
-              transform: 'translateY(-50%)',
-            }}
-          >
-            <Button variant="primary" role="drag-row">
-              <Icon as={AiOutlineHolder} width="24px" height="24px" />
-            </Button>
-          </Box> */}
         </Box>
       ))}
     </Box>
