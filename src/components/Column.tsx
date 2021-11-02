@@ -29,7 +29,12 @@ export default function Column({
     <Box width="100%" row="column">
       {column.map(dropZone => (
         <Box position="relative" key={dropZone.id}>
-          <DropZone id={dropZone.id} />
+          <DropZone
+            sectionId={sectionId}
+            rowId={rowId}
+            columnId={columnId}
+            id={dropZone.id}
+          />
 
           {/* <Flex justifyContent="center">
             <Button

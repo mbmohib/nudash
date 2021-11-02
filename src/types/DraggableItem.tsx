@@ -4,4 +4,5 @@ export default interface DraggableItem {
   id: string;
   fieldType?: FieldType;
   data?: any;
+  handlerId?: string;
 }

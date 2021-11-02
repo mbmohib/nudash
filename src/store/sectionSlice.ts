@@ -195,9 +195,10 @@ const sectionSlice = createSlice({
         sectionId: number;
         rowId: number;
         columnId: number;
+        handlerId?: string;
       }>,
     ) {
-      const { actionType, dropZoneId, rowId, sectionId, columnId } =
+      const { actionType, dropZoneId, rowId, sectionId, columnId, handlerId } =
         action.payload;
       const newDropZoneId = nanoid();
 
@@ -215,16 +216,23 @@ const sectionSlice = createSlice({
 
       const dropZoneIndex = state.sections[sectionIndex].rows[rowIndex].columns[
         columnIndex
-      ].findIndex(dropZone => dropZone.id === dropZoneId);
+      ].findIndex(
+        dropZone =>
+          dropZone.handlerId === handlerId || dropZone.id === dropZoneId,
+      );
+
+      const dropZone = state.sections[sectionIndex].rows[rowIndex].columns[
+        columnIndex
+      ].find(dropZone => dropZone.handlerId === handlerId) as DraggableItem;
 
       const currentColumn =
         state.sections[sectionIndex].rows[rowIndex].columns[columnIndex];
 
-      const isAlreadyEmptyDropZoneExist = currentColumn.find(column => {
-        return state.dropZones.find(
-          dropZone => dropZone.id === column.id && !dropZone.fieldType,
-        ) as DraggableItem;
-      });
+      const nextDropZone = currentColumn[dropZoneIndex + 1];
+
+      const isAlreadyEmptyDropZoneExist = state.dropZones.find(
+        item => item.id === nextDropZone?.id && !item.fieldType,
+      );
 
       if (actionType === ActionType.Add && !isAlreadyEmptyDropZoneExist) {
         currentColumn.splice(dropZoneIndex + 1, 0, {
@@ -249,6 +257,39 @@ const sectionSlice = createSlice({
         currentColumn.splice(dropZoneIndex, 1);
       }
     },
+    attachDropZoneId(
+      state,
+      action: PayloadAction<{
+        dropZoneId: string;
+        sectionId: number;
+        rowId: number;
+        columnId: number;
+        handlerId: string;
+      }>,
+    ) {
+      const { dropZoneId, rowId, sectionId, columnId, handlerId } =
+        action.payload;
+
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+
+      const rowIndex = state.sections[sectionIndex].rows.findIndex(
+        row => row.id === rowId,
+      );
+
+      const columnIndex = state.sections[sectionIndex].rows[
+        rowIndex
+      ].columns.findIndex((_, index) => index === columnId);
+
+      const dropZoneIndex = state.sections[sectionIndex].rows[rowIndex].columns[
+        columnIndex
+      ].findIndex(dropZone => dropZone.id === dropZoneId);
+
+      state.sections[sectionIndex].rows[rowIndex].columns[columnIndex][
+        dropZoneIndex
+      ].handlerId = handlerId;
+    },
   },
 });
 
@@ -258,5 +299,6 @@ export const {
   handleColumn,
   handleFieldDrop,
   handleDropZone,
+  attachDropZoneId,
 } = sectionSlice.actions;
 export default sectionSlice.reducer;

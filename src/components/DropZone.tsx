@@ -10,11 +10,15 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { handleDropZone } from '../store/sectionSlice';
+import { handleDropZone, attachDropZoneId } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
+import { useEffect } from 'react';
 
 interface DropZoneProps {
   id: string;
+  sectionId: number;
+  rowId: number;
+  columnId: number;
 }
 
 interface DropZonePlaceholderProps {
@@ -38,7 +42,12 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
   );
 }
 
-export default function DropZone({ id }: DropZoneProps) {
+export default function DropZone({
+  id,
+  sectionId,
+  rowId,
+  columnId,
+}: DropZoneProps) {
   const dispatch = useDispatch();
   const { dropZones } = useSelector(state => state.section);
   const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
@@ -48,13 +57,14 @@ export default function DropZone({ id }: DropZoneProps) {
       accept: ItemTypes.Field,
       drop: (item, monitor) => ({ id, targetId: monitor.getHandlerId() }),
       hover(item, monitor) {
-        const handlerId = monitor.getHandlerId();
+        const hoveredHandlerId = monitor.getHandlerId();
 
         if (dropZone.fieldType) {
           dispatch(
             handleDropZone({
               actionType: ActionType.Add,
               dropZoneId: dropZone.id,
+              handlerId: hoveredHandlerId as string,
               sectionId: 0,
               rowId: 0,
               columnId: 0,
@@ -82,7 +92,19 @@ export default function DropZone({ id }: DropZoneProps) {
 
   const isActive = canDrop && isOver;
 
-  console.log('handlerId :>> ', handlerId);
+  useEffect(() => {
+    if (handlerId) {
+      dispatch(
+        attachDropZoneId({
+          sectionId,
+          rowId,
+          columnId,
+          handlerId: handlerId as string,
+          dropZoneId: dropZone.id,
+        }),
+      );
+    }
+  }, [dispatch, sectionId, columnId, rowId, dropZone.id, handlerId]);
 
   return (
     <Flex
