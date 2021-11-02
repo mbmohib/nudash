@@ -1,9 +1,7 @@
 import { Text, Box, Flex, Grid } from '@chakra-ui/react';
 import { useDrag } from 'react-dnd';
 import { FieldType, ItemTypes } from '../config';
-import { DraggableField } from '../types';
 import { useDispatch, useSelector } from '../hooks/useRedux';
-import { handleFieldDrop, removeUnUsedDropZones } from '../store/sectionSlice';
 import { useEffect } from 'react';
 
 interface DropResult {

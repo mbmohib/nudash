@@ -2,13 +2,9 @@ import { Box } from '@chakra-ui/react';
 import { DropZone } from './';
 import { DraggableItem } from '../types';
 import { useDrop } from 'react-dnd';
-import { ItemTypes, FieldType, ActionType } from '../config';
-import { useSelector, useDispatch } from '../hooks/useRedux';
-import {
-  handleDropZone,
-  attachDropZoneId,
-  handleRow,
-} from '../store/sectionSlice';
+import { ItemTypes, ActionType } from '../config';
+import { useDispatch } from '../hooks/useRedux';
+import { handleRow } from '../store/sectionSlice';
 
 interface ColumnProps {
   column: DraggableItem[];
@@ -24,16 +20,6 @@ export default function Column({
   sectionId,
 }: ColumnProps) {
   const dispatch = useDispatch();
-  const { sections } = useSelector(state => state.section);
-  const sectionIndex = sections.findIndex(section => section.id === sectionId);
-  const rowIndex = sections[sectionIndex].rows.findIndex(
-    row => row.id === rowId,
-  );
-  const columnIndex = sections[sectionIndex].rows[rowIndex].columns.findIndex(
-    (_, index) => index === columnId,
-  );
-  const currentColumn =
-    sections[sectionIndex].rows[rowIndex].columns[columnIndex];
 
   const [{ canDrop, isOver, handlerId }, drop] = useDrop(
     () => ({
