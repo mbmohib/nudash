@@ -88,7 +88,7 @@ export default function DropZone({
     }),
     [dropZone],
   );
-  const { fieldType, data } = dropZone || {};
+  const { fieldType } = dropZone || {};
 
   const isActive = canDrop && isOver;
 

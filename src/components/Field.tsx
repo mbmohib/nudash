@@ -1,9 +1,9 @@
 import { Text, Box, Flex } from '@chakra-ui/react';
 import { useDrag } from 'react-dnd';
-import { ItemTypes, ActionType } from '../config';
+import { ItemTypes } from '../config';
 import { DraggableField } from '../types';
 import { useDispatch, useSelector } from '../hooks/useRedux';
-import { handleFieldDrop, handleDropZone } from '../store/sectionSlice';
+import { handleFieldDrop, removeUnUsedDropZones } from '../store/sectionSlice';
 import { useEffect } from 'react';
 
 interface DropResult {
@@ -41,19 +41,10 @@ export default function Field({ type, info }: DraggableField) {
   );
 
   useEffect(() => {
-    if (
-      !didDrop &&
-      !isDragging &&
-      lastDropItemInfo &&
-      !lastDropItemInfo.hasField
-    ) {
-      dispatch(
-        handleDropZone({
-          actionType: ActionType.Delete,
-          ...lastDropItemInfo!,
-        }),
-      );
+    if (!didDrop && !isDragging && lastDropItemInfo) {
+      dispatch(removeUnUsedDropZones(lastDropItemInfo));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, isDragging]);
 
   return (

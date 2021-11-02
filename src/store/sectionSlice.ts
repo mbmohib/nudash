@@ -17,11 +17,9 @@ interface SectionState {
   }[];
   dropZones: DraggableItem[];
   lastDropItemInfo?: {
-    dropZoneId: string;
     sectionId: number;
     columnId: number;
     rowId: number;
-    hasField: boolean;
   };
 }
 
@@ -173,10 +171,6 @@ const sectionSlice = createSlice({
     ) {
       const { fieldType, dropZoneId } = action.payload;
 
-      if (state.lastDropItemInfo) {
-        state.lastDropItemInfo.hasField = true;
-      }
-
       state.dropZones = state.dropZones.map((dropZone: DraggableItem) => {
         if (dropZone.id === dropZoneId) {
           return {
@@ -221,10 +215,6 @@ const sectionSlice = createSlice({
           dropZone.handlerId === handlerId || dropZone.id === dropZoneId,
       );
 
-      const dropZone = state.sections[sectionIndex].rows[rowIndex].columns[
-        columnIndex
-      ].find(dropZone => dropZone.handlerId === handlerId) as DraggableItem;
-
       const currentColumn =
         state.sections[sectionIndex].rows[rowIndex].columns[columnIndex];
 
@@ -240,11 +230,9 @@ const sectionSlice = createSlice({
         });
 
         state.lastDropItemInfo = {
-          dropZoneId: newDropZoneId,
           columnId,
           sectionId,
           rowId,
-          hasField: false,
         };
 
         state.dropZones.push({
@@ -290,6 +278,37 @@ const sectionSlice = createSlice({
         dropZoneIndex
       ].handlerId = handlerId;
     },
+    removeUnUsedDropZones(
+      state,
+      action: PayloadAction<{
+        sectionId: number;
+        rowId: number;
+        columnId: number;
+      }>,
+    ) {
+      const { rowId, sectionId, columnId } = action.payload;
+
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+
+      const rowIndex = state.sections[sectionIndex].rows.findIndex(
+        row => row.id === rowId,
+      );
+
+      const columnIndex = state.sections[sectionIndex].rows[
+        rowIndex
+      ].columns.findIndex((_, index) => index === columnId);
+
+      state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].filter(
+          dropZone => {
+            return !state.dropZones.find(
+              item => item.id === dropZone.id && !item.fieldType,
+            );
+          },
+        );
+    },
   },
 });
 
@@ -300,5 +319,6 @@ export const {
   handleFieldDrop,
   handleDropZone,
   attachDropZoneId,
+  removeUnUsedDropZones,
 } = sectionSlice.actions;
 export default sectionSlice.reducer;

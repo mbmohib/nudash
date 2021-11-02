@@ -2,7 +2,7 @@ import { Box, Flex, Button, Icon } from '@chakra-ui/react';
 import { ActionType } from '../config';
 import { Column, PredefinedColumns } from './';
 import { useDispatch } from '../hooks/useRedux';
-import { handleRow, handleColumn, handleSection } from '../store/sectionSlice';
+import { handleColumn, handleSection } from '../store/sectionSlice';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { useState } from 'react';
 import { DraggableItem } from '../types';
