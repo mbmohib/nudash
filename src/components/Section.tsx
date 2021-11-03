@@ -1,6 +1,6 @@
 import { Box, Flex, Button, Icon } from '@chakra-ui/react';
 import { ActionType } from '../config';
-import { Column } from './';
+import { Row } from './';
 import { handleSection } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
 import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
@@ -32,26 +32,7 @@ export default function Section({ section }: SectionProps) {
       mb="2"
     >
       {section.rows.map((row, index) => (
-        <Box width="100%" key={index} role="row" position="relative">
-          <Flex
-            width="100%"
-            gridGap="2"
-            p="2"
-            borderTop={
-              section.rows.length && index !== 0 ? '1px solid #2D2D6A' : 'none'
-            }
-          >
-            {row.columns.map((column, columnIndex) => (
-              <Column
-                key={columnIndex}
-                rowId={row.id}
-                sectionId={section.id}
-                column={column}
-                columnId={columnIndex}
-              />
-            ))}
-          </Flex>
-        </Box>
+        <Row key={index} rowId={row.id} sectionId={section.id} row={row} />
       ))}
 
       <Flex justifyContent="center" py="2">

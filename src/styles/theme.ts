@@ -1,4 +1,9 @@
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme, ThemeConfig } from '@chakra-ui/react';
+
+const config: ThemeConfig = {
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
+};
 
 const styles = {
   global: {
@@ -82,7 +87,41 @@ const zIndices = {
   tooltip: 1800,
 };
 
+const components = {
+  Button: {
+    // 1. We can update the base styles
+    baseStyle: {
+      borderRadius: '12px',
+    },
+    // 2. We can add a new button size or extend existing
+    // sizes: {
+    //   xl: {
+    //     h: "56px",
+    //     fontSize: "lg",
+    //     px: "32px",
+    //   },
+    // },
+    // 3. We can add a new visual variant
+    variants: {
+      // 4. We can override existing variants
+      solid: (props: any) => ({
+        bg:
+          props.colorMode === 'dark'
+            ? 'linear-gradient(82.17deg, #2D2D6A 0%, #5C1594 96.26%)'
+            : 'red.500',
+        _hover: {
+          bg:
+            props.colorMode === 'dark'
+              ? 'linear-gradient(82.17deg, #2D2D6A 2%, #5C1594 60.26%)'
+              : 'red.500',
+        },
+      }),
+    },
+  },
+};
+
 export const theme = extendTheme({
+  config,
   styles,
   fonts,
   colors,
@@ -90,4 +129,5 @@ export const theme = extendTheme({
   radii,
   shadows,
   zIndices,
+  components,
 });

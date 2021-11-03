@@ -36,17 +36,18 @@ function Column({ count, handleColumn }: ColumnProps) {
   return (
     <Flex
       border="1px"
-      borderColor="primary"
+      borderColor="secondary100"
       justifyContent="center"
       cursor="pointer"
       onClick={() => handleColumn(count)}
+      width="100%"
     >
       {columns.map((_, index) => (
         <Box
+          width="100%"
           key={index}
-          width="50px"
           height="50px"
-          bgColor="tertiary"
+          bgColor="secondary400"
           m="0.5"
         />
       ))}
@@ -60,10 +61,16 @@ export default function PredefinedColumns({
   handleColumnLayout,
 }: PredefinedColumnsProps) {
   return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered size="lg">
+    <Modal
+      autoFocus={false}
+      onClose={onClose}
+      isOpen={isOpen}
+      isCentered
+      size="lg"
+    >
       <ModalOverlay />
-      <ModalContent bgColor="secondary">
-        <ModalHeader>Modal Title</ModalHeader>
+      <ModalContent bgColor="secondary500">
+        <ModalHeader>Select Column</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex flexWrap="wrap" gridGap="2">
@@ -90,7 +97,7 @@ export default function PredefinedColumns({
           </Flex>
         </ModalBody>
         <ModalFooter>
-          <Button bgColor="primary" onClick={onClose}>
+          <Button variant="solid" onClick={onClose}>
             Close
           </Button>
         </ModalFooter>
