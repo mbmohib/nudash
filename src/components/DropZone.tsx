@@ -65,9 +65,9 @@ export default function DropZone({
               actionType: ActionType.Add,
               dropZoneId: dropZone.id,
               handlerId: hoveredHandlerId as string,
-              sectionId: 0,
-              rowId: 0,
-              columnId: 0,
+              sectionId,
+              rowId,
+              columnId,
             }),
           );
         }
