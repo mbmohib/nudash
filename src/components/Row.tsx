@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { useDrop } from 'react-dnd';
 import { ItemTypes, ActionType } from '../config';
 import { useSelector, useDispatch } from '../hooks/useRedux';
@@ -25,7 +25,7 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
 
   const currentColumns = sections[sectionIndex].rows[rowIndex].columns[0];
 
-  const [{ canDrop, isOver, handlerId }, drop] = useDrop(
+  const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
       accept: ItemTypes.Column,
       drop: (_, monitor) => ({
@@ -34,8 +34,6 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
         targetId: monitor.getHandlerId(),
       }),
       hover(_, monitor) {
-        const hoveredHandlerId = monitor.getHandlerId();
-
         if (currentColumns.length !== 0) {
           dispatch(
             handleRow({
@@ -63,28 +61,42 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
     [currentColumns.length],
   );
 
+  const isActive = canDrop && isOver;
+
   return (
     <Flex
       width="100%"
       position="relative"
       ref={drop}
       role={`Row DropZone-${rowId}`}
-      minHeight="80px"
       opacity={isOver ? '0.2' : '1'}
       bgColor={isOver ? 'white' : 'transparent'}
       borderTop={rowId !== 0 ? '1px solid #2D2D6A' : 'none'}
       gridGap="2"
       p="2"
     >
-      {row.columns.map((column, columnIndex) => (
-        <Column
-          key={columnIndex}
-          rowId={rowId}
-          sectionId={sectionId}
-          column={column}
-          columnId={columnIndex}
-        />
-      ))}
+      {row.columns[0].length ? (
+        row.columns.map((column, columnIndex) => (
+          <Column
+            key={columnIndex}
+            rowId={rowId}
+            sectionId={sectionId}
+            column={column}
+            columnId={columnIndex}
+          />
+        ))
+      ) : (
+        <Flex
+          minHeight="80px"
+          alignItems="center"
+          justifyContent="center"
+          width="100%"
+          border="1px dashed"
+          borderColor="secondary100"
+        >
+          {isActive ? `Release to drop` : `Drag & Drop Column here`}
+        </Flex>
+      )}
     </Flex>
   );
 }

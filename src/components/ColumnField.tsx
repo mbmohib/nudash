@@ -2,6 +2,7 @@ import { Text, Box, Flex, Grid } from '@chakra-ui/react';
 import { useDrag } from 'react-dnd';
 import { FieldType, ItemTypes } from '../config';
 import { useDispatch, useSelector } from '../hooks/useRedux';
+import { removeUnUsedRows } from '../store/sectionSlice';
 import { useEffect } from 'react';
 
 interface DropResult {
@@ -17,9 +18,10 @@ export default function ColumnField({
   handleOpenColumnLayout,
 }: ColumnFieldProps) {
   const dispatch = useDispatch();
-  const { dropZones, lastDropItemInfo } = useSelector(state => state.section);
+  const { dropZones, sections } = useSelector(state => state.section);
+  const notInitialRow = sections[0].rows[0].columns[0].length > 0;
 
-  const [{ didDrop, isDragging }, drag] = useDrag(
+  const [{ isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.Column,
       item: FieldType.Column,
@@ -31,7 +33,6 @@ export default function ColumnField({
       },
       collect: monitor => {
         return {
-          didDrop: monitor.didDrop(),
           isDragging: monitor.isDragging(),
           handlerId: monitor.getHandlerId(),
         };
@@ -41,8 +42,8 @@ export default function ColumnField({
   );
 
   useEffect(() => {
-    if (!didDrop && !isDragging && lastDropItemInfo) {
-      // dispatch(removeUnUsedDropZones(lastDropItemInfo));
+    if (!isDragging && notInitialRow) {
+      // dispatch(removeUnUsedRows());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, isDragging]);

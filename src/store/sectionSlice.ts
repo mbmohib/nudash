@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
 import { ActionType, FieldType } from '../config';
 import { nanoid } from 'nanoid';
 import { DraggableItem } from '../types';
@@ -64,7 +64,7 @@ const sectionSlice = createSlice({
           rows: [
             {
               id: 0,
-              columns: [[{ id: newDropZoneId }]],
+              columns: [[]],
             },
           ],
         });
@@ -296,6 +296,12 @@ const sectionSlice = createSlice({
           },
         );
     },
+    removeUnUsedRows(state) {
+      state.sections.map(section => {
+        section.rows = section.rows.filter(row => row.columns[0].length);
+        return section;
+      });
+    },
   },
 });
 
@@ -307,5 +313,6 @@ export const {
   handleDropZone,
   attachDropZoneId,
   removeUnUsedDropZones,
+  removeUnUsedRows,
 } = sectionSlice.actions;
 export default sectionSlice.reducer;

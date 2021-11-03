@@ -37,7 +37,7 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
       alignItems="center"
       justifyContent="center"
     >
-      <Text>{isActive ? `Release to drop` : `Drop a column block here`}</Text>
+      <Text>{isActive ? `Release to drop` : `Drop a block here`}</Text>
     </Box>
   );
 }
