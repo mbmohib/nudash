@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActionType, FieldType } from '../config';
 import { nanoid } from 'nanoid';
 import { DraggableItem } from '../types';
@@ -18,6 +18,8 @@ interface SectionState {
     sectionId: number;
     columnId: number;
     rowId: number;
+    hasField: boolean;
+    dropZoneId: string;
   };
 }
 
@@ -200,7 +202,6 @@ const sectionSlice = createSlice({
         dropZone =>
           dropZone.handlerId === handlerId || dropZone.id === dropZoneId,
       );
-
       const currentColumn =
         state.sections[sectionIndex].rows[rowIndex].columns[columnIndex];
 
@@ -219,6 +220,8 @@ const sectionSlice = createSlice({
           columnId,
           sectionId,
           rowId,
+          dropZoneId: newDropZoneId,
+          hasField: false,
         };
 
         state.dropZones.push({
@@ -265,15 +268,19 @@ const sectionSlice = createSlice({
         dropZoneIndex
       ].handlerId = handlerId;
     },
-    removeUnUsedDropZones(
+    removeDropZone(
       state,
       action: PayloadAction<{
+        actionType: ActionType;
+        dropZoneId: string;
         sectionId: number;
         rowId: number;
         columnId: number;
+        handlerId?: string;
       }>,
     ) {
-      const { rowId, sectionId, columnId } = action.payload;
+      const { actionType, dropZoneId, rowId, sectionId, columnId, handlerId } =
+        action.payload;
 
       const sectionIndex = state.sections.findIndex(
         section => section.id === sectionId,
@@ -287,14 +294,21 @@ const sectionSlice = createSlice({
         rowIndex
       ].columns.findIndex((_, index) => index === columnId);
 
-      state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
-        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].filter(
-          dropZone => {
-            return !state.dropZones.find(
-              item => item.id === dropZone.id && !item.fieldType,
-            );
-          },
-        );
+      const dropZoneIndex = state.sections[sectionIndex].rows[rowIndex].columns[
+        columnIndex
+      ].findIndex(
+        dropZone =>
+          dropZone.handlerId === handlerId || dropZone.id === dropZoneId,
+      );
+      const currentColumn =
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex];
+
+      const nextDropZone = currentColumn[dropZoneIndex + 1];
+
+      // TODO: make it work
+      if (actionType === ActionType.Delete && nextDropZone) {
+        currentColumn.splice(dropZoneIndex + 1, 1);
+      }
     },
     removeUnUsedRows(state) {
       state.sections.map(section => {
@@ -312,7 +326,7 @@ export const {
   handleFieldDrop,
   handleDropZone,
   attachDropZoneId,
-  removeUnUsedDropZones,
+  removeDropZone,
   removeUnUsedRows,
 } = sectionSlice.actions;
 export default sectionSlice.reducer;

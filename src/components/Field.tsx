@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../config';
 import { DraggableField } from '../types';
 import { useDispatch, useSelector } from '../hooks/useRedux';
-import { handleFieldDrop, removeUnUsedDropZones } from '../store/sectionSlice';
+import { handleFieldDrop } from '../store/sectionSlice';
 import { useEffect } from 'react';
 
 interface DropResult {
@@ -41,9 +41,9 @@ export default function Field({ type, info }: DraggableField) {
   );
 
   useEffect(() => {
-    if (!didDrop && !isDragging && lastDropItemInfo) {
-      dispatch(removeUnUsedDropZones(lastDropItemInfo));
-    }
+    // if (!didDrop && !isDragging && lastDropItemInfo) {
+    //   dispatch(removeUnUsedDropZones(lastDropItemInfo));
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, isDragging]);
 
@@ -59,7 +59,6 @@ export default function Field({ type, info }: DraggableField) {
       bg="secondary500"
       boxShadow="sm"
       ref={drag}
-      data-testid={`box-${type}`}
     >
       <Box
         bg="secondary400"

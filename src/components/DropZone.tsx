@@ -10,9 +10,13 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { handleDropZone, attachDropZoneId } from '../store/sectionSlice';
+import {
+  handleDropZone,
+  attachDropZoneId,
+  removeDropZone,
+} from '../store/sectionSlice';
 import { DraggableItem } from '../types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface DropZoneProps {
   id: string;
@@ -52,26 +56,10 @@ export default function DropZone({
   const { dropZones } = useSelector(state => state.section);
   const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
 
-  const [{ canDrop, isOver, handlerId }, drop] = useDrop(
+  const [{ canDrop, isOver, handlerId, isOverCurrent }, drop] = useDrop(
     () => ({
       accept: ItemTypes.Field,
       drop: (_, monitor) => ({ id, targetId: monitor.getHandlerId() }),
-      hover(_, monitor) {
-        const hoveredHandlerId = monitor.getHandlerId();
-
-        if (dropZone.fieldType) {
-          dispatch(
-            handleDropZone({
-              actionType: ActionType.Add,
-              dropZoneId: dropZone.id,
-              handlerId: hoveredHandlerId as string,
-              sectionId,
-              rowId,
-              columnId,
-            }),
-          );
-        }
-      },
       canDrop() {
         if (dropZone.fieldType) {
           return false;
@@ -80,6 +68,7 @@ export default function DropZone({
       },
       collect: monitor => {
         return {
+          isOverCurrent: monitor.isOver({ shallow: true }),
           handlerId: monitor.getHandlerId(),
           isOver: monitor.isOver(),
           canDrop: monitor.canDrop(),
@@ -91,6 +80,36 @@ export default function DropZone({
   const { fieldType } = dropZone || {};
 
   const isActive = canDrop && isOver;
+
+  useEffect(() => {
+    console.log('Firing...', handlerId, isOverCurrent);
+    if (isOverCurrent && handlerId && dropZone.fieldType) {
+      dispatch(
+        handleDropZone({
+          actionType: ActionType.Add,
+          dropZoneId: dropZone.id,
+          handlerId: handlerId as string,
+          sectionId,
+          rowId,
+          columnId,
+        }),
+      );
+    }
+
+    if (!isOverCurrent && handlerId && dropZone.fieldType) {
+      dispatch(
+        removeDropZone({
+          actionType: ActionType.Delete,
+          dropZoneId: dropZone.id,
+          handlerId: handlerId as string,
+          sectionId,
+          rowId,
+          columnId,
+        }),
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOverCurrent]);
 
   useEffect(() => {
     if (handlerId) {
@@ -109,13 +128,15 @@ export default function DropZone({
   return (
     <Flex
       ref={drop}
-      role={'DropZone'}
+      role={`DropZone-${dropZone.id}`}
       minHeight="100px"
       width="100%"
       justifyContent="center"
       alignItems="center"
       rounded="base"
       p="2"
+      opacity={isActive ? '0.2' : '1'}
+      bgColor={isActive ? 'white' : 'transparent'}
     >
       {!fieldType && <DropZonePlaceholder isActive={isActive} />}
       {fieldType === FieldType.Text && (
