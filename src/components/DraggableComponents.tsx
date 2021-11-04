@@ -1,5 +1,5 @@
 import { Box, Heading, Grid } from '@chakra-ui/react';
-import { Field } from './';
+import { Field } from '.';
 import { DraggableField } from '../types';
 import { FieldType } from '../config';
 import {
@@ -11,7 +11,7 @@ import {
   CalenderIcon,
   SwitchIcon,
 } from '../assets/icons';
-import { ColumnField } from './';
+import { ColumnField } from '.';
 
 const fields: DraggableField[] = [
   {
@@ -65,11 +65,13 @@ const fields: DraggableField[] = [
   },
 ];
 
-interface AsideProps {
+interface DraggableComponentsProps {
   handleOpenColumnLayout: (id: number, sectionId: number) => void;
 }
 
-export default function Aside({ handleOpenColumnLayout }: AsideProps) {
+export default function DraggableComponents({
+  handleOpenColumnLayout,
+}: DraggableComponentsProps) {
   return (
     <Box
       p="2"

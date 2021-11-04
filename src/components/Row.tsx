@@ -23,7 +23,6 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
   const rowIndex = sections[sectionIndex].rows.findIndex(
     row => row.id === rowId,
   );
-
   const currentColumns = sections[sectionIndex].rows[rowIndex].columns[0];
   const notInitialRow = sections[0].rows[0].columns[0].length > 0;
 

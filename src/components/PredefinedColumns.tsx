@@ -22,13 +22,7 @@ interface ColumnProps {
   handleColumn: (count: number) => void;
 }
 
-enum ColumnCount {
-  oneColumn = 1,
-  twoColumns = 2,
-  threeColumns = 3,
-  fourColumns = 4,
-  sixColumns = 6,
-}
+const columnCount = [1, 2, 3, 4, 6];
 
 function Column({ count, handleColumn }: ColumnProps) {
   const columns = Array(...Array(count)).map((_, i) => i);
@@ -74,26 +68,13 @@ export default function PredefinedColumns({
         <ModalCloseButton />
         <ModalBody>
           <Flex flexWrap="wrap" gridGap="2">
-            <Column
-              count={ColumnCount.oneColumn}
-              handleColumn={(count: number) => handleColumnLayout(count)}
-            />
-            <Column
-              count={ColumnCount.twoColumns}
-              handleColumn={(count: number) => handleColumnLayout(count)}
-            />
-            <Column
-              count={ColumnCount.threeColumns}
-              handleColumn={(count: number) => handleColumnLayout(count)}
-            />
-            <Column
-              count={ColumnCount.fourColumns}
-              handleColumn={(count: number) => handleColumnLayout(count)}
-            />
-            <Column
-              count={ColumnCount.sixColumns}
-              handleColumn={(count: number) => handleColumnLayout(count)}
-            />
+            {columnCount.map((column: number) => (
+              <Column
+                key={column}
+                count={column}
+                handleColumn={(count: number) => handleColumnLayout(count)}
+              />
+            ))}
           </Flex>
         </ModalBody>
         <ModalFooter>
