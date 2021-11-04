@@ -3,6 +3,7 @@ import { useDrag } from 'react-dnd';
 import { FieldType, ItemTypes } from '../config';
 import { useDispatch, useSelector } from '../hooks/useRedux';
 import { removeLastUnusedRow } from '../store/sectionSlice';
+import { useEffect, useState } from 'react';
 
 interface DropResult {
   id: number;
@@ -21,6 +22,8 @@ export default function ColumnField({
     state => state.section,
   );
   const notInitialRow = sections[0].rows[0].columns[0].length > 0;
+  const [didDrop, setDidDrop] = useState<boolean>();
+  const [sectionId, setSectionId] = useState<number>();
 
   const [{ isDragging }, drag] = useDrag(
     () => ({
@@ -29,17 +32,21 @@ export default function ColumnField({
       end: (item, monitor) => {
         const dropResult = monitor.getDropResult<DropResult>();
 
-        if (
-          !monitor.didDrop() &&
-          lastRowItemInfo &&
-          notInitialRow &&
-          !lastRowItemInfo.hasColumn
-        ) {
-          console.log('ColumnField ! removeLastUnusedRow');
-          dispatch(removeLastUnusedRow());
+        if (didDrop !== monitor.didDrop()) {
+          setDidDrop(monitor.didDrop());
         }
 
+        // if (
+        //   !didDrop &&
+        //   lastRowItemInfo &&
+        //   notInitialRow &&
+        //   !lastRowItemInfo.hasColumn
+        // ) {
+        //   dispatch(removeLastUnusedRow());
+        // }
+
         if (item && dropResult) {
+          setSectionId(dropResult.sectionId);
           handleOpenColumnLayout(dropResult.id, dropResult.sectionId);
         }
       },
@@ -52,6 +59,29 @@ export default function ColumnField({
     }),
     [dropZones.length, lastRowItemInfo],
   );
+
+  useEffect(() => {
+    if (
+      !didDrop &&
+      lastRowItemInfo &&
+      notInitialRow &&
+      !lastRowItemInfo.hasColumn
+    ) {
+      dispatch(removeLastUnusedRow());
+    }
+
+    if (
+      didDrop &&
+      lastRowItemInfo &&
+      notInitialRow &&
+      !lastRowItemInfo.hasColumn &&
+      lastRowItemInfo.sectionId !== sectionId
+    ) {
+      dispatch(removeLastUnusedRow());
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [didDrop, isDragging]);
 
   return (
     <Flex
