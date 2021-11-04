@@ -5,6 +5,14 @@ import { DraggableItem } from '../types';
 
 const initialDropZoneId = nanoid();
 
+interface LastDropItem {
+  sectionId: number;
+  columnId: number;
+  rowId: number;
+  hasField: boolean;
+  dropZoneId: string;
+}
+
 interface SectionState {
   sections: {
     id: number;
@@ -14,13 +22,7 @@ interface SectionState {
     }[];
   }[];
   dropZones: DraggableItem[];
-  lastDropItemInfo?: {
-    sectionId: number;
-    columnId: number;
-    rowId: number;
-    hasField: boolean;
-    dropZoneId: string;
-  };
+  lastDropItemInfo?: LastDropItem;
 }
 
 const initialDraggableState: DraggableItem = {
@@ -168,6 +170,13 @@ const sectionSlice = createSlice({
         }
         return dropZone;
       });
+
+      if (
+        state.lastDropItemInfo &&
+        state.lastDropItemInfo.dropZoneId === dropZoneId
+      ) {
+        state.lastDropItemInfo.hasField = true;
+      }
     },
     handleDropZone(
       state,
@@ -229,11 +238,6 @@ const sectionSlice = createSlice({
           id: newDropZoneId,
         });
       }
-
-      // TODO: make it work
-      if (actionType === ActionType.Delete) {
-        currentColumn.splice(dropZoneIndex, 1);
-      }
     },
     attachDropZoneId(
       state,
@@ -268,19 +272,9 @@ const sectionSlice = createSlice({
         dropZoneIndex
       ].handlerId = handlerId;
     },
-    removeDropZone(
-      state,
-      action: PayloadAction<{
-        actionType: ActionType;
-        dropZoneId: string;
-        sectionId: number;
-        rowId: number;
-        columnId: number;
-        handlerId?: string;
-      }>,
-    ) {
-      const { actionType, dropZoneId, rowId, sectionId, columnId, handlerId } =
-        action.payload;
+    removeLastDropZone(state) {
+      const { dropZoneId, rowId, sectionId, columnId } =
+        state.lastDropItemInfo as LastDropItem;
 
       const sectionIndex = state.sections.findIndex(
         section => section.id === sectionId,
@@ -296,18 +290,17 @@ const sectionSlice = createSlice({
 
       const dropZoneIndex = state.sections[sectionIndex].rows[rowIndex].columns[
         columnIndex
-      ].findIndex(
-        dropZone =>
-          dropZone.handlerId === handlerId || dropZone.id === dropZoneId,
-      );
-      const currentColumn =
-        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex];
+      ].findIndex(dropZone => dropZone.id === dropZoneId);
 
-      const nextDropZone = currentColumn[dropZoneIndex + 1];
+      if (dropZoneIndex && !state.lastDropItemInfo?.hasField) {
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].splice(
+          dropZoneIndex,
+          1,
+        );
 
-      // TODO: make it work
-      if (actionType === ActionType.Delete && nextDropZone) {
-        currentColumn.splice(dropZoneIndex + 1, 1);
+        state.dropZones.filter(dropZone => dropZone.id !== dropZoneId);
+
+        delete state.lastDropItemInfo;
       }
     },
     removeUnUsedRows(state) {
@@ -326,7 +319,7 @@ export const {
   handleFieldDrop,
   handleDropZone,
   attachDropZoneId,
-  removeDropZone,
+  removeLastDropZone,
   removeUnUsedRows,
 } = sectionSlice.actions;
 export default sectionSlice.reducer;

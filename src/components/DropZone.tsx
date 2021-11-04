@@ -13,10 +13,10 @@ import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
   handleDropZone,
   attachDropZoneId,
-  removeDropZone,
+  removeLastDropZone,
 } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 interface DropZoneProps {
   id: string;
@@ -53,7 +53,7 @@ export default function DropZone({
   columnId,
 }: DropZoneProps) {
   const dispatch = useDispatch();
-  const { dropZones } = useSelector(state => state.section);
+  const { dropZones, lastDropItemInfo } = useSelector(state => state.section);
   const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
 
   const [{ canDrop, isOver, handlerId, isOverCurrent }, drop] = useDrop(
@@ -68,6 +68,7 @@ export default function DropZone({
       },
       collect: monitor => {
         return {
+          didDrop: monitor.didDrop(),
           isOverCurrent: monitor.isOver({ shallow: true }),
           handlerId: monitor.getHandlerId(),
           isOver: monitor.isOver(),
@@ -82,7 +83,16 @@ export default function DropZone({
   const isActive = canDrop && isOver;
 
   useEffect(() => {
-    console.log('Firing...', handlerId, isOverCurrent);
+    if (
+      lastDropItemInfo &&
+      !lastDropItemInfo.hasField &&
+      isOverCurrent &&
+      handlerId &&
+      dropZone.fieldType
+    ) {
+      dispatch(removeLastDropZone());
+    }
+
     if (isOverCurrent && handlerId && dropZone.fieldType) {
       dispatch(
         handleDropZone({
@@ -96,18 +106,6 @@ export default function DropZone({
       );
     }
 
-    if (!isOverCurrent && handlerId && dropZone.fieldType) {
-      dispatch(
-        removeDropZone({
-          actionType: ActionType.Delete,
-          dropZoneId: dropZone.id,
-          handlerId: handlerId as string,
-          sectionId,
-          rowId,
-          columnId,
-        }),
-      );
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOverCurrent]);
 
