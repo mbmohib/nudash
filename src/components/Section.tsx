@@ -1,7 +1,6 @@
 import { Box, Flex, Button, Icon } from '@chakra-ui/react';
-import { ActionType } from '../config';
 import { Row } from './';
-import { handleSection } from '../store/sectionSlice';
+import { handleAddSection, handleRemoveSection } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
 import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
 import { AiOutlineHolder } from 'react-icons/ai';
@@ -42,8 +41,7 @@ export default function Section({ section }: SectionProps) {
           leftIcon={<FilePlusIcons />}
           onClick={() =>
             dispatch(
-              handleSection({
-                actionType: ActionType.Add,
+              handleAddSection({
                 id: section.id,
               }),
             )
@@ -58,8 +56,7 @@ export default function Section({ section }: SectionProps) {
           ml="2"
           onClick={() =>
             dispatch(
-              handleSection({
-                actionType: ActionType.Delete,
+              handleRemoveSection({
                 id: section.id,
               }),
             )
@@ -82,8 +79,7 @@ export default function Section({ section }: SectionProps) {
           variant="primary"
           onClick={() =>
             dispatch(
-              handleSection({
-                actionType: ActionType.Drag,
+              handleRemoveSection({
                 id: section.id,
               }),
             )

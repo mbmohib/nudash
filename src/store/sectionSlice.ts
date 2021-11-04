@@ -62,48 +62,43 @@ const sectionSlice = createSlice({
   name: 'section',
   initialState,
   reducers: {
-    handleSection(
+    handleAddSection(
       state,
       action: PayloadAction<{
-        actionType: ActionType;
         id: number;
       }>,
     ) {
-      const { id, actionType } = action.payload;
+      const { id } = action.payload;
+      const position = id + 1;
 
-      if (actionType === ActionType.Add) {
-        const newDropZoneId = nanoid();
-        const position = id + 1;
-
-        state.sections.splice(position, 0, {
-          id: state.sections.length,
-          rows: [
-            {
-              id: 0,
-              columns: [[]],
-            },
-          ],
-        });
-
-        state.dropZones.push({
-          ...initialDraggableState,
-          id: newDropZoneId,
-        });
-      }
-
-      if (actionType === ActionType.Delete) {
-        state.sections = state.sections.filter(section => section.id !== id);
-      }
+      state.sections.splice(position, 0, {
+        id: state.sections.length,
+        rows: [
+          {
+            id: 0,
+            columns: [[]],
+          },
+        ],
+      });
     },
-    handleRow(
+    handleRemoveSection(
       state,
       action: PayloadAction<{
-        actionType: ActionType;
+        id: number;
+      }>,
+    ) {
+      const { id } = action.payload;
+
+      state.sections = state.sections.filter(section => section.id !== id);
+    },
+    handleAddRow(
+      state,
+      action: PayloadAction<{
         sectionId: number;
         rowId: number;
       }>,
     ) {
-      const { actionType, sectionId, rowId } = action.payload;
+      const { sectionId, rowId } = action.payload;
       const position = rowId + 1;
       const sectionIndex = state.sections.findIndex(
         section => section.id === sectionId,
@@ -111,7 +106,7 @@ const sectionSlice = createSlice({
       const nextRow = state.sections[sectionIndex].rows[position];
       const isAddRow = !nextRow || nextRow.columns[0].length > 0;
 
-      if (actionType === ActionType.Add && isAddRow) {
+      if (isAddRow) {
         const rowId = state.sections[sectionIndex].rows.length;
         state.sections[sectionIndex].rows.splice(position, 0, {
           id: rowId,
@@ -124,24 +119,16 @@ const sectionSlice = createSlice({
           hasColumn: false,
         };
       }
-
-      if (actionType === ActionType.Delete) {
-        const rows = state.sections[sectionIndex].rows.filter(
-          row => row.id !== rowId,
-        );
-        state.sections[sectionIndex].rows = rows;
-      }
     },
-    handleColumn(
+    handleAddColumn(
       state,
       action: PayloadAction<{
-        actionType: ActionType;
         sectionId: number;
         rowId: number;
         columnCount: number;
       }>,
     ) {
-      const { actionType, sectionId, rowId, columnCount } = action.payload;
+      const { sectionId, rowId, columnCount } = action.payload;
 
       const sectionIndex = state.sections.findIndex(
         section => section.id === sectionId,
@@ -150,29 +137,27 @@ const sectionSlice = createSlice({
         row => row.id === rowId,
       );
 
-      if (actionType === ActionType.Modify) {
-        const newColumns: DraggableItem[][] = [];
+      const newColumns: DraggableItem[][] = [];
 
-        for (let i = 0; i < columnCount; i++) {
-          const newDropZoneId = nanoid();
+      for (let i = 0; i < columnCount; i++) {
+        const newDropZoneId = nanoid();
 
-          newColumns.push([
-            {
-              id: newDropZoneId,
-            },
-          ]);
-
-          state.dropZones.push({
-            ...initialDraggableState,
+        newColumns.push([
+          {
             id: newDropZoneId,
-          });
-        }
+          },
+        ]);
 
-        state.sections[sectionIndex].rows[rowIndex].columns = newColumns;
+        state.dropZones.push({
+          ...initialDraggableState,
+          id: newDropZoneId,
+        });
+      }
 
-        if (state.lastRowItemInfo && state.lastRowItemInfo.rowId === rowId) {
-          state.lastRowItemInfo.hasColumn = true;
-        }
+      state.sections[sectionIndex].rows[rowIndex].columns = newColumns;
+
+      if (state.lastRowItemInfo && state.lastRowItemInfo.rowId === rowId) {
+        state.lastRowItemInfo.hasColumn = true;
       }
     },
     handleFieldDrop(
@@ -347,9 +332,10 @@ const sectionSlice = createSlice({
 });
 
 export const {
-  handleSection,
-  handleRow,
-  handleColumn,
+  handleAddSection,
+  handleRemoveSection,
+  handleAddRow,
+  handleAddColumn,
   handleFieldDrop,
   handleDropZone,
   attachDropZoneId,

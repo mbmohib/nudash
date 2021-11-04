@@ -1,8 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import { useDrop } from 'react-dnd';
-import { ItemTypes, ActionType } from '../config';
+import { ItemTypes } from '../config';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { handleRow, removeLastUnusedRow } from '../store/sectionSlice';
+import { handleAddRow, removeLastUnusedRow } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
 import { Column } from './';
 import { useEffect } from 'react';
@@ -68,8 +68,7 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
 
     if (isOverCurrent && currentColumns.length !== 0) {
       dispatch(
-        handleRow({
-          actionType: ActionType.Add,
+        handleAddRow({
           sectionId,
           rowId,
         }),

@@ -5,8 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { useState } from 'react';
-import { handleColumn } from '../store/sectionSlice';
-import { ActionType } from '../config';
+import { handleAddColumn } from '../store/sectionSlice';
 
 export default function Page() {
   const { sections } = useSelector(state => state.section);
@@ -17,8 +16,7 @@ export default function Page() {
 
   const handleColumnLayout = (count: number) => {
     dispatch(
-      handleColumn({
-        actionType: ActionType.Modify,
+      handleAddColumn({
         sectionId,
         rowId,
         columnCount: count,
