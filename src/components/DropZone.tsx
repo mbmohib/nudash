@@ -1,5 +1,5 @@
 import { useDrop } from 'react-dnd';
-import { ItemTypes, FieldType, ActionType } from '../config';
+import { ItemTypes, FieldType } from '../config';
 import {
   Textarea,
   FormControl,
@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { useSelector, useDispatch } from '../hooks/useRedux';
 import {
-  handleDropZone,
+  handleAddDropZone,
   attachDropZoneId,
   removeLastDropZone,
 } from '../store/sectionSlice';
@@ -100,8 +100,7 @@ export default function DropZone({
 
     if (isOverCurrent && handlerId && dropZone.fieldType) {
       dispatch(
-        handleDropZone({
-          actionType: ActionType.Add,
+        handleAddDropZone({
           dropZoneId: dropZone.id,
           handlerId: handlerId as string,
           sectionId,

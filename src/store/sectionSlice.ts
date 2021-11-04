@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ActionType, FieldType } from '../config';
+import { FieldType } from '../config';
 import { nanoid } from 'nanoid';
 import { DraggableItem } from '../types';
 
@@ -186,10 +186,9 @@ const sectionSlice = createSlice({
         state.lastDropItemInfo.hasField = true;
       }
     },
-    handleDropZone(
+    handleAddDropZone(
       state,
       action: PayloadAction<{
-        actionType: ActionType;
         dropZoneId: string;
         sectionId: number;
         rowId: number;
@@ -197,7 +196,7 @@ const sectionSlice = createSlice({
         handlerId?: string;
       }>,
     ) {
-      const { actionType, dropZoneId, rowId, sectionId, columnId, handlerId } =
+      const { dropZoneId, rowId, sectionId, columnId, handlerId } =
         action.payload;
       const newDropZoneId = nanoid();
 
@@ -228,7 +227,7 @@ const sectionSlice = createSlice({
         item => item.id === nextDropZone?.id && !item.fieldType,
       );
 
-      if (actionType === ActionType.Add && !isAlreadyEmptyDropZoneExist) {
+      if (!isAlreadyEmptyDropZoneExist) {
         currentColumn.splice(dropZoneIndex + 1, 0, {
           id: newDropZoneId,
         });
@@ -337,7 +336,7 @@ export const {
   handleAddRow,
   handleAddColumn,
   handleFieldDrop,
-  handleDropZone,
+  handleAddDropZone,
   attachDropZoneId,
   removeLastDropZone,
   removeLastUnusedRow,
