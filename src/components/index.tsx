@@ -10,3 +10,4 @@ export { default as Section } from './Section';
 export { default as Column } from './Column';
 export { default as ColumnField } from './ColumnField';
 export { default as Row } from './Row';
+export { default as Button } from './Button';

@@ -6,7 +6,7 @@
 
 ### Features
 
-- Create row/column
+- Create row/column on mouse drag
 - Drag HTML Element to specific column
 
 ### Tech
@@ -21,5 +21,5 @@
 ### TODO
 
 - Implement drag feature for changing order
-- Implement resize feature for column
 - Create Schema for collection
+- Implement expand/collapse for section

@@ -327,6 +327,25 @@ const sectionSlice = createSlice({
         delete state.lastRowItemInfo;
       }
     },
+    handleFieldData(
+      state,
+      action: PayloadAction<{
+        data: any;
+        dropZoneId: string;
+      }>,
+    ) {
+      const { data, dropZoneId } = action.payload;
+
+      state.dropZones = state.dropZones.map((dropZone: DraggableItem) => {
+        if (dropZone.id === dropZoneId) {
+          return {
+            ...dropZone,
+            data,
+          };
+        }
+        return dropZone;
+      });
+    },
   },
 });
 
@@ -340,5 +359,6 @@ export const {
   attachDropZoneId,
   removeLastDropZone,
   removeLastUnusedRow,
+  handleFieldData,
 } = sectionSlice.actions;
 export default sectionSlice.reducer;

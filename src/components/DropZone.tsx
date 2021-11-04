@@ -17,6 +17,7 @@ import {
 } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
 import { useEffect } from 'react';
+import { Button } from './';
 
 interface DropZoneProps {
   id: string;
@@ -36,6 +37,7 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
       borderColor="secondary100"
       width="80%"
       mx="auto"
+      p="1"
       height="80px"
       display="flex"
       alignItems="center"
@@ -55,7 +57,7 @@ export default function DropZone({
   const dispatch = useDispatch();
   const { dropZones, lastDropItemInfo } = useSelector(state => state.section);
   const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
-
+  const { fieldType } = dropZone || {};
   const [{ canDrop, isOver, handlerId, isOverCurrent }, drop] = useDrop(
     () => ({
       accept: ItemTypes.Field,
@@ -78,8 +80,6 @@ export default function DropZone({
     }),
     [dropZone],
   );
-  const { fieldType } = dropZone || {};
-
   const isActive = canDrop && isOver;
 
   useEffect(() => {
@@ -148,6 +148,7 @@ export default function DropZone({
           <Textarea />
         </FormControl>
       )}
+      {fieldType === FieldType.Button && <Button field={dropZone} />}
     </Flex>
   );
 }
