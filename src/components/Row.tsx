@@ -2,9 +2,10 @@ import { Flex } from '@chakra-ui/react';
 import { useDrop } from 'react-dnd';
 import { ItemTypes, ActionType } from '../config';
 import { useSelector, useDispatch } from '../hooks/useRedux';
-import { handleRow } from '../store/sectionSlice';
+import { handleRow, removeLastUnusedRow } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
 import { Column } from './';
+import { useEffect } from 'react';
 
 interface RowProps {
   row: {
@@ -17,15 +18,16 @@ interface RowProps {
 
 export default function Row({ row, rowId, sectionId }: RowProps) {
   const dispatch = useDispatch();
-  const { sections } = useSelector(state => state.section);
+  const { sections, lastRowItemInfo } = useSelector(state => state.section);
   const sectionIndex = sections.findIndex(section => section.id === sectionId);
   const rowIndex = sections[sectionIndex].rows.findIndex(
     row => row.id === rowId,
   );
 
   const currentColumns = sections[sectionIndex].rows[rowIndex].columns[0];
+  const notInitialRow = sections[0].rows[0].columns[0].length > 0;
 
-  const [{ canDrop, isOver }, drop] = useDrop(
+  const [{ canDrop, isOver, isOverCurrent }, drop] = useDrop(
     () => ({
       accept: ItemTypes.Column,
       drop: (_, monitor) => ({
@@ -33,17 +35,6 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
         sectionId: sectionId,
         targetId: monitor.getHandlerId(),
       }),
-      hover(_, monitor) {
-        if (currentColumns.length !== 0) {
-          dispatch(
-            handleRow({
-              actionType: ActionType.Add,
-              sectionId,
-              rowId,
-            }),
-          );
-        }
-      },
       canDrop() {
         if (currentColumns.length !== 0) {
           return false;
@@ -52,6 +43,7 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
       },
       collect: monitor => {
         return {
+          isOverCurrent: monitor.isOver({ shallow: true }),
           handlerId: monitor.getHandlerId(),
           isOver: monitor.isOver(),
           canDrop: monitor.canDrop(),
@@ -62,6 +54,30 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
   );
 
   const isActive = canDrop && isOver;
+
+  useEffect(() => {
+    if (
+      lastRowItemInfo &&
+      !lastRowItemInfo.hasColumn &&
+      isOverCurrent &&
+      notInitialRow &&
+      currentColumns.length !== 0
+    ) {
+      dispatch(removeLastUnusedRow());
+    }
+
+    if (isOverCurrent && currentColumns.length !== 0) {
+      dispatch(
+        handleRow({
+          actionType: ActionType.Add,
+          sectionId,
+          rowId,
+        }),
+      );
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOverCurrent]);
 
   return (
     <Flex

@@ -14,7 +14,7 @@ export default function Field({ type, info }: DraggableField) {
   const dispatch = useDispatch();
   const { dropZones, lastDropItemInfo } = useSelector(state => state.section);
 
-  const [{ didDrop, isDragging }, drag] = useDrag(
+  const [{ isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.Field,
       item: { type },
@@ -31,7 +31,6 @@ export default function Field({ type, info }: DraggableField) {
       },
       collect: monitor => {
         return {
-          didDrop: monitor.didDrop(),
           isDragging: monitor.isDragging(),
           handlerId: monitor.getHandlerId(),
         };
@@ -41,12 +40,7 @@ export default function Field({ type, info }: DraggableField) {
   );
 
   useEffect(() => {
-    if (
-      !didDrop &&
-      !isDragging &&
-      lastDropItemInfo &&
-      !lastDropItemInfo.hasField
-    ) {
+    if (!isDragging && lastDropItemInfo && !lastDropItemInfo.hasField) {
       dispatch(removeLastDropZone());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

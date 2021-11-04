@@ -13,6 +13,12 @@ interface LastDropItem {
   dropZoneId: string;
 }
 
+interface LastRowItem {
+  sectionId: number;
+  rowId: number;
+  hasColumn: boolean;
+}
+
 interface SectionState {
   sections: {
     id: number;
@@ -23,6 +29,7 @@ interface SectionState {
   }[];
   dropZones: DraggableItem[];
   lastDropItemInfo?: LastDropItem;
+  lastRowItemInfo?: LastRowItem;
 }
 
 const initialDraggableState: DraggableItem = {
@@ -44,6 +51,11 @@ const initialState: SectionState = {
     },
   ],
   dropZones: [],
+  lastRowItemInfo: {
+    sectionId: 0,
+    rowId: 0,
+    hasColumn: false,
+  },
 };
 
 const sectionSlice = createSlice({
@@ -100,10 +112,17 @@ const sectionSlice = createSlice({
       const isAddRow = !nextRow || nextRow.columns[0].length > 0;
 
       if (actionType === ActionType.Add && isAddRow) {
+        const rowId = state.sections[sectionIndex].rows.length;
         state.sections[sectionIndex].rows.splice(position, 0, {
-          id: state.sections[sectionIndex].rows.length,
+          id: rowId,
           columns: [[]],
         });
+
+        state.lastRowItemInfo = {
+          sectionId,
+          rowId,
+          hasColumn: false,
+        };
       }
 
       if (actionType === ActionType.Delete) {
@@ -150,6 +169,10 @@ const sectionSlice = createSlice({
         }
 
         state.sections[sectionIndex].rows[rowIndex].columns = newColumns;
+
+        if (state.lastRowItemInfo && state.lastRowItemInfo.rowId === rowId) {
+          state.lastRowItemInfo.hasColumn = true;
+        }
       }
     },
     handleFieldDrop(
@@ -303,11 +326,22 @@ const sectionSlice = createSlice({
         delete state.lastDropItemInfo;
       }
     },
-    removeUnUsedRows(state) {
-      state.sections.map(section => {
-        section.rows = section.rows.filter(row => row.columns[0].length);
-        return section;
-      });
+    removeLastUnusedRow(state) {
+      const { rowId, sectionId } = state.lastRowItemInfo as LastRowItem;
+
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+
+      const rowIndex = state.sections[sectionIndex].rows.findIndex(
+        row => row.id === rowId,
+      );
+
+      if (state.sections[sectionIndex].rows[rowIndex].columns[0].length === 0) {
+        state.sections[sectionIndex].rows.splice(rowIndex, 1);
+
+        delete state.lastRowItemInfo;
+      }
     },
   },
 });
@@ -320,6 +354,6 @@ export const {
   handleDropZone,
   attachDropZoneId,
   removeLastDropZone,
-  removeUnUsedRows,
+  removeLastUnusedRow,
 } = sectionSlice.actions;
 export default sectionSlice.reducer;

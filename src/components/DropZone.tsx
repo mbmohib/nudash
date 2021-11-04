@@ -83,6 +83,11 @@ export default function DropZone({
   const isActive = canDrop && isOver;
 
   useEffect(() => {
+    // console.log('==========================================');
+    // console.log('lastDropItemInfo :>> ', lastDropItemInfo);
+    // console.log('handlerId :>> ', handlerId);
+    // console.log('dropZone :>> ', dropZone);
+    // console.log('#############################################');
     if (
       lastDropItemInfo &&
       !lastDropItemInfo.hasField &&

@@ -2,8 +2,7 @@ import { Text, Box, Flex, Grid } from '@chakra-ui/react';
 import { useDrag } from 'react-dnd';
 import { FieldType, ItemTypes } from '../config';
 import { useDispatch, useSelector } from '../hooks/useRedux';
-import { removeUnUsedRows } from '../store/sectionSlice';
-import { useEffect } from 'react';
+import { removeLastUnusedRow } from '../store/sectionSlice';
 
 interface DropResult {
   id: number;
@@ -18,7 +17,9 @@ export default function ColumnField({
   handleOpenColumnLayout,
 }: ColumnFieldProps) {
   const dispatch = useDispatch();
-  const { dropZones, sections } = useSelector(state => state.section);
+  const { dropZones, sections, lastRowItemInfo } = useSelector(
+    state => state.section,
+  );
   const notInitialRow = sections[0].rows[0].columns[0].length > 0;
 
   const [{ isDragging }, drag] = useDrag(
@@ -27,6 +28,17 @@ export default function ColumnField({
       item: FieldType.Column,
       end: (item, monitor) => {
         const dropResult = monitor.getDropResult<DropResult>();
+
+        if (
+          !monitor.didDrop() &&
+          lastRowItemInfo &&
+          notInitialRow &&
+          !lastRowItemInfo.hasColumn
+        ) {
+          console.log('ColumnField ! removeLastUnusedRow');
+          dispatch(removeLastUnusedRow());
+        }
+
         if (item && dropResult) {
           handleOpenColumnLayout(dropResult.id, dropResult.sectionId);
         }
@@ -38,15 +50,8 @@ export default function ColumnField({
         };
       },
     }),
-    [dropZones.length],
+    [dropZones.length, lastRowItemInfo],
   );
-
-  useEffect(() => {
-    if (!isDragging && notInitialRow) {
-      // dispatch(removeUnUsedRows());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, isDragging]);
 
   return (
     <Flex
@@ -59,6 +64,7 @@ export default function ColumnField({
       borderRadius="4"
       bg="secondary500"
       boxShadow="sm"
+      opacity={isDragging ? '0.6' : '1'}
       ref={drag}
     >
       <Box
