@@ -79,7 +79,6 @@ export default function ColumnField({
     ) {
       dispatch(removeLastUnusedRow());
     }
-
   }, [didDrop, isDragging]);
 
   return (

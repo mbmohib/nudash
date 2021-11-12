@@ -73,7 +73,6 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
         }),
       );
     }
-
   }, [isOverCurrent]);
 
   return (

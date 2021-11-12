@@ -13,12 +13,8 @@ export default function ButtonComponent({ field }: any) {
     dispatch(
       handleFieldData({
         dropZoneId: field.id,
-
         data: {
-          label: 
-          
-          
-          label,
+          label: label,
         },
       }),
     );

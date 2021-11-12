@@ -104,7 +104,6 @@ export default function DropZone({
         }),
       );
     }
-
   }, [isOverCurrent]);
 
   useEffect(() => {
