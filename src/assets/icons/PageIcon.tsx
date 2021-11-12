@@ -1,14 +1,6 @@
-import { Box } from '@chakra-ui/react';
-
-function PageIcon(props) {
+function PageIcon() {
   return (
-    <svg
-      width={18}
-      height={20}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg width={18} height={20} fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"
