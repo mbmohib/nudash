@@ -105,7 +105,6 @@ export default function DropZone({
       );
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOverCurrent]);
 
   useEffect(() => {

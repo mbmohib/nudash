@@ -80,7 +80,6 @@ export default function ColumnField({
       dispatch(removeLastUnusedRow());
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [didDrop, isDragging]);
 
   return (

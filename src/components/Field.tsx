@@ -43,7 +43,6 @@ export default function Field({ type, info }: DraggableField) {
     if (!isDragging && lastDropItemInfo && !lastDropItemInfo.hasField) {
       dispatch(removeLastDropZone());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, isDragging]);
 
   return (

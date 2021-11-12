@@ -74,7 +74,6 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
       );
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOverCurrent]);
 
   return (
