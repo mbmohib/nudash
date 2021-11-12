@@ -39,7 +39,7 @@
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
     "lint-staged": "lint-staged",
-    "validate": "npm-run-all --parallel check-types check-format lint build",
+    "validate": "npm-run-all --parallel check-types check-format lint",
     "prepare": "husky install"
   },
   "eslintConfig": {
