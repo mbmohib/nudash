@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FieldType } from '../config';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
+
+import { FieldType } from '../config';
 import { DraggableItem } from '../types';
 
 const initialDropZoneId = nanoid();
@@ -107,15 +108,15 @@ const sectionSlice = createSlice({
       const isAddRow = !nextRow || nextRow.columns[0].length > 0;
 
       if (isAddRow) {
-        const rowId = state.sections[sectionIndex].rows.length;
+        const newRowId = state.sections[sectionIndex].rows.length;
         state.sections[sectionIndex].rows.splice(position, 0, {
-          id: rowId,
+          id: newRowId,
           columns: [[]],
         });
 
         state.lastRowItemInfo = {
           sectionId,
-          rowId,
+          rowId: newRowId,
           hasColumn: false,
         };
       }
@@ -139,7 +140,7 @@ const sectionSlice = createSlice({
 
       const newColumns: DraggableItem[][] = [];
 
-      for (let i = 0; i < columnCount; i++) {
+      for (let i = 0; i < columnCount; i += 1) {
         const newDropZoneId = nanoid();
 
         newColumns.push([

@@ -1,13 +1,14 @@
-import { Grid, Box, Text, Flex, Heading } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
+import { Box, Flex, Grid, Heading, Text } from '@chakra-ui/layout';
+import { Link } from 'react-router-dom';
+
 import {
-  PageIcon,
   LightIcon,
   NotificationIcon,
-  SchemaIcon,
+  PageIcon,
   PlusIcon,
+  SchemaIcon,
 } from '../assets/icons';
-import { Link } from 'react-router-dom';
 
 export default function Sidebar() {
   return (

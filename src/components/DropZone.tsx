@@ -1,23 +1,24 @@
-import { useDrop } from 'react-dnd';
-import { ItemTypes, FieldType } from '../config';
 import {
-  Textarea,
+  Box,
+  Flex,
   FormControl,
   FormLabel,
   Input,
-  Flex,
-  Box,
   Text,
+  Textarea,
 } from '@chakra-ui/react';
-import { useSelector, useDispatch } from '../hooks/useRedux';
+import { useEffect } from 'react';
+import { useDrop } from 'react-dnd';
+
+import { Button } from '.';
+import { FieldType, ItemTypes } from '../config';
+import { useDispatch, useSelector } from '../hooks/useRedux';
 import {
-  handleAddDropZone,
   attachDropZoneId,
+  handleAddDropZone,
   removeLastDropZone,
 } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
-import { useEffect } from 'react';
-import { Button } from './';
 
 interface DropZoneProps {
   id: string;

@@ -1,10 +1,11 @@
+import { useDisclosure } from '@chakra-ui/hooks';
 import { Container, Grid } from '@chakra-ui/react';
-import { DraggableComponents, Section, PredefinedColumns } from '../components';
+import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useSelector, useDispatch } from '../hooks/useRedux';
-import { useDisclosure } from '@chakra-ui/hooks';
-import { useState } from 'react';
+
+import { DraggableComponents, PredefinedColumns, Section } from '../components';
+import { useDispatch, useSelector } from '../hooks/useRedux';
 import { handleAddColumn, removeLastUnusedRow } from '../store/sectionSlice';
 
 export default function Page() {
@@ -26,9 +27,12 @@ export default function Page() {
     onClose();
   };
 
-  const handleOpenColumnLayout = (rowId: number, sectionId: number): void => {
-    setRowId(rowId);
-    setSectionId(sectionId);
+  const handleOpenColumnLayout = (
+    rowNumber: number,
+    sectionNumber: number,
+  ): void => {
+    setRowId(rowNumber);
+    setSectionId(sectionNumber);
     onOpen();
   };
 

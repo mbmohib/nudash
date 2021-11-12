@@ -1,9 +1,10 @@
-import { Text, Box, Flex, Grid } from '@chakra-ui/react';
+import { Box, Flex, Grid, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
+
 import { FieldType, ItemTypes } from '../config';
 import { useDispatch, useSelector } from '../hooks/useRedux';
 import { removeLastUnusedRow } from '../store/sectionSlice';
-import { useEffect, useState } from 'react';
 
 interface DropResult {
   id: number;

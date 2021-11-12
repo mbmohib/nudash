@@ -1,7 +1,7 @@
-import React from 'react';
-import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
-import { Page, NotFoundPage } from '../screens';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+
 import { Layout } from '../components';
+import { NotFoundPage, Page } from '../screens';
 
 const Routes = () => (
   <BrowserRouter>

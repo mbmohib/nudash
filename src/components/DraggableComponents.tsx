@@ -1,17 +1,17 @@
-import { Box, Heading, Grid } from '@chakra-ui/react';
-import { Field } from '.';
-import { DraggableField } from '../types';
-import { FieldType } from '../config';
+import { Box, Grid, Heading } from '@chakra-ui/react';
+
+import { ColumnField, Field } from '.';
 import {
-  SingleLineTextIcon,
-  MultilineIcon,
-  TextIcon,
   ButtonIcon,
-  NumberIcon,
   CalenderIcon,
+  MultilineIcon,
+  NumberIcon,
+  SingleLineTextIcon,
   SwitchIcon,
+  TextIcon,
 } from '../assets/icons';
-import { ColumnField } from '.';
+import { FieldType } from '../config';
+import { DraggableField } from '../types';
 
 const fields: DraggableField[] = [
   {

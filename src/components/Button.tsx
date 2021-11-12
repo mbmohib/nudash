@@ -1,8 +1,9 @@
 // import { DraggableItem } from '../types';
-import { Button, Input, Grid, Box, Flex } from '@chakra-ui/react';
-import { handleFieldData } from '../store/sectionSlice';
-import { useDispatch } from '../hooks/useRedux';
+import { Box, Button, Flex, Grid, Input } from '@chakra-ui/react';
 import { useState } from 'react';
+
+import { useDispatch } from '../hooks/useRedux';
+import { handleFieldData } from '../store/sectionSlice';
 
 // FIXME: fix any type
 export default function ButtonComponent({ field }: any) {
@@ -14,7 +15,7 @@ export default function ButtonComponent({ field }: any) {
       handleFieldData({
         dropZoneId: field.id,
         data: {
-          label: label,
+          label,
         },
       }),
     );

@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react';
-import { DropZone } from './';
+
+import { DropZone } from '.';
 import { DraggableItem } from '../types';
 
 interface ColumnProps {

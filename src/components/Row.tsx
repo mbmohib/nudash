@@ -1,11 +1,12 @@
 import { Flex } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
+
+import { Column } from '.';
 import { ItemTypes } from '../config';
-import { useSelector, useDispatch } from '../hooks/useRedux';
+import { useDispatch, useSelector } from '../hooks/useRedux';
 import { handleAddRow, removeLastUnusedRow } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
-import { Column } from './';
-import { useEffect } from 'react';
 
 interface RowProps {
   row: {
@@ -21,7 +22,7 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
   const { sections, lastRowItemInfo } = useSelector(state => state.section);
   const sectionIndex = sections.findIndex(section => section.id === sectionId);
   const rowIndex = sections[sectionIndex].rows.findIndex(
-    row => row.id === rowId,
+    rowItem => rowItem.id === rowId,
   );
   const currentColumns = sections[sectionIndex].rows[rowIndex].columns[0];
   const notInitialRow = sections[0].rows[0].columns[0].length > 0;
@@ -31,7 +32,7 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
       accept: ItemTypes.Column,
       drop: (_, monitor) => ({
         id: rowId,
-        sectionId: sectionId,
+        sectionId,
         targetId: monitor.getHandlerId(),
       }),
       canDrop() {

@@ -1,10 +1,11 @@
-import { Box, Flex, Button, Icon } from '@chakra-ui/react';
-import { Row } from './';
+import { Box, Button, Flex, Icon } from '@chakra-ui/react';
+import { AiOutlineHolder } from 'react-icons/ai';
+
+import { Row } from '.';
+import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
+import { useDispatch } from '../hooks/useRedux';
 import { handleAddSection, handleRemoveSection } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
-import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
-import { AiOutlineHolder } from 'react-icons/ai';
-import { useDispatch } from '../hooks/useRedux';
 
 interface SectionTypes {
   id: number;

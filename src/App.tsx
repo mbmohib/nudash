@@ -1,8 +1,9 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { theme } from './styles/theme';
-import { store } from './store/store';
 import { Provider } from 'react-redux';
+
 import Routes from './routes';
+import { store } from './store/store';
+import theme from './styles/theme';
 
 export default function App() {
   return (

@@ -1,10 +1,11 @@
-import { Text, Box, Flex } from '@chakra-ui/react';
-import { useDrag } from 'react-dnd';
-import { ItemTypes } from '../config';
-import { DraggableField } from '../types';
-import { useDispatch, useSelector } from '../hooks/useRedux';
-import { removeLastDropZone, handleFieldDrop } from '../store/sectionSlice';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
+import { useDrag } from 'react-dnd';
+
+import { ItemTypes } from '../config';
+import { useDispatch, useSelector } from '../hooks/useRedux';
+import { handleFieldDrop, removeLastDropZone } from '../store/sectionSlice';
+import { DraggableField } from '../types';
 
 interface DropResult {
   id: string;
