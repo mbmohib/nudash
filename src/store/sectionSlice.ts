@@ -169,6 +169,7 @@ const sectionSlice = createSlice({
     ) {
       const { fieldType, dropZoneId } = action.payload;
 
+      // FIXME: Remove dropzones dependency for field dropping
       state.dropZones = state.dropZones.map((dropZone: DraggableItem) => {
         if (dropZone.id === dropZoneId) {
           return {
@@ -223,6 +224,7 @@ const sectionSlice = createSlice({
 
       const nextDropZone = currentColumn[dropZoneIndex + 1];
 
+      // FIXME: remove empty checking dependency from dropzones
       const isAlreadyEmptyDropZoneExist = state.dropZones.find(
         item => item.id === nextDropZone?.id && !item.fieldType,
       );
@@ -338,6 +340,7 @@ const sectionSlice = createSlice({
     ) {
       const { data, dropZoneId } = action.payload;
 
+      // FIXME: Remove data saving to dropzone, instead save to section
       state.dropZones = state.dropZones.map((dropZone: DraggableItem) => {
         if (dropZone.id === dropZoneId) {
           return {

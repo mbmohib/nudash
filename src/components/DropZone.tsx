@@ -12,6 +12,7 @@ import { useDrop } from 'react-dnd';
 
 import { Button } from '.';
 import { FieldType, ItemTypes } from '../config';
+import { useSection } from '../hooks';
 import { useDispatch, useSelector } from '../hooks/useRedux';
 import {
   attachDropZoneId,
@@ -22,9 +23,6 @@ import { DraggableItem } from '../types';
 
 interface DropZoneProps {
   id: string;
-  sectionId: number;
-  rowId: number;
-  columnId: number;
 }
 
 interface DropZonePlaceholderProps {
@@ -49,13 +47,9 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
   );
 }
 
-export default function DropZone({
-  id,
-  sectionId,
-  rowId,
-  columnId,
-}: DropZoneProps) {
+export default function DropZone({ id }: DropZoneProps) {
   const dispatch = useDispatch();
+  const { sectionId, rowId, columnId } = useSection();
   const { dropZones, lastDropItemInfo } = useSelector(state => state.section);
   const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
   const { fieldType } = dropZone || {};

@@ -5,6 +5,7 @@ import { useDrop } from 'react-dnd';
 import { Column } from '.';
 import { ItemTypes } from '../config';
 import { useDispatch, useSelector } from '../hooks/useRedux';
+import { SectionContext } from '../hooks/useSection';
 import { handleAddRow, removeLastUnusedRow } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
 
@@ -13,11 +14,11 @@ interface RowProps {
     id: number;
     columns: DraggableItem[][];
   };
-  rowId: number;
   sectionId: number;
+  rowId: number;
 }
 
-export default function Row({ row, rowId, sectionId }: RowProps) {
+export default function Row({ sectionId, rowId, row }: RowProps) {
   const dispatch = useDispatch();
   const { sections, lastRowItemInfo } = useSelector(state => state.section);
   const sectionIndex = sections.findIndex(section => section.id === sectionId);
@@ -90,13 +91,16 @@ export default function Row({ row, rowId, sectionId }: RowProps) {
     >
       {row.columns[0].length ? (
         row.columns.map((column, columnIndex) => (
-          <Column
+          <SectionContext.Provider
             key={columnIndex}
-            rowId={rowId}
-            sectionId={sectionId}
-            column={column}
-            columnId={columnIndex}
-          />
+            value={{
+              sectionId,
+              rowId,
+              columnId: columnIndex,
+            }}
+          >
+            <Column column={column} />
+          </SectionContext.Provider>
         ))
       ) : (
         <Flex
