@@ -1,16 +1,8 @@
-import {
-  Box,
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  Text,
-  Textarea,
-} from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
-import { Button } from '.';
+import { Button, MultilineText, Number, SingleLineText, Switch } from '.';
 import { FieldType, ItemTypes } from '../config';
 import { useDebounce, useDispatch, useSection, useSelector } from '../hooks';
 import {
@@ -50,7 +42,7 @@ export default function DropZone({ dropZone }: DropZoneProps) {
   const dispatch = useDispatch();
   const { sectionId, rowId, columnId } = useSection();
   const { lastDropItemInfo } = useSelector(state => state.section);
-  const { fieldType } = dropZone || {};
+  const { fieldType } = dropZone;
   const [{ canDrop, isOver, handlerId, isOverCurrent }, drop] = useDrop(
     () => ({
       accept: ItemTypes.Field,
@@ -61,16 +53,12 @@ export default function DropZone({ dropZone }: DropZoneProps) {
         rowId,
         columnId,
       }),
-      canDrop: (_, monitor) => {
+      canDrop: () => {
         if (dropZone.fieldType) {
           return false;
         }
 
-        if (monitor.isOver()) {
-          return true;
-        }
-
-        return false;
+        return true;
       },
       collect: monitor => {
         return {
@@ -141,18 +129,14 @@ export default function DropZone({ dropZone }: DropZoneProps) {
       bgColor={isActive ? 'white' : 'transparent'}
     >
       {!fieldType && <DropZonePlaceholder isActive={isActive} />}
-      {fieldType === FieldType.Text && (
-        <FormControl id="text">
-          <FormLabel>Single line Text</FormLabel>
-          <Input type="text" />
-        </FormControl>
-      )}
+
+      {fieldType === FieldType.Text && <SingleLineText field={dropZone} />}
       {fieldType === FieldType.MultilineText && (
-        <FormControl id="text">
-          <FormLabel>Multi line Text</FormLabel>
-          <Textarea />
-        </FormControl>
+        <MultilineText field={dropZone} />
       )}
+      {fieldType === FieldType.RichText && <MultilineText field={dropZone} />}
+      {fieldType === FieldType.Number && <Number field={dropZone} />}
+      {fieldType === FieldType.Switch && <Switch field={dropZone} />}
       {fieldType === FieldType.Button && <Button field={dropZone} />}
     </Flex>
   );

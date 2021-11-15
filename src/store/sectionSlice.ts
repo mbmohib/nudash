@@ -328,7 +328,7 @@ const sectionSlice = createSlice({
       state,
       action: PayloadAction<{
         data: {
-          [key: string]: string;
+          [key: string]: string | number | boolean;
         };
         dropZoneId: string;
         sectionId: number;

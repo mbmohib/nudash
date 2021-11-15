@@ -4,7 +4,7 @@ export default interface DraggableItem {
   id: string;
   fieldType?: FieldType;
   data?: {
-    [key: string]: string;
+    [key: string]: string | number | boolean;
   };
   handlerId?: string;
 }

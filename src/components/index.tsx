@@ -11,3 +11,8 @@ export { default as Column } from './Column';
 export { default as ColumnField } from './ColumnField';
 export { default as Row } from './Row';
 export { default as Button } from './Button';
+export { default as SingleLineText } from './SingleLineText';
+export { default as ComponentAction } from './ComponentAction';
+export { default as MultilineText } from './MultilineText';
+export { default as Number } from './Number';
+export { default as Switch } from './Switch';

@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Input } from '@chakra-ui/react';
+import { Box, Text, Textarea } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { ComponentAction } from '.';
@@ -9,7 +9,7 @@ import { FieldProps } from '../types';
 export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
-  const [label, setLabel] = useState<string>('');
+  const [value, setValue] = useState<string>('');
 
   const handleSaveData = () => {
     dispatch(
@@ -19,7 +19,7 @@ export default function ButtonComponent({ field }: FieldProps) {
         rowId,
         columnId,
         data: {
-          label,
+          value,
         },
       }),
     );
@@ -28,17 +28,16 @@ export default function ButtonComponent({ field }: FieldProps) {
   return (
     <>
       {field.data ? (
-        <Button>{field.data.label}</Button>
+        <Text>{field.data.value}</Text>
       ) : (
-        <Box>
-          <Grid gridTemplateColumns="1fr 3fr" gap="1" width="100%">
-            <Input
-              onChange={event => setLabel(event.target.value)}
+        <Box width="100%">
+          <Box>
+            <Textarea
+              onChange={event => setValue(event.target.value)}
               type="text"
-              placeholder="label"
+              placeholder="Write here.."
             />
-            <Input type="text" placeholder="Link" />
-          </Grid>
+          </Box>
           <ComponentAction handleSave={handleSaveData} />
         </Box>
       )}

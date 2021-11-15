@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Input } from '@chakra-ui/react';
+import { Box, Input, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { ComponentAction } from '.';
@@ -6,10 +6,10 @@ import { useDispatch, useSection } from '../hooks';
 import { handleFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
-export default function ButtonComponent({ field }: FieldProps) {
+export default function NumberComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
-  const [label, setLabel] = useState<string>('');
+  const [number, setNumber] = useState<string>('');
 
   const handleSaveData = () => {
     dispatch(
@@ -19,7 +19,7 @@ export default function ButtonComponent({ field }: FieldProps) {
         rowId,
         columnId,
         data: {
-          label,
+          value: number,
         },
       }),
     );
@@ -28,17 +28,16 @@ export default function ButtonComponent({ field }: FieldProps) {
   return (
     <>
       {field.data ? (
-        <Button>{field.data.label}</Button>
+        <Text>{field.data.value}</Text>
       ) : (
-        <Box>
-          <Grid gridTemplateColumns="1fr 3fr" gap="1" width="100%">
+        <Box width="100%">
+          <Box>
             <Input
-              onChange={event => setLabel(event.target.value)}
-              type="text"
+              onChange={event => setNumber(event.target.value)}
+              type="number"
               placeholder="label"
             />
-            <Input type="text" placeholder="Link" />
-          </Grid>
+          </Box>
           <ComponentAction handleSave={handleSaveData} />
         </Box>
       )}
