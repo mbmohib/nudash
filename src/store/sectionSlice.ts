@@ -227,7 +227,7 @@ const sectionSlice = createSlice({
 
       const nextDropZone = currentColumn[dropZoneIndex + 1];
 
-      if (!nextDropZone || !nextDropZone.fieldType) {
+      if (!nextDropZone || nextDropZone.fieldType) {
         currentColumn.splice(dropZoneIndex + 1, 0, {
           id: newDropZoneId,
         });
