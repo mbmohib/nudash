@@ -3,13 +3,9 @@ import { useState } from 'react';
 
 import { useDispatch } from '../hooks/useRedux';
 import { handleFieldData } from '../store/sectionSlice';
-import { DraggableItem } from '../types';
+import { FieldProps } from '../types';
 
-interface ButtonComponentProps {
-  field: DraggableItem;
-}
-
-export default function ButtonComponent({ field }: ButtonComponentProps) {
+export default function ButtonComponent({ field }: FieldProps) {
   const dispatch = useDispatch();
   const [label, setLabel] = useState<string>('');
 
