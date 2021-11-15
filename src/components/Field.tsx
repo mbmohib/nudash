@@ -16,8 +16,7 @@ interface DropResult {
 
 export default function Field({ type, info }: DraggableField) {
   const dispatch = useDispatch();
-  const { dropZones, lastDropItemInfo } = useSelector(state => state.section);
-
+  const { lastDropItemInfo } = useSelector(state => state.section);
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.Field,
@@ -43,7 +42,7 @@ export default function Field({ type, info }: DraggableField) {
         };
       },
     }),
-    [type, dropZones.length],
+    [type, lastDropItemInfo],
   );
 
   useEffect(() => {

@@ -26,7 +26,6 @@ interface SectionState {
       columns: DraggableItem[][];
     }[];
   }[];
-  dropZones: DraggableItem[];
   lastDropItemInfo?: LastDropItem;
   lastRowItemInfo?: LastRowItem;
 }
@@ -43,7 +42,6 @@ const initialState: SectionState = {
       ],
     },
   ],
-  dropZones: [],
   lastRowItemInfo: {
     sectionId: 0,
     rowId: 0,

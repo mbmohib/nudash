@@ -19,9 +19,7 @@ export default function ColumnField({
   handleOpenColumnLayout,
 }: ColumnFieldProps) {
   const dispatch = useDispatch();
-  const { dropZones, sections, lastRowItemInfo } = useSelector(
-    state => state.section,
-  );
+  const { sections, lastRowItemInfo } = useSelector(state => state.section);
   const notInitialRow = sections[0].rows[0].columns[0].length > 0;
   const [didDrop, setDidDrop] = useState<boolean>();
   const [sectionId, setSectionId] = useState<number>();
@@ -37,15 +35,6 @@ export default function ColumnField({
           setDidDrop(monitor.didDrop());
         }
 
-        // if (
-        //   !didDrop &&
-        //   lastRowItemInfo &&
-        //   notInitialRow &&
-        //   !lastRowItemInfo.hasColumn
-        // ) {
-        //   dispatch(removeLastUnusedRow());
-        // }
-
         if (item && dropResult) {
           setSectionId(dropResult.sectionId);
           handleOpenColumnLayout(dropResult.id, dropResult.sectionId);
@@ -58,7 +47,7 @@ export default function ColumnField({
         };
       },
     }),
-    [dropZones.length, lastRowItemInfo],
+    [lastRowItemInfo],
   );
 
   useEffect(() => {
