@@ -14,6 +14,7 @@ export default function Page() {
   const { sections } = useSelector(state => state.section);
   const [rowId, setRowId] = useState<number>(0);
   const [sectionId, setSectionId] = useState<number>(0);
+  const notInitialRow = sections[0].rows[0].columns[0].length > 0;
 
   const handleColumnLayout = (count: number) => {
     dispatch(
@@ -37,7 +38,9 @@ export default function Page() {
   };
 
   const handleCloseColumnLayout = () => {
-    dispatch(removeLastUnusedRow());
+    if (notInitialRow) {
+      dispatch(removeLastUnusedRow());
+    }
     onClose();
   };
 

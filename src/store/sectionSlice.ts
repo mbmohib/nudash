@@ -306,18 +306,22 @@ const sectionSlice = createSlice({
     removeLastUnusedRow(state) {
       const { rowId, sectionId } = state.lastRowItemInfo as LastRowItem;
 
-      const sectionIndex = state.sections.findIndex(
-        section => section.id === sectionId,
-      );
+      if (sectionId || (sectionId === 0 && rowId) || rowId === 0) {
+        const sectionIndex = state.sections.findIndex(
+          section => section.id === sectionId,
+        );
 
-      const rowIndex = state.sections[sectionIndex].rows.findIndex(
-        row => row.id === rowId,
-      );
+        const rowIndex = state.sections[sectionIndex].rows.findIndex(
+          row => row.id === rowId,
+        );
 
-      if (state.sections[sectionIndex].rows[rowIndex].columns[0].length === 0) {
-        state.sections[sectionIndex].rows.splice(rowIndex, 1);
+        if (
+          state.sections[sectionIndex].rows[rowIndex].columns[0].length === 0
+        ) {
+          state.sections[sectionIndex].rows.splice(rowIndex, 1);
 
-        delete state.lastRowItemInfo;
+          delete state.lastRowItemInfo;
+        }
       }
     },
     handleFieldData(

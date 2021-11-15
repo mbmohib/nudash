@@ -12,7 +12,7 @@ import { useDrop } from 'react-dnd';
 
 import { Button } from '.';
 import { FieldType, ItemTypes } from '../config';
-import { useDispatch, useSection, useSelector } from '../hooks';
+import { useDebounce, useDispatch, useSection, useSelector } from '../hooks';
 import {
   attachDropZoneId,
   handleAddDropZone,
@@ -61,11 +61,16 @@ export default function DropZone({ dropZone }: DropZoneProps) {
         rowId,
         columnId,
       }),
-      canDrop() {
+      canDrop: (_, monitor) => {
         if (dropZone.fieldType) {
           return false;
         }
-        return true;
+
+        if (monitor.isOver()) {
+          return true;
+        }
+
+        return false;
       },
       collect: monitor => {
         return {
@@ -80,6 +85,7 @@ export default function DropZone({ dropZone }: DropZoneProps) {
     [dropZone],
   );
   const isActive = canDrop && isOver;
+  const debouncedHover = useDebounce(isOverCurrent, 100);
 
   useEffect(() => {
     if (
@@ -91,7 +97,9 @@ export default function DropZone({ dropZone }: DropZoneProps) {
     ) {
       dispatch(removeLastDropZone());
     }
+  }, [debouncedHover]);
 
+  useEffect(() => {
     if (isOverCurrent && handlerId && dropZone.fieldType) {
       dispatch(
         handleAddDropZone({
@@ -103,7 +111,7 @@ export default function DropZone({ dropZone }: DropZoneProps) {
         }),
       );
     }
-  }, [isOverCurrent]);
+  }, [debouncedHover]);
 
   useEffect(() => {
     if (handlerId) {

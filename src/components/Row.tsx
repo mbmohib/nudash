@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 
 import { Column } from '.';
 import { ItemTypes } from '../config';
-import { useDispatch, useSelector } from '../hooks';
+import { useDebounce, useDispatch, useSelector } from '../hooks';
 import { SectionContext } from '../hooks/useSection';
 import { handleAddRow, removeLastUnusedRow } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
@@ -55,6 +55,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
   );
 
   const isActive = canDrop && isOver;
+  const debouncedHover = useDebounce(isOverCurrent, 100);
 
   useEffect(() => {
     if (
@@ -66,7 +67,9 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
     ) {
       dispatch(removeLastUnusedRow());
     }
+  }, [debouncedHover]);
 
+  useEffect(() => {
     if (isOverCurrent && currentColumns.length !== 0) {
       dispatch(
         handleAddRow({
@@ -75,7 +78,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
         }),
       );
     }
-  }, [isOverCurrent]);
+  }, [debouncedHover]);
 
   return (
     <Flex
