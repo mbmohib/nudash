@@ -1,11 +1,12 @@
 import { Box, Button, Flex, Grid, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import { useDispatch } from '../hooks';
+import { useDispatch, useSection } from '../hooks';
 import { handleFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
+  const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
   const [label, setLabel] = useState<string>('');
 
@@ -13,6 +14,9 @@ export default function ButtonComponent({ field }: FieldProps) {
     dispatch(
       handleFieldData({
         dropZoneId: field.id,
+        sectionId,
+        rowId,
+        columnId,
         data: {
           label,
         },

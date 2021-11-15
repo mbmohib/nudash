@@ -4,8 +4,6 @@ import { nanoid } from 'nanoid';
 import { FieldType } from '../config';
 import { DraggableItem } from '../types';
 
-const initialDropZoneId = nanoid();
-
 interface LastDropItem {
   sectionId: number;
   columnId: number;
@@ -32,11 +30,6 @@ interface SectionState {
   lastDropItemInfo?: LastDropItem;
   lastRowItemInfo?: LastRowItem;
 }
-
-const initialDraggableState: DraggableItem = {
-  id: initialDropZoneId,
-  fieldType: undefined,
-};
 
 const initialState: SectionState = {
   sections: [
@@ -147,11 +140,6 @@ const sectionSlice = createSlice({
             id: newDropZoneId,
           },
         ]);
-
-        state.dropZones.push({
-          ...initialDraggableState,
-          id: newDropZoneId,
-        });
       }
 
       state.sections[sectionIndex].rows[rowIndex].columns = newColumns;
@@ -197,17 +185,6 @@ const sectionSlice = createSlice({
           },
         );
 
-      // FIXME: Remove dropzones dependency for field dropping
-      // state.dropZones = state.dropZones.map((dropZone: DraggableItem) => {
-      //   if (dropZone.id === dropZoneId) {
-      //     return {
-      //       ...dropZone,
-      //       fieldType,
-      //     };
-      //   }
-      //   return dropZone;
-      // });
-
       if (
         state.lastDropItemInfo &&
         state.lastDropItemInfo.dropZoneId === dropZoneId
@@ -252,12 +229,7 @@ const sectionSlice = createSlice({
 
       const nextDropZone = currentColumn[dropZoneIndex + 1];
 
-      // FIXME: remove empty checking dependency from dropzones
-      const isAlreadyEmptyDropZoneExist = state.dropZones.find(
-        item => item.id === nextDropZone?.id && !item.fieldType,
-      );
-
-      if (!isAlreadyEmptyDropZoneExist) {
+      if (!nextDropZone || !nextDropZone.fieldType) {
         currentColumn.splice(dropZoneIndex + 1, 0, {
           id: newDropZoneId,
         });
@@ -269,11 +241,6 @@ const sectionSlice = createSlice({
           dropZoneId: newDropZoneId,
           hasField: false,
         };
-
-        state.dropZones.push({
-          ...initialDraggableState,
-          id: newDropZoneId,
-        });
       }
     },
     attachDropZoneId(
@@ -335,8 +302,6 @@ const sectionSlice = createSlice({
           1,
         );
 
-        state.dropZones.filter(dropZone => dropZone.id !== dropZoneId);
-
         delete state.lastDropItemInfo;
       }
     },
@@ -364,20 +329,34 @@ const sectionSlice = createSlice({
           [key: string]: string;
         };
         dropZoneId: string;
+        sectionId: number;
+        rowId: number;
+        columnId: number;
       }>,
     ) {
-      const { data, dropZoneId } = action.payload;
+      const { data, dropZoneId, sectionId, rowId, columnId } = action.payload;
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+      const rowIndex = state.sections[sectionIndex].rows.findIndex(
+        row => row.id === rowId,
+      );
+      const columnIndex = state.sections[sectionIndex].rows[
+        rowIndex
+      ].columns.findIndex((_, index) => index === columnId);
 
-      // FIXME: Remove data saving to dropzone, instead save to section
-      state.dropZones = state.dropZones.map((dropZone: DraggableItem) => {
-        if (dropZone.id === dropZoneId) {
-          return {
-            ...dropZone,
-            data,
-          };
-        }
-        return dropZone;
-      });
+      state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].map(
+          (dropZone: DraggableItem) => {
+            if (dropZone.id === dropZoneId) {
+              return {
+                ...dropZone,
+                data,
+              };
+            }
+            return dropZone;
+          },
+        );
     },
   },
 });
