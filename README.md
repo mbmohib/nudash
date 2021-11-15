@@ -23,3 +23,6 @@
 - Implement drag feature for changing order
 - Create Schema for collection
 - Implement expand/collapse for section
+- Add edit option for component
+- Add save to db option/publish
+- Add auto save
