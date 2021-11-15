@@ -5,7 +5,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { DraggableComponents, PredefinedColumns, Section } from '../components';
-import { useDispatch, useSelector } from '../hooks/useRedux';
+import { useDispatch, useSelector } from '../hooks';
 import { handleAddColumn, removeLastUnusedRow } from '../store/sectionSlice';
 
 export default function Page() {

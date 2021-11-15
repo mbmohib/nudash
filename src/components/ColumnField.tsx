@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 
 import { FieldType, ItemTypes } from '../config';
-import { useDispatch, useSelector } from '../hooks/useRedux';
+import { useDispatch, useSelector } from '../hooks';
 import { removeLastUnusedRow } from '../store/sectionSlice';
 
 interface DropResult {

@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 
 import { Column } from '.';
 import { ItemTypes } from '../config';
-import { useDispatch, useSelector } from '../hooks/useRedux';
+import { useDispatch, useSelector } from '../hooks';
 import { SectionContext } from '../hooks/useSection';
 import { handleAddRow, removeLastUnusedRow } from '../store/sectionSlice';
 import { DraggableItem } from '../types';

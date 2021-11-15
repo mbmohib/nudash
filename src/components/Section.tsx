@@ -3,7 +3,7 @@ import { AiOutlineHolder } from 'react-icons/ai';
 
 import { Row } from '.';
 import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
-import { useDispatch } from '../hooks/useRedux';
+import { useDispatch } from '../hooks';
 import { handleAddSection, handleRemoveSection } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
 

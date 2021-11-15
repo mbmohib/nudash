@@ -12,8 +12,7 @@ import { useDrop } from 'react-dnd';
 
 import { Button } from '.';
 import { FieldType, ItemTypes } from '../config';
-import { useSection } from '../hooks';
-import { useDispatch, useSelector } from '../hooks/useRedux';
+import { useDispatch, useSection, useSelector } from '../hooks';
 import {
   attachDropZoneId,
   handleAddDropZone,

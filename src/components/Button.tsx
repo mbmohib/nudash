@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Grid, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import { useDispatch } from '../hooks/useRedux';
+import { useDispatch } from '../hooks';
 import { handleFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 

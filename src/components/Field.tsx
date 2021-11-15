@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDrag } from 'react-dnd';
 
 import { ItemTypes } from '../config';
-import { useDispatch, useSelector } from '../hooks/useRedux';
+import { useDispatch, useSelector } from '../hooks';
 import { handleFieldDrop, removeLastDropZone } from '../store/sectionSlice';
 import { DraggableField } from '../types';
 
