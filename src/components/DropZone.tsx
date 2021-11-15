@@ -21,7 +21,7 @@ import {
 import { DraggableItem } from '../types';
 
 interface DropZoneProps {
-  id: string;
+  dropZone: DraggableItem;
 }
 
 interface DropZonePlaceholderProps {
@@ -46,16 +46,21 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
   );
 }
 
-export default function DropZone({ id }: DropZoneProps) {
+export default function DropZone({ dropZone }: DropZoneProps) {
   const dispatch = useDispatch();
   const { sectionId, rowId, columnId } = useSection();
-  const { dropZones, lastDropItemInfo } = useSelector(state => state.section);
-  const dropZone = dropZones.find(item => item.id === id) as DraggableItem;
+  const { lastDropItemInfo } = useSelector(state => state.section);
   const { fieldType } = dropZone || {};
   const [{ canDrop, isOver, handlerId, isOverCurrent }, drop] = useDrop(
     () => ({
       accept: ItemTypes.Field,
-      drop: (_, monitor) => ({ id, targetId: monitor.getHandlerId() }),
+      drop: (_, monitor) => ({
+        id: dropZone.id,
+        targetId: monitor.getHandlerId(),
+        sectionId,
+        rowId,
+        columnId,
+      }),
       canDrop() {
         if (dropZone.fieldType) {
           return false;

@@ -12,7 +12,7 @@ export default function Column({ column }: ColumnProps) {
     <Box width="100%" role="column" minHeight="80px">
       {column.map(dropZone => (
         <Box position="relative" key={dropZone.id}>
-          <DropZone id={dropZone.id} />
+          <DropZone dropZone={dropZone} />
         </Box>
       ))}
     </Box>

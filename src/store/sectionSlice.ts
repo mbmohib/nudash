@@ -165,20 +165,48 @@ const sectionSlice = createSlice({
       action: PayloadAction<{
         fieldType: FieldType;
         dropZoneId: string;
+        sectionId: number;
+        rowId: number;
+        columnId: number;
       }>,
     ) {
-      const { fieldType, dropZoneId } = action.payload;
+      const { fieldType, dropZoneId, sectionId, rowId, columnId } =
+        action.payload;
+
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+      const rowIndex = state.sections[sectionIndex].rows.findIndex(
+        row => row.id === rowId,
+      );
+
+      const columnIndex = state.sections[sectionIndex].rows[
+        rowIndex
+      ].columns.findIndex((_, index) => index === columnId);
+
+      state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].map(
+          (dropZone: DraggableItem) => {
+            if (dropZone.id === dropZoneId) {
+              return {
+                ...dropZone,
+                fieldType,
+              };
+            }
+            return dropZone;
+          },
+        );
 
       // FIXME: Remove dropzones dependency for field dropping
-      state.dropZones = state.dropZones.map((dropZone: DraggableItem) => {
-        if (dropZone.id === dropZoneId) {
-          return {
-            ...dropZone,
-            fieldType,
-          };
-        }
-        return dropZone;
-      });
+      // state.dropZones = state.dropZones.map((dropZone: DraggableItem) => {
+      //   if (dropZone.id === dropZoneId) {
+      //     return {
+      //       ...dropZone,
+      //       fieldType,
+      //     };
+      //   }
+      //   return dropZone;
+      // });
 
       if (
         state.lastDropItemInfo &&

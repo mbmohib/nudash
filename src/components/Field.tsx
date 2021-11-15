@@ -9,6 +9,9 @@ import { DraggableField } from '../types';
 
 interface DropResult {
   id: string;
+  sectionId: number;
+  rowId: number;
+  columnId: number;
 }
 
 export default function Field({ type, info }: DraggableField) {
@@ -26,6 +29,9 @@ export default function Field({ type, info }: DraggableField) {
             handleFieldDrop({
               fieldType: item.type,
               dropZoneId: dropResult.id,
+              sectionId: dropResult.sectionId,
+              rowId: dropResult.rowId,
+              columnId: dropResult.columnId,
             }),
           );
         }
