@@ -104,14 +104,14 @@ const components = {
     // 3. We can add a new visual variant
     variants: {
       // 4. We can override existing variants
-      solid: (props: any) => ({
+      solid: ({ colorMode }: { colorMode: string }) => ({
         bg:
-          props.colorMode === 'dark'
+          colorMode === 'dark'
             ? 'linear-gradient(82.17deg, #2D2D6A 0%, #5C1594 96.26%)'
             : 'red.500',
         _hover: {
           bg:
-            props.colorMode === 'dark'
+            colorMode === 'dark'
               ? 'linear-gradient(82.17deg, #2D2D6A 2%, #5C1594 60.26%)'
               : 'red.500',
         },

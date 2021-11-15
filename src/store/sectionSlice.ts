@@ -36,7 +36,6 @@ interface SectionState {
 const initialDraggableState: DraggableItem = {
   id: initialDropZoneId,
   fieldType: undefined,
-  data: null,
 };
 
 const initialState: SectionState = {
@@ -331,7 +330,9 @@ const sectionSlice = createSlice({
     handleFieldData(
       state,
       action: PayloadAction<{
-        data: any;
+        data: {
+          [key: string]: string;
+        };
         dropZoneId: string;
       }>,
     ) {

@@ -52,6 +52,7 @@ module.exports = {
           },
         ],
         '@typescript-eslint/no-shadow': 'error',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
       },
     },
   ],

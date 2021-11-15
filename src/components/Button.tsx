@@ -1,14 +1,17 @@
-// import { DraggableItem } from '../types';
 import { Box, Button, Flex, Grid, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { useDispatch } from '../hooks/useRedux';
 import { handleFieldData } from '../store/sectionSlice';
+import { DraggableItem } from '../types';
 
-// FIXME: fix any type
-export default function ButtonComponent({ field }: any) {
+interface ButtonComponentProps {
+  field: DraggableItem;
+}
+
+export default function ButtonComponent({ field }: ButtonComponentProps) {
   const dispatch = useDispatch();
-  const [label, setLabel] = useState<string>();
+  const [label, setLabel] = useState<string>('');
 
   const handleSaveData = () => {
     dispatch(
