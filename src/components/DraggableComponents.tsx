@@ -50,6 +50,13 @@ const fields: DraggableField[] = [
     },
   },
   {
+    type: FieldType.Image,
+    info: {
+      title: 'Image',
+      icon: <NumberIcon />,
+    },
+  },
+  {
     type: FieldType.Date,
     info: {
       title: 'Date',
