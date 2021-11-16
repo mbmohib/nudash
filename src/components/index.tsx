@@ -18,3 +18,5 @@ export { default as Number } from './Number';
 export { default as Switch } from './Switch';
 export { default as DateComponent } from './DateComponent';
 export { default as DatePicker } from './DatePicker';
+export { default as FileUpload } from './FileUpload';
+export { default as FileUploadComponent } from './FileUploadComponent';

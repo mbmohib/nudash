@@ -5,6 +5,7 @@ import { useDrop } from 'react-dnd';
 import {
   Button,
   DateComponent,
+  FileUploadComponent,
   MultilineText,
   Number,
   SingleLineText,
@@ -144,6 +145,9 @@ export default function DropZone({ dropZone }: DropZoneProps) {
       {fieldType === FieldType.RichText && <MultilineText field={dropZone} />}
       {fieldType === FieldType.Number && <Number field={dropZone} />}
       {fieldType === FieldType.Switch && <Switch field={dropZone} />}
+      {fieldType === FieldType.Image && (
+        <FileUploadComponent field={dropZone} />
+      )}
       {fieldType === FieldType.Date && <DateComponent field={dropZone} />}
       {fieldType === FieldType.Button && <Button field={dropZone} />}
     </Flex>

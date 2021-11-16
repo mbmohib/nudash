@@ -22,3 +22,5 @@ export const ItemTypes = {
   Field: 'field',
   Column: 'column',
 };
+
+export const maxImageSize = 3 * 1024 * 1024;
