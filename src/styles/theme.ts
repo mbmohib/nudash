@@ -118,6 +118,30 @@ const components = {
       }),
     },
   },
+  Input: {
+    baseStyle: {
+      field: {
+        bg: colors.secondary400,
+        borderColor: colors.secondary100,
+        borderWidth: 2,
+        ':focus': {
+          borderColor: colors.secondary100,
+          bg: colors.secondary600,
+        },
+      },
+    },
+    sizes: {
+      md: {
+        field: {
+          borderRadius: '4px',
+        },
+      },
+    },
+    variants: {},
+    defaultProps: {
+      variant: null, // null here
+    },
+  },
 };
 
 export default extendTheme({

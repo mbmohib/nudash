@@ -16,3 +16,5 @@ export { default as ComponentAction } from './ComponentAction';
 export { default as MultilineText } from './MultilineText';
 export { default as Number } from './Number';
 export { default as Switch } from './Switch';
+export { default as DateComponent } from './DateComponent';
+export { default as DatePicker } from './DatePicker';

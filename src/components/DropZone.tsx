@@ -2,7 +2,14 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
-import { Button, MultilineText, Number, SingleLineText, Switch } from '.';
+import {
+  Button,
+  DateComponent,
+  MultilineText,
+  Number,
+  SingleLineText,
+  Switch,
+} from '.';
 import { FieldType, ItemTypes } from '../config';
 import { useDebounce, useDispatch, useSection, useSelector } from '../hooks';
 import {
@@ -137,6 +144,7 @@ export default function DropZone({ dropZone }: DropZoneProps) {
       {fieldType === FieldType.RichText && <MultilineText field={dropZone} />}
       {fieldType === FieldType.Number && <Number field={dropZone} />}
       {fieldType === FieldType.Switch && <Switch field={dropZone} />}
+      {fieldType === FieldType.Date && <DateComponent field={dropZone} />}
       {fieldType === FieldType.Button && <Button field={dropZone} />}
     </Flex>
   );
