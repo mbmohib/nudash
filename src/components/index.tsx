@@ -20,3 +20,5 @@ export { default as DateComponent } from './DateComponent';
 export { default as DatePicker } from './DatePicker';
 export { default as FileUpload } from './FileUpload';
 export { default as FileUploadComponent } from './FileUploadComponent';
+export { default as RichText } from './RichText';
+export { default as RichTextComponent } from './RichTextComponent';
