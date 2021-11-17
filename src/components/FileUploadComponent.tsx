@@ -2,7 +2,7 @@ import { Box, Image } from '@chakra-ui/react';
 
 import { FileUpload } from '.';
 import { useDispatch, useSection } from '../hooks';
-import { handleFieldData } from '../store/sectionSlice';
+import { saveFieldData } from '../store/sectionSlice';
 import { FieldProps, FileType } from '../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
@@ -11,7 +11,7 @@ export default function ButtonComponent({ field }: FieldProps) {
 
   const handleSaveData = (file: FileType) => {
     dispatch(
-      handleFieldData({
+      saveFieldData({
         dropZoneId: field.id,
         sectionId,
         rowId,

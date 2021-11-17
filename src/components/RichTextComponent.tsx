@@ -3,7 +3,7 @@ import { useRef } from 'react';
 
 import { ComponentAction, RichText } from '.';
 import { useDispatch, useSection } from '../hooks';
-import { handleFieldData } from '../store/sectionSlice';
+import { saveFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
 interface EditorRef {
@@ -21,7 +21,7 @@ export default function ButtonComponent({ field }: FieldProps) {
       data = await editorRef.current.handleSave();
 
       dispatch(
-        handleFieldData({
+        saveFieldData({
           dropZoneId: field.id,
           sectionId,
           rowId,

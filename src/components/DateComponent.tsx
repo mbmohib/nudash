@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { ComponentAction, DatePicker } from '.';
 import { useDispatch, useSection } from '../hooks';
-import { handleFieldData } from '../store/sectionSlice';
+import { saveFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
@@ -15,7 +15,7 @@ export default function ButtonComponent({ field }: FieldProps) {
 
   const handleSaveData = () => {
     dispatch(
-      handleFieldData({
+      saveFieldData({
         dropZoneId: field.id,
         sectionId,
         rowId,

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { ComponentAction } from '.';
 import { useDispatch, useSection } from '../hooks';
-import { handleFieldData } from '../store/sectionSlice';
+import { saveFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
 export default function SwitchComponent({ field }: FieldProps) {
@@ -14,7 +14,7 @@ export default function SwitchComponent({ field }: FieldProps) {
 
   const handleSaveData = () => {
     dispatch(
-      handleFieldData({
+      saveFieldData({
         dropZoneId: field.id,
         sectionId,
         rowId,
@@ -29,7 +29,7 @@ export default function SwitchComponent({ field }: FieldProps) {
 
   const handleSwitchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
-      handleFieldData({
+      saveFieldData({
         dropZoneId: field.id,
         sectionId,
         rowId,

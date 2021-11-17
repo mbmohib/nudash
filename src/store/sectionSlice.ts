@@ -324,7 +324,7 @@ const sectionSlice = createSlice({
         }
       }
     },
-    handleFieldData(
+    saveFieldData(
       state,
       action: PayloadAction<{
         data: {
@@ -373,6 +373,6 @@ export const {
   attachDropZoneId,
   removeLastDropZone,
   removeLastUnusedRow,
-  handleFieldData,
+  saveFieldData,
 } = sectionSlice.actions;
 export default sectionSlice.reducer;
