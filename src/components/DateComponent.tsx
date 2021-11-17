@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { ComponentAction, DatePicker } from '.';
 import { useDispatch, useSection } from '../hooks';
-import { saveFieldData } from '../store/sectionSlice';
+import { removeField, saveFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
@@ -26,6 +26,10 @@ export default function ButtonComponent({ field }: FieldProps) {
         },
       }),
     );
+  };
+
+  const handleDelete = () => {
+    dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
   };
 
   return (
@@ -50,7 +54,10 @@ export default function ButtonComponent({ field }: FieldProps) {
               onChange={dateValue => setDate(dateValue as Date)}
             />
           </Grid>
-          <ComponentAction handleSave={handleSaveData} />
+          <ComponentAction
+            handleSave={handleSaveData}
+            handleRemove={handleDelete}
+          />
         </Box>
       )}
     </>

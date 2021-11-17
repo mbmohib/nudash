@@ -360,6 +360,58 @@ const sectionSlice = createSlice({
           },
         );
     },
+    removeField(
+      state,
+      action: PayloadAction<{
+        dropZoneId: string;
+        sectionId: number;
+        rowId: number;
+        columnId: number;
+      }>,
+    ) {
+      const { dropZoneId, sectionId, rowId, columnId } = action.payload;
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+      const rowIndex = state.sections[sectionIndex].rows.findIndex(
+        row => row.id === rowId,
+      );
+      const columnIndex = state.sections[sectionIndex].rows[
+        rowIndex
+      ].columns.findIndex((_, index) => index === columnId);
+
+      state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].map(
+          (dropZone: DraggableItem) => {
+            if (dropZone.id === dropZoneId) {
+              return {
+                ...dropZone,
+                data: undefined,
+                fieldType: undefined,
+              };
+            }
+            return dropZone;
+          },
+        );
+    },
+    removeRow(
+      state,
+      action: PayloadAction<{
+        sectionId: number;
+        rowId: number;
+      }>,
+    ) {
+      const { sectionId, rowId } = action.payload;
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+
+      if (state.sections[sectionIndex].rows.length > 1) {
+        state.sections[sectionIndex].rows = state.sections[
+          sectionIndex
+        ].rows.filter(row => row.id !== rowId);
+      }
+    },
   },
 });
 
@@ -374,5 +426,7 @@ export const {
   removeLastDropZone,
   removeLastUnusedRow,
   saveFieldData,
+  removeField,
+  removeRow,
 } = sectionSlice.actions;
 export default sectionSlice.reducer;

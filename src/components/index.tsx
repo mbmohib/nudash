@@ -10,7 +10,7 @@ export { default as Section } from './Section';
 export { default as Column } from './Column';
 export { default as ColumnField } from './ColumnField';
 export { default as Row } from './Row';
-export { default as Button } from './Button';
+export { default as ButtonComponent } from './ButtonComponent';
 export { default as SingleLineText } from './SingleLineText';
 export { default as ComponentAction } from './ComponentAction';
 export { default as MultilineText } from './MultilineText';

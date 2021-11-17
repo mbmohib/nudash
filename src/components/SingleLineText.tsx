@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { ComponentAction, ComponentActionWithData } from '.';
 import { useDispatch, useSection, useToggle } from '../hooks';
-import { saveFieldData } from '../store/sectionSlice';
+import { removeField, saveFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
@@ -33,7 +33,11 @@ export default function ButtonComponent({ field }: FieldProps) {
   };
 
   const handleDelete = () => {
-    //
+    dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
+  };
+
+  const handleDeleteDropZone = () => {
+    dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
   };
 
   return (
@@ -55,7 +59,12 @@ export default function ButtonComponent({ field }: FieldProps) {
               value={value}
             />
           </Box>
-          <ComponentAction handleSave={handleSaveData} />
+          <ComponentAction
+            handleSave={handleSaveData}
+            handleCancel={() => setShowEditorView(false)}
+            handleDelete={handleDeleteDropZone}
+            hasData={!!field?.data?.value}
+          />
         </Box>
       )}
     </>

@@ -23,6 +23,10 @@ export default function ButtonComponent({ field }: FieldProps) {
     );
   };
 
+  // const handleDelete = () => {
+  //   dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
+  // };
+
   return (
     <>
       {field.data ? (

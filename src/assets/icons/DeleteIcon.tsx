@@ -8,8 +8,8 @@ function DeleteIcon({ width, height }: IconProps) {
     <svg
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
+      width={width || 18}
+      height={height || 20}
       viewBox="0 0 18 20"
     >
       <path

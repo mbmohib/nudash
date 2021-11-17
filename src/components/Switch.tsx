@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { ComponentAction } from '.';
 import { useDispatch, useSection } from '../hooks';
-import { saveFieldData } from '../store/sectionSlice';
+import { removeField, saveFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
 export default function SwitchComponent({ field }: FieldProps) {
@@ -42,6 +42,10 @@ export default function SwitchComponent({ field }: FieldProps) {
     );
   };
 
+  const handleDelete = () => {
+    dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
+  };
+
   return (
     <>
       {field.data ? (
@@ -72,7 +76,10 @@ export default function SwitchComponent({ field }: FieldProps) {
               onChange={event => setValue(event.target.checked)}
             />
           </Grid>
-          <ComponentAction handleSave={handleSaveData} />
+          <ComponentAction
+            handleSave={handleSaveData}
+            handleRemove={handleDelete}
+          />
         </Box>
       )}
     </>

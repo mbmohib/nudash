@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
 import {
-  Button,
+  ButtonComponent,
   DateComponent,
   FileUploadComponent,
   LinkComponent,
@@ -153,7 +153,7 @@ export default function DropZone({ dropZone }: DropZoneProps) {
         <FileUploadComponent field={dropZone} />
       )}
       {fieldType === FieldType.Date && <DateComponent field={dropZone} />}
-      {fieldType === FieldType.Button && <Button field={dropZone} />}
+      {fieldType === FieldType.Button && <ButtonComponent field={dropZone} />}
     </Flex>
   );
 }
