@@ -32,11 +32,7 @@ export default function ButtonComponent({ field }: FieldProps) {
     setShowEditorView(false);
   };
 
-  const handleDelete = () => {
-    dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
-  };
-
-  const handleDeleteDropZone = () => {
+  const handleRemove = () => {
     dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
   };
 
@@ -45,7 +41,7 @@ export default function ButtonComponent({ field }: FieldProps) {
       {field.data && !showEditorView ? (
         <ComponentActionWithData
           handleEdit={toggleShowEditorView}
-          handleDelete={handleDelete}
+          handleRemove={handleRemove}
         >
           <Text fontSize="xl">{field.data.value}</Text>
         </ComponentActionWithData>
@@ -62,7 +58,7 @@ export default function ButtonComponent({ field }: FieldProps) {
           <ComponentAction
             handleSave={handleSaveData}
             handleCancel={() => setShowEditorView(false)}
-            handleDelete={handleDeleteDropZone}
+            handleRemove={handleRemove}
             hasData={!!field?.data?.value}
           />
         </Box>

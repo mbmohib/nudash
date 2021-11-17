@@ -3,14 +3,12 @@ import { Button, Flex } from '@chakra-ui/react';
 interface ComponentActionProps {
   handleSave: () => void;
   handleCancel?: () => void;
-  handleDelete?: () => void;
-  handleRemove?: () => void;
+  handleRemove: () => void;
   hasData?: boolean;
 }
 
 export default function ComponentAction({
   handleSave,
-  handleDelete,
   handleCancel,
   handleRemove,
   hasData,
@@ -26,7 +24,7 @@ export default function ComponentAction({
         </Button>
       )}
       {!hasData && (
-        <Button variant="link" onClick={handleDelete}>
+        <Button variant="link" onClick={handleRemove}>
           Delete
         </Button>
       )}

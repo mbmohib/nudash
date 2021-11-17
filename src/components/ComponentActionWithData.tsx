@@ -4,13 +4,13 @@ import { DeleteIcon } from '../assets/icons';
 
 interface ComponentActionProps {
   handleEdit: () => void;
-  handleDelete: () => void;
+  handleRemove: () => void;
   children: React.ReactNode;
 }
 
 export default function ComponentActionWithData({
   handleEdit,
-  handleDelete,
+  handleRemove,
   children,
 }: ComponentActionProps) {
   return (
@@ -34,7 +34,7 @@ export default function ComponentActionWithData({
           <Button variant="icon" size="xs" onClick={handleEdit}>
             <DeleteIcon width="10px" />
           </Button>
-          <Button variant="icon" size="xs" onClick={handleDelete}>
+          <Button variant="icon" size="xs" onClick={handleRemove}>
             <DeleteIcon width="10px" />
           </Button>
         </Flex>
