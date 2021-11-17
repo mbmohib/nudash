@@ -13,3 +13,4 @@ export { default as TextIcon } from './TextIcon';
 export { default as SwitchIcon } from './SwitchIcon';
 export { default as CalenderIcon } from './CalenderIcon';
 export { default as NumberIcon } from './NumberIcon';
+export { default as EditIcon } from './EditIcon';

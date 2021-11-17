@@ -1,8 +1,8 @@
 import { Box, Input, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { ComponentAction } from '.';
-import { useDispatch, useSection } from '../hooks';
+import { ComponentAction, ComponentActionWithData } from '.';
+import { useDispatch, useSection, useToggle } from '../hooks';
 import { handleFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
@@ -10,6 +10,11 @@ export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
+  const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
+
+  useEffect(() => {
+    setValue((field?.data?.value as string) ?? '');
+  }, []);
 
   const handleSaveData = () => {
     dispatch(
@@ -23,12 +28,23 @@ export default function ButtonComponent({ field }: FieldProps) {
         },
       }),
     );
+
+    setShowEditorView(false);
+  };
+
+  const handleDelete = () => {
+    //
   };
 
   return (
     <>
-      {field.data ? (
-        <Text>{field.data.value}</Text>
+      {field.data && !showEditorView ? (
+        <ComponentActionWithData
+          handleEdit={toggleShowEditorView}
+          handleDelete={handleDelete}
+        >
+          <Text fontSize="xl">{field.data.value}</Text>
+        </ComponentActionWithData>
       ) : (
         <Box width="100%">
           <Box>
@@ -36,6 +52,7 @@ export default function ButtonComponent({ field }: FieldProps) {
               onChange={event => setValue(event.target.value)}
               type="text"
               placeholder="label"
+              value={value}
             />
           </Box>
           <ComponentAction handleSave={handleSaveData} />

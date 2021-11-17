@@ -30,7 +30,9 @@ export default function ButtonComponent({ field }: FieldProps) {
   return (
     <>
       {field.data ? (
-        <Link to={field.data.value}>{field.data.label}</Link>
+        <Link color="primary" to={field.data.value}>
+          {field.data.label}
+        </Link>
       ) : (
         <Box>
           <Grid gridTemplateColumns="1fr 3fr" gap="1" width="100%">

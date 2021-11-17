@@ -116,6 +116,10 @@ const components = {
               : 'red.500',
         },
       }),
+      icon: () => ({
+        bg: 'transparent',
+        padding: 1,
+      }),
     },
   },
   Input: {

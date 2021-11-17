@@ -1,10 +1,15 @@
 import { useDisclosure } from '@chakra-ui/hooks';
-import { Container, Grid } from '@chakra-ui/react';
+import { Box, Container, Grid } from '@chakra-ui/react';
 import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { DraggableComponents, PredefinedColumns, Section } from '../components';
+import {
+  DraggableComponents,
+  PageHeader,
+  PredefinedColumns,
+  Section,
+} from '../components';
 import { useDispatch, useSelector } from '../hooks';
 import { handleAddColumn, removeLastUnusedRow } from '../store/sectionSlice';
 
@@ -44,25 +49,33 @@ export default function Page() {
     onClose();
   };
 
+  const saveData = () => {
+    // eslint-disable-next-line no-console
+    console.log(sections);
+  };
+
   return (
     <>
-      <DndProvider backend={HTML5Backend}>
-        <Grid gridTemplateColumns="1fr 350px">
-          <Container py="2" maxW="container.lg">
-            {sections.map((section, index) => (
-              <Section section={section} key={index} />
-            ))}
-          </Container>
-          <DraggableComponents
-            handleOpenColumnLayout={handleOpenColumnLayout}
-          />
-        </Grid>
-      </DndProvider>
-      <PredefinedColumns
-        isOpen={isOpen}
-        onClose={handleCloseColumnLayout}
-        handleColumnLayout={handleColumnLayout}
-      />
+      <PageHeader save={saveData} />
+      <Box pt="80px">
+        <DndProvider backend={HTML5Backend}>
+          <Grid gridTemplateColumns="1fr 350px">
+            <Container py="2" maxW="container.lg">
+              {sections.map((section, index) => (
+                <Section section={section} key={index} />
+              ))}
+            </Container>
+            <DraggableComponents
+              handleOpenColumnLayout={handleOpenColumnLayout}
+            />
+          </Grid>
+        </DndProvider>
+        <PredefinedColumns
+          isOpen={isOpen}
+          onClose={handleCloseColumnLayout}
+          handleColumnLayout={handleColumnLayout}
+        />
+      </Box>
     </>
   );
 }

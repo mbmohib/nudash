@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/layout';
 
-import { Footer, Header, Sidebar } from '.';
+import { Footer, Sidebar } from '.';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -11,8 +11,7 @@ export default function Layout({ children }: LayoutProps) {
     <Box>
       <Sidebar />
       <Box ml="250px">
-        <Header />
-        <Box pt="80px">{children}</Box>
+        <Box>{children}</Box>
         <Footer />
       </Box>
     </Box>

@@ -129,12 +129,11 @@ export default function DropZone({ dropZone }: DropZoneProps) {
     <Flex
       ref={drop}
       role={`DropZone-${dropZone.id}`}
-      minHeight="100px"
       width="100%"
-      justifyContent="center"
+      justifyContent="flex-start"
       alignItems="center"
       rounded="base"
-      p="2"
+      mb="1"
       opacity={isActive ? '0.2' : '1'}
       bgColor={isActive ? 'white' : 'transparent'}
     >

@@ -1,8 +1,12 @@
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 
 import { DeleteIcon } from '../assets/icons';
 
-export default function Header() {
+interface HeaderProps {
+  save: () => void;
+}
+
+export default function Header({ save }: HeaderProps) {
   return (
     <Flex
       p="2"
@@ -10,18 +14,21 @@ export default function Header() {
       borderColor="gray.500"
       justifyContent="space-between"
       alignItems="center"
-      position="fixed"
       height="80px"
+      background="secondary600"
       width="calc(100% - 250px)"
       zIndex="docked"
-      background="secondary600"
+      position="fixed"
     >
       <Box>
         <Heading size="lg">Home</Heading>
       </Box>
-      <Box>
+      <Flex alignItems="center">
+        <Button onClick={save} mr="2">
+          Save
+        </Button>
         <DeleteIcon />
-      </Box>
+      </Flex>
     </Flex>
   );
 }

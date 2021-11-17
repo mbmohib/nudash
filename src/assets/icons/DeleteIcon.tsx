@@ -1,6 +1,17 @@
-function DeleteIcon() {
+interface IconProps {
+  width?: string;
+  height?: string;
+}
+
+function DeleteIcon({ width, height }: IconProps) {
   return (
-    <svg width={18} height={20} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 18 20"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
