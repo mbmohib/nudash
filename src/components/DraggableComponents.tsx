@@ -43,6 +43,13 @@ const fields: DraggableField[] = [
     },
   },
   {
+    type: FieldType.Link,
+    info: {
+      title: 'Link',
+      icon: <ButtonIcon />,
+    },
+  },
+  {
     type: FieldType.Number,
     info: {
       title: 'Number',

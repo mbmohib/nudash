@@ -22,3 +22,4 @@ export { default as FileUpload } from './FileUpload';
 export { default as FileUploadComponent } from './FileUploadComponent';
 export { default as RichText } from './RichText';
 export { default as RichTextComponent } from './RichTextComponent';
+export { default as LinkComponent } from './LinkComponent';

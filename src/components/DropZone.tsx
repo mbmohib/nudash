@@ -6,6 +6,7 @@ import {
   Button,
   DateComponent,
   FileUploadComponent,
+  LinkComponent,
   MultilineText,
   Number,
   RichTextComponent,
@@ -147,6 +148,7 @@ export default function DropZone({ dropZone }: DropZoneProps) {
         <RichTextComponent field={dropZone} />
       )}
       {fieldType === FieldType.Number && <Number field={dropZone} />}
+      {fieldType === FieldType.Link && <LinkComponent field={dropZone} />}
       {fieldType === FieldType.Switch && <Switch field={dropZone} />}
       {fieldType === FieldType.Image && (
         <FileUploadComponent field={dropZone} />

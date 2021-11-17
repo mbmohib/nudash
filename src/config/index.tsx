@@ -16,6 +16,7 @@ export enum FieldType {
   Date = 'date',
   Switch = 'switch',
   Button = 'button',
+  Link = 'link',
 }
 
 export const ItemTypes = {
