@@ -1,6 +1,6 @@
 import { Box, Button, Flex } from '@chakra-ui/react';
 
-import { DeleteIcon } from '../assets/icons';
+import { DeleteIcon } from '../../assets/icons';
 
 interface ComponentActionProps {
   handleEdit: () => void;

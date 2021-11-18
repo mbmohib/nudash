@@ -1,16 +1,20 @@
-import { Box, Text, Textarea } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Box, Input, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
-import { ComponentAction, ComponentActionWithData } from '.';
-import { useDispatch, useSection, useToggle } from '../hooks';
-import { removeField, saveFieldData } from '../store/sectionSlice';
-import { FieldProps } from '../types';
+import { ComponentAction, ComponentActionWithData } from '..';
+import { useDispatch, useSection, useToggle } from '../../hooks';
+import { removeField, saveFieldData } from '../../store/sectionSlice';
+import { FieldProps } from '../../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
   const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
+
+  useEffect(() => {
+    setValue((field?.data?.value as string) ?? '');
+  }, []);
 
   const handleSaveData = () => {
     dispatch(
@@ -24,6 +28,8 @@ export default function ButtonComponent({ field }: FieldProps) {
         },
       }),
     );
+
+    setShowEditorView(false);
   };
 
   const handleRemove = () => {
@@ -37,15 +43,16 @@ export default function ButtonComponent({ field }: FieldProps) {
           handleEdit={toggleShowEditorView}
           handleRemove={handleRemove}
         >
-          <Text>{field.data.value}</Text>
+          <Text fontSize="xl">{field.data.value}</Text>
         </ComponentActionWithData>
       ) : (
         <Box width="100%">
           <Box>
-            <Textarea
+            <Input
               onChange={event => setValue(event.target.value)}
               type="text"
-              placeholder="Write here.."
+              placeholder="label"
+              value={value}
             />
           </Box>
           <ComponentAction

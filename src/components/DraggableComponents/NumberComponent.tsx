@@ -1,16 +1,15 @@
-import { Box, Grid, Input, Link } from '@chakra-ui/react';
+import { Box, Input, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import { ComponentAction, ComponentActionWithData } from '.';
-import { useDispatch, useSection, useToggle } from '../hooks';
-import { removeField, saveFieldData } from '../store/sectionSlice';
-import { FieldProps } from '../types';
+import { ComponentAction, ComponentActionWithData } from '..';
+import { useDispatch, useSection, useToggle } from '../../hooks';
+import { removeField, saveFieldData } from '../../store/sectionSlice';
+import { FieldProps } from '../../types';
 
-export default function ButtonComponent({ field }: FieldProps) {
+export default function NumberComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
-  const [label, setLabel] = useState<string>('');
-  const [value, setValue] = useState<string>('');
+  const [number, setNumber] = useState<string>('');
   const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
 
   const handleSaveData = () => {
@@ -21,8 +20,7 @@ export default function ButtonComponent({ field }: FieldProps) {
         rowId,
         columnId,
         data: {
-          label,
-          value,
+          value: number,
         },
       }),
     );
@@ -39,24 +37,17 @@ export default function ButtonComponent({ field }: FieldProps) {
           handleEdit={toggleShowEditorView}
           handleRemove={handleRemove}
         >
-          <Link color="primary" to={field.data.value}>
-            {field.data.label}
-          </Link>
+          <Text>{field.data.value}</Text>
         </ComponentActionWithData>
       ) : (
-        <Box>
-          <Grid gridTemplateColumns="1fr 3fr" gap="1" width="100%">
+        <Box width="100%">
+          <Box>
             <Input
-              onChange={event => setLabel(event.target.value)}
-              type="text"
+              onChange={event => setNumber(event.target.value)}
+              type="number"
               placeholder="label"
             />
-            <Input
-              type="text"
-              placeholder="Link"
-              onChange={event => setValue(event.target.value)}
-            />
-          </Grid>
+          </Box>
           <ComponentAction
             handleSave={handleSaveData}
             handleCancel={() => setShowEditorView(false)}

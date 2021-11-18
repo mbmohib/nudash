@@ -1,9 +1,9 @@
 import { Box, Image } from '@chakra-ui/react';
 
-import { FileUpload } from '.';
-import { useDispatch, useSection } from '../hooks';
-import { saveFieldData } from '../store/sectionSlice';
-import { FieldProps, FileType } from '../types';
+import { FileUpload } from '..';
+import { useDispatch, useSection } from '../../hooks';
+import { saveFieldData } from '../../store/sectionSlice';
+import { FieldProps, FileType } from '../../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();

@@ -1,15 +1,17 @@
-import { Box, Button, Grid, Input } from '@chakra-ui/react';
+import { Box, Grid, Input, Text } from '@chakra-ui/react';
+import { format } from 'date-fns';
 import { useState } from 'react';
 
-import { ComponentAction, ComponentActionWithData } from '.';
-import { useDispatch, useSection, useToggle } from '../hooks';
-import { removeField, saveFieldData } from '../store/sectionSlice';
-import { FieldProps } from '../types';
+import { ComponentAction, ComponentActionWithData, DatePicker } from '..';
+import { useDispatch, useSection, useToggle } from '../../hooks';
+import { removeField, saveFieldData } from '../../store/sectionSlice';
+import { FieldProps } from '../../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
   const [label, setLabel] = useState<string>('');
+  const [date, setDate] = useState<Date>(new Date());
   const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
 
   const handleSaveData = () => {
@@ -21,6 +23,7 @@ export default function ButtonComponent({ field }: FieldProps) {
         columnId,
         data: {
           label,
+          date: new Date(date).toISOString(),
         },
       }),
     );
@@ -37,17 +40,23 @@ export default function ButtonComponent({ field }: FieldProps) {
           handleEdit={toggleShowEditorView}
           handleRemove={handleRemove}
         >
-          <Button>{field.data.label}</Button>
+          <Text>{field.data.label}:</Text>
+          <Text mr="2">
+            {format(new Date(field.data.date as Date), 'dd/MM/yyyy')}
+          </Text>
         </ComponentActionWithData>
       ) : (
         <Box>
-          <Grid gridTemplateColumns="1fr 3fr" gap="1" width="100%">
+          <Grid gridTemplateColumns="1fr 3fr" gap="2">
             <Input
-              onChange={event => setLabel(event.target.value)}
               type="text"
-              placeholder="label"
+              value={label}
+              onChange={event => setLabel(event.target.value)}
             />
-            <Input type="text" placeholder="Link" />
+            <DatePicker
+              selected={date}
+              onChange={dateValue => setDate(dateValue as Date)}
+            />
           </Grid>
           <ComponentAction
             handleSave={handleSaveData}

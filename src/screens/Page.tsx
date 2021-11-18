@@ -5,7 +5,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import {
-  DraggableComponents,
+  DraggableComponentsContainer,
   PageHeader,
   PredefinedColumns,
   Section,
@@ -69,7 +69,7 @@ export default function Page() {
                 />
               ))}
             </Container>
-            <DraggableComponents
+            <DraggableComponentsContainer
               handleOpenColumnLayout={handleOpenColumnLayout}
             />
           </Grid>

@@ -1,10 +1,10 @@
 import { Box } from '@chakra-ui/react';
 import { useRef } from 'react';
 
-import { ComponentAction, ComponentActionWithData, RichText } from '.';
-import { useDispatch, useSection, useToggle } from '../hooks';
-import { removeField, saveFieldData } from '../store/sectionSlice';
-import { FieldProps } from '../types';
+import { ComponentAction, ComponentActionWithData, RichText } from '..';
+import { useDispatch, useSection, useToggle } from '../../hooks';
+import { removeField, saveFieldData } from '../../store/sectionSlice';
+import { FieldProps } from '../../types';
 
 interface EditorRef {
   handleSave: () => string;
