@@ -7,10 +7,10 @@ import {
   DateComponent,
   FileUploadComponent,
   LinkComponent,
-  MultilineText,
+  MultilineTextComponent,
   NumberComponent,
   RichTextComponent,
-  SingleLineText,
+  SingleLineTextComponent,
   SwitchComponent,
 } from '.';
 import { FieldType, ItemTypes } from '../config';
@@ -139,9 +139,11 @@ export default function DropZone({ dropZone }: DropZoneProps) {
     >
       {!fieldType && <DropZonePlaceholder isActive={isActive} />}
 
-      {fieldType === FieldType.Text && <SingleLineText field={dropZone} />}
+      {fieldType === FieldType.Text && (
+        <SingleLineTextComponent field={dropZone} />
+      )}
       {fieldType === FieldType.MultilineText && (
-        <MultilineText field={dropZone} />
+        <MultilineTextComponent field={dropZone} />
       )}
       {fieldType === FieldType.RichText && (
         <RichTextComponent field={dropZone} />
