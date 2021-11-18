@@ -1,8 +1,8 @@
 import { Box, Text, Textarea } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import { ComponentAction } from '.';
-import { useDispatch, useSection } from '../hooks';
+import { ComponentAction, ComponentActionWithData } from '.';
+import { useDispatch, useSection, useToggle } from '../hooks';
 import { removeField, saveFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
@@ -10,6 +10,7 @@ export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
+  const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
 
   const handleSaveData = () => {
     dispatch(
@@ -25,14 +26,19 @@ export default function ButtonComponent({ field }: FieldProps) {
     );
   };
 
-  const handleDelete = () => {
+  const handleRemove = () => {
     dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
   };
 
   return (
     <>
-      {field.data ? (
-        <Text>{field.data.value}</Text>
+      {field.data && !showEditorView ? (
+        <ComponentActionWithData
+          handleEdit={toggleShowEditorView}
+          handleRemove={handleRemove}
+        >
+          <Text>{field.data.value}</Text>
+        </ComponentActionWithData>
       ) : (
         <Box width="100%">
           <Box>
@@ -44,7 +50,9 @@ export default function ButtonComponent({ field }: FieldProps) {
           </Box>
           <ComponentAction
             handleSave={handleSaveData}
-            handleRemove={handleDelete}
+            handleCancel={() => setShowEditorView(false)}
+            handleRemove={handleRemove}
+            hasData={!!field?.data?.value}
           />
         </Box>
       )}

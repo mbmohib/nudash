@@ -8,10 +8,10 @@ import {
   FileUploadComponent,
   LinkComponent,
   MultilineText,
-  Number,
+  NumberComponent,
   RichTextComponent,
   SingleLineText,
-  Switch,
+  SwitchComponent,
 } from '.';
 import { FieldType, ItemTypes } from '../config';
 import { useDebounce, useDispatch, useSection, useSelector } from '../hooks';
@@ -146,9 +146,9 @@ export default function DropZone({ dropZone }: DropZoneProps) {
       {fieldType === FieldType.RichText && (
         <RichTextComponent field={dropZone} />
       )}
-      {fieldType === FieldType.Number && <Number field={dropZone} />}
+      {fieldType === FieldType.Number && <NumberComponent field={dropZone} />}
       {fieldType === FieldType.Link && <LinkComponent field={dropZone} />}
-      {fieldType === FieldType.Switch && <Switch field={dropZone} />}
+      {fieldType === FieldType.Switch && <SwitchComponent field={dropZone} />}
       {fieldType === FieldType.Image && (
         <FileUploadComponent field={dropZone} />
       )}

@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { useRef } from 'react';
 
-import { ComponentAction, RichText } from '.';
-import { useDispatch, useSection } from '../hooks';
+import { ComponentAction, ComponentActionWithData, RichText } from '.';
+import { useDispatch, useSection, useToggle } from '../hooks';
 import { removeField, saveFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
@@ -14,6 +14,7 @@ export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
   const editorRef = useRef<EditorRef>(null);
+  const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
 
   const handleSaveData = async () => {
     let data = '';
@@ -34,16 +35,21 @@ export default function ButtonComponent({ field }: FieldProps) {
     }
   };
 
-  const handleDelete = () => {
+  const handleRemove = () => {
     dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
   };
 
   return (
     <>
-      {field.data ? (
-        <Box
-          dangerouslySetInnerHTML={{ __html: field.data?.html as string }}
-        ></Box>
+      {field.data && !showEditorView ? (
+        <ComponentActionWithData
+          handleEdit={toggleShowEditorView}
+          handleRemove={handleRemove}
+        >
+          <Box
+            dangerouslySetInnerHTML={{ __html: field.data?.html as string }}
+          ></Box>
+        </ComponentActionWithData>
       ) : (
         <Box width="100%">
           <Box bg="secondary400">
@@ -51,7 +57,9 @@ export default function ButtonComponent({ field }: FieldProps) {
           </Box>
           <ComponentAction
             handleSave={handleSaveData}
-            handleRemove={handleDelete}
+            handleCancel={() => setShowEditorView(false)}
+            handleRemove={handleRemove}
+            hasData={!!field?.data?.isChecked}
           />
         </Box>
       )}

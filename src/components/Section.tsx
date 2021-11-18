@@ -17,9 +17,10 @@ interface SectionTypes {
 
 interface SectionProps {
   section: SectionTypes;
+  totalSection: number;
 }
 
-export default function Section({ section }: SectionProps) {
+export default function Section({ section, totalSection }: SectionProps) {
   const dispatch = useDispatch();
 
   return (
@@ -51,6 +52,7 @@ export default function Section({ section }: SectionProps) {
           Add Section
         </Button>
         <Button
+          disabled={totalSection === 1}
           fontWeight="normal"
           leftIcon={<FileMinusIcons />}
           variant="link"

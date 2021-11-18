@@ -62,7 +62,11 @@ export default function Page() {
           <Grid gridTemplateColumns="1fr 350px">
             <Container py="2" maxW="container.lg">
               {sections.map((section, index) => (
-                <Section section={section} key={index} />
+                <Section
+                  section={section}
+                  key={index}
+                  totalSection={sections.length}
+                />
               ))}
             </Container>
             <DraggableComponents

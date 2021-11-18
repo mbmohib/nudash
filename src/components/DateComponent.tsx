@@ -2,8 +2,8 @@ import { Box, Grid, Input, Text } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { useState } from 'react';
 
-import { ComponentAction, DatePicker } from '.';
-import { useDispatch, useSection } from '../hooks';
+import { ComponentAction, ComponentActionWithData, DatePicker } from '.';
+import { useDispatch, useSection, useToggle } from '../hooks';
 import { removeField, saveFieldData } from '../store/sectionSlice';
 import { FieldProps } from '../types';
 
@@ -12,6 +12,7 @@ export default function ButtonComponent({ field }: FieldProps) {
   const dispatch = useDispatch();
   const [label, setLabel] = useState<string>('');
   const [date, setDate] = useState<Date>(new Date());
+  const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
 
   const handleSaveData = () => {
     dispatch(
@@ -28,19 +29,22 @@ export default function ButtonComponent({ field }: FieldProps) {
     );
   };
 
-  const handleDelete = () => {
+  const handleRemove = () => {
     dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
   };
 
   return (
     <>
-      {field.data ? (
-        <>
+      {field.data && !showEditorView ? (
+        <ComponentActionWithData
+          handleEdit={toggleShowEditorView}
+          handleRemove={handleRemove}
+        >
           <Text>{field.data.label}:</Text>
           <Text mr="2">
             {format(new Date(field.data.date as Date), 'dd/MM/yyyy')}
           </Text>
-        </>
+        </ComponentActionWithData>
       ) : (
         <Box>
           <Grid gridTemplateColumns="1fr 3fr" gap="2">
@@ -56,7 +60,9 @@ export default function ButtonComponent({ field }: FieldProps) {
           </Grid>
           <ComponentAction
             handleSave={handleSaveData}
-            handleRemove={handleDelete}
+            handleCancel={() => setShowEditorView(false)}
+            handleRemove={handleRemove}
+            hasData={!!field?.data?.value}
           />
         </Box>
       )}
