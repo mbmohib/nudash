@@ -1,15 +1,6 @@
-import { Button } from '@chakra-ui/button';
-import {
-  Box,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
+
+import { Modal } from '.';
 
 interface PredefinedColumnsProps {
   isOpen: boolean;
@@ -55,34 +46,16 @@ export default function PredefinedColumns({
   handleColumnLayout,
 }: PredefinedColumnsProps) {
   return (
-    <Modal
-      autoFocus={false}
-      onClose={onClose}
-      isOpen={isOpen}
-      isCentered
-      size="lg"
-    >
-      <ModalOverlay />
-      <ModalContent bgColor="secondary500">
-        <ModalHeader>Select Column</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Flex flexWrap="wrap" gridGap="2">
-            {columnCount.map((column: number) => (
-              <Column
-                key={column}
-                count={column}
-                handleColumn={(count: number) => handleColumnLayout(count)}
-              />
-            ))}
-          </Flex>
-        </ModalBody>
-        <ModalFooter>
-          <Button variant="solid" onClick={onClose}>
-            Close
-          </Button>
-        </ModalFooter>
-      </ModalContent>
+    <Modal isOpen={isOpen} onClose={onClose} heading="Select Column">
+      <Flex flexWrap="wrap" gridGap="2">
+        {columnCount.map((column: number) => (
+          <Column
+            key={column}
+            count={column}
+            handleColumn={(count: number) => handleColumnLayout(count)}
+          />
+        ))}
+      </Flex>
     </Modal>
   );
 }
