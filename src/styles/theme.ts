@@ -137,13 +137,20 @@ const components = {
     sizes: {
       md: {
         field: {
+          paddingLeft: '16px',
+          paddingRight: '16px',
           borderRadius: '4px',
         },
       },
     },
-    variants: {},
-    defaultProps: {
-      variant: null, // null here
+  },
+  Textarea: {
+    variants: {
+      outline: {
+        paddingInlineStart: 2,
+        paddingInlineEnd: 2,
+        borderRadius: '4px',
+      },
     },
   },
 };

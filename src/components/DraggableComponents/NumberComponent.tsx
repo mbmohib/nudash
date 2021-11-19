@@ -24,6 +24,8 @@ export default function NumberComponent({ field }: FieldProps) {
         },
       }),
     );
+
+    setShowEditorView(false);
   };
 
   const handleRemove = () => {

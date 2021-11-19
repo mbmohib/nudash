@@ -7,7 +7,7 @@ import { removeField, saveFieldData } from '../../store/sectionSlice';
 import { FieldProps } from '../../types';
 
 interface EditorRef {
-  handleSave: () => string;
+  handleSave: () => { blocks: any; html: string };
 }
 
 export default function ButtonComponent({ field }: FieldProps) {
@@ -17,9 +17,8 @@ export default function ButtonComponent({ field }: FieldProps) {
   const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
 
   const handleSaveData = async () => {
-    let data = '';
     if (editorRef.current) {
-      data = await editorRef.current.handleSave();
+      const data = await editorRef.current.handleSave();
 
       dispatch(
         saveFieldData({
@@ -28,7 +27,8 @@ export default function ButtonComponent({ field }: FieldProps) {
           rowId,
           columnId,
           data: {
-            html: data,
+            blocks: data.blocks,
+            value: data.html,
           },
         }),
       );
@@ -47,13 +47,13 @@ export default function ButtonComponent({ field }: FieldProps) {
           handleRemove={handleRemove}
         >
           <Box
-            dangerouslySetInnerHTML={{ __html: field.data?.html as string }}
+            dangerouslySetInnerHTML={{ __html: field.data?.value as string }}
           ></Box>
         </ComponentActionWithData>
       ) : (
         <Box width="100%">
           <Box bg="secondary400">
-            <RichText ref={editorRef} />
+            <RichText ref={editorRef} defaultBlock={field.data?.blocks} />
           </Box>
           <ComponentAction
             handleSave={handleSaveData}

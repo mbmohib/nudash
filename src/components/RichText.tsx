@@ -36,12 +36,12 @@ function codeParser({ data }: CodeParserProps) {
 }
 
 interface EditorJS {
-  save: () => void;
+  save: () => { blocks: any };
   clear: () => void;
 }
 
 interface ReactEditorProps {
-  defaultBlock?: string;
+  defaultBlock?: any;
 }
 
 function RichText(
@@ -84,14 +84,21 @@ function RichText(
     editorJS.current = instance;
   }, []);
 
-  const handleSave = async (): Promise<string> => {
+  const handleSave = async (): Promise<{ blocks: any; html: string }> => {
     if (editorJS.current) {
       const savedData = await editorJS.current.save();
       const edjsParser = edjsHTML({ table: tableParser, code: codeParser });
-      return edjsParser.parse(savedData).join('');
+
+      return {
+        blocks: savedData,
+        html: edjsParser.parse(savedData).join(''),
+      };
     }
 
-    return '';
+    return {
+      blocks: null,
+      html: '',
+    };
   };
 
   const resetEditor = () => {
@@ -107,7 +114,7 @@ function RichText(
 
   return (
     <ReactEditorJS
-      defaultBlock={defaultBlock}
+      defaultValue={defaultBlock}
       onInitialize={handleInitialize}
       tools={EDITOR_JS_TOOLS}
     />

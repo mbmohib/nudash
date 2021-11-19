@@ -26,6 +26,8 @@ export default function ButtonComponent({ field }: FieldProps) {
         },
       }),
     );
+
+    setShowEditorView(false);
   };
 
   const handleRemove = () => {

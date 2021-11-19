@@ -26,6 +26,8 @@ export default function SwitchComponent({ field }: FieldProps) {
         },
       }),
     );
+
+    setShowEditorView(false);
   };
 
   const handleSwitchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
