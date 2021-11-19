@@ -6,9 +6,11 @@ import InlineCode from '@editorjs/inline-code';
 import List from '@editorjs/list';
 import Quote from '@editorjs/quote';
 import Table from '@editorjs/table';
-import edjsHTML from 'editorjs-html';
+import editorjsHTML from 'editorjs-html';
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { createReactEditorJS } from 'react-editor-js';
+
+import { EditorBlock } from '../types';
 
 interface TableParserProps {
   data: { content: [] };
@@ -36,16 +38,16 @@ function codeParser({ data }: CodeParserProps) {
 }
 
 interface EditorJS {
-  save: () => { blocks: any };
+  save: () => { blocks: EditorBlock };
   clear: () => void;
 }
 
 interface ReactEditorProps {
-  defaultBlock?: any;
+  blocks?: EditorBlock;
 }
 
 function RichText(
-  { defaultBlock }: ReactEditorProps,
+  { blocks }: ReactEditorProps,
   ref: React.Ref<unknown> | undefined,
 ) {
   const editorJS = React.useRef<EditorJS | null>(null);
@@ -84,14 +86,20 @@ function RichText(
     editorJS.current = instance;
   }, []);
 
-  const handleSave = async (): Promise<{ blocks: any; html: string }> => {
+  const handleSave = async (): Promise<{
+    blocks: EditorBlock | null;
+    html: string;
+  }> => {
     if (editorJS.current) {
       const savedData = await editorJS.current.save();
-      const edjsParser = edjsHTML({ table: tableParser, code: codeParser });
+      const editorjsParser = editorjsHTML({
+        table: tableParser,
+        code: codeParser,
+      });
 
       return {
-        blocks: savedData,
-        html: edjsParser.parse(savedData).join(''),
+        blocks: savedData.blocks,
+        html: editorjsParser.parse(savedData).join(''),
       };
     }
 
@@ -114,7 +122,7 @@ function RichText(
 
   return (
     <ReactEditorJS
-      defaultValue={defaultBlock}
+      defaultValue={{ blocks }}
       onInitialize={handleInitialize}
       tools={EDITOR_JS_TOOLS}
     />

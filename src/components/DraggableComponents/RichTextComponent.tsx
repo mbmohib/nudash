@@ -4,10 +4,10 @@ import { useRef } from 'react';
 import { ComponentAction, ComponentActionWithData, RichText } from '..';
 import { useDispatch, useSection, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/sectionSlice';
-import { FieldProps } from '../../types';
+import { EditorBlock, FieldProps } from '../../types';
 
 interface EditorRef {
-  handleSave: () => { blocks: any; html: string };
+  handleSave: () => { blocks: EditorBlock; html: string };
 }
 
 export default function ButtonComponent({ field }: FieldProps) {
@@ -53,7 +53,10 @@ export default function ButtonComponent({ field }: FieldProps) {
       ) : (
         <Box width="100%">
           <Box bg="secondary400">
-            <RichText ref={editorRef} defaultBlock={field.data?.blocks} />
+            <RichText
+              ref={editorRef}
+              blocks={field.data?.blocks as EditorBlock}
+            />
           </Box>
           <ComponentAction
             handleSave={handleSaveData}
