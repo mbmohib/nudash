@@ -20,9 +20,12 @@
 
 ### TODO
 
-- Add site overview page
+- Add site overview page with menus
 - Add Create collection page
 - Add Create page
+- Add sidebar to page internal
+- Add login page
+- Add user menu
 - Implement drag feature for changing order
 - Create Schema for collection
 - Add save to db option/publish
