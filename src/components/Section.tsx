@@ -3,7 +3,7 @@ import { AiOutlineHolder } from 'react-icons/ai';
 
 import { Row } from '.';
 import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
-import { useDispatch } from '../hooks';
+import { useDispatch, useToggle } from '../hooks';
 import { handleAddSection, handleRemoveSection } from '../store/sectionSlice';
 import { DraggableItem } from '../types';
 
@@ -22,6 +22,7 @@ interface SectionProps {
 
 export default function Section({ section, totalSection }: SectionProps) {
   const dispatch = useDispatch();
+  const [expand, setExpand] = useToggle(true);
 
   return (
     <Box
@@ -32,9 +33,11 @@ export default function Section({ section, totalSection }: SectionProps) {
       rounded="base"
       mb="2"
     >
-      {section.rows.map((row, index) => (
-        <Row key={index} rowId={row.id} sectionId={section.id} row={row} />
-      ))}
+      <Box maxHeight={expand ? 'auto' : '100px'} overflow="hidden">
+        {section.rows.map((row, index) => (
+          <Row key={index} rowId={row.id} sectionId={section.id} row={row} />
+        ))}
+      </Box>
 
       <Flex justifyContent="center" py="2">
         <Button
@@ -90,6 +93,26 @@ export default function Section({ section, totalSection }: SectionProps) {
         >
           <Icon as={AiOutlineHolder} width="24px" height="24px" />
         </Button>
+      </Box>
+
+      <Box
+        role="expand"
+        position="absolute"
+        sx={{
+          top: '-30px',
+          right: '25px',
+        }}
+      >
+        {expand && (
+          <Button variant="primary" onClick={setExpand}>
+            Collapse
+          </Button>
+        )}
+        {!expand && (
+          <Button variant="primary" onClick={setExpand}>
+            Expand
+          </Button>
+        )}
       </Box>
     </Box>
   );
