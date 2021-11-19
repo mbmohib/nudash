@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
 import { FieldType } from '../config';
-import { DraggableItem, EditorBlock } from '../types';
+import { DraggableItem, FieldData } from '../types';
 
 interface LastDropItem {
   sectionId: number;
@@ -327,10 +327,7 @@ const sectionSlice = createSlice({
     saveFieldData(
       state,
       action: PayloadAction<{
-        data: {
-          // FIXME: refactor this to proper type
-          [key: string]: string | number | boolean | Date | EditorBlock;
-        };
+        data: FieldData;
         dropZoneId: string;
         sectionId: number;
         rowId: number;

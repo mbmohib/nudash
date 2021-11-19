@@ -62,7 +62,7 @@ export default function ButtonComponent({ field }: FieldProps) {
             handleSave={handleSaveData}
             handleCancel={() => setShowEditorView(false)}
             handleRemove={handleRemove}
-            hasData={!!field?.data?.isChecked}
+            hasData={!!field?.data?.blocks}
           />
         </Box>
       )}

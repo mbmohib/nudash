@@ -23,7 +23,7 @@ export default function ButtonComponent({ field }: FieldProps) {
         columnId,
         data: {
           label,
-          date: new Date(date).toISOString(),
+          value: new Date(date).toISOString(),
         },
       }),
     );
@@ -44,7 +44,7 @@ export default function ButtonComponent({ field }: FieldProps) {
         >
           <Text>{field.data.label}:</Text>
           <Text mr="2">
-            {format(new Date(field.data.date as Date), 'dd/MM/yyyy')}
+            {format(new Date(field.data.value as Date), 'dd/MM/yyyy')}
           </Text>
         </ComponentActionWithData>
       ) : (

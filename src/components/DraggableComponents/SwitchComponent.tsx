@@ -21,8 +21,8 @@ export default function SwitchComponent({ field }: FieldProps) {
         rowId,
         columnId,
         data: {
-          isChecked: value,
           label,
+          value,
         },
       }),
     );
@@ -38,7 +38,7 @@ export default function SwitchComponent({ field }: FieldProps) {
         rowId,
         columnId,
         data: {
-          isChecked: event.target.checked,
+          value: event.target.checked,
           label,
         },
       }),
@@ -61,7 +61,7 @@ export default function SwitchComponent({ field }: FieldProps) {
             <Switch
               size="md"
               onChange={handleSwitchValue}
-              isChecked={!!field.data.isChecked}
+              isChecked={!!field.data.value}
             />
           </Flex>
         </ComponentActionWithData>
@@ -88,7 +88,7 @@ export default function SwitchComponent({ field }: FieldProps) {
             handleSave={handleSaveData}
             handleCancel={() => setShowEditorView(false)}
             handleRemove={handleRemove}
-            hasData={!!field?.data?.isChecked}
+            hasData={!!field?.data?.value}
           />
         </Box>
       )}

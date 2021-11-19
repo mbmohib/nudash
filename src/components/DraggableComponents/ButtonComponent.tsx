@@ -10,6 +10,7 @@ export default function ButtonComponent({ field }: FieldProps) {
   const dispatch = useDispatch();
   const { sectionId, rowId, columnId } = useSection();
   const [label, setLabel] = useState<string>('');
+  const [value, setValue] = useState<string>('');
   const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
 
   const handleSaveData = () => {
@@ -21,6 +22,7 @@ export default function ButtonComponent({ field }: FieldProps) {
         columnId,
         data: {
           label,
+          value,
         },
       }),
     );
@@ -49,7 +51,11 @@ export default function ButtonComponent({ field }: FieldProps) {
               type="text"
               placeholder="label"
             />
-            <Input type="text" placeholder="Link" />
+            <Input
+              type="text"
+              placeholder="Link"
+              onChange={event => setValue(event.target.value)}
+            />
           </Grid>
           <ComponentAction
             handleSave={handleSaveData}

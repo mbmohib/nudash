@@ -3,3 +3,4 @@ export type { default as DraggableItem } from './DraggableItem';
 export type { default as FieldProps } from './FieldProps';
 export type { default as FileType } from './FileType';
 export type { default as EditorBlock } from './EditorBlock';
+export type { default as FieldData } from './FieldData';

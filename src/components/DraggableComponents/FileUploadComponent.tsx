@@ -17,20 +17,16 @@ export default function ButtonComponent({ field }: FieldProps) {
         rowId,
         columnId,
         data: {
-          src: file.preview,
+          value: file.preview,
         },
       }),
     );
   };
 
-  // const handleDelete = () => {
-  //   dispatch(removeField({ dropZoneId: field.id, sectionId, rowId, columnId }));
-  // };
-
   return (
     <>
       {field.data ? (
-        <Image src={field.data.src as string} />
+        <Image src={field.data.value as string} />
       ) : (
         <Box>
           <FileUpload handleUpload={handleSaveData} />
