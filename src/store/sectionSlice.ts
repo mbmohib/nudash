@@ -19,6 +19,7 @@ interface LastRowItem {
 }
 
 interface SectionState {
+  pageId: string;
   sections: {
     id: number;
     rows: {
@@ -31,6 +32,7 @@ interface SectionState {
 }
 
 const initialState: SectionState = {
+  pageId: '001',
   sections: [
     {
       id: 0,
@@ -53,6 +55,9 @@ const sectionSlice = createSlice({
   name: 'section',
   initialState,
   reducers: {
+    setInitialState(state, action) {
+      return action.payload;
+    },
     handleAddSection(
       state,
       action: PayloadAction<{
@@ -414,6 +419,7 @@ const sectionSlice = createSlice({
 });
 
 export const {
+  setInitialState,
   handleAddSection,
   handleRemoveSection,
   handleAddRow,

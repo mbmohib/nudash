@@ -1,6 +1,6 @@
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Box, Container, Grid } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useParams } from 'react-router-dom';
@@ -12,15 +12,12 @@ import {
   PredefinedColumns,
   Section,
 } from '../components';
-import { useDispatch, useSelector, useSite } from '../hooks';
-import { handleAddColumn, removeLastUnusedRow } from '../store/sectionSlice';
-
-const menus = [
-  {
-    link: '/home',
-    label: 'Home',
-  },
-];
+import { useDispatch, useSection, useSelector, useSite } from '../hooks';
+import {
+  handleAddColumn,
+  removeLastUnusedRow,
+  setInitialState,
+} from '../store/sectionSlice';
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -29,9 +26,19 @@ export default function Page() {
   const [rowId, setRowId] = useState<number>(0);
   const [sectionId, setSectionId] = useState<number>(0);
   const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { page } = useParams<{ page?: string }>();
   const { data, isLoading } = useSite();
+  const {
+    data: sectionData,
+    isLoading: isSectionLoading,
+    isFetched,
+  } = useSection(page);
+
+  useEffect(() => {
+    if (sectionData && isFetched) {
+      dispatch(setInitialState(sectionData));
+    }
+  }, [sectionData]);
 
   const handleColumnLayout = (count: number) => {
     dispatch(
@@ -62,7 +69,7 @@ export default function Page() {
   };
 
   return (
-    <PreLoader isLoading={isLoading}>
+    <PreLoader isLoading={isLoading || isSectionLoading}>
       <PageLayout heading="Pages" menus={data?.pages}>
         <Box pt="80px">
           <DndProvider backend={HTML5Backend}>

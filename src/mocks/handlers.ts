@@ -59,4 +59,29 @@ export const handlers = [
       }),
     );
   }),
+
+  rest.get('/:pageId/section', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        sections: [
+          {
+            id: 0,
+            rows: [
+              {
+                id: 0,
+                columns: [[]],
+              },
+            ],
+          },
+        ],
+        lastRowItemInfo: {
+          sectionId: 0,
+          rowId: 0,
+          hasColumn: false,
+        },
+        pageId: '001',
+      }),
+    );
+  }),
 ];
