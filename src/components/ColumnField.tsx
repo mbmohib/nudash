@@ -20,7 +20,7 @@ export default function ColumnField({
 }: ColumnFieldProps) {
   const dispatch = useDispatch();
   const { sections, lastRowItemInfo } = useSelector(state => state.section);
-  const notInitialRow = sections[0].rows[0].columns[0].length > 0;
+  const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
   const [didDrop, setDidDrop] = useState<boolean>();
   const [sectionId, setSectionId] = useState<number>();
 
