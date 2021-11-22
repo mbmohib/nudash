@@ -10,7 +10,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <Box>
       <Sidebar />
-      <Box ml="250px">
+      <Box ml="40px">
         <Box>{children}</Box>
         <Footer />
       </Box>

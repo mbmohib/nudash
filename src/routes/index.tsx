@@ -7,8 +7,9 @@ const Routes = () => (
   <BrowserRouter>
     <Layout>
       <Switch>
-        <Route exact path="/" component={Page} />
-        <Route path="/404" component={NotFoundPage} />
+        <Redirect exact from="/" to="/pages/home" />
+        <Route exact path="/pages/:page" component={Page} />
+        <Route exact path="/404" component={NotFoundPage} />
         <Redirect to="/404" />
       </Switch>
     </Layout>

@@ -3,15 +3,23 @@ import { Box, Container, Grid } from '@chakra-ui/react';
 import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useParams } from 'react-router-dom';
 
 import {
   DraggableComponentsContainer,
-  PageHeader,
+  PageLayout,
   PredefinedColumns,
   Section,
 } from '../components';
 import { useDispatch, useSelector } from '../hooks';
 import { handleAddColumn, removeLastUnusedRow } from '../store/sectionSlice';
+
+const menus = [
+  {
+    link: '/home',
+    label: 'Home',
+  },
+];
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -20,6 +28,7 @@ export default function Page() {
   const [rowId, setRowId] = useState<number>(0);
   const [sectionId, setSectionId] = useState<number>(0);
   const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
+  const { page } = useParams<{ page?: string }>();
 
   const handleColumnLayout = (count: number) => {
     dispatch(
@@ -49,14 +58,8 @@ export default function Page() {
     onClose();
   };
 
-  const saveData = () => {
-    // eslint-disable-next-line no-console
-    console.log(sections);
-  };
-
   return (
-    <>
-      <PageHeader save={saveData} />
+    <PageLayout heading="Pages" menus={menus}>
       <Box pt="80px">
         <DndProvider backend={HTML5Backend}>
           <Grid gridTemplateColumns="1fr 350px">
@@ -80,6 +83,6 @@ export default function Page() {
           handleColumnLayout={handleColumnLayout}
         />
       </Box>
-    </>
+    </PageLayout>
   );
 }

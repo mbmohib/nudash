@@ -3,10 +3,11 @@ import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 import { DeleteIcon } from '../assets/icons';
 
 interface HeaderProps {
-  save: () => void;
+  handleSave: () => void;
+  handleDelete: () => void;
 }
 
-export default function Header({ save }: HeaderProps) {
+export default function PageHeader({ handleSave, handleDelete }: HeaderProps) {
   return (
     <Flex
       p="2"
@@ -24,10 +25,12 @@ export default function Header({ save }: HeaderProps) {
         <Heading size="lg">Home</Heading>
       </Box>
       <Flex alignItems="center">
-        <Button onClick={save} mr="2">
+        <Button onClick={handleSave} mr="2">
           Save
         </Button>
-        <DeleteIcon />
+        <Button variant="icon" mr="2" onClick={handleDelete}>
+          <DeleteIcon />
+        </Button>
       </Flex>
     </Flex>
   );
