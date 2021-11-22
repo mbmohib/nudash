@@ -9,8 +9,8 @@ interface PageLayoutProps {
   heading: string;
   children: React.ReactNode;
   menus: {
-    link: string;
-    label: string;
+    path: string;
+    name: string;
   }[];
 }
 
@@ -43,8 +43,8 @@ export default function PageLayout({
         </Flex>
         <Box as="ul" mt="28px" sx={{ listStyle: 'none' }}>
           {menus.map(menu => (
-            <Box as="li" py="0.5" key={menu.label}>
-              <Link to={menu.link}>{menu.label}</Link>
+            <Box as="li" py="0.5" key={menu.name}>
+              <Link to={`/pages/${menu.path}`}>{menu.name}</Link>
             </Box>
           ))}
         </Box>

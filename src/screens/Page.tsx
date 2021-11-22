@@ -8,10 +8,11 @@ import { useParams } from 'react-router-dom';
 import {
   DraggableComponentsContainer,
   PageLayout,
+  PreLoader,
   PredefinedColumns,
   Section,
 } from '../components';
-import { useDispatch, useSelector } from '../hooks';
+import { useDispatch, useSelector, useSite } from '../hooks';
 import { handleAddColumn, removeLastUnusedRow } from '../store/sectionSlice';
 
 const menus = [
@@ -28,7 +29,9 @@ export default function Page() {
   const [rowId, setRowId] = useState<number>(0);
   const [sectionId, setSectionId] = useState<number>(0);
   const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { page } = useParams<{ page?: string }>();
+  const { data, isLoading } = useSite();
 
   const handleColumnLayout = (count: number) => {
     dispatch(
@@ -59,30 +62,32 @@ export default function Page() {
   };
 
   return (
-    <PageLayout heading="Pages" menus={menus}>
-      <Box pt="80px">
-        <DndProvider backend={HTML5Backend}>
-          <Grid gridTemplateColumns="1fr 350px">
-            <Container py="2" maxW="container.lg">
-              {sections.map((section, index) => (
-                <Section
-                  section={section}
-                  key={index}
-                  totalSection={sections.length}
-                />
-              ))}
-            </Container>
-            <DraggableComponentsContainer
-              handleOpenColumnLayout={handleOpenColumnLayout}
-            />
-          </Grid>
-        </DndProvider>
-        <PredefinedColumns
-          isOpen={isOpen}
-          onClose={handleCloseColumnLayout}
-          handleColumnLayout={handleColumnLayout}
-        />
-      </Box>
-    </PageLayout>
+    <PreLoader isLoading={isLoading}>
+      <PageLayout heading="Pages" menus={data?.pages}>
+        <Box pt="80px">
+          <DndProvider backend={HTML5Backend}>
+            <Grid gridTemplateColumns="1fr 350px">
+              <Container py="2" maxW="container.lg">
+                {sections.map((section, index) => (
+                  <Section
+                    section={section}
+                    key={index}
+                    totalSection={sections.length}
+                  />
+                ))}
+              </Container>
+              <DraggableComponentsContainer
+                handleOpenColumnLayout={handleOpenColumnLayout}
+              />
+            </Grid>
+          </DndProvider>
+          <PredefinedColumns
+            isOpen={isOpen}
+            onClose={handleCloseColumnLayout}
+            handleColumnLayout={handleColumnLayout}
+          />
+        </Box>
+      </PageLayout>
+    </PreLoader>
   );
 }

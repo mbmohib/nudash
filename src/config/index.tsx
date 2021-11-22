@@ -25,3 +25,4 @@ export const ItemTypes = {
 };
 
 export const maxImageSize = 3 * 1024 * 1024;
+export const apiEndpoint = '/';
