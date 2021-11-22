@@ -14,7 +14,12 @@ import {
   SwitchComponent,
 } from '.';
 import { FieldType, ItemTypes } from '../config';
-import { useDebounce, useDispatch, useSection, useSelector } from '../hooks';
+import {
+  useDebounce,
+  useDispatch,
+  useSectionMeta,
+  useSelector,
+} from '../hooks';
 import {
   attachDropZoneId,
   handleAddDropZone,
@@ -50,7 +55,7 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
 
 export default function DropZone({ dropZone }: DropZoneProps) {
   const dispatch = useDispatch();
-  const { sectionId, rowId, columnId } = useSection();
+  const { sectionId, rowId, columnId } = useSectionMeta();
   const { lastDropItemInfo } = useSelector(state => state.section);
   const { fieldType } = dropZone;
   const [{ canDrop, isOver, handlerId, isOverCurrent }, drop] = useDrop(

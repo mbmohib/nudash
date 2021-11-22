@@ -6,7 +6,7 @@ import { Column } from '.';
 import { DeleteIcon } from '../assets/icons';
 import { ItemTypes } from '../config';
 import { useDebounce, useDispatch, useSelector } from '../hooks';
-import { SectionContext } from '../hooks/useSection';
+import { SectionContext } from '../hooks/useSectionMeta';
 import {
   handleAddRow,
   removeLastUnusedRow,

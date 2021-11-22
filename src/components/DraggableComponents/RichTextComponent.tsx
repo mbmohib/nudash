@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { useRef } from 'react';
 
 import { ComponentAction, ComponentActionWithData, RichText } from '..';
-import { useDispatch, useSection, useToggle } from '../../hooks';
+import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/sectionSlice';
 import { EditorBlock, FieldProps } from '../../types';
 
@@ -11,7 +11,7 @@ interface EditorRef {
 }
 
 export default function ButtonComponent({ field }: FieldProps) {
-  const { sectionId, rowId, columnId } = useSection();
+  const { sectionId, rowId, columnId } = useSectionMeta();
   const dispatch = useDispatch();
   const editorRef = useRef<EditorRef>(null);
   const [showEditorView, toggleShowEditorView] = useToggle();

@@ -27,7 +27,7 @@ export function SectionProvider({
   return <SectionContext.Provider value={contextValue} />;
 }
 
-export default function useSection() {
+export default function useSectionMeta() {
   const context = useContext(SectionContext);
   if (context === undefined) {
     throw new Error(`useAuth must be used within a AuthProvider`);

@@ -3,12 +3,12 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 
 import { ComponentAction, ComponentActionWithData, DatePicker } from '..';
-import { useDispatch, useSection, useToggle } from '../../hooks';
+import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/sectionSlice';
 import { FieldProps } from '../../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
-  const { sectionId, rowId, columnId } = useSection();
+  const { sectionId, rowId, columnId } = useSectionMeta();
   const dispatch = useDispatch();
   const [label, setLabel] = useState<string>('');
   const [date, setDate] = useState<Date>(new Date());

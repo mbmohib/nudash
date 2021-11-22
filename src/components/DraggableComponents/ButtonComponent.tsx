@@ -2,13 +2,13 @@ import { Box, Button, Grid, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { ComponentAction, ComponentActionWithData } from '..';
-import { useDispatch, useSection, useToggle } from '../../hooks';
+import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/sectionSlice';
 import { FieldProps } from '../../types';
 
 export default function ButtonComponent({ field }: FieldProps) {
   const dispatch = useDispatch();
-  const { sectionId, rowId, columnId } = useSection();
+  const { sectionId, rowId, columnId } = useSectionMeta();
   const [label, setLabel] = useState<string>('');
   const [value, setValue] = useState<string>('');
   const [showEditorView, toggleShowEditorView] = useToggle();

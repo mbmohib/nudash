@@ -2,12 +2,12 @@ import { Box, Flex, Grid, Input, Switch, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { ComponentAction, ComponentActionWithData } from '..';
-import { useDispatch, useSection, useToggle } from '../../hooks';
+import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/sectionSlice';
 import { FieldProps } from '../../types';
 
 export default function SwitchComponent({ field }: FieldProps) {
-  const { sectionId, rowId, columnId } = useSection();
+  const { sectionId, rowId, columnId } = useSectionMeta();
   const [value, setValue] = useState<boolean>(false);
   const [label, setLabel] = useState<string>('');
   const dispatch = useDispatch();
