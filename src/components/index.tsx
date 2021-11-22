@@ -27,3 +27,4 @@ export { default as FileUpload } from './FileUpload';
 export { default as RichText } from './RichText';
 export { default as Modal } from './Modal';
 export { default as CreatePage } from './CreatePage';
+export { default as ErrorFallback } from './ErrorFallback';

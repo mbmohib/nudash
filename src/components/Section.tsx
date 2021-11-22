@@ -55,7 +55,7 @@ export default function Section({ section, totalSection }: SectionProps) {
           Add Section
         </Button>
         <Button
-          disabled={totalSection === 1}
+          // disabled={totalSection === 1}
           fontWeight="normal"
           leftIcon={<FileMinusIcons />}
           variant="link"
