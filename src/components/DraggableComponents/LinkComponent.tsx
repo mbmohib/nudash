@@ -11,7 +11,7 @@ export default function ButtonComponent({ field }: FieldProps) {
   const dispatch = useDispatch();
   const [label, setLabel] = useState<string>('');
   const [value, setValue] = useState<string>('');
-  const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
+  const [showEditorView, toggleShowEditorView] = useToggle();
 
   const handleSaveData = () => {
     dispatch(
@@ -27,7 +27,7 @@ export default function ButtonComponent({ field }: FieldProps) {
       }),
     );
 
-    setShowEditorView(false);
+    toggleShowEditorView(false);
   };
 
   const handleRemove = () => {
@@ -61,7 +61,7 @@ export default function ButtonComponent({ field }: FieldProps) {
           </Grid>
           <ComponentAction
             handleSave={handleSaveData}
-            handleCancel={() => setShowEditorView(false)}
+            handleCancel={() => toggleShowEditorView(false)}
             handleRemove={handleRemove}
             hasData={!!field?.data?.value}
           />

@@ -14,7 +14,7 @@ export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
   const editorRef = useRef<EditorRef>(null);
-  const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
+  const [showEditorView, toggleShowEditorView] = useToggle();
 
   const handleSaveData = async () => {
     if (editorRef.current) {
@@ -60,7 +60,7 @@ export default function ButtonComponent({ field }: FieldProps) {
           </Box>
           <ComponentAction
             handleSave={handleSaveData}
-            handleCancel={() => setShowEditorView(false)}
+            handleCancel={() => toggleShowEditorView(false)}
             handleRemove={handleRemove}
             hasData={!!field?.data?.blocks}
           />

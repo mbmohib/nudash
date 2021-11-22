@@ -10,7 +10,7 @@ export default function NumberComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
   const [number, setNumber] = useState<string>('');
-  const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
+  const [showEditorView, toggleShowEditorView] = useToggle();
 
   const handleSaveData = () => {
     dispatch(
@@ -25,7 +25,7 @@ export default function NumberComponent({ field }: FieldProps) {
       }),
     );
 
-    setShowEditorView(false);
+    toggleShowEditorView(false);
   };
 
   const handleRemove = () => {
@@ -52,7 +52,7 @@ export default function NumberComponent({ field }: FieldProps) {
           </Box>
           <ComponentAction
             handleSave={handleSaveData}
-            handleCancel={() => setShowEditorView(false)}
+            handleCancel={() => toggleShowEditorView(false)}
             handleRemove={handleRemove}
             hasData={!!field?.data?.value}
           />

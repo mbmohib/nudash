@@ -10,7 +10,7 @@ import theme from './styles/theme';
 import { errorHandler } from './utils';
 
 export default function App() {
-  const [reset, setReset] = useToggle();
+  const [error, setError] = useToggle();
 
   return (
     <Provider store={store}>
@@ -18,10 +18,10 @@ export default function App() {
         <ErrorBoundary
           FallbackComponent={ErrorFallback}
           onError={errorHandler}
-          onReset={setReset}
-          resetKeys={[reset]}
+          onReset={setError}
+          resetKeys={[error]}
         >
-          <Routes />
+          {error ? null : <Routes />}
         </ErrorBoundary>
       </ChakraProvider>
     </Provider>

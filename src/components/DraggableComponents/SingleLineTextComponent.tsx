@@ -10,7 +10,7 @@ export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSection();
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
-  const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
+  const [showEditorView, toggleShowEditorView] = useToggle();
 
   useEffect(() => {
     setValue((field?.data?.value as string) ?? '');
@@ -29,7 +29,7 @@ export default function ButtonComponent({ field }: FieldProps) {
       }),
     );
 
-    setShowEditorView(false);
+    toggleShowEditorView(false);
   };
 
   const handleRemove = () => {
@@ -57,7 +57,7 @@ export default function ButtonComponent({ field }: FieldProps) {
           </Box>
           <ComponentAction
             handleSave={handleSaveData}
-            handleCancel={() => setShowEditorView(false)}
+            handleCancel={() => toggleShowEditorView(false)}
             handleRemove={handleRemove}
             hasData={!!field?.data?.value}
           />

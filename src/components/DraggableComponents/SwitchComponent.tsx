@@ -11,7 +11,7 @@ export default function SwitchComponent({ field }: FieldProps) {
   const [value, setValue] = useState<boolean>(false);
   const [label, setLabel] = useState<string>('');
   const dispatch = useDispatch();
-  const [showEditorView, toggleShowEditorView, setShowEditorView] = useToggle();
+  const [showEditorView, toggleShowEditorView] = useToggle();
 
   const handleSaveData = () => {
     dispatch(
@@ -27,7 +27,7 @@ export default function SwitchComponent({ field }: FieldProps) {
       }),
     );
 
-    setShowEditorView(false);
+    toggleShowEditorView(false);
   };
 
   const handleSwitchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +86,7 @@ export default function SwitchComponent({ field }: FieldProps) {
           </Grid>
           <ComponentAction
             handleSave={handleSaveData}
-            handleCancel={() => setShowEditorView(false)}
+            handleCancel={() => toggleShowEditorView(false)}
             handleRemove={handleRemove}
             hasData={!!field?.data?.value}
           />
