@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd';
 
 import { ItemTypes } from '../config';
 import { useDispatch, useSelector } from '../hooks';
-import { handleFieldDrop, removeLastDropZone } from '../store/sectionSlice';
+import { handleFieldDrop, removeLastDropZone } from '../store/slices/page';
 import { DraggableField } from '../types';
 
 interface DropResult {
@@ -16,7 +16,7 @@ interface DropResult {
 
 export default function Field({ type, info }: DraggableField) {
   const dispatch = useDispatch();
-  const { lastDropItemInfo } = useSelector(state => state.section);
+  const { lastDropItemInfo } = useSelector(state => state.page);
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.Field,

@@ -24,7 +24,7 @@ import {
   attachDropZoneId,
   handleAddDropZone,
   removeLastDropZone,
-} from '../store/sectionSlice';
+} from '../store/slices/page';
 import { DraggableItem } from '../types';
 
 interface DropZoneProps {
@@ -56,7 +56,7 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
 export default function DropZone({ dropZone }: DropZoneProps) {
   const dispatch = useDispatch();
   const { sectionId, rowId, columnId } = useSectionMeta();
-  const { lastDropItemInfo } = useSelector(state => state.section);
+  const { lastDropItemInfo } = useSelector(state => state.page);
   const { fieldType } = dropZone;
   const [{ canDrop, isOver, handlerId, isOverCurrent }, drop] = useDrop(
     () => ({

@@ -4,7 +4,7 @@ import { AiOutlineHolder } from 'react-icons/ai';
 import { Row } from '.';
 import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
 import { useDispatch, useToggle } from '../hooks';
-import { handleAddSection, handleRemoveSection } from '../store/sectionSlice';
+import { handleAddSection, handleRemoveSection } from '../store/slices/page';
 import { DraggableItem } from '../types';
 
 interface SectionTypes {

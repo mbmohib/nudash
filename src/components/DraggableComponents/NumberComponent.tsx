@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { ComponentAction, ComponentActionWithData } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
-import { removeField, saveFieldData } from '../../store/sectionSlice';
+import { removeField, saveFieldData } from '../../store/slices/page';
 import { FieldProps } from '../../types';
 
 export default function NumberComponent({ field }: FieldProps) {

@@ -11,7 +11,7 @@ import {
   handleAddRow,
   removeLastUnusedRow,
   removeRow,
-} from '../store/sectionSlice';
+} from '../store/slices/page';
 import { DraggableItem } from '../types';
 
 interface RowProps {
@@ -25,7 +25,7 @@ interface RowProps {
 
 export default function Row({ sectionId, rowId, row }: RowProps) {
   const dispatch = useDispatch();
-  const { sections, lastRowItemInfo } = useSelector(state => state.section);
+  const { sections, lastRowItemInfo } = useSelector(state => state.page);
   const sectionIndex = sections.findIndex(section => section.id === sectionId);
   const rowIndex = sections[sectionIndex].rows.findIndex(
     rowItem => rowItem.id === rowId,

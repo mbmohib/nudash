@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd';
 
 import { FieldType, ItemTypes } from '../config';
 import { useDispatch, useSelector } from '../hooks';
-import { removeLastUnusedRow } from '../store/sectionSlice';
+import { removeLastUnusedRow } from '../store/slices/page';
 
 interface DropResult {
   id: number;
@@ -14,12 +14,11 @@ interface DropResult {
 interface ColumnFieldProps {
   handleOpenColumnLayout: (id: number, sectionId: number) => void;
 }
-
 export default function ColumnField({
   handleOpenColumnLayout,
 }: ColumnFieldProps) {
   const dispatch = useDispatch();
-  const { sections, lastRowItemInfo } = useSelector(state => state.section);
+  const { sections, lastRowItemInfo } = useSelector(state => state.page);
   const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
   const [didDrop, setDidDrop] = useState<boolean>();
   const [sectionId, setSectionId] = useState<number>();

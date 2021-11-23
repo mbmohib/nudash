@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
-import { FieldType } from '../config';
-import { DraggableItem, FieldData } from '../types';
+import { FieldType } from '../../config';
+import { DraggableItem, FieldData, Section } from '../../types';
 
 interface LastDropItem {
   sectionId: number;
@@ -18,17 +18,7 @@ interface LastRowItem {
   hasColumn: boolean;
 }
 
-interface SectionState {
-  pageId: string;
-  name: string;
-  path: string;
-  sections: {
-    id: number;
-    rows: {
-      id: number;
-      columns: DraggableItem[][];
-    }[];
-  }[];
+interface SectionState extends Section {
   lastDropItemInfo?: LastDropItem;
   lastRowItemInfo?: LastRowItem;
 }
@@ -55,8 +45,8 @@ const initialState: SectionState = {
   },
 };
 
-const sectionSlice = createSlice({
-  name: 'section',
+const pageSlice = createSlice({
+  name: 'page',
   initialState,
   reducers: {
     setInitialState(state, action) {
@@ -436,5 +426,5 @@ export const {
   saveFieldData,
   removeField,
   removeRow,
-} = sectionSlice.actions;
-export default sectionSlice.reducer;
+} = pageSlice.actions;
+export default pageSlice.reducer;

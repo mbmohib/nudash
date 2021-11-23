@@ -6,7 +6,7 @@ interface HeaderProps {
   handleSave: () => void;
   handleDelete: () => void;
   isLoading?: boolean;
-  pageName: string;
+  pageName?: string;
 }
 
 export default function PageHeader({

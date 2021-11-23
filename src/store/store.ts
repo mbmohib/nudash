@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import sectionSlice from './sectionSlice';
+import page from './slices/page';
 
 export const store = configureStore({
   reducer: {
-    section: sectionSlice,
+    page,
   },
 });
 

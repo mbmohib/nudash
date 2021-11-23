@@ -10,8 +10,8 @@ interface PageLayoutProps {
   heading: string;
   children: React.ReactNode;
   isLoading: boolean;
-  pageName: string;
-  menus: {
+  pageName?: string;
+  menus?: {
     path: string;
     name: string;
   }[];

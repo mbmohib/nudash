@@ -17,28 +17,24 @@ import {
   handleAddColumn,
   removeLastUnusedRow,
   setInitialState,
-} from '../store/sectionSlice';
+} from '../store/slices/page';
 
 export default function Page() {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { sections } = useSelector(state => state.section);
+  const { sections } = useSelector(state => state.page);
   const [rowId, setRowId] = useState<number>(0);
   const [sectionId, setSectionId] = useState<number>(0);
   const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
   const { page } = useParams<{ page?: string }>();
-  const { data, isLoading } = useSite();
-  const {
-    data: pageData,
-    isLoading: isSectionLoading,
-    isFetched,
-  } = usePage(page);
+  const siteQuery = useSite();
+  const pageQuery = usePage(page);
 
   useEffect(() => {
-    if (pageData && isFetched) {
-      dispatch(setInitialState(pageData));
+    if (pageQuery.data && pageQuery.isFetched) {
+      dispatch(setInitialState(pageQuery.data));
     }
-  }, [pageData]);
+  }, [pageQuery.data]);
 
   const handleColumnLayout = (count: number) => {
     dispatch(
@@ -71,11 +67,11 @@ export default function Page() {
   return (
     <PageLayout
       heading="Pages"
-      menus={data?.pages}
-      isLoading={isLoading}
-      pageName={pageData?.name}
+      menus={siteQuery.data?.pages}
+      isLoading={siteQuery.isLoading}
+      pageName={pageQuery.data?.name}
     >
-      <PreLoader isLoading={isSectionLoading}>
+      <PreLoader isLoading={pageQuery.isLoading}>
         <Box pt="80px">
           <DndProvider backend={HTML5Backend}>
             <Grid gridTemplateColumns="1fr 350px">
