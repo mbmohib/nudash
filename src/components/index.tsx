@@ -30,3 +30,5 @@ export { default as CreatePage } from './CreatePage';
 export { default as ErrorFallback } from './ErrorFallback';
 export { default as PageLayout } from './PageLayout';
 export { default as PreLoader } from './PreLoader';
+export { default as SiteData } from './SiteData';
+export { default as SiteNav } from './SiteNav';

@@ -13,7 +13,8 @@ import {
   PredefinedColumns,
   Section,
 } from '../components';
-import { useDispatch, usePage, useSelector } from '../hooks';
+import { useDispatch, useSelector } from '../hooks';
+import { usePageQuery } from '../hooks/usePage';
 import { useSiteQuery } from '../hooks/useSite';
 import {
   handleAddColumn,
@@ -31,7 +32,7 @@ export default function Page() {
   const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
   const { page } = useParams<{ page?: string }>();
   const siteQuery = useSiteQuery();
-  const pageQuery = usePage(page);
+  const pageQuery = usePageQuery(page);
 
   useEffect(() => {
     if (pageQuery.data && pageQuery.isFetched) {

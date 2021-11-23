@@ -63,6 +63,7 @@ export default function PageLayout({
 
       <Box ml="200px">
         <PageHeader
+          hasSidebar={true}
           isLoading={isLoading}
           pageName={pageName}
           handleSave={saveData}

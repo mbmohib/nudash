@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { Modal } from '.';
-import { useAddSite } from '../hooks/useSite';
+import { useAddPage } from '../hooks/usePage';
 
 interface CreatePageProps {
   isOpen: boolean;
@@ -26,8 +26,9 @@ const schema = yup
   .required();
 
 export default function CreatePage({ isOpen, onClose }: CreatePageProps) {
-  const addPage = useAddSite();
+  const addPage = useAddPage();
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -41,6 +42,7 @@ export default function CreatePage({ isOpen, onClose }: CreatePageProps) {
       {
         onSuccess: () => {
           onClose();
+          reset();
         },
       },
     );
@@ -64,7 +66,12 @@ export default function CreatePage({ isOpen, onClose }: CreatePageProps) {
           </FormErrorMessage>
         </FormControl>
         <Box textAlign="right">
-          <Button variant="solid" mt="3" type="submit">
+          <Button
+            variant="solid"
+            mt="3"
+            type="submit"
+            isLoading={addPage.isLoading}
+          >
             Create
           </Button>
         </Box>

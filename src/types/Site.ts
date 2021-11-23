@@ -1,8 +1,10 @@
 export default interface Site {
   id: string;
   name: string;
-  logo?: string;
   url?: string;
+  tagline?: string;
+  description?: string;
+  logo?: string;
   menus?: {
     label: string;
     url: string;

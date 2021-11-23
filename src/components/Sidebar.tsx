@@ -16,8 +16,9 @@ export default function Sidebar() {
       height="100vh"
       position="fixed"
       bgColor="secondary500"
+      width="60px"
     >
-      <Flex height="80px" alignItems="center" justifyContent="center">
+      <Flex height="79px" alignItems="center" justifyContent="center">
         <Text fontSize="lg">ND</Text>
       </Flex>
       <Flex

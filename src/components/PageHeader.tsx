@@ -7,6 +7,7 @@ interface HeaderProps {
   handleDelete: () => void;
   isLoading?: boolean;
   pageName?: string;
+  hasSidebar?: boolean;
 }
 
 export default function PageHeader({
@@ -14,6 +15,7 @@ export default function PageHeader({
   handleDelete,
   isLoading,
   pageName,
+  hasSidebar,
 }: HeaderProps) {
   return (
     <Flex
@@ -24,7 +26,7 @@ export default function PageHeader({
       alignItems="center"
       height="80px"
       background="secondary600"
-      width="calc(100% - 250px)"
+      width={`calc(100% - ${hasSidebar ? '250px' : '60px'})`}
       zIndex="docked"
       position="fixed"
     >
@@ -35,14 +37,16 @@ export default function PageHeader({
           </Heading>
         </Skeleton>
       </Box>
-      <Flex alignItems="center">
-        <Button onClick={handleSave} mr="2">
-          Save
-        </Button>
-        <Button variant="icon" mr="2" onClick={handleDelete}>
-          <DeleteIcon />
-        </Button>
-      </Flex>
+      <Skeleton isLoaded={!isLoading}>
+        <Flex alignItems="center">
+          <Button onClick={handleSave} mr="2">
+            Save
+          </Button>
+          <Button variant="icon" mr="2" onClick={handleDelete}>
+            <DeleteIcon />
+          </Button>
+        </Flex>
+      </Skeleton>
     </Flex>
   );
 }
