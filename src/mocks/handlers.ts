@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
-import { rest } from 'msw';
+import { RestRequest, rest } from 'msw';
 
-import { sections } from './data';
+import { pageData, siteData } from './data';
 
 // eslint-disable-next-line import/prefer-default-export
 export const handlers = [
@@ -39,30 +39,28 @@ export const handlers = [
   }),
 
   rest.get('/site', (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        name: 'Nudash',
-        logo: '',
-        url: 'https://mohib.me',
-        menus: [
-          {
-            label: 'Home',
-            url: '/',
-          },
-        ],
-        pages: [
-          {
-            id: '001',
-            name: 'Home',
-            path: 'home',
-          },
-        ],
-      }),
-    );
+    return res(ctx.status(200), ctx.json(siteData));
   }),
 
   rest.get('/pages/:pageId', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(sections));
+    return res(ctx.status(200), ctx.json(pageData));
+  }),
+
+  rest.post('/pages', (req: RestRequest, res, ctx) => {
+    const body = req.body as { name: string; path: string };
+
+    const data = {
+      ...siteData,
+      pages: [
+        ...siteData.pages,
+        {
+          id: '002',
+          name: body.name,
+          path: body.path,
+        },
+      ],
+    };
+
+    return res(ctx.status(200), ctx.json(data));
   }),
 ];

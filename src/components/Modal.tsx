@@ -14,6 +14,7 @@ interface ModalExtendedProps {
   isOpen: boolean;
   children: React.ReactNode;
   onClose: () => void;
+  showCloseBtn?: boolean;
 }
 
 export default function ModalExtended({
@@ -21,6 +22,7 @@ export default function ModalExtended({
   isOpen,
   onClose,
   children,
+  showCloseBtn,
 }: ModalExtendedProps) {
   return (
     <Modal
@@ -34,12 +36,14 @@ export default function ModalExtended({
       <ModalContent bgColor="secondary500">
         {heading && <ModalHeader>{heading}</ModalHeader>}
         <ModalCloseButton />
-        <ModalBody>{children}</ModalBody>
-        <ModalFooter>
-          <Button variant="solid" onClick={onClose}>
-            Close
-          </Button>
-        </ModalFooter>
+        <ModalBody pb="4">{children}</ModalBody>
+        {showCloseBtn && (
+          <ModalFooter>
+            <Button variant="solid" onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        )}
       </ModalContent>
     </Modal>
   );

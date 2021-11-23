@@ -46,7 +46,12 @@ export default function PredefinedColumns({
   handleColumnLayout,
 }: PredefinedColumnsProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} heading="Select Column">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      heading="Select Column"
+      showCloseBtn={true}
+    >
       <Flex flexWrap="wrap" gridGap="2">
         {columnCount.map((column: number) => (
           <Column

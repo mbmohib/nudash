@@ -6,13 +6,15 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useParams } from 'react-router-dom';
 
 import {
+  CreatePage,
   DraggableComponentsContainer,
   PageLayout,
   PreLoader,
   PredefinedColumns,
   Section,
 } from '../components';
-import { useDispatch, usePage, useSelector, useSite } from '../hooks';
+import { useDispatch, usePage, useSelector } from '../hooks';
+import { useSiteQuery } from '../hooks/useSite';
 import {
   handleAddColumn,
   removeLastUnusedRow,
@@ -22,12 +24,13 @@ import {
 export default function Page() {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const createPageModal = useDisclosure();
   const { sections } = useSelector(state => state.page);
   const [rowId, setRowId] = useState<number>(0);
   const [sectionId, setSectionId] = useState<number>(0);
   const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
   const { page } = useParams<{ page?: string }>();
-  const siteQuery = useSite();
+  const siteQuery = useSiteQuery();
   const pageQuery = usePage(page);
 
   useEffect(() => {
@@ -64,12 +67,17 @@ export default function Page() {
     onClose();
   };
 
+  const handlePageAdd = () => {
+    createPageModal.onToggle();
+  };
+
   return (
     <PageLayout
       heading="Pages"
       menus={siteQuery.data?.pages}
       isLoading={siteQuery.isLoading}
       pageName={pageQuery.data?.name}
+      handleAdd={handlePageAdd}
     >
       <PreLoader isLoading={pageQuery.isLoading}>
         <Box pt="80px">
@@ -96,6 +104,11 @@ export default function Page() {
           />
         </Box>
       </PreLoader>
+
+      <CreatePage
+        isOpen={createPageModal.isOpen}
+        onClose={createPageModal.onClose}
+      />
     </PageLayout>
   );
 }

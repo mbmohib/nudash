@@ -15,6 +15,7 @@ interface PageLayoutProps {
     path: string;
     name: string;
   }[];
+  handleAdd: () => void;
 }
 
 export default function PageLayout({
@@ -23,6 +24,7 @@ export default function PageLayout({
   isLoading,
   menus = [],
   children,
+  handleAdd,
 }: PageLayoutProps) {
   const saveData = () => {
     // eslint-disable-next-line no-console
@@ -42,7 +44,7 @@ export default function PageLayout({
           <Heading as="h2" size="md">
             {heading}
           </Heading>
-          <Button variant="link">
+          <Button variant="link" onClick={handleAdd}>
             <PlusIcon />
           </Button>
         </Flex>
@@ -51,7 +53,7 @@ export default function PageLayout({
         ) : (
           <Box as="ul" mt="28px" sx={{ listStyle: 'none' }}>
             {menus.map(menu => (
-              <Box as="li" py="0.5" key={menu.name}>
+              <Box as="li" py="0.5" key={menu.name} textTransform="capitalize">
                 <Link to={`/pages/${menu.path}`}>{menu.name}</Link>
               </Box>
             ))}

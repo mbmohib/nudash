@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
-export { default as sections } from './sections';
+export { default as pageData } from './pageData';
+export { default as siteData } from './siteData';

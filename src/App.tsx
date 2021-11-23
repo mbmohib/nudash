@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
 
 import { ErrorFallback } from './components';
@@ -30,6 +31,7 @@ export default function App() {
             {error ? null : <Routes />}
           </ErrorBoundary>
         </ChakraProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </Provider>
   );

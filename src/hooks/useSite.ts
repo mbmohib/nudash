@@ -1,9 +1,16 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { Site } from '../types';
 import useAxios from './useAxios';
 
-export default function useSite() {
+interface createPageData {
+  data: {
+    name: string;
+    path: string;
+  };
+}
+
+export const useSiteQuery = () => {
   const axios = useAxios();
 
   return useQuery<Site, Error>(
@@ -17,4 +24,15 @@ export default function useSite() {
       staleTime: 60 * 1000,
     },
   );
-}
+};
+
+export const useAddSite = () => {
+  const axios = useAxios();
+  const queryClient = useQueryClient();
+
+  return useMutation(({ data }: createPageData) => axios.post(`/pages`, data), {
+    onSuccess: data => {
+      queryClient.setQueryData('site', () => data.data);
+    },
+  });
+};

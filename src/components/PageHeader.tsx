@@ -30,7 +30,9 @@ export default function PageHeader({
     >
       <Box>
         <Skeleton isLoaded={!isLoading}>
-          <Heading size="lg">{pageName}</Heading>
+          <Heading size="lg" textTransform="capitalize">
+            {pageName}
+          </Heading>
         </Skeleton>
       </Box>
       <Flex alignItems="center">
