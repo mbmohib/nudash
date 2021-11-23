@@ -20,6 +20,8 @@ interface LastRowItem {
 
 interface SectionState {
   pageId: string;
+  name: string;
+  path: string;
   sections: {
     id: number;
     rows: {
@@ -33,6 +35,8 @@ interface SectionState {
 
 const initialState: SectionState = {
   pageId: '001',
+  name: 'home',
+  path: 'page',
   sections: [
     {
       id: 0,

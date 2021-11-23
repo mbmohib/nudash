@@ -12,7 +12,7 @@ import {
   PredefinedColumns,
   Section,
 } from '../components';
-import { useDispatch, useSection, useSelector, useSite } from '../hooks';
+import { useDispatch, usePage, useSelector, useSite } from '../hooks';
 import {
   handleAddColumn,
   removeLastUnusedRow,
@@ -29,16 +29,16 @@ export default function Page() {
   const { page } = useParams<{ page?: string }>();
   const { data, isLoading } = useSite();
   const {
-    data: sectionData,
+    data: pageData,
     isLoading: isSectionLoading,
     isFetched,
-  } = useSection(page);
+  } = usePage(page);
 
   useEffect(() => {
-    if (sectionData && isFetched) {
-      dispatch(setInitialState(sectionData));
+    if (pageData && isFetched) {
+      dispatch(setInitialState(pageData));
     }
-  }, [sectionData]);
+  }, [pageData]);
 
   const handleColumnLayout = (count: number) => {
     dispatch(
@@ -69,8 +69,13 @@ export default function Page() {
   };
 
   return (
-    <PreLoader isLoading={isLoading || isSectionLoading}>
-      <PageLayout heading="Pages" menus={data?.pages}>
+    <PageLayout
+      heading="Pages"
+      menus={data?.pages}
+      isLoading={isLoading}
+      pageName={pageData?.name}
+    >
+      <PreLoader isLoading={isSectionLoading}>
         <Box pt="80px">
           <DndProvider backend={HTML5Backend}>
             <Grid gridTemplateColumns="1fr 350px">
@@ -94,7 +99,7 @@ export default function Page() {
             handleColumnLayout={handleColumnLayout}
           />
         </Box>
-      </PageLayout>
-    </PreLoader>
+      </PreLoader>
+    </PageLayout>
   );
 }

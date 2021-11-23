@@ -1,5 +1,6 @@
 import { Button } from '@chakra-ui/button';
 import { Box, Flex, Heading } from '@chakra-ui/layout';
+import { SkeletonText } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 import { PageHeader } from '.';
@@ -8,6 +9,8 @@ import { PlusIcon } from '../assets/icons';
 interface PageLayoutProps {
   heading: string;
   children: React.ReactNode;
+  isLoading: boolean;
+  pageName: string;
   menus: {
     path: string;
     name: string;
@@ -15,8 +18,10 @@ interface PageLayoutProps {
 }
 
 export default function PageLayout({
+  pageName,
   heading,
-  menus,
+  isLoading,
+  menus = [],
   children,
 }: PageLayoutProps) {
   const saveData = () => {
@@ -41,16 +46,26 @@ export default function PageLayout({
             <PlusIcon />
           </Button>
         </Flex>
-        <Box as="ul" mt="28px" sx={{ listStyle: 'none' }}>
-          {menus.map(menu => (
-            <Box as="li" py="0.5" key={menu.name}>
-              <Link to={`/pages/${menu.path}`}>{menu.name}</Link>
-            </Box>
-          ))}
-        </Box>
+        {isLoading ? (
+          <SkeletonText mt="4" noOfLines={4} spacing="2" />
+        ) : (
+          <Box as="ul" mt="28px" sx={{ listStyle: 'none' }}>
+            {menus.map(menu => (
+              <Box as="li" py="0.5" key={menu.name}>
+                <Link to={`/pages/${menu.path}`}>{menu.name}</Link>
+              </Box>
+            ))}
+          </Box>
+        )}
       </Box>
+
       <Box ml="200px">
-        <PageHeader handleSave={saveData} handleDelete={saveData} />
+        <PageHeader
+          isLoading={isLoading}
+          pageName={pageName}
+          handleSave={saveData}
+          handleDelete={saveData}
+        />
         {children}
       </Box>
     </Box>
