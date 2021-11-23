@@ -12,16 +12,21 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { FileUpload } from '.';
-import { useUpdateSite } from '../hooks/useSite';
+import { useSiteQuery, useUpdateSite } from '../hooks/useSite';
+import { Site } from '../types';
 
 const schema = yup
   .object({
     name: yup.string().required('Please enter site name'),
     url: yup.string().required('Please enter site url'),
+    tagline: yup.string(),
+    description: yup.string(),
+    logo: yup.string(),
   })
   .required();
 
 export default function SiteData() {
+  const { data } = useSiteQuery();
   const updateSite = useUpdateSite();
   const {
     register,
@@ -29,19 +34,26 @@ export default function SiteData() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      name: data?.name,
+      url: data?.url,
+      tagline: data?.tagline,
+      description: data?.description,
+      logo: data?.logo,
+    },
   });
 
-  const onSubmit = (data: any) => {
-    // updateSite.mutate({ data });
+  const onSubmit = (values: Site) => {
+    updateSite.mutate({ data: values });
   };
 
-  const handleUpload = (data: any) => {
+  const handleUpload = () => {
     // updateSite.mutate({ data });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl isInvalid={errors.name} mb="2">
+      <FormControl isInvalid={!!errors.name} mb="2">
         <FormLabel htmlFor="name">Name</FormLabel>
         <Input id="name" placeholder="name" {...register('name')} />
         <FormErrorMessage>
@@ -49,13 +61,13 @@ export default function SiteData() {
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.url} mb="2">
+      <FormControl isInvalid={!!errors.url} mb="2">
         <FormLabel htmlFor="url">Url</FormLabel>
         <Input id="url" placeholder="url" {...register('url')} />
         <FormErrorMessage>{errors.url && errors.url.message}</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.tagline} mb="2">
+      <FormControl isInvalid={!!errors.tagline} mb="2">
         <FormLabel htmlFor="tagline">Tagline</FormLabel>
         <Input id="tagline" placeholder="tagline" {...register('tagline')} />
         <FormErrorMessage>
@@ -63,7 +75,7 @@ export default function SiteData() {
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.description} mb="2">
+      <FormControl isInvalid={!!errors.description} mb="2">
         <FormLabel htmlFor="description">Description</FormLabel>
         <Textarea
           id="description"
@@ -75,7 +87,7 @@ export default function SiteData() {
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.logo} mb="2">
+      <FormControl isInvalid={!!errors.logo} mb="2">
         <FormLabel htmlFor="description">Logo</FormLabel>
         <FileUpload handleUpload={handleUpload} />
         <FormErrorMessage>

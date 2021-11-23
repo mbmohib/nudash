@@ -63,4 +63,15 @@ export const handlers = [
 
     return res(ctx.status(200), ctx.json(data));
   }),
+
+  rest.post('/sites', (req: RestRequest, res, ctx) => {
+    const { body } = req;
+
+    const data = {
+      ...siteData,
+      ...(body as Record<string, string>),
+    };
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
 ];
