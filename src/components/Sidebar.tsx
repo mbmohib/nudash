@@ -30,6 +30,26 @@ export default function Sidebar() {
       >
         <Button
           as={Link}
+          to="/"
+          variant="link"
+          bg="primary.light"
+          color="white"
+          mb="3"
+        >
+          DS
+        </Button>
+        <Button
+          as={Link}
+          to="/site"
+          variant="link"
+          bg="primary.light"
+          color="white"
+          mb="3"
+        >
+          Site
+        </Button>
+        <Button
+          as={Link}
           to="/pages"
           variant="link"
           bg="primary.light"
