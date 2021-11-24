@@ -21,9 +21,14 @@ export default function Site() {
       />
       <PreLoader isLoading={siteQuery.isLoading}>
         <Container pt="80px">
-          <Grid gridTemplateColumns="1fr 1fr" mt="4" gap="4">
-            <SiteData />
-            <SiteNav />
+          <Grid
+            gridTemplateColumns="1fr 1fr"
+            mt="4"
+            gap="4"
+            alignItems="flex-start"
+          >
+            <SiteData data={siteQuery.data} />
+            <SiteNav menus={siteQuery.data?.menus} />
           </Grid>
         </Container>
       </PreLoader>

@@ -59,7 +59,7 @@ export default function Sidebar() {
         >
           <PageIcon />
         </Button>
-        <Button
+        {/* <Button
           as={Link}
           to="/pages"
           variant="link"
@@ -68,7 +68,7 @@ export default function Sidebar() {
           mb="3"
         >
           <SchemaIcon />
-        </Button>
+        </Button> */}
       </Flex>
       <Flex flexDirection="column" alignItems="center" pb={2}>
         <Button

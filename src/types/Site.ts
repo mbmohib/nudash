@@ -1,6 +1,6 @@
 export default interface Site {
   id: string;
-  name: string;
+  name?: string;
   url?: string;
   tagline?: string;
   description?: string;
@@ -8,6 +8,7 @@ export default interface Site {
   menus?: {
     label: string;
     url: string;
+    isOpenNew: boolean;
   }[];
   pages?: {
     id: string;

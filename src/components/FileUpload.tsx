@@ -71,10 +71,6 @@ export default function FileUpload({ loading, handleUpload }: FileUploadProps) {
     [fieldValue],
   );
 
-  const handleUploadFile = () => {
-    handleUpload(fieldValue as FileType);
-  };
-
   return (
     <Flex
       width="100%"
@@ -88,13 +84,7 @@ export default function FileUpload({ loading, handleUpload }: FileUploadProps) {
       >
         <input {...getInputProps()} />
         {!fieldValue && (
-          <Box
-            border="1px dashed"
-            borderColor="secondary100"
-            width="80%"
-            mx="auto"
-            p="3"
-          >
+          <Box border="1px dashed" borderColor="secondary100" mx="auto" p="3">
             <Text textAlign="center">
               Drag 'n' drop image here, or click to select image
             </Text>
@@ -105,15 +95,6 @@ export default function FileUpload({ loading, handleUpload }: FileUploadProps) {
           <Preview file={fieldValue} handleImageRemove={handleImageRemove} />
         )}
       </Flex>
-      <Button
-        mt="2"
-        loading={loading}
-        disabled={!fieldValue}
-        type="submit"
-        onClick={handleUploadFile}
-      >
-        Upload
-      </Button>
     </Flex>
   );
 }

@@ -23,9 +23,12 @@ export const useUpdateSite = () => {
   const axios = useAxios();
   const queryClient = useQueryClient();
 
-  return useMutation(({ data }: { data: Site }) => axios.post(`/sites`, data), {
-    onSuccess: data => {
-      queryClient.setQueryData('site', () => data.data);
+  return useMutation(
+    ({ data }: { data: Omit<Site, 'id'> }) => axios.post(`/sites`, data),
+    {
+      onSuccess: data => {
+        queryClient.setQueryData('site', () => data.data);
+      },
     },
-  });
+  );
 };

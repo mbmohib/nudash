@@ -10,6 +10,8 @@ export { default as RichTextComponent } from './DraggableComponents/RichTextComp
 export { default as ComponentActionWithData } from './DraggableComponents/ComponentActionWithData';
 export { default as LinkComponent } from './DraggableComponents/LinkComponent';
 
+export { default as SiteNavItem } from './SiteNavComponents/SiteNavItem';
+
 export { default as Layout } from './Layout';
 export { default as Sidebar } from './Sidebar';
 export { default as PageHeader } from './PageHeader';

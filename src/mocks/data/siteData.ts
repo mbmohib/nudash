@@ -8,6 +8,7 @@ export default {
     {
       label: 'Home',
       url: '/',
+      isOpenNew: false,
     },
   ],
   pages: [

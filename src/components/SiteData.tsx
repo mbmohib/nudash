@@ -5,6 +5,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Text,
   Textarea,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -25,8 +26,11 @@ const schema = yup
   })
   .required();
 
-export default function SiteData() {
-  const { data } = useSiteQuery();
+interface SiteDataProps {
+  data: Site | undefined;
+}
+
+export default function SiteData({ data }: SiteDataProps) {
   const updateSite = useUpdateSite();
   const {
     register,
@@ -52,59 +56,66 @@ export default function SiteData() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl isInvalid={!!errors.name} mb="2">
-        <FormLabel htmlFor="name">Name</FormLabel>
-        <Input id="name" placeholder="name" {...register('name')} />
-        <FormErrorMessage>
-          {errors.name && errors.name.message}
-        </FormErrorMessage>
-      </FormControl>
+    <Box bgColor="secondary500" rounded="base" p="4">
+      <Text fontSize="lg" mb="2">
+        Site Data
+      </Text>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormControl isInvalid={!!errors.name} mb="2">
+          <FormLabel htmlFor="name">Name</FormLabel>
+          <Input id="name" placeholder="name" {...register('name')} />
+          <FormErrorMessage>
+            {errors.name && errors.name.message}
+          </FormErrorMessage>
+        </FormControl>
 
-      <FormControl isInvalid={!!errors.url} mb="2">
-        <FormLabel htmlFor="url">Url</FormLabel>
-        <Input id="url" placeholder="url" {...register('url')} />
-        <FormErrorMessage>{errors.url && errors.url.message}</FormErrorMessage>
-      </FormControl>
+        <FormControl isInvalid={!!errors.url} mb="2">
+          <FormLabel htmlFor="url">Url</FormLabel>
+          <Input id="url" placeholder="url" {...register('url')} />
+          <FormErrorMessage>
+            {errors.url && errors.url.message}
+          </FormErrorMessage>
+        </FormControl>
 
-      <FormControl isInvalid={!!errors.tagline} mb="2">
-        <FormLabel htmlFor="tagline">Tagline</FormLabel>
-        <Input id="tagline" placeholder="tagline" {...register('tagline')} />
-        <FormErrorMessage>
-          {errors.tagline && errors.tagline.message}
-        </FormErrorMessage>
-      </FormControl>
+        <FormControl isInvalid={!!errors.tagline} mb="2">
+          <FormLabel htmlFor="tagline">Tagline</FormLabel>
+          <Input id="tagline" placeholder="tagline" {...register('tagline')} />
+          <FormErrorMessage>
+            {errors.tagline && errors.tagline.message}
+          </FormErrorMessage>
+        </FormControl>
 
-      <FormControl isInvalid={!!errors.description} mb="2">
-        <FormLabel htmlFor="description">Description</FormLabel>
-        <Textarea
-          id="description"
-          placeholder="description"
-          {...register('description')}
-        />
-        <FormErrorMessage>
-          {errors.description && errors.description.message}
-        </FormErrorMessage>
-      </FormControl>
+        <FormControl isInvalid={!!errors.description} mb="2">
+          <FormLabel htmlFor="description">Description</FormLabel>
+          <Textarea
+            id="description"
+            placeholder="description"
+            {...register('description')}
+          />
+          <FormErrorMessage>
+            {errors.description && errors.description.message}
+          </FormErrorMessage>
+        </FormControl>
 
-      <FormControl isInvalid={!!errors.logo} mb="2">
-        <FormLabel htmlFor="description">Logo</FormLabel>
-        <FileUpload handleUpload={handleUpload} />
-        <FormErrorMessage>
-          {errors.logo && errors.logo.message}
-        </FormErrorMessage>
-      </FormControl>
+        <FormControl isInvalid={!!errors.logo} mb="2">
+          <FormLabel htmlFor="description">Logo</FormLabel>
+          <FileUpload handleUpload={handleUpload} />
+          <FormErrorMessage>
+            {errors.logo && errors.logo.message}
+          </FormErrorMessage>
+        </FormControl>
 
-      <Box textAlign="right">
-        <Button
-          variant="solid"
-          mt="3"
-          type="submit"
-          isLoading={updateSite.isLoading}
-        >
-          Update
-        </Button>
-      </Box>
-    </form>
+        <Box textAlign="right">
+          <Button
+            variant="solid"
+            mt="3"
+            type="submit"
+            isLoading={updateSite.isLoading}
+          >
+            Update
+          </Button>
+        </Box>
+      </form>
+    </Box>
   );
 }
