@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import {
   LightIcon,
   NotificationIcon,
-  PageIcon,
-  SchemaIcon,
+  PageIcon, // SchemaIcon,
 } from '../assets/icons';
 
 export default function Sidebar() {

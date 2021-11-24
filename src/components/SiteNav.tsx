@@ -20,18 +20,24 @@ interface SiteNavProps {
 export default function SiteNav({ menus }: SiteNavProps) {
   const updateSite = useUpdateSite();
 
-  const handleSaveData = (values: SiteMenu) => {
+  const handleSaveData = (menu: SiteMenu, menuIndex: number) => {
     updateSite.mutate({
       data: {
-        menus: [...(menus as SiteMenu[]), values],
+        menus: menus?.map((menuItem, index) => {
+          if (index === menuIndex) {
+            return menu;
+          }
+
+          return menuItem;
+        }),
       },
     });
   };
 
-  const handleDeleteNav = (label: string) => {
+  const handleDeleteNav = (menuIndex: number) => {
     updateSite.mutate({
       data: {
-        menus: menus?.filter(menu => menu.label !== label),
+        menus: menus?.filter((menu, index) => index !== menuIndex),
       },
     });
   };
@@ -56,8 +62,8 @@ export default function SiteNav({ menus }: SiteNavProps) {
       <Text fontSize="lg" mb="2">
         Site Nav
       </Text>
-      {menus?.map(menu => (
-        <Accordion allowToggle allowMultiple>
+      {menus?.map((menu, index) => (
+        <Accordion key={index} allowToggle allowMultiple>
           <AccordionItem>
             <AccordionButton px="0">
               <Box flex="1" textAlign="left">
@@ -69,6 +75,7 @@ export default function SiteNav({ menus }: SiteNavProps) {
               <SiteNavItem
                 isLoading={updateSite.isLoading}
                 menu={menu}
+                menuIndex={index}
                 handleSaveData={handleSaveData}
                 handleDeleteNav={handleDeleteNav}
               />

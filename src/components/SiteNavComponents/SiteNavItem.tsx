@@ -24,13 +24,10 @@ const schema = yup
 
 interface SiteNavProps {
   isLoading: boolean;
-  menu: {
-    label: string;
-    url: string;
-    isOpenNew: boolean;
-  };
-  handleSaveData: (values: SiteMenu) => void;
-  handleDeleteNav: (values: string) => void;
+  menu: SiteMenu;
+  menuIndex: number;
+  handleSaveData: (menu: SiteMenu, menuIndex: number) => void;
+  handleDeleteNav: (menuIndex: number) => void;
 }
 
 export default function SiteNav({
@@ -38,6 +35,7 @@ export default function SiteNav({
   menu,
   handleSaveData,
   handleDeleteNav,
+  menuIndex,
 }: SiteNavProps) {
   const {
     register,
@@ -53,7 +51,7 @@ export default function SiteNav({
   });
 
   return (
-    <form onSubmit={handleSubmit(handleSaveData)}>
+    <form onSubmit={handleSubmit(values => handleSaveData(values, menuIndex))}>
       <Grid gridTemplateColumns="3fr 1fr" gridTemplateRows="1f 1fr" gap="2">
         <FormControl isInvalid={!!errors.label} mb="2">
           <FormLabel htmlFor="label">Label</FormLabel>
@@ -83,7 +81,7 @@ export default function SiteNav({
         <Button variant="link" mr="1" type="submit" isLoading={isLoading}>
           Save
         </Button>
-        <Button variant="link" onClick={() => handleDeleteNav(menu.label)}>
+        <Button variant="link" onClick={() => handleDeleteNav(menuIndex)}>
           Delete
         </Button>
       </Flex>

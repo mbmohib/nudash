@@ -2,11 +2,12 @@ import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
+import { PreLoader } from '.';
 import { maxImageSize } from '../config';
 import { FileType } from '../types';
 
 interface FileUploadProps {
-  loading?: boolean;
+  isLoading?: boolean;
   handleUpload: (file: FileType) => void;
 }
 
@@ -33,7 +34,10 @@ const Preview = ({ file, handleImageRemove }: PreviewProps) => {
   );
 };
 
-export default function FileUpload({ loading, handleUpload }: FileUploadProps) {
+export default function FileUpload({
+  isLoading,
+  handleUpload,
+}: FileUploadProps) {
   const [error, setError] = useState<string>('');
   const [fieldValue, setFieldValue] = useState<FileType | null>();
 
@@ -52,6 +56,7 @@ export default function FileUpload({ loading, handleUpload }: FileUploadProps) {
       } else {
         setError('');
         setFieldValue(files[0]);
+        handleUpload(files[0]);
       }
     },
     multiple: false,
@@ -80,7 +85,7 @@ export default function FileUpload({ loading, handleUpload }: FileUploadProps) {
     >
       <Flex
         // hasFile={fieldValue.files.length !== 0}
-        {...getRootProps({ className: 'dropzone' })}
+        {...getRootProps({ className: 'file-upload' })}
       >
         <input {...getInputProps()} />
         {!fieldValue && (
@@ -92,7 +97,9 @@ export default function FileUpload({ loading, handleUpload }: FileUploadProps) {
         )}
         {error && <Text color="error">{error}</Text>}
         {fieldValue && (
-          <Preview file={fieldValue} handleImageRemove={handleImageRemove} />
+          <PreLoader isLoading={!!isLoading}>
+            <Preview file={fieldValue} handleImageRemove={handleImageRemove} />
+          </PreLoader>
         )}
       </Flex>
     </Flex>

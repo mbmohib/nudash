@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { FileUpload } from '.';
-import { useSiteQuery, useUpdateSite } from '../hooks/useSite';
+import { useUpdateSite } from '../hooks/useSite';
 import { Site } from '../types';
 
 const schema = yup
