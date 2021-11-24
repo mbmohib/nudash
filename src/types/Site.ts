@@ -1,3 +1,5 @@
+import { SiteMenu } from '.';
+
 export default interface Site {
   id: string;
   name?: string;
@@ -5,11 +7,7 @@ export default interface Site {
   tagline?: string;
   description?: string;
   logo?: string;
-  menus?: {
-    label: string;
-    url: string;
-    isOpenNew: boolean;
-  }[];
+  menus?: SiteMenu[];
   pages?: {
     id: string;
     name: string;

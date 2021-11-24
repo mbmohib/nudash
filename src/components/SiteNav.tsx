@@ -6,57 +6,41 @@ import {
   AccordionPanel,
   Box,
   Button,
-  Flex,
-  Grid,
-  Link,
   Text,
 } from '@chakra-ui/react';
 
 import { SiteNavItem } from '.';
 import { useUpdateSite } from '../hooks/useSite';
-import { Site } from '../types';
+import { SiteMenu } from '../types';
 
 interface SiteNavProps {
-  menus:
-    | {
-        label: string;
-        url: string;
-        isOpenNew: boolean;
-      }[]
-    | undefined;
+  menus: SiteMenu[] | undefined;
 }
 
 export default function SiteNav({ menus }: SiteNavProps) {
   const updateSite = useUpdateSite();
 
-  const handleSaveData = (values: any) => {
+  const handleSaveData = (values: SiteMenu) => {
     updateSite.mutate({
       data: {
-        menus: [
-          ...(menus as {
-            label: string;
-            url: string;
-            isOpenNew: boolean;
-          }[]),
-          values,
-        ],
+        menus: [...(menus as SiteMenu[]), values],
       },
     });
   };
 
-  const handleDeleteNav = (values: any) => {
-    // updateSite.mutate(values)
+  const handleDeleteNav = (label: string) => {
+    updateSite.mutate({
+      data: {
+        menus: menus?.filter(menu => menu.label !== label),
+      },
+    });
   };
 
-  const handleAddMenu = (values: any) => {
+  const handleAddMenu = () => {
     updateSite.mutate({
       data: {
         menus: [
-          ...(menus as {
-            label: string;
-            url: string;
-            isOpenNew: boolean;
-          }[]),
+          ...(menus as SiteMenu[]),
           {
             label: 'unnamed',
             url: '/',

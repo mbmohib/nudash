@@ -12,6 +12,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
+import { SiteMenu } from '../../types';
+
 const schema = yup
   .object({
     label: yup.string().required('Please enter site label'),
@@ -27,8 +29,8 @@ interface SiteNavProps {
     url: string;
     isOpenNew: boolean;
   };
-  handleSaveData: (values: any) => void;
-  handleDeleteNav: (values: any) => void;
+  handleSaveData: (values: SiteMenu) => void;
+  handleDeleteNav: (values: string) => void;
 }
 
 export default function SiteNav({
@@ -81,7 +83,7 @@ export default function SiteNav({
         <Button variant="link" mr="1" type="submit" isLoading={isLoading}>
           Save
         </Button>
-        <Button variant="link" onClick={handleDeleteNav}>
+        <Button variant="link" onClick={() => handleDeleteNav(menu.label)}>
           Delete
         </Button>
       </Flex>

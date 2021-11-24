@@ -5,4 +5,5 @@ export type { default as FileType } from './FileType';
 export type { default as EditorBlock } from './EditorBlock';
 export type { default as FieldData } from './FieldData';
 export type { default as Section } from './Section';
+export type { default as SiteMenu } from './SiteMenu';
 export type { default as Site } from './Site';
