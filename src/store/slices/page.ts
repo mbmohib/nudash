@@ -409,6 +409,32 @@ const pageSlice = createSlice({
         ].rows.filter(row => row.id !== rowId);
       }
     },
+    removeColumn(
+      state,
+      action: PayloadAction<{
+        sectionId: number;
+        rowId: number;
+        columnId: number;
+      }>,
+    ) {
+      const { sectionId, rowId, columnId } = action.payload;
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+      const rowIndex = state.sections[sectionIndex].rows.findIndex(
+        row => row.id === rowId,
+      );
+
+      const columns = state.sections[sectionIndex].rows[
+        rowIndex
+      ].columns.filter((_, index) => index !== columnId);
+
+      if (columns.length) {
+        state.sections[sectionIndex].rows[rowIndex].columns = columns;
+      } else {
+        state.sections[sectionIndex].rows[rowIndex].columns = [[]];
+      }
+    },
     handleSectionOrder(
       state,
       action: PayloadAction<{
@@ -441,6 +467,7 @@ export const {
   saveFieldData,
   removeField,
   removeRow,
+  removeColumn,
   handleSectionOrder,
 } = pageSlice.actions;
 export default pageSlice.reducer;

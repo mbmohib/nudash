@@ -29,7 +29,7 @@ export default function Page() {
   const { sections } = useSelector(state => state.page);
   const [rowId, setRowId] = useState<number>(0);
   const [sectionId, setSectionId] = useState<number>(0);
-  const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
+  const notInitialRow = sections[0]?.rows[0]?.columns?.length > 0;
   const { page } = useParams<{ page?: string }>();
   const siteQuery = useSiteQuery();
   const pageQuery = usePageQuery(page);
