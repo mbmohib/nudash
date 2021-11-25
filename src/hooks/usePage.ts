@@ -10,13 +10,13 @@ interface createPageData {
   };
 }
 
-export const usePageQuery = (pageId: string | undefined) => {
+export const usePageQuery = (slug: string | undefined) => {
   const axios = useAxios();
 
   return useQuery<Section, Error>(
-    ['pages', pageId],
+    ['pages', slug],
     async () => {
-      const { data } = await axios.get(`/pages/${pageId}`);
+      const { data } = await axios.get(`/pages/${slug}`);
 
       return data;
     },
@@ -35,4 +35,19 @@ export const useAddPage = () => {
       queryClient.setQueryData('site', () => data.data);
     },
   });
+};
+
+export const useUpdatePage = (slug: string | undefined) => {
+  const axios = useAxios();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ data }: { data: Pick<Section, 'sections'>['sections'] }) =>
+      axios.post(`/pages/${slug}`, data),
+    {
+      onSuccess: data => {
+        queryClient.setQueryData(['pages', slug], () => data.data);
+      },
+    },
+  );
 };

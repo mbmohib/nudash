@@ -1,6 +1,7 @@
 // src/mocks/handlers.js
 import { RestRequest, rest } from 'msw';
 
+import { Section } from '../types';
 import { pageData, siteData } from './data';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -9,8 +10,10 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(siteData));
   }),
 
-  rest.get('/pages/:pageId', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(pageData));
+  rest.get('/pages/:slug', (req, res, ctx) => {
+    const page = pageData.find(pageItem => pageItem.path === req.params.slug);
+
+    return res(ctx.status(200), ctx.json(page));
   }),
 
   rest.post('/pages', (req: RestRequest, res, ctx) => {
@@ -26,6 +29,19 @@ export const handlers = [
           path: body.path,
         },
       ],
+    };
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.post('/pages/:slug', (req: RestRequest, res, ctx) => {
+    const body = req.body as Section;
+
+    const page = pageData.find(pageItem => pageItem.path === req.params.slug);
+
+    const data = {
+      ...page,
+      sections: body,
     };
 
     return res(ctx.status(200), ctx.json(data));

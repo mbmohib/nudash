@@ -35,7 +35,7 @@ export default function Page() {
   const pageQuery = usePageQuery(page);
 
   useEffect(() => {
-    if (pageQuery.data && pageQuery.isFetched) {
+    if (pageQuery.data?.sections && pageQuery.isFetched) {
       dispatch(setInitialState(pageQuery.data));
     }
   }, [pageQuery.data]);
@@ -78,6 +78,7 @@ export default function Page() {
       menus={siteQuery.data?.pages}
       isLoading={siteQuery.isLoading}
       pageName={pageQuery.data?.name}
+      path={pageQuery.data?.path}
       handleAdd={handlePageAdd}
     >
       <PreLoader isLoading={pageQuery.isLoading}>

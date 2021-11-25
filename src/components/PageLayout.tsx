@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 
 import { PageHeader } from '.';
 import { PlusIcon } from '../assets/icons';
+import { useSelector } from '../hooks';
+import { useUpdatePage } from '../hooks/usePage';
 
 interface PageLayoutProps {
   heading: string;
   children: React.ReactNode;
   isLoading: boolean;
   pageName?: string;
+  path?: string;
   menus?: {
     path: string;
     name: string;
@@ -25,10 +28,13 @@ export default function PageLayout({
   menus = [],
   children,
   handleAdd,
+  path,
 }: PageLayoutProps) {
+  const updatePage = useUpdatePage(path);
+  const { sections } = useSelector(state => state.page);
+
   const saveData = () => {
-    // eslint-disable-next-line no-console
-    console.log('saving');
+    updatePage.mutate({ data: sections });
   };
 
   return (
@@ -44,7 +50,11 @@ export default function PageLayout({
           <Heading as="h2" size="md">
             {heading}
           </Heading>
-          <Button variant="link" onClick={handleAdd}>
+          <Button
+            variant="link"
+            onClick={handleAdd}
+            isLoading={updatePage.isLoading}
+          >
             <PlusIcon />
           </Button>
         </Flex>
