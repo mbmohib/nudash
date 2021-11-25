@@ -81,14 +81,15 @@ export default function Page() {
       handleAdd={handlePageAdd}
     >
       <PreLoader isLoading={pageQuery.isLoading}>
-        <Box pt="80px">
+        <Box pt="80px" bg="secondary600">
           <DndProvider backend={HTML5Backend}>
             <Grid gridTemplateColumns="1fr 350px">
               <Container py="2" maxW="container.lg">
                 {sections.map((section, index) => (
                   <Section
                     section={section}
-                    key={index}
+                    key={section.id}
+                    index={index}
                     totalSection={sections.length}
                   />
                 ))}

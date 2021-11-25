@@ -1,10 +1,23 @@
 import { Box, Button, Flex, Icon } from '@chakra-ui/react';
+import { XYCoord } from 'dnd-core';
+import { useRef } from 'react';
+import {
+  DragSourceMonitor,
+  DropTargetMonitor,
+  useDrag,
+  useDrop,
+} from 'react-dnd';
 import { AiOutlineHolder } from 'react-icons/ai';
 
 import { Row } from '.';
 import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
+import { ItemTypes } from '../config';
 import { useDispatch, useToggle } from '../hooks';
-import { handleAddSection, handleRemoveSection } from '../store/slices/page';
+import {
+  handleAddSection,
+  handleRemoveSection,
+  handleSectionOrder,
+} from '../store/slices/page';
 import { DraggableItem } from '../types';
 
 interface SectionTypes {
@@ -17,12 +30,97 @@ interface SectionTypes {
 
 interface SectionProps {
   section: SectionTypes;
+  index: number;
   totalSection: number;
 }
 
-export default function Section({ section, totalSection }: SectionProps) {
+interface DragItem {
+  index: number;
+  id: string;
+  type: string;
+}
+
+export default function Section({
+  section,
+  totalSection,
+  index,
+}: SectionProps) {
   const dispatch = useDispatch();
   const [expand, setExpand] = useToggle(true);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [{ handlerId }, drop] = useDrop({
+    accept: ItemTypes.Section,
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+      };
+    },
+    hover(item: DragItem, monitor: DropTargetMonitor) {
+      if (!ref.current) {
+        return;
+      }
+      const draggedIndex = item.index;
+      const hoveredIndex = index;
+
+      // Don't replace items with themselves
+      if (draggedIndex === hoveredIndex) {
+        return;
+      }
+
+      // Determine rectangle on screen
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+
+      // Get vertical middle
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+      // Determine mouse position
+      const clientOffset = monitor.getClientOffset();
+
+      // Get pixels to the top
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
+
+      // Only perform the move when the mouse has crossed half of the items height
+      // When dragging downwards, only move when the cursor is below 50%
+      // When dragging upwards, only move when the cursor is above 50%
+
+      // Dragging downwards
+      if (draggedIndex < hoveredIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+
+      // Dragging upwards
+      if (draggedIndex > hoveredIndex && hoverClientY > hoverMiddleY) {
+        // eslint-disable-next-line no-useless-return
+        return;
+      }
+
+      // Time to actually perform the action
+      // moveCard(draggedIndex, hoveredIndex);
+      dispatch(handleSectionOrder({ draggedIndex, hoveredIndex }));
+
+      // Note: we're mutating the monitor item here!
+      // Generally it's better to avoid mutations,
+      // but it's good here for the sake of performance
+      // to avoid expensive index searches.
+      // eslint-disable-next-line no-param-reassign
+      item.index = hoveredIndex;
+    },
+  });
+
+  const [{ isDragging }, drag] = useDrag({
+    type: ItemTypes.Section,
+    item: () => {
+      return { id: section.id, index };
+    },
+    collect: (monitor: DragSourceMonitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const opacity = isDragging ? 0 : 1;
+  drag(drop(ref));
 
   return (
     <Box
@@ -32,10 +130,13 @@ export default function Section({ section, totalSection }: SectionProps) {
       bgColor="secondary500"
       rounded="base"
       mb="2"
+      ref={ref}
+      opacity={opacity}
+      data-handler-id={handlerId}
     >
-      <Box maxHeight={expand ? 'auto' : '100px'} overflow="hidden">
-        {section.rows.map((row, index) => (
-          <Row key={index} rowId={row.id} sectionId={section.id} row={row} />
+      <Box maxHeight={expand ? '100%' : '100px'} overflow="hidden">
+        {section.rows.map(row => (
+          <Row key={row.id} rowId={row.id} sectionId={section.id} row={row} />
         ))}
       </Box>
 
@@ -83,13 +184,9 @@ export default function Section({ section, totalSection }: SectionProps) {
       >
         <Button
           variant="primary"
-          onClick={() =>
-            dispatch(
-              handleRemoveSection({
-                id: section.id,
-              }),
-            )
-          }
+          _hover={{
+            cursor: 'move',
+          }}
         >
           <Icon as={AiOutlineHolder} width="24px" height="24px" />
         </Button>
@@ -99,7 +196,7 @@ export default function Section({ section, totalSection }: SectionProps) {
         role="expand"
         position="absolute"
         sx={{
-          top: '-30px',
+          top: '-10px',
           right: '25px',
         }}
       >

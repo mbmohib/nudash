@@ -409,6 +409,21 @@ const pageSlice = createSlice({
         ].rows.filter(row => row.id !== rowId);
       }
     },
+    handleSectionOrder(
+      state,
+      action: PayloadAction<{
+        hoveredIndex: number;
+        draggedIndex: number;
+      }>,
+    ) {
+      const { hoveredIndex, draggedIndex } = action.payload;
+
+      state.sections.splice(
+        hoveredIndex,
+        0,
+        state.sections.splice(draggedIndex, 1)[0],
+      );
+    },
   },
 });
 
@@ -426,5 +441,6 @@ export const {
   saveFieldData,
   removeField,
   removeRow,
+  handleSectionOrder,
 } = pageSlice.actions;
 export default pageSlice.reducer;

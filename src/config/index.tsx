@@ -22,6 +22,7 @@ export enum FieldType {
 export const ItemTypes = {
   Field: 'field',
   Column: 'column',
+  Section: 'section',
 };
 
 export const maxImageSize = 3 * 1024 * 1024;

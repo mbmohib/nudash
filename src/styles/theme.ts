@@ -5,24 +5,6 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 };
 
-const styles = {
-  global: {
-    // styles for the `body`
-    body: {
-      bg: '#101026',
-      color: 'white',
-    },
-    // styles for the `a`
-    a: {
-      color: 'white',
-      _hover: {
-        textDecoration: 'none',
-        color: 'teal.700',
-      },
-    },
-  },
-};
-
 const fonts = {
   heading: 'Zen Kaku Gothic Antique',
   body: 'Zen Kaku Gothic Antique',
@@ -85,6 +67,24 @@ const zIndices = {
   skipLink: 1600,
   toast: 1700,
   tooltip: 1800,
+};
+
+const styles = {
+  global: {
+    // styles for the `body`
+    body: {
+      bg: colors.secondary600,
+      color: 'white',
+    },
+    // styles for the `a`
+    a: {
+      color: 'white',
+      _hover: {
+        textDecoration: 'none',
+        color: 'teal.700',
+      },
+    },
+  },
 };
 
 const components = {
