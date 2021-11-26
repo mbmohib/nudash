@@ -1,9 +1,8 @@
 import { Box, Container, Grid } from '@chakra-ui/react';
+import { PageHeader, PreLoader, SiteData, SiteNav } from 'components';
+import { useSiteQuery } from 'hooks/useSite';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-
-import { PageHeader, PreLoader, SiteData, SiteNav } from '../components';
-import { useSiteQuery } from '../hooks/useSite';
 
 export default function Site() {
   const siteQuery = useSiteQuery();
