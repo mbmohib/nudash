@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-import { SiteData } from '.';
+import { SiteData } from '../components';
 import { siteData } from '../mocks/data';
 
 test('render site data form heading', () => {
