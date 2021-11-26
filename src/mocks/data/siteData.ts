@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 
 export default {
+  id: '001',
   name: 'Nudash',
   tagline: 'We will rock!',
   description: 'We do...',
