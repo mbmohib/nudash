@@ -3,8 +3,9 @@ import { Box, Button, Flex, Heading, Skeleton } from '@chakra-ui/react';
 import { DeleteIcon } from '../assets/icons';
 
 interface HeaderProps {
-  handleSave: () => void;
-  handleDelete: () => void;
+  showActionButton?: boolean;
+  handleSave?: () => void;
+  handleDelete?: () => void;
   isLoading?: boolean;
   pageName?: string;
   hasSidebar?: boolean;
@@ -16,6 +17,7 @@ export default function PageHeader({
   isLoading,
   pageName,
   hasSidebar,
+  showActionButton,
 }: HeaderProps) {
   return (
     <Flex
@@ -37,16 +39,18 @@ export default function PageHeader({
           </Heading>
         </Skeleton>
       </Box>
-      <Skeleton isLoaded={!isLoading}>
-        <Flex alignItems="center">
-          <Button onClick={handleSave} mr="2">
-            Save
-          </Button>
-          <Button variant="icon" mr="2" onClick={handleDelete}>
-            <DeleteIcon />
-          </Button>
-        </Flex>
-      </Skeleton>
+      {showActionButton && (
+        <Skeleton isLoaded={!isLoading}>
+          <Flex alignItems="center">
+            <Button onClick={handleSave} mr="2">
+              Save
+            </Button>
+            <Button variant="icon" mr="2" onClick={handleDelete}>
+              <DeleteIcon />
+            </Button>
+          </Flex>
+        </Skeleton>
+      )}
     </Flex>
   );
 }

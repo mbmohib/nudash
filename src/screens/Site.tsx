@@ -1,4 +1,6 @@
 import { Box, Container, Grid } from '@chakra-ui/react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { PageHeader, PreLoader, SiteData, SiteNav } from '../components';
 import { useSiteQuery } from '../hooks/useSite';
@@ -6,19 +8,9 @@ import { useSiteQuery } from '../hooks/useSite';
 export default function Site() {
   const siteQuery = useSiteQuery();
 
-  const saveData = () => {
-    // eslint-disable-next-line no-console
-    console.log('saveData');
-  };
-
   return (
     <Box>
-      <PageHeader
-        isLoading={siteQuery.isLoading}
-        pageName="Site"
-        handleSave={saveData}
-        handleDelete={saveData}
-      />
+      <PageHeader isLoading={siteQuery.isLoading} pageName="Site" />
       <PreLoader isLoading={siteQuery.isLoading}>
         <Container pt="80px">
           <Grid
@@ -28,7 +20,9 @@ export default function Site() {
             alignItems="flex-start"
           >
             <SiteData data={siteQuery.data} />
-            <SiteNav menus={siteQuery.data?.menus} />
+            <DndProvider backend={HTML5Backend}>
+              <SiteNav menus={siteQuery.data?.menus} />
+            </DndProvider>
           </Grid>
         </Container>
       </PreLoader>

@@ -1,13 +1,6 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Button,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Button, Text } from '@chakra-ui/react';
+import produce from 'immer';
+import { nanoid } from 'nanoid';
 
 import { SiteNavItem } from '.';
 import { useUpdateSite } from '../hooks/useSite';
@@ -20,11 +13,11 @@ interface SiteNavProps {
 export default function SiteNav({ menus }: SiteNavProps) {
   const updateSite = useUpdateSite();
 
-  const handleSaveData = (menu: SiteMenu, menuIndex: number) => {
+  const handleSaveData = (menu: SiteMenu, menuId: string) => {
     updateSite.mutate({
       data: {
-        menus: menus?.map((menuItem, index) => {
-          if (index === menuIndex) {
+        menus: menus?.map(menuItem => {
+          if (menuItem.id === menuId) {
             return menu;
           }
 
@@ -34,10 +27,10 @@ export default function SiteNav({ menus }: SiteNavProps) {
     });
   };
 
-  const handleDeleteNav = (menuIndex: number) => {
+  const handleDeleteNav = (menuId: string) => {
     updateSite.mutate({
       data: {
-        menus: menus?.filter((menu, index) => index !== menuIndex),
+        menus: menus?.filter(menu => menu.id !== menuId),
       },
     });
   };
@@ -48,11 +41,24 @@ export default function SiteNav({ menus }: SiteNavProps) {
         menus: [
           ...(menus as SiteMenu[]),
           {
+            id: nanoid(),
             label: 'unnamed',
             url: '/',
             isOpenNew: false,
           },
         ],
+      },
+    });
+  };
+
+  const handleOrderMenu = (draggedIndex: number, hoveredIndex: number) => {
+    const updatedOrder = produce(menus, (draft: SiteMenu[]) => {
+      draft.splice(hoveredIndex, 0, draft.splice(draggedIndex, 1)[0]);
+    });
+
+    updateSite.mutate({
+      data: {
+        menus: updatedOrder,
       },
     });
   };
@@ -63,25 +69,15 @@ export default function SiteNav({ menus }: SiteNavProps) {
         Site Nav
       </Text>
       {menus?.map((menu, index) => (
-        <Accordion key={index} allowToggle allowMultiple>
-          <AccordionItem>
-            <AccordionButton px="0">
-              <Box flex="1" textAlign="left">
-                {menu.label}
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel px="1" pb={4}>
-              <SiteNavItem
-                isLoading={updateSite.isLoading}
-                menu={menu}
-                menuIndex={index}
-                handleSaveData={handleSaveData}
-                handleDeleteNav={handleDeleteNav}
-              />
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+        <SiteNavItem
+          key={menu.id}
+          isLoading={updateSite.isLoading}
+          menu={menu}
+          index={index}
+          handleSaveData={handleSaveData}
+          handleOrderMenu={handleOrderMenu}
+          handleDeleteNav={handleDeleteNav}
+        />
       ))}
 
       <Box textAlign="right" mt="2">

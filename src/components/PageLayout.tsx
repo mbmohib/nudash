@@ -73,6 +73,7 @@ export default function PageLayout({
 
       <Box ml="200px">
         <PageHeader
+          showActionButton={true}
           hasSidebar={true}
           isLoading={isLoading}
           pageName={pageName}

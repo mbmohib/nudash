@@ -23,6 +23,7 @@ export const ItemTypes = {
   Field: 'field',
   Column: 'column',
   Section: 'section',
+  Menu: 'menu',
 };
 
 export const maxImageSize = 3 * 1024 * 1024;

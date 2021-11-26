@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 export default {
   name: 'Nudash',
   tagline: 'We will rock!',
@@ -6,6 +8,7 @@ export default {
   url: 'https://mohib.me',
   menus: [
     {
+      id: nanoid(),
       label: 'Home',
       url: '/',
       isOpenNew: false,
@@ -13,7 +16,7 @@ export default {
   ],
   pages: [
     {
-      id: '001',
+      id: nanoid(),
       name: 'Home',
       path: 'home',
     },
