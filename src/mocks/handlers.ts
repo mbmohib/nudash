@@ -1,13 +1,25 @@
 // src/mocks/handlers.js
 import { RestRequest, rest } from 'msw';
 
-import { Section } from '../types';
+import { Section, Site } from '../types';
 import { pageData, siteData } from './data';
+import { db } from './db/site';
 
 // eslint-disable-next-line import/prefer-default-export
 export const handlers = [
   rest.get('/site', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(siteData));
+    return res(
+      ctx.status(200),
+      ctx.json(
+        db.site.findFirst({
+          where: {
+            id: {
+              equals: 'nudash',
+            },
+          },
+        }),
+      ),
+    );
   }),
 
   rest.get('/pages/:slug', (req, res, ctx) => {
@@ -50,11 +62,15 @@ export const handlers = [
   rest.post('/sites', (req: RestRequest, res, ctx) => {
     const { body } = req;
 
-    const data = {
-      ...siteData,
-      ...(body as Record<string, string>),
-    };
+    const site = db.site.update({
+      where: {
+        id: {
+          equals: 'nudash',
+        },
+      },
+      data: body as Site,
+    });
 
-    return res(ctx.status(200), ctx.json(data));
+    return res(ctx.status(200), ctx.json({ data: site }));
   }),
 ];

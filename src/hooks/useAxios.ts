@@ -12,7 +12,7 @@ export default function useAxios() {
 
   const axiosClient: Axios = useMemo(() => {
     const axiosInstance = axios.create({
-      baseURL: apiEndpoint,
+      baseURL: '/', // apiEndpoint,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -46,7 +46,7 @@ export default function useAxios() {
       },
     );
 
-    return axios;
+    return axiosInstance;
 
     // eslint-disable-next-line
   }, [token]);

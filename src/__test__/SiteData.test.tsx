@@ -1,22 +1,27 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { SiteData } from '../components';
 import { siteData } from '../mocks/data';
+import { db } from '../mocks/db/site';
+import server from '../mocks/server';
+import { Site } from '../types';
 
-const server = setupServer(
+server.use(
   rest.post('/sites', (req, res, ctx) => {
     const { body } = req;
+    const site = db.site.update({
+      where: {
+        id: {
+          equals: 'nudash',
+        },
+      },
+      data: body as Site,
+    });
 
-    const data = {
-      ...siteData,
-      ...(body as Record<string, string>),
-    };
-
-    return res(ctx.status(200), ctx.json(data));
+    return res(ctx.json({ data: site }));
   }),
 );
 
