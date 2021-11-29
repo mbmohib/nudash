@@ -1,82 +1,61 @@
-import { render, screen } from '@testing-library/react';
-import user from '@testing-library/user-event';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { SiteData } from '../components';
 import { siteData } from '../mocks/data';
 
-test('render site data form heading', () => {
+const server = setupServer(
+  rest.post('/sites', (req, res, ctx) => {
+    const { body } = req;
+
+    const data = {
+      ...siteData,
+      ...(body as Record<string, string>),
+    };
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+);
+
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+afterAll(() => server.close());
+afterEach(() => server.resetHandlers());
+
+test('renders a site update form and update data', async () => {
   const queryClient = new QueryClient();
   render(
     <QueryClientProvider client={queryClient}>
       <SiteData data={siteData} />
     </QueryClientProvider>,
   );
-  const formHeading = screen.getByText(/site data/i);
 
-  expect(formHeading).toBeInTheDocument();
-});
-
-test('render name input field & check user input', () => {
-  const queryClient = new QueryClient();
-  render(
-    <QueryClientProvider client={queryClient}>
-      <SiteData data={siteData} />
-    </QueryClientProvider>,
-  );
   const name = screen.getByLabelText(/name/i);
+  userEvent.clear(name);
+  userEvent.type(name, 'My Rocking site!');
 
-  expect(name).toBeInTheDocument();
-
-  user.clear(name);
-  user.type(name, 'John Doe');
-  expect(name).toHaveValue('John Doe');
-});
-
-test('render url input field & check user input', () => {
-  const queryClient = new QueryClient();
-  render(
-    <QueryClientProvider client={queryClient}>
-      <SiteData data={siteData} />
-    </QueryClientProvider>,
-  );
   const url = screen.getByLabelText(/url/i);
+  userEvent.clear(url);
+  userEvent.type(url, 'https://example.me');
 
-  expect(url).toBeInTheDocument();
+  const tagline = screen.getByLabelText(/tagline/i);
+  userEvent.clear(tagline);
+  userEvent.type(tagline, 'We will rock!');
 
-  user.clear(url);
-  user.type(url, 'https://mohib.me');
-  expect(url).toHaveValue('https://mohib.me');
-});
+  const description = screen.getByLabelText(/description/i);
+  userEvent.clear(description);
+  userEvent.type(description, 'We do...');
 
-test('render tagline input field & check user input', () => {
-  const queryClient = new QueryClient();
-  render(
-    <QueryClientProvider client={queryClient}>
-      <SiteData data={siteData} />
-    </QueryClientProvider>,
-  );
-  const tagline = screen.getByLabelText(/url/i);
+  const submitBtn = screen.getByText(/update/i);
+  userEvent.click(submitBtn);
 
-  expect(tagline).toBeInTheDocument();
-
-  user.clear(tagline);
-  user.type(tagline, 'We will rock!');
-  expect(tagline).toHaveValue('We will rock!');
-});
-
-test('render description textarea field & check user input', () => {
-  const queryClient = new QueryClient();
-  render(
-    <QueryClientProvider client={queryClient}>
-      <SiteData data={siteData} />
-    </QueryClientProvider>,
-  );
-  const description = screen.getByLabelText(/url/i);
-
-  expect(description).toBeInTheDocument();
-
-  user.clear(description);
-  user.type(description, 'We do...');
-  expect(description).toHaveValue('We do...');
+  // TODO: test image upload..
+  await waitFor(() => {
+    expect(name).toHaveValue('My Rocking site!');
+    expect(url).toHaveValue('https://example.me');
+    expect(tagline).toHaveValue('We will rock!');
+    expect(description).toHaveValue('We do...');
+  });
 });
