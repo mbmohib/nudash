@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
 import { RestRequest, rest } from 'msw';
 
-import { Section, Site } from '../types';
+import { Page, Site } from '../types';
 import { pageData, siteData } from './data';
 import { db } from './db/site';
 
@@ -47,13 +47,13 @@ export const handlers = [
   }),
 
   rest.post('/pages/:slug', (req: RestRequest, res, ctx) => {
-    const body = req.body as Section;
+    const body = req.body as Page;
 
     const page = pageData.find(pageItem => pageItem.path === req.params.slug);
 
     const data = {
       ...page,
-      sections: body,
+      Pages: body,
     };
 
     return res(ctx.status(200), ctx.json(data));
@@ -72,5 +72,12 @@ export const handlers = [
     });
 
     return res(ctx.status(200), ctx.json({ data: site }));
+  }),
+
+  rest.get('/:site/pages', (req: RestRequest, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([{ id: 'hosel', name: 'Home', path: 'home' }]),
+    );
   }),
 ];

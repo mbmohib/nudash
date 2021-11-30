@@ -14,7 +14,7 @@ import {
   Section,
 } from '../components';
 import { useDispatch, useSelector } from '../hooks';
-import { usePageQuery } from '../hooks/usePage';
+import { usePageQueries, usePageQuery } from '../hooks/usePage';
 import { useSiteQuery } from '../hooks/useSite';
 import {
   handleAddColumn,
@@ -33,6 +33,7 @@ export default function Page() {
   const { page } = useParams<{ page?: string }>();
   const siteQuery = useSiteQuery();
   const pageQuery = usePageQuery(page);
+  const pageQueries = usePageQueries(siteQuery.data?.id);
 
   useEffect(() => {
     if (pageQuery.data?.sections && pageQuery.isFetched) {
@@ -75,7 +76,7 @@ export default function Page() {
   return (
     <PageLayout
       heading="Pages"
-      menus={siteQuery.data?.pages}
+      menus={pageQueries.data}
       isLoading={siteQuery.isLoading}
       pageName={pageQuery.data?.name}
       path={pageQuery.data?.path}

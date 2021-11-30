@@ -62,7 +62,7 @@ export default function PageLayout({
           <SkeletonText mt="4" noOfLines={4} spacing="2" />
         ) : (
           <Box as="ul" mt="28px" sx={{ listStyle: 'none' }}>
-            {menus.map(menu => (
+            {menus?.map(menu => (
               <Box as="li" py="0.5" key={menu.name} textTransform="capitalize">
                 <Link to={`/pages/${menu.path}`}>{menu.name}</Link>
               </Box>

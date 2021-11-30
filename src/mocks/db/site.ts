@@ -40,7 +40,6 @@ export const db = factory({
     //     id: primaryKey(faker.random.uuid).
     //   }
     // ],
-    // pages: Array,
   },
 });
 

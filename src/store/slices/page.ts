@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
 import { FieldType } from '../../config';
-import { DraggableItem, FieldData, Section } from '../../types';
+import { DraggableItem, FieldData, Page } from '../../types';
 
 interface LastDropItem {
   sectionId: number;
@@ -18,12 +18,13 @@ interface LastRowItem {
   hasColumn: boolean;
 }
 
-interface SectionState extends Section {
+interface PageState extends Page {
   lastDropItemInfo?: LastDropItem;
   lastRowItemInfo?: LastRowItem;
 }
 
-const initialState: SectionState = {
+const initialState: PageState = {
+  siteId: 'nudash',
   pageId: '001',
   name: 'home',
   path: 'page',

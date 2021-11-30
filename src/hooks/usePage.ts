@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { Section } from '../types';
+import { Page, Pages } from '../types';
 import useAxios from './useAxios';
 
 interface createPageData {
@@ -13,10 +13,26 @@ interface createPageData {
 export const usePageQuery = (slug: string | undefined) => {
   const axios = useAxios();
 
-  return useQuery<Section, Error>(
+  return useQuery<Page, Error>(
     ['pages', slug],
     async () => {
       const { data } = await axios.get(`/pages/${slug}`);
+
+      return data;
+    },
+    {
+      staleTime: 60 * 1000,
+    },
+  );
+};
+
+export const usePageQueries = (site: string | undefined) => {
+  const axios = useAxios();
+
+  return useQuery<Pages[], Error>(
+    [site, 'pages'],
+    async () => {
+      const { data } = await axios.get(`/${site}/pages/`);
 
       return data;
     },
@@ -42,7 +58,7 @@ export const useUpdatePage = (slug: string | undefined) => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    ({ data }: { data: Pick<Section, 'sections'>['sections'] }) =>
+    ({ data }: { data: Pick<Page, 'sections'>['sections'] }) =>
       axios.post(`/pages/${slug}`, data),
     {
       onSuccess: data => {

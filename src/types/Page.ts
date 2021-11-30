@@ -1,6 +1,7 @@
 import { DraggableItem } from '.';
 
-export default interface Section {
+export default interface Page {
+  siteId: string;
   pageId: string;
   name: string;
   path: string;
