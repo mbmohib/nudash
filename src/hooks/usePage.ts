@@ -42,15 +42,18 @@ export const usePageQueries = (site: string | undefined) => {
   );
 };
 
-export const useAddPage = () => {
+export const useAddPage = (site: string | undefined) => {
   const axios = useAxios();
   const queryClient = useQueryClient();
 
-  return useMutation(({ data }: createPageData) => axios.post(`/pages`, data), {
-    onSuccess: data => {
-      queryClient.setQueryData('site', () => data.data);
+  return useMutation(
+    ({ data }: createPageData) => axios.post(`/${site}/pages`, data),
+    {
+      onSuccess: data => {
+        queryClient.setQueryData([site, 'pages'], () => data.data);
+      },
     },
-  });
+  );
 };
 
 export const useUpdatePage = (slug: string | undefined) => {

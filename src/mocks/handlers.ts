@@ -2,7 +2,7 @@
 import { RestRequest, rest } from 'msw';
 
 import { Page, Site } from '../types';
-import { pageData, siteData } from './data';
+import { pageData, pagesData, siteData } from './data';
 import { db } from './db/site';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -28,20 +28,19 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(page));
   }),
 
-  rest.post('/pages', (req: RestRequest, res, ctx) => {
+  rest.post('/:site/pages', (req: RestRequest, res, ctx) => {
     const body = req.body as { name: string; path: string };
 
-    const data = {
-      ...siteData,
-      pages: [
-        ...siteData.pages,
+    const data = [
+      ...pagesData,
+      [
         {
           id: '002',
           name: body.name,
           path: body.path,
         },
       ],
-    };
+    ];
 
     return res(ctx.status(200), ctx.json(data));
   }),
@@ -75,9 +74,6 @@ export const handlers = [
   }),
 
   rest.get('/:site/pages', (req: RestRequest, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([{ id: 'hosel', name: 'Home', path: 'home' }]),
-    );
+    return res(ctx.status(200), ctx.json(pagesData));
   }),
 ];

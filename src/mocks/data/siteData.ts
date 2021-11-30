@@ -15,11 +15,4 @@ export default {
       isOpenNew: false,
     },
   ],
-  pages: [
-    {
-      id: nanoid(),
-      name: 'Home',
-      path: 'home',
-    },
-  ],
 };

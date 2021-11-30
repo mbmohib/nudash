@@ -8,9 +8,4 @@ export default interface Site {
   description?: string;
   logo?: string;
   menus?: SiteMenu[];
-  pages?: {
-    id: string;
-    name: string;
-    path: string;
-  }[];
 }

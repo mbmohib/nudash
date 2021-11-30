@@ -110,6 +110,7 @@ export default function Page() {
       </PreLoader>
 
       <CreatePage
+        siteId={siteQuery.data?.id}
         isOpen={createPageModal.isOpen}
         onClose={createPageModal.onClose}
       />

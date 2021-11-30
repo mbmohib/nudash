@@ -14,6 +14,7 @@ import { Modal } from '.';
 import { useAddPage } from '../hooks/usePage';
 
 interface CreatePageProps {
+  siteId?: string;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -25,8 +26,12 @@ const schema = yup
   })
   .required();
 
-export default function CreatePage({ isOpen, onClose }: CreatePageProps) {
-  const addPage = useAddPage();
+export default function CreatePage({
+  isOpen,
+  onClose,
+  siteId,
+}: CreatePageProps) {
+  const addPage = useAddPage(siteId);
   const {
     reset,
     register,
