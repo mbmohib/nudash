@@ -4,26 +4,11 @@ import { rest } from 'msw';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { SiteData } from '../components';
-import { siteData } from '../mocks/data';
-import { db } from '../mocks/db/site';
-import server from '../mocks/server';
-import { Site } from '../types';
+import { UpdateSite } from '../mocks/api/sites';
+import { siteData } from '../mocks/db/site';
+import { server } from '../mocks/server';
 
-server.use(
-  rest.post('/sites', (req, res, ctx) => {
-    const { body } = req;
-    const site = db.site.update({
-      where: {
-        id: {
-          equals: 'nudash',
-        },
-      },
-      data: body as Site,
-    });
-
-    return res(ctx.json({ data: site }));
-  }),
-);
+server.use(rest.post('/sites', UpdateSite));
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 afterAll(() => server.close());

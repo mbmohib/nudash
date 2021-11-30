@@ -1,79 +1,15 @@
-// src/mocks/handlers.js
-import { RestRequest, rest } from 'msw';
+import { rest } from 'msw';
 
-import { Page, Site } from '../types';
-import { pageData, pagesData, siteData } from './data';
-import { db } from './db/site';
+import { addPage, getPage, getPages, updatePage } from './api/pages';
+import { UpdateSite, getSite } from './api/sites';
 
-// eslint-disable-next-line import/prefer-default-export
-export const handlers = [
-  rest.get('/site', (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json(
-        db.site.findFirst({
-          where: {
-            id: {
-              equals: 'nudash',
-            },
-          },
-        }),
-      ),
-    );
-  }),
+export default [
+  rest.get('/site', getSite),
+  rest.post('/sites', UpdateSite),
 
-  rest.get('/pages/:slug', (req, res, ctx) => {
-    const page = pageData.find(pageItem => pageItem.path === req.params.slug);
+  rest.get('/pages/:slug', getPage),
+  rest.get('/:site/pages', getPages),
 
-    return res(ctx.status(200), ctx.json(page));
-  }),
-
-  rest.post('/:site/pages', (req: RestRequest, res, ctx) => {
-    const body = req.body as { name: string; path: string };
-
-    const data = [
-      ...pagesData,
-      [
-        {
-          id: '002',
-          name: body.name,
-          path: body.path,
-        },
-      ],
-    ];
-
-    return res(ctx.status(200), ctx.json(data));
-  }),
-
-  rest.post('/pages/:slug', (req: RestRequest, res, ctx) => {
-    const body = req.body as Page;
-
-    const page = pageData.find(pageItem => pageItem.path === req.params.slug);
-
-    const data = {
-      ...page,
-      Pages: body,
-    };
-
-    return res(ctx.status(200), ctx.json(data));
-  }),
-
-  rest.post('/sites', (req: RestRequest, res, ctx) => {
-    const { body } = req;
-
-    const site = db.site.update({
-      where: {
-        id: {
-          equals: 'nudash',
-        },
-      },
-      data: body as Site,
-    });
-
-    return res(ctx.status(200), ctx.json({ data: site }));
-  }),
-
-  rest.get('/:site/pages', (req: RestRequest, res, ctx) => {
-    return res(ctx.status(200), ctx.json(pagesData));
-  }),
+  rest.post('/:site/pages', addPage),
+  rest.post('/pages/:slug', updatePage),
 ];

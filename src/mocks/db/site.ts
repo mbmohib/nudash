@@ -1,46 +1,25 @@
-import { factory, nullable, primaryKey } from '@mswjs/data';
-import faker from 'faker';
-import { nanoid } from 'nanoid';
+import { build, fake, sequence } from '@jackfranklin/test-data-bot';
 
-const data = {
-  id: nanoid(),
-  name: 'Nudash',
-  tagline: 'We will rock!',
-  description: 'We do...',
-  logo: '',
-  url: 'https://mohib.me',
-  menus: [
-    {
-      id: nanoid(),
-      label: 'Home',
-      url: '/',
-      isOpenNew: false,
-    },
-  ],
-  pages: [
-    {
-      id: nanoid(),
-      name: 'Home',
-      path: 'home',
-    },
-  ],
-};
+import { Site } from '../../types';
 
 // eslint-disable-next-line import/prefer-default-export
-export const db = factory({
-  site: {
-    id: primaryKey(String),
-    name: faker.lorem.word,
-    tagline: faker.lorem.sentence,
-    description: faker.lorem.sentences,
-    logo: faker.image.imageUrl,
-    url: faker.internet.url,
-    // menus: [
-    //   {
-    //     id: primaryKey(faker.random.uuid).
-    //   }
-    // ],
+export const siteBuilder = build('Site', {
+  fields: {
+    id: 'nudash',
+    name: fake(f => f.lorem.words()),
+    tagline: fake(f => f.lorem.paragraphs()),
+    description: fake(f => f.lorem.paragraphs().replace(/\r/g, '')),
+    logo: fake(f => f.image.imageUrl),
+    url: fake(f => f.internet.url()),
+    menus: [
+      {
+        id: sequence(),
+        label: 'Home',
+        url: '/',
+        isOpenNew: false,
+      },
+    ],
   },
 });
 
-db.site.create({ id: 'nudash' });
+export const siteData = siteBuilder() as Site;
