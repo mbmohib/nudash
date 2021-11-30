@@ -34,4 +34,3 @@ export { default as PageLayout } from './PageLayout';
 export { default as PreLoader } from './PreLoader';
 export { default as SiteData } from './SiteData';
 export { default as SiteNav } from './SiteNav';
-export { default as Alert } from './Alert';

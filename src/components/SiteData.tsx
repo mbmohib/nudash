@@ -12,7 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { Alert, FileUpload } from '.';
+import { FileUpload } from '.';
 import { useUpdateSite } from '../hooks/useSite';
 import { Site } from '../types';
 
@@ -116,12 +116,6 @@ export default function SiteData({ data }: SiteDataProps) {
           </Button>
         </Box>
       </form>
-
-      <Alert
-        status="error"
-        show={updateSite.isError}
-        title="Sorry, site update failed!"
-      />
     </Box>
   );
 }
