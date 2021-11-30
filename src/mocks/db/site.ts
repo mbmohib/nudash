@@ -1,8 +1,8 @@
-import { build, fake, sequence } from '@jackfranklin/test-data-bot';
+import { build, fake } from '@jackfranklin/test-data-bot';
+import { nanoid } from 'nanoid';
 
 import { Site } from '../../types';
 
-// eslint-disable-next-line import/prefer-default-export
 export const siteBuilder = build('Site', {
   fields: {
     id: 'nudash',
@@ -13,7 +13,7 @@ export const siteBuilder = build('Site', {
     url: fake(f => f.internet.url()),
     menus: [
       {
-        id: sequence(),
+        id: nanoid(),
         label: 'Home',
         url: '/',
         isOpenNew: false,

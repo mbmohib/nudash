@@ -31,5 +31,5 @@ export const pageBuilder = build('Page', {
   },
 });
 
-export const pagesData = pagesBuilder() as Pages;
+export const pagesData = [pagesBuilder()] as Pages[];
 export const pageData = pageBuilder() as Page;

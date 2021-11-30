@@ -26,31 +26,32 @@ export const usePageQuery = (slug: string | undefined) => {
   );
 };
 
-export const usePageQueries = (site: string | undefined) => {
+export const usePageQueries = (siteId: string | undefined) => {
   const axios = useAxios();
 
   return useQuery<Pages[], Error>(
-    [site, 'pages'],
+    [siteId, 'pages'],
     async () => {
-      const { data } = await axios.get(`/${site}/pages/`);
+      const { data } = await axios.get(`/${siteId}/pages/`);
 
       return data;
     },
     {
       staleTime: 60 * 1000,
+      enabled: !!siteId,
     },
   );
 };
 
-export const useAddPage = (site: string | undefined) => {
+export const useAddPage = (siteId: string | undefined) => {
   const axios = useAxios();
   const queryClient = useQueryClient();
 
   return useMutation(
-    ({ data }: createPageData) => axios.post(`/${site}/pages`, data),
+    ({ data }: createPageData) => axios.post(`/${siteId}/pages`, data),
     {
       onSuccess: data => {
-        queryClient.setQueryData([site, 'pages'], () => data.data);
+        queryClient.setQueryData([siteId, 'pages'], () => data.data);
       },
     },
   );
