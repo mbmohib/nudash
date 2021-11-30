@@ -4,18 +4,28 @@ import { rest } from 'msw';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { SiteData } from '../components';
-import { UpdateSite } from '../mocks/api/sites';
-import { siteData } from '../mocks/db/site';
+import { siteFailed, updateSite } from '../mocks/api/sites';
+import { siteBuilder, siteData } from '../mocks/db/site';
 import { server } from '../mocks/server';
+import { Site } from '../types';
 
-server.use(rest.post('/sites', UpdateSite));
+const consoleErrorSpy = jest.spyOn(console, 'error');
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-afterAll(() => server.close());
+beforeAll(() => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  consoleErrorSpy.mockImplementation(() => {});
+  server.listen({ onUnhandledRequest: 'error' });
+});
+afterAll(() => {
+  server.close();
+  consoleErrorSpy.mockRestore();
+});
 afterEach(() => server.resetHandlers());
+const fakeSiteData = siteBuilder() as Site;
 
-test('renders a site update form and update data', async () => {
+function renderSiteData() {
   const queryClient = new QueryClient();
+
   render(
     <QueryClientProvider client={queryClient}>
       <SiteData data={siteData} />
@@ -24,28 +34,52 @@ test('renders a site update form and update data', async () => {
 
   const name = screen.getByLabelText(/name/i);
   userEvent.clear(name);
-  userEvent.type(name, 'My Rocking site!');
+  userEvent.type(name, fakeSiteData.name as string);
 
   const url = screen.getByLabelText(/url/i);
   userEvent.clear(url);
-  userEvent.type(url, 'https://example.me');
+  userEvent.type(url, fakeSiteData.url as string);
 
   const tagline = screen.getByLabelText(/tagline/i);
   userEvent.clear(tagline);
-  userEvent.type(tagline, 'We will rock!');
+  userEvent.type(tagline, fakeSiteData.tagline as string);
 
   const description = screen.getByLabelText(/description/i);
   userEvent.clear(description);
-  userEvent.type(description, 'We do...');
+  userEvent.type(description, fakeSiteData.description as string);
 
   const submitBtn = screen.getByText(/update/i);
+
+  return {
+    name,
+    url,
+    tagline,
+    description,
+    submitBtn,
+  };
+}
+
+test('renders a site update form and update data', async () => {
+  server.use(rest.post('/sites', updateSite));
+  const { submitBtn, name, url, tagline, description } = renderSiteData();
+
   userEvent.click(submitBtn);
 
   // TODO: test image upload..
   await waitFor(() => {
-    expect(name).toHaveValue('My Rocking site!');
-    expect(url).toHaveValue('https://example.me');
-    expect(tagline).toHaveValue('We will rock!');
-    expect(description).toHaveValue('We do...');
+    expect(name).toHaveValue(fakeSiteData.name);
+    expect(url).toHaveValue(fakeSiteData.url);
+    expect(tagline).toHaveValue(fakeSiteData.tagline);
+    expect(description).toHaveValue(fakeSiteData.description);
   });
+});
+
+test('handle error on site update form', async () => {
+  server.use(rest.post('/sites', siteFailed));
+
+  const { submitBtn } = renderSiteData();
+  userEvent.click(submitBtn);
+
+  const updateError = await screen.findByRole('alert');
+  expect(updateError).toBeInTheDocument();
 });

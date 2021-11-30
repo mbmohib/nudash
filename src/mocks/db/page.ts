@@ -1,9 +1,10 @@
 import { build, sequence } from '@jackfranklin/test-data-bot';
+import { nanoid } from 'nanoid';
 
 import { Page, Pages } from '../../types';
 
 export const pagesBuilder = build('Pages', {
-  fields: { id: 'home-001', name: 'Home', path: 'home' },
+  fields: { id: nanoid(), name: 'Home', path: 'home' },
 });
 
 export const pageBuilder = build('Page', {

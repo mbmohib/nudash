@@ -3,7 +3,7 @@ import { ResponseComposition, RestContext, RestRequest } from 'msw';
 import { Site } from '../../types';
 import { siteData } from '../db/site';
 
-export const UpdateSite = (
+export const updateSite = (
   req: RestRequest,
   res: ResponseComposition,
   ctx: RestContext,
@@ -24,4 +24,15 @@ export const getSite = (
   ctx: RestContext,
 ) => {
   return res(ctx.status(200), ctx.json(siteData));
+};
+
+export const siteFailed = (
+  req: RestRequest,
+  res: ResponseComposition,
+  ctx: RestContext,
+) => {
+  return res(
+    ctx.status(500),
+    ctx.json({ data: { error: 'Internal server error' } }),
+  );
 };
