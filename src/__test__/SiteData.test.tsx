@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import mockConsole from 'jest-mock-console';
 import { rest } from 'msw';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -9,16 +10,15 @@ import { siteBuilder, siteData } from '../mocks/db/site';
 import { server } from '../mocks/server';
 import { Site } from '../types';
 
-const consoleErrorSpy = jest.spyOn(console, 'error');
+let restoreConsole: { (): void; (): void };
 
 beforeAll(() => {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  consoleErrorSpy.mockImplementation(() => {});
+  restoreConsole = mockConsole();
   server.listen({ onUnhandledRequest: 'error' });
 });
 afterAll(() => {
   server.close();
-  consoleErrorSpy.mockRestore();
+  restoreConsole();
 });
 afterEach(() => server.resetHandlers());
 const fakeSiteData = siteBuilder() as Site;
@@ -48,7 +48,7 @@ function renderSiteData() {
   userEvent.clear(description);
   userEvent.type(description, fakeSiteData.description as string);
 
-  const submitBtn = screen.getByText(/update/i);
+  const submitBtn = screen.getByText(/update/i, { selector: 'button' });
 
   return {
     name,
@@ -76,7 +76,6 @@ test('renders a site update form and update data', async () => {
 
 test('handle error on site update form', async () => {
   server.use(rest.post('/sites', siteFailed));
-
   const { submitBtn } = renderSiteData();
   userEvent.click(submitBtn);
 
