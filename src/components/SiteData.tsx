@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { FileUpload } from '.';
-import { useUpdateSite } from '../hooks/useSite';
+import { useSiteQuery, useUpdateSite } from '../hooks/useSite';
 import { Site } from '../types';
 
 const schema = yup
@@ -26,12 +26,10 @@ const schema = yup
   })
   .required();
 
-interface SiteDataProps {
-  data: Site | undefined;
-}
-
-export default function SiteData({ data }: SiteDataProps) {
+export default function SiteData() {
   const updateSite = useUpdateSite();
+  const { data } = useSiteQuery();
+
   const {
     register,
     handleSubmit,

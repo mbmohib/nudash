@@ -1,12 +1,21 @@
 import { Box, Button, Text } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
 import { SiteNavItem } from '.';
 import { useDispatch, useSelector } from '../hooks';
-import { addMenu } from '../store/slices/menus';
+import { useSiteQuery } from '../hooks/useSite';
+import { addMenu, setMenus } from '../store/slices/menus';
 
 export default function SiteNav() {
   const dispatch = useDispatch();
   const menus = useSelector(state => state.menus);
+  const siteQuery = useSiteQuery();
+
+  useEffect(() => {
+    if (siteQuery.isFetched && siteQuery.isSuccess) {
+      dispatch(setMenus(siteQuery.data?.menus ?? []));
+    }
+  }, [siteQuery.isFetched]);
 
   const handleAddMenu = () => {
     dispatch(addMenu());

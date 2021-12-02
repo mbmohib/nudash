@@ -1,7 +1,10 @@
 import { render as rtlRender } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
+
+import { store } from '../store/store';
 
 // eslint-disable-next-line import/prefer-default-export
 export function render(
@@ -13,9 +16,11 @@ export function render(
 
   const Wrapper: React.FC = ({ children }) => {
     return (
-      <QueryClientProvider client={queryClient}>
-        <Router history={history}>{children}</Router>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <Router history={history}>{children}</Router>
+        </QueryClientProvider>
+      </Provider>
     );
   };
 

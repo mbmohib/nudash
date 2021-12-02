@@ -1,15 +1,17 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
-import { siteData } from '../../mocks/db/site';
 import { SiteMenu } from '../../types';
 
-const initialState = siteData.menus as SiteMenu[];
+const initialState = [] as SiteMenu[];
 
 const menuSlice = createSlice({
   name: 'menus',
   initialState,
   reducers: {
+    setMenus(state, action: PayloadAction<SiteMenu[]>) {
+      return action.payload;
+    },
     addMenu(state) {
       state.push({
         id: nanoid(),
@@ -51,6 +53,6 @@ const menuSlice = createSlice({
   },
 });
 
-export const { addMenu, updateMenu, deleteMenu, changeOrder } =
+export const { addMenu, updateMenu, deleteMenu, changeOrder, setMenus } =
   menuSlice.actions;
 export default menuSlice.reducer;
