@@ -26,17 +26,16 @@ import {
 export default function Page() {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { page } = useParams<{ page?: string }>();
   const createPageModal = useDisclosure();
+  const siteQuery = useSiteQuery();
+  const pageQuery = usePageQuery(page);
+  const pageQueries = usePageQueries(siteQuery.data?.id);
+  const updatePage = useUpdatePage(pageQuery.data?.path);
   const { sections } = useSelector(state => state.page);
   const [rowId, setRowId] = useState<number>(0);
   const [sectionId, setSectionId] = useState<number>(0);
   const notInitialRow = sections[0]?.rows[0]?.columns?.length > 0;
-  const { page } = useParams<{ page?: string }>();
-  const siteQuery = useSiteQuery();
-  const pageQuery = usePageQuery(page);
-  const pageQueries = usePageQueries(siteQuery.data?.id);
-
-  const updatePage = useUpdatePage(pageQuery.data?.path);
 
   const handleSave = () => {
     updatePage.mutate({ data: sections });
