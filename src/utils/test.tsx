@@ -1,4 +1,5 @@
 import { render as rtlRender } from '@testing-library/react';
+import fireEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
@@ -6,7 +7,6 @@ import { Router } from 'react-router-dom';
 
 import { store } from '../store/store';
 
-// eslint-disable-next-line import/prefer-default-export
 export function render(
   ui: React.ReactElement,
   { route = '/', options = {} }: { route?: string; options?: object } = {},
@@ -26,3 +26,5 @@ export function render(
 
   return { ...rtlRender(ui, { wrapper: Wrapper, ...options }), history };
 }
+
+export const userEvent = fireEvent;

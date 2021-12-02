@@ -3,15 +3,19 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { SiteNav } from '../components';
-import { siteBuilder } from '../mocks/db/site';
 import { server } from '../mocks/server';
-import { Site } from '../types';
-import { render } from '../utils/test';
+import { render, userEvent } from '../utils/test';
 
 let restoreConsole: { (): void; (): void };
 
+const fakeMenu = {
+  label: 'Fake Label',
+  url: 'https://fake.com',
+  isOpenNew: true,
+};
+
 beforeAll(() => {
-  restoreConsole = mockConsole();
+  restoreConsole = mockConsole('error');
   server.listen({ onUnhandledRequest: 'error' });
 });
 afterAll(() => {
@@ -19,22 +23,50 @@ afterAll(() => {
   restoreConsole();
 });
 afterEach(() => server.resetHandlers());
-const fakeSiteData = siteBuilder() as Site;
 
-function renderSiteData() {
-  const utils = render(
+function RenderSiteNav() {
+  return render(
     <DndProvider backend={HTML5Backend}>
-      <SiteNav menus={fakeSiteData.menus} />
+      <SiteNav />
     </DndProvider>,
   );
-
-  return {
-    ...utils,
-  };
 }
 
-test('renders a nav form and update data', async () => {
-  const { getByLabelText } = renderSiteData();
+test('renders a nav form and add menu', async () => {
+  const { getByText, getAllByLabelText } = RenderSiteNav();
 
-  getByLabelText(/label/i);
+  const addBtn = getByText(/add/i);
+  userEvent.click(addBtn);
+
+  expect(getAllByLabelText(/label/i)).toHaveLength(1);
+});
+
+test('renders a nav form and  update menu', async () => {
+  const { getByText, getByLabelText } = RenderSiteNav();
+
+  const label = getByLabelText(/label/i);
+  userEvent.clear(label);
+  userEvent.type(label, fakeMenu.label);
+  expect(label).toHaveValue(fakeMenu.label);
+
+  const url = getByLabelText(/url/i);
+  userEvent.clear(url);
+  userEvent.type(url, fakeMenu.url);
+  expect(url).toHaveValue(fakeMenu.url);
+
+  const newToggleBtn = getByLabelText(/new/i);
+  userEvent.clear(newToggleBtn);
+  userEvent.click(newToggleBtn);
+  expect(newToggleBtn).toBeChecked();
+
+  const saveBtn = getByText(/save/i);
+  userEvent.click(saveBtn);
+});
+
+test('renders a nav form and  delete menu', async () => {
+  const { getByText, queryAllByLabelText } = RenderSiteNav();
+
+  const deleteBtn = getByText(/delete/i);
+  userEvent.click(deleteBtn);
+  expect(queryAllByLabelText(/label/i)).toHaveLength(0);
 });

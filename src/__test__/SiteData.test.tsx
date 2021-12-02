@@ -24,7 +24,7 @@ afterEach(() => server.resetHandlers());
 const fakeSiteData = siteBuilder() as Site;
 
 function renderSiteData() {
-  render(<SiteData data={siteData} />);
+  render(<SiteData />);
 
   const name = screen.getByLabelText(/name/i);
   userEvent.clear(name);
