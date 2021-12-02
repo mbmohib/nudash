@@ -2,7 +2,7 @@ import axios, { Axios, AxiosError, AxiosRequestConfig } from 'axios';
 import { useMemo } from 'react';
 
 // import { useAuth } from '.';
-import { apiEndpoint } from '../config';
+// import { apiEndpoint } from '../config';
 
 export default function useAxios() {
   // const { token, logout } = useAuth();

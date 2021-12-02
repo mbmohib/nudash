@@ -35,6 +35,7 @@ export default function Sidebar() {
           bg="primary.light"
           color="white"
           mb="3"
+          role="dashboard"
         >
           DS
         </Button>
@@ -45,6 +46,7 @@ export default function Sidebar() {
           bg="primary.light"
           color="white"
           mb="3"
+          role="site"
         >
           Site
         </Button>
@@ -55,6 +57,7 @@ export default function Sidebar() {
           bg="primary.light"
           color="white"
           mb="3"
+          role="pages"
         >
           <PageIcon />
         </Button>

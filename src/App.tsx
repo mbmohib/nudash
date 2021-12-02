@@ -3,6 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 import { ErrorFallback } from './components';
 import { useToggle } from './hooks';
@@ -28,7 +29,7 @@ export default function App() {
             onReset={setError}
             resetKeys={[error]}
           >
-            {error ? null : <Routes />}
+            <BrowserRouter>{error ? null : <Routes />}</BrowserRouter>
           </ErrorBoundary>
         </ChakraProvider>
         <ReactQueryDevtools initialIsOpen={false} />

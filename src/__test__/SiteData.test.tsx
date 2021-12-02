@@ -1,14 +1,14 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import mockConsole from 'jest-mock-console';
 import { rest } from 'msw';
-import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { SiteData } from '../components';
 import { siteFailed, updateSite } from '../mocks/api/sites';
 import { siteBuilder, siteData } from '../mocks/db/site';
 import { server } from '../mocks/server';
 import { Site } from '../types';
+import { render } from '../utils/test';
 
 let restoreConsole: { (): void; (): void };
 
@@ -24,13 +24,7 @@ afterEach(() => server.resetHandlers());
 const fakeSiteData = siteBuilder() as Site;
 
 function renderSiteData() {
-  const queryClient = new QueryClient();
-
-  render(
-    <QueryClientProvider client={queryClient}>
-      <SiteData data={siteData} />
-    </QueryClientProvider>,
-  );
+  render(<SiteData data={siteData} />);
 
   const name = screen.getByLabelText(/name/i);
   userEvent.clear(name);
