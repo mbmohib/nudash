@@ -5,7 +5,7 @@ import { rest } from 'msw';
 
 import { SiteData } from '../components';
 import { siteFailed, updateSite } from '../mocks/api/sites';
-import { siteBuilder, siteData } from '../mocks/db/site';
+import { siteBuilder } from '../mocks/db/site';
 import { server } from '../mocks/server';
 import { Site } from '../types';
 import { render } from '../utils/test';

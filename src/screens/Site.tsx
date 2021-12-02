@@ -6,7 +6,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 export default function Site() {
   return (
     <Box>
-      <PageHeader pageName="Site" />
+      <PageHeader pageName="Site" showActionButton={true} />
       <Container pt="80px">
         <Grid
           gridTemplateColumns="1fr 1fr"
