@@ -24,11 +24,7 @@ export const pageBuilder = build('Page', {
         ],
       },
     ],
-    lastRowItemInfo: {
-      sectionId: 0,
-      rowId: 0,
-      hasColumn: false,
-    },
+    lastRowItemInfo: {},
   },
 });
 
