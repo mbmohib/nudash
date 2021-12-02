@@ -3,8 +3,6 @@ import { Flex, Text } from '@chakra-ui/layout';
 import { Link } from 'react-router-dom';
 
 import {
-  LightIcon,
-  NotificationIcon,
   PageIcon, // SchemaIcon,
 } from '../assets/icons';
 
@@ -71,28 +69,6 @@ export default function Sidebar() {
         >
           <SchemaIcon />
         </Button> */}
-      </Flex>
-      <Flex flexDirection="column" alignItems="center" pb={2}>
-        <Button
-          as={Link}
-          to="/pages"
-          variant="link"
-          bg="primary.light"
-          color="white"
-          mb="3"
-        >
-          <NotificationIcon />
-        </Button>
-        <Button
-          as={Link}
-          to="/pages"
-          variant="link"
-          bg="primary.light"
-          color="white"
-          mb="3"
-        >
-          <LightIcon />
-        </Button>
       </Flex>
     </Flex>
   );

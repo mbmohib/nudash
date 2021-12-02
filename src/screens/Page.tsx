@@ -8,13 +8,14 @@ import { useParams } from 'react-router-dom';
 import {
   CreatePage,
   DraggableComponentsContainer,
-  PageLayout,
+  PageHeader,
+  PageSidebar,
   PreLoader,
   PredefinedColumns,
   Section,
 } from '../components';
 import { useDispatch, useSelector } from '../hooks';
-import { usePageQueries, usePageQuery } from '../hooks/usePage';
+import { usePageQueries, usePageQuery, useUpdatePage } from '../hooks/usePage';
 import { useSiteQuery } from '../hooks/useSite';
 import {
   handleAddColumn,
@@ -34,6 +35,12 @@ export default function Page() {
   const siteQuery = useSiteQuery();
   const pageQuery = usePageQuery(page);
   const pageQueries = usePageQueries(siteQuery.data?.id);
+
+  const updatePage = useUpdatePage(pageQuery.data?.path);
+
+  const handleSave = () => {
+    updatePage.mutate({ data: sections });
+  };
 
   useEffect(() => {
     if (pageQuery.data?.sections && pageQuery.isFetched) {
@@ -74,19 +81,24 @@ export default function Page() {
   };
 
   return (
-    <PageLayout
-      heading="Pages"
-      menus={pageQueries.data}
-      isLoading={siteQuery.isLoading}
-      pageName={pageQuery.data?.name}
-      path={pageQuery.data?.path}
-      handleAdd={handlePageAdd}
-    >
-      <PreLoader isLoading={pageQuery.isLoading}>
-        <Box pt="80px" bg="secondary600">
+    <Box>
+      <PageSidebar
+        isLoading={false}
+        handleAdd={handlePageAdd}
+        heading="Pages"
+        menus={pageQueries.data}
+      />
+
+      <Box ml="208px" bg="secondary600">
+        <PreLoader isLoading={pageQuery.isLoading}>
           <DndProvider backend={HTML5Backend}>
             <Grid gridTemplateColumns="1fr 350px">
               <Container py="2" maxW="container.lg">
+                <PageHeader
+                  pageName={pageQuery.data?.name}
+                  showActionButton
+                  handleSave={handleSave}
+                />
                 {sections.map((section, index) => (
                   <Section
                     section={section}
@@ -106,14 +118,14 @@ export default function Page() {
             onClose={handleCloseColumnLayout}
             handleColumnLayout={handleColumnLayout}
           />
-        </Box>
-      </PreLoader>
+        </PreLoader>
+      </Box>
 
       <CreatePage
         siteId={siteQuery.data?.id}
         isOpen={createPageModal.isOpen}
         onClose={createPageModal.onClose}
       />
-    </PageLayout>
+    </Box>
   );
 }
