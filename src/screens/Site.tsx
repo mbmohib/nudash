@@ -20,7 +20,7 @@ export default function Site() {
           >
             <SiteData data={siteQuery.data} />
             <DndProvider backend={HTML5Backend}>
-              <SiteNav menus={siteQuery.data?.menus} />
+              <SiteNav />
             </DndProvider>
           </Grid>
         </Container>

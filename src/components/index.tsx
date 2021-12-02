@@ -10,8 +10,6 @@ export { default as RichTextComponent } from './DraggableComponents/RichTextComp
 export { default as ComponentActionWithData } from './DraggableComponents/ComponentActionWithData';
 export { default as LinkComponent } from './DraggableComponents/LinkComponent';
 
-export { default as SiteNavItem } from './SiteNavComponents/SiteNavItem';
-
 export { default as Layout } from './Layout';
 export { default as Sidebar } from './Sidebar';
 export { default as PageHeader } from './PageHeader';
@@ -34,3 +32,4 @@ export { default as PageLayout } from './PageLayout';
 export { default as PreLoader } from './PreLoader';
 export { default as SiteData } from './SiteData';
 export { default as SiteNav } from './SiteNav';
+export { default as SiteNavItem } from './SiteNavItem';

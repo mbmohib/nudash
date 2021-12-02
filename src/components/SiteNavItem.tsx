@@ -26,8 +26,10 @@ import {
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { ItemTypes } from '../../config';
-import { SiteMenu } from '../../types';
+import { ItemTypes } from '../config';
+import { useDispatch } from '../hooks';
+import { changeOrder, deleteMenu, updateMenu } from '../store/slices/menus';
+import { SiteMenu } from '../types';
 
 const schema = yup
   .object({
@@ -38,12 +40,8 @@ const schema = yup
   .required();
 
 interface SiteNavProps {
-  isLoading: boolean;
   menu: SiteMenu;
   index: number;
-  handleSaveData: (menu: SiteMenu, menuId: string) => void;
-  handleDeleteNav: (menuId: string) => void;
-  handleOrderMenu: (draggedIndex: number, hoveredIndex: number) => void;
 }
 
 interface DragItem {
@@ -52,14 +50,8 @@ interface DragItem {
   type: string;
 }
 
-export default function SiteNav({
-  isLoading,
-  menu,
-  handleSaveData,
-  handleDeleteNav,
-  handleOrderMenu,
-  index,
-}: SiteNavProps) {
+export default function SiteNav({ menu, index }: SiteNavProps) {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -146,6 +138,23 @@ export default function SiteNav({
     }),
   });
 
+  const handleSaveData = (data: SiteMenu, menuId: string) => {
+    dispatch(
+      updateMenu({
+        id: menuId,
+        data,
+      }),
+    );
+  };
+
+  const handleDeleteNav = (menuId: string) => {
+    dispatch(deleteMenu(menuId));
+  };
+
+  const handleOrderMenu = (draggedIndex: number, hoveredIndex: number) => {
+    dispatch(changeOrder({ draggedIndex, hoveredIndex }));
+  };
+
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
 
@@ -197,12 +206,7 @@ export default function SiteNav({
                 </FormControl>
               </Grid>
               <Flex justifyContent="flex-end" mt="1">
-                <Button
-                  variant="link"
-                  mr="1"
-                  type="submit"
-                  isLoading={isLoading}
-                >
+                <Button variant="link" mr="1" type="submit">
                   Save
                 </Button>
                 <Button variant="link" onClick={() => handleDeleteNav(menu.id)}>
