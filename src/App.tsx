@@ -1,4 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
+import '@fontsource/lexend';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';

@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 
-import { DeleteIcon } from '../assets/icons';
+import { DeleteIcon, SaveIcon } from '../assets/icons';
 
 interface HeaderProps {
   showActionButton?: boolean;
@@ -27,17 +27,27 @@ export default function PageHeader({
       background="secondary600"
     >
       <Box>
-        <Heading size="lg" textTransform="capitalize">
+        <Heading as="h1" fontSize="xl" textTransform="capitalize">
           {pageName}
         </Heading>
       </Box>
       {showActionButton && (
         <Flex alignItems="center">
-          <Button onClick={handleSave} mr="2" isLoading={isSaving}>
+          <Button
+            leftIcon={<SaveIcon />}
+            onClick={handleSave}
+            mr="2"
+            isLoading={isSaving}
+          >
             Save
           </Button>
-          <Button variant="icon" mr="2" onClick={handleDelete}>
-            <DeleteIcon />
+          <Button
+            leftIcon={<DeleteIcon />}
+            variant="outline"
+            mr="2"
+            onClick={handleDelete}
+          >
+            Delete
           </Button>
         </Flex>
       )}

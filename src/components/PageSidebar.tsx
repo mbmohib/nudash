@@ -29,7 +29,7 @@ export default function PageSidebar({
       width="200px"
     >
       <Flex justifyContent="space-between" alignItems="center" height="80px">
-        <Heading as="h2" size="md">
+        <Heading as="h2" fontSize="xl">
           {heading}
         </Heading>
         <Button variant="link" onClick={handleAdd} isLoading={isLoading}>

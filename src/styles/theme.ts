@@ -6,8 +6,8 @@ const config: ThemeConfig = {
 };
 
 const fonts = {
-  heading: 'Zen Kaku Gothic Antique',
-  body: 'Zen Kaku Gothic Antique',
+  heading: 'Lexend',
+  body: 'Lexend',
 };
 
 const colors = {
@@ -69,12 +69,29 @@ const zIndices = {
   tooltip: 1800,
 };
 
+const fontSizes = {
+  xs: '12px',
+  sm: '14px',
+  md: '16px',
+  lg: '18px',
+  xl: '22px',
+  '2xl': '22px',
+  '3xl': '1.875rem',
+  '4xl': '2.25rem',
+  '5xl': '3rem',
+  '6xl': '3.75rem',
+  '7xl': '4.5rem',
+  '8xl': '6rem',
+  '9xl': '8rem',
+};
+
 const styles = {
   global: {
     // styles for the `body`
     body: {
       bg: colors.secondary600,
       color: 'white',
+      fontSizes: '16px',
     },
     // styles for the `a`
     a: {
@@ -107,12 +124,21 @@ const components = {
       solid: ({ colorMode }: { colorMode: string }) => ({
         bg:
           colorMode === 'dark'
-            ? 'linear-gradient(82.17deg, #2D2D6A 0%, #5C1594 96.26%)'
+            ? 'radial-gradient(115.93% 115.93% at 50% 50%, #8E2DE2 0%, #4A00E0 100%)'
             : 'red.500',
         _hover: {
           bg:
             colorMode === 'dark'
-              ? 'linear-gradient(82.17deg, #2D2D6A 2%, #5C1594 60.26%)'
+              ? 'radial-gradient(115.93% 115.93% at 50% 50%, #8E2DE2 0%, #4A00E0 100%)'
+              : 'red.500',
+        },
+      }),
+      outline: ({ colorMode }: { colorMode: string }) => ({
+        borderColor: colorMode === 'dark' ? '#8C2CE2' : 'red.500',
+        _hover: {
+          bg:
+            colorMode === 'dark'
+              ? 'radial-gradient(115.93% 115.93% at 50% 50%, #8E2DE2 0%, #4A00E0 100%)'
               : 'red.500',
         },
       }),
@@ -153,12 +179,18 @@ const components = {
       },
     },
   },
+  Heading: {
+    baseStyle: {
+      fontWeight: 'normal',
+    },
+  },
 };
 
 export default extendTheme({
   config,
   styles,
   fonts,
+  fontSizes,
   colors,
   space,
   radii,

@@ -16,7 +16,7 @@
     "@editorjs/table": "^2.0.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@fontsource/zen-kaku-gothic-antique": "^4.5.0",
+    "@fontsource/lexend": "^4.5.1",
     "@hookform/resolvers": "^2.8.3",
     "@mswjs/data": "^0.8.2",
     "@reduxjs/toolkit": "^1.6.2",

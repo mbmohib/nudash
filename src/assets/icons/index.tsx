@@ -14,3 +14,6 @@ export { default as SwitchIcon } from './SwitchIcon';
 export { default as CalenderIcon } from './CalenderIcon';
 export { default as NumberIcon } from './NumberIcon';
 export { default as EditIcon } from './EditIcon';
+export { default as SaveIcon } from './SaveIcon';
+export { default as DashboardIcon } from './DashboardIcon';
+export { default as SiteIcon } from './SiteIcon';

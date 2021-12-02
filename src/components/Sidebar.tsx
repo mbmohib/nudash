@@ -1,10 +1,8 @@
 import { Button } from '@chakra-ui/button';
-import { Flex, Text } from '@chakra-ui/layout';
+import { Flex } from '@chakra-ui/layout';
 import { Link } from 'react-router-dom';
 
-import {
-  PageIcon, // SchemaIcon,
-} from '../assets/icons';
+import { DashboardIcon, PageIcon, SiteIcon } from '../assets/icons';
 
 export default function Sidebar() {
   return (
@@ -15,12 +13,7 @@ export default function Sidebar() {
       bgColor="secondary500"
       width="60px"
     >
-      <Flex height="79px" alignItems="center" justifyContent="center">
-        <Text fontSize="lg">ND</Text>
-      </Flex>
       <Flex
-        borderTop="1px"
-        borderColor="gray.500"
         flexDirection="column"
         alignItems="center"
         pt="4"
@@ -35,7 +28,7 @@ export default function Sidebar() {
           mb="3"
           role="dashboard"
         >
-          DS
+          <DashboardIcon />
         </Button>
         <Button
           as={Link}
@@ -46,7 +39,7 @@ export default function Sidebar() {
           mb="3"
           role="site"
         >
-          Site
+          <SiteIcon />
         </Button>
         <Button
           as={Link}
@@ -59,16 +52,6 @@ export default function Sidebar() {
         >
           <PageIcon />
         </Button>
-        {/* <Button
-          as={Link}
-          to="/pages"
-          variant="link"
-          bg="primary.light"
-          color="white"
-          mb="3"
-        >
-          <SchemaIcon />
-        </Button> */}
       </Flex>
     </Flex>
   );
