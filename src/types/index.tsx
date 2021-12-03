@@ -8,3 +8,4 @@ export type { default as Page } from './Page';
 export type { default as SiteMenu } from './SiteMenu';
 export type { default as Site } from './Site';
 export type { default as Pages } from './Pages';
+export type { default as IconTypes } from './IconTypes';

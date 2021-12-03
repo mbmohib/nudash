@@ -10,17 +10,15 @@ const fonts = {
   body: 'Lexend',
 };
 
-const colors = {
+export const colors = {
   transparent: 'transparent',
   black: '#000',
   white: '#fff',
   primary: '#8C2CE2',
-  secondary: {
-    100: '#2D2D6A',
-    400: '#191934',
-    500: '#141430',
-    600: '#101026',
-  },
+  'secondary.100': '#2D2D6A',
+  'secondary.400': '#191934',
+  'secondary.500': '#141430',
+  'secondary.600': '#101026',
   tertiary: '#2e3039',
 };
 
@@ -91,7 +89,7 @@ const styles = {
   global: {
     // styles for the `body`
     body: {
-      bg: colors.secondary[600],
+      bg: colors['secondary.600'],
       color: 'white',
       fontSize: '16px',
     },
@@ -155,12 +153,12 @@ const components = {
   Input: {
     baseStyle: {
       field: {
-        bg: colors.secondary[400],
-        borderColor: colors.secondary[100],
+        bg: colors['secondary.400'],
+        borderColor: colors['secondary.100'],
         borderWidth: 2,
         ':focus': {
-          borderColor: colors.secondary[100],
-          bg: colors.secondary[600],
+          borderColor: colors['secondary.100'],
+          bg: colors['secondary.600'],
         },
       },
     },

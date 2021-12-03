@@ -42,7 +42,7 @@ export default function PageHeader({
             Save
           </Button>
           <Button
-            leftIcon={<DeleteIcon />}
+            leftIcon={<DeleteIcon fill="primary" />}
             variant="outline"
             mr="2"
             onClick={handleDelete}
