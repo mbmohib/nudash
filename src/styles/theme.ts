@@ -87,18 +87,16 @@ const fontSizes = {
 
 const styles = {
   global: {
-    // styles for the `body`
     body: {
       bg: colors['secondary.600'],
-      color: 'white',
+      color: colors.white,
       fontSize: '16px',
     },
-    // styles for the `a`
     a: {
-      color: 'white',
+      color: colors.white,
       _hover: {
         textDecoration: 'none',
-        color: 'teal.700',
+        color: colors.primary,
       },
     },
   },
@@ -108,7 +106,7 @@ const components = {
   Button: {
     // 1. We can update the base styles
     baseStyle: {
-      borderRadius: '12px',
+      borderRadius: '16px',
       paddingLeft: '0',
       paddingInlineEnd: 0,
     },
@@ -128,7 +126,7 @@ const components = {
         _hover: {
           bg:
             colorMode === 'dark'
-              ? 'radial-gradient(115.93% 115.93% at 50% 50%, #8E2DE2 0%, #4A00E0 100%)'
+              ? 'radial-gradient(115.93% 115.93% at 80% 80%, #8E2DE2 0%, #4A00E0 100%)'
               : 'red.500',
         },
       }),
@@ -138,15 +136,17 @@ const components = {
         borderColor: colorMode === 'dark' ? '#8C2CE2' : 'red.500',
         color: colorMode === 'dark' ? '#8C2CE2' : 'red.500',
         _hover: {
-          bg:
-            colorMode === 'dark'
-              ? 'radial-gradient(115.93% 115.93% at 50% 50%, #8E2DE2 0%, #4A00E0 100%)'
-              : 'red.500',
+          bg: colorMode === 'dark' ? colors.primary : 'red.500',
+          color: colorMode === 'dark' ? colors.white : 'red.500',
         },
       }),
-      icon: () => ({
+      icon: ({ colorMode }: { colorMode: string }) => ({
         bg: 'transparent',
         padding: 1,
+        color: colorMode === 'dark' ? colors.white : 'red.500',
+        _hover: {
+          color: colorMode === 'dark' ? colors.primary : 'red.500',
+        },
       }),
     },
   },

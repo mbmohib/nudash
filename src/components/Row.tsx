@@ -124,7 +124,8 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
           minHeight="80px"
           alignItems="center"
           justifyContent="center"
-          width="100%"
+          width="80%"
+          mx="auto"
           border="1px dashed"
           borderColor="secondary.100"
         >
@@ -134,7 +135,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
       <Box position="absolute" right="-10px" top="-10px">
         {sections[sectionIndex].rows.length > 1 && (
           <Button variant="icon" onClick={handleRowRemove}>
-            <DeleteIcon width="15px" />
+            <DeleteIcon width={15} />
           </Button>
         )}
       </Box>

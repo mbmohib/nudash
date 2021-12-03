@@ -32,7 +32,7 @@ export default function Column({ column }: ColumnProps) {
           {!dropZone.fieldType && (
             <Box position="absolute" right="20px" top="20px">
               <Button variant="icon" onClick={handleRowRemove}>
-                <DeleteIcon width="15px" />
+                <DeleteIcon width={15} />
               </Button>
             </Box>
           )}

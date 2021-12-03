@@ -92,7 +92,7 @@ export default function Page() {
         <PreLoader isLoading={pageQuery.isLoading}>
           <DndProvider backend={HTML5Backend}>
             <Grid gridTemplateColumns="1fr 350px">
-              <Container py="2" maxW="container.lg">
+              <Container maxW="container.lg">
                 <PageHeader
                   pageName={pageQuery.data?.name}
                   showActionButton

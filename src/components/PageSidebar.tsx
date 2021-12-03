@@ -28,11 +28,11 @@ export default function PageSidebar({
       position="fixed"
       width="200px"
     >
-      <Flex justifyContent="space-between" alignItems="center" height="80px">
+      <Flex justifyContent="space-between" alignItems="center" mt="2">
         <Heading as="h2" fontSize="xl">
           {heading}
         </Heading>
-        <Button variant="link" onClick={handleAdd} isLoading={isLoading}>
+        <Button variant="icon" onClick={handleAdd} isLoading={isLoading}>
           <PlusIcon />
         </Button>
       </Flex>

@@ -17,3 +17,5 @@ export { default as EditIcon } from './EditIcon';
 export { default as SaveIcon } from './SaveIcon';
 export { default as DashboardIcon } from './DashboardIcon';
 export { default as SiteIcon } from './SiteIcon';
+export { default as ExpandIcon } from './ExpandIcon';
+export { default as CollapseIcon } from './CollapseIcon';

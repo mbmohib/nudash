@@ -10,7 +10,12 @@ import {
 import { AiOutlineHolder } from 'react-icons/ai';
 
 import { Row } from '.';
-import { FileMinusIcons, FilePlusIcons } from '../assets/icons';
+import {
+  CollapseIcon,
+  ExpandIcon,
+  FileMinusIcons,
+  FilePlusIcons,
+} from '../assets/icons';
 import { ItemTypes } from '../config';
 import { useDispatch, useToggle } from '../hooks';
 import {
@@ -197,17 +202,17 @@ export default function Section({
         position="absolute"
         sx={{
           top: '-10px',
-          right: '25px',
+          right: '-6px',
         }}
       >
         {expand && (
-          <Button variant="primary" onClick={setExpand}>
-            Collapse
+          <Button variant="icon" onClick={setExpand}>
+            <CollapseIcon />
           </Button>
         )}
         {!expand && (
-          <Button variant="primary" onClick={setExpand}>
-            Expand
+          <Button variant="icon" onClick={setExpand}>
+            <ExpandIcon />
           </Button>
         )}
       </Box>

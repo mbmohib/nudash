@@ -32,10 +32,10 @@ export default function ComponentActionWithData({
       >
         <Flex>
           <Button variant="icon" size="xs" onClick={handleEdit}>
-            <DeleteIcon width="10px" />
+            <DeleteIcon width={10} />
           </Button>
           <Button variant="icon" size="xs" onClick={handleRemove}>
-            <DeleteIcon width="10px" />
+            <DeleteIcon width={10} />
           </Button>
         </Flex>
       </Box>

@@ -20,7 +20,6 @@ export default function PageHeader({
 }: HeaderProps) {
   return (
     <Flex
-      p="2"
       justifyContent="space-between"
       alignItems="center"
       height="80px"
@@ -32,7 +31,7 @@ export default function PageHeader({
         </Heading>
       </Box>
       {showActionButton && (
-        <Flex alignItems="center">
+        <Box>
           <Button
             leftIcon={<SaveIcon />}
             onClick={handleSave}
@@ -42,14 +41,13 @@ export default function PageHeader({
             Save
           </Button>
           <Button
-            leftIcon={<DeleteIcon fill="primary" />}
+            leftIcon={<DeleteIcon />}
             variant="outline"
-            mr="2"
             onClick={handleDelete}
           >
             Delete
           </Button>
-        </Flex>
+        </Box>
       )}
     </Flex>
   );
