@@ -14,7 +14,7 @@ const colors = {
   transparent: 'transparent',
   black: '#000',
   white: '#fff',
-  primary: '#51459f',
+  primary: '#8C2CE2',
   secondary100: '#2D2D6A',
   secondary400: '#191934',
   secondary500: '#141430',
@@ -91,7 +91,7 @@ const styles = {
     body: {
       bg: colors.secondary600,
       color: 'white',
-      fontSizes: '16px',
+      fontSize: '16px',
     },
     // styles for the `a`
     a: {
@@ -109,19 +109,18 @@ const components = {
     // 1. We can update the base styles
     baseStyle: {
       borderRadius: '12px',
+      paddingLeft: '0',
+      paddingInlineEnd: 0,
     },
     // 2. We can add a new button size or extend existing
-    // sizes: {
-    //   xl: {
-    //     h: "56px",
-    //     fontSize: "lg",
-    //     px: "32px",
-    //   },
-    // },
+    sizes: {
+      md: {},
+    },
     // 3. We can add a new visual variant
     variants: {
       // 4. We can override existing variants
       solid: ({ colorMode }: { colorMode: string }) => ({
+        padding: '0 24px',
         bg:
           colorMode === 'dark'
             ? 'radial-gradient(115.93% 115.93% at 50% 50%, #8E2DE2 0%, #4A00E0 100%)'
@@ -134,7 +133,10 @@ const components = {
         },
       }),
       outline: ({ colorMode }: { colorMode: string }) => ({
+        padding: '0 24px',
+        border: '2px solid',
         borderColor: colorMode === 'dark' ? '#8C2CE2' : 'red.500',
+        color: colorMode === 'dark' ? '#8C2CE2' : 'red.500',
         _hover: {
           bg:
             colorMode === 'dark'
