@@ -39,7 +39,7 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
   return (
     <Box
       border="1px dashed"
-      borderColor="secondary100"
+      borderColor="secondary.100"
       width="80%"
       mx="auto"
       p="1"

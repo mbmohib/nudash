@@ -11,10 +11,10 @@ export default function Header() {
       width="100%"
       zIndex="docked"
       top="0"
-      bg="secondary600"
+      bg="secondary.600"
     >
       <Flex
-        bg="secondary500"
+        bg="secondary.500"
         alignItems="center"
         justifyContent="space-between"
         px="2"

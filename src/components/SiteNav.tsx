@@ -22,7 +22,7 @@ export default function SiteNav() {
   };
 
   return (
-    <Box bgColor="secondary500" rounded="base" p="4">
+    <Box bgColor="secondary.500" rounded="base" p="4">
       <Text fontSize="lg" mb="2">
         Site Nav
       </Text>

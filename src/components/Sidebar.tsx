@@ -10,7 +10,7 @@ export default function Sidebar() {
       flexDirection="column"
       height="100vh"
       position="fixed"
-      bgColor="secondary500"
+      bgColor="secondary.500"
       width="60px"
     >
       <Flex

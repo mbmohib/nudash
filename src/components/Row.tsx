@@ -126,7 +126,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
           justifyContent="center"
           width="100%"
           border="1px dashed"
-          borderColor="secondary100"
+          borderColor="secondary.100"
         >
           {isActive ? `Release to drop` : `Drag & Drop Column here`}
         </Flex>

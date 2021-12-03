@@ -21,7 +21,7 @@ function Column({ count, handleColumn }: ColumnProps) {
   return (
     <Flex
       border="1px"
-      borderColor="secondary100"
+      borderColor="secondary.100"
       justifyContent="center"
       cursor="pointer"
       onClick={() => handleColumn(count)}
@@ -32,7 +32,7 @@ function Column({ count, handleColumn }: ColumnProps) {
           width="100%"
           key={index}
           height="50px"
-          bgColor="secondary400"
+          bgColor="secondary.400"
           m="0.5"
         />
       ))}

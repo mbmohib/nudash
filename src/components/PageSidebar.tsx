@@ -21,7 +21,7 @@ export default function PageSidebar({
 }: PageSidebarProps) {
   return (
     <Box
-      bgColor="secondary400"
+      bgColor="secondary.400"
       px={2}
       ml="1"
       height="100vh"

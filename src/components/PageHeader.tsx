@@ -24,7 +24,7 @@ export default function PageHeader({
       justifyContent="space-between"
       alignItems="center"
       height="80px"
-      background="secondary600"
+      background="secondary.600"
     >
       <Box>
         <Heading as="h1" fontSize="xl" textTransform="capitalize">

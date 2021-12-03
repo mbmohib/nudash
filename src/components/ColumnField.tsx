@@ -79,13 +79,13 @@ export default function ColumnField({
       pt="2"
       cursor="pointer"
       borderRadius="4"
-      bg="secondary500"
+      bg="secondary.500"
       boxShadow="sm"
       opacity={isDragging ? '0.6' : '1'}
       ref={drag}
     >
       <Box
-        bg="secondary400"
+        bg="secondary.400"
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -96,15 +96,15 @@ export default function ColumnField({
         <Grid
           border="1px solid #2D2D6A"
           gridTemplateColumns="1fr 1fr"
-          bg="secondary500"
+          bg="secondary.500"
           gap="1"
           width="100%"
           height="100%"
           p="1"
           rounded="sm"
         >
-          <Box bg="secondary400"></Box>
-          <Box bg="secondary400"></Box>
+          <Box bg="secondary.400"></Box>
+          <Box bg="secondary.400"></Box>
         </Grid>
       </Box>
       <Text>Add Columns</Text>

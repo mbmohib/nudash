@@ -60,12 +60,12 @@ export default function Field({ type, info }: DraggableField) {
       pt="2"
       cursor="pointer"
       borderRadius="4"
-      bg="secondary500"
+      bg="secondary.500"
       boxShadow="sm"
       ref={drag}
     >
       <Box
-        bg="secondary400"
+        bg="secondary.400"
         display="flex"
         alignItems="center"
         justifyContent="center"

@@ -52,7 +52,7 @@ export default function ButtonComponent({ field }: FieldProps) {
         </ComponentActionWithData>
       ) : (
         <Box width="100%">
-          <Box bg="secondary400">
+          <Box bg="secondary.400">
             <RichText
               ref={editorRef}
               blocks={field.data?.blocks as EditorBlock}

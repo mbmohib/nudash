@@ -33,7 +33,7 @@ export default function ModalExtended({
       size="lg"
     >
       <ModalOverlay />
-      <ModalContent bgColor="secondary500">
+      <ModalContent bgColor="secondary.500">
         {heading && <ModalHeader>{heading}</ModalHeader>}
         <ModalCloseButton />
         <ModalBody pb="4">{children}</ModalBody>

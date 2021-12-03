@@ -88,7 +88,7 @@ export default function Page() {
         menus={pageQueries.data}
       />
 
-      <Box ml="208px" bg="secondary600">
+      <Box ml="208px" bg="secondary.600">
         <PreLoader isLoading={pageQuery.isLoading}>
           <DndProvider backend={HTML5Backend}>
             <Grid gridTemplateColumns="1fr 350px">

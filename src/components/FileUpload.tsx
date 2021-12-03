@@ -89,7 +89,7 @@ export default function FileUpload({
       >
         <input {...getInputProps()} />
         {!fieldValue && (
-          <Box border="1px dashed" borderColor="secondary100" mx="auto" p="3">
+          <Box border="1px dashed" borderColor="secondary.100" mx="auto" p="3">
             <Text textAlign="center">
               Drag 'n' drop image here, or click to select image
             </Text>

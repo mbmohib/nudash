@@ -54,7 +54,7 @@ export default function SiteData() {
   };
 
   return (
-    <Box bgColor="secondary500" rounded="base" p="4">
+    <Box bgColor="secondary.500" rounded="base" p="4">
       <Text fontSize="lg" mb="2">
         Site Data
       </Text>

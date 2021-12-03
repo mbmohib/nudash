@@ -127,7 +127,7 @@ export default function Section({
       width="100%"
       m="1"
       position="relative"
-      bgColor="secondary500"
+      bgColor="secondary.500"
       rounded="base"
       mb="2"
       ref={ref}
