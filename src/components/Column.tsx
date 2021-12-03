@@ -30,7 +30,14 @@ export default function Column({ column }: ColumnProps) {
         <Box position="relative" key={dropZone.id}>
           <DropZone dropZone={dropZone} />
           {!dropZone.fieldType && (
-            <Box position="absolute" right="20px" top="20px">
+            <Box
+              position="absolute"
+              sx={{
+                transform: 'translateX(-50%)',
+              }}
+              left="calc(50% + 90px)"
+              top="20px"
+            >
               <Button variant="icon" onClick={handleRowRemove}>
                 <DeleteIcon width={15} />
               </Button>

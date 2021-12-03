@@ -90,7 +90,7 @@ const styles = {
     body: {
       bg: colors['secondary.600'],
       color: colors.white,
-      fontSize: '16px',
+      fontSize: fontSizes.md,
     },
     a: {
       color: colors.white,
@@ -104,19 +104,15 @@ const styles = {
 
 const components = {
   Button: {
-    // 1. We can update the base styles
     baseStyle: {
       borderRadius: '16px',
       paddingLeft: '0',
       paddingInlineEnd: 0,
     },
-    // 2. We can add a new button size or extend existing
     sizes: {
       md: {},
     },
-    // 3. We can add a new visual variant
     variants: {
-      // 4. We can override existing variants
       solid: ({ colorMode }: { colorMode: string }) => ({
         padding: '0 24px',
         bg:
@@ -151,25 +147,22 @@ const components = {
     },
   },
   Input: {
-    baseStyle: {
-      field: {
-        bg: colors['secondary.400'],
-        borderColor: colors['secondary.100'],
-        borderWidth: 2,
-        ':focus': {
-          borderColor: colors['secondary.100'],
-          bg: colors['secondary.600'],
-        },
-      },
-    },
     sizes: {
       md: {
         field: {
           paddingLeft: '16px',
           paddingRight: '16px',
-          borderRadius: '4px',
+          borderRadius: '16px',
         },
       },
+    },
+    variants: {
+      outline: ({ colorMode }: { colorMode: string }) => ({
+        borderColor: colors['secondary.100'],
+      }),
+    },
+    defaultProps: {
+      borderColor: 'red',
     },
   },
   Textarea: {

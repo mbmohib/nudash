@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/button';
 import { Box, Flex, Heading } from '@chakra-ui/layout';
 import { SkeletonText } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { PlusIcon } from '../assets/icons';
 import { Pages } from '../types';
@@ -22,13 +22,12 @@ export default function PageSidebar({
   return (
     <Box
       bgColor="secondary.400"
-      px={2}
       ml="1"
       height="100vh"
       position="fixed"
       width="200px"
     >
-      <Flex justifyContent="space-between" alignItems="center" mt="2">
+      <Flex px="2" justifyContent="space-between" alignItems="center" mt="2">
         <Heading as="h2" fontSize="xl">
           {heading}
         </Heading>
@@ -39,11 +38,25 @@ export default function PageSidebar({
       {isLoading ? (
         <SkeletonText mt="4" noOfLines={4} spacing="2" />
       ) : (
-        <Box as="ul" mt="28px" sx={{ listStyle: 'none' }}>
+        <Box mt="28px" sx={{ listStyle: 'none' }}>
           {menus?.map(menu => (
-            <Box as="li" py="0.5" key={menu.id} textTransform="capitalize">
-              <Link to={`/pages/${menu.path}`}>{menu.name}</Link>
-            </Box>
+            <NavLink activeClassName="active" to={`/pages/${menu.path}`}>
+              <Box
+                as="span"
+                display="block"
+                py="0.5"
+                px="2"
+                key={menu.id}
+                sx={{
+                  '.active &': {
+                    bg: 'secondary.600',
+                  },
+                }}
+                textTransform="capitalize"
+              >
+                {menu.name}
+              </Box>
+            </NavLink>
           ))}
         </Box>
       )}
