@@ -9,7 +9,7 @@ import {
   CreatePage,
   DraggableComponentsContainer,
   PageHeader,
-  PageSidebar,
+  PageLayout,
   PreLoader,
   PredefinedColumns,
   Section,
@@ -80,15 +80,13 @@ export default function Page() {
   };
 
   return (
-    <Box>
-      <PageSidebar
+    <>
+      <PageLayout
         isLoading={false}
         handleAdd={handlePageAdd}
         heading="Pages"
         menus={pageQueries.data}
-      />
-
-      <Box ml="208px" bg="secondary.600">
+      >
         <PreLoader isLoading={pageQuery.isLoading}>
           <DndProvider backend={HTML5Backend}>
             <Grid gridTemplateColumns="1fr 350px">
@@ -118,13 +116,13 @@ export default function Page() {
             handleColumnLayout={handleColumnLayout}
           />
         </PreLoader>
-      </Box>
+      </PageLayout>
 
       <CreatePage
         siteId={siteQuery.data?.id}
         isOpen={createPageModal.isOpen}
         onClose={createPageModal.onClose}
       />
-    </Box>
+    </>
   );
 }

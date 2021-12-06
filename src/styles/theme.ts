@@ -74,7 +74,7 @@ const fontSizes = {
   sm: '14px',
   md: '16px',
   lg: '18px',
-  xl: '22px',
+  xl: '20px',
   '2xl': '22px',
   '3xl': '1.875rem',
   '4xl': '2.25rem',

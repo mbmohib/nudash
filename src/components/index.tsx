@@ -33,4 +33,4 @@ export { default as SiteData } from './SiteData';
 export { default as SiteNav } from './SiteNav';
 export { default as SiteNavItem } from './SiteNavItem';
 export { default as Header } from './Header';
-export { default as PageSidebar } from './PageSidebar';
+export { default as PageLayout } from './PageLayout';
