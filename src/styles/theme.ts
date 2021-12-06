@@ -161,16 +161,21 @@ const components = {
         borderColor: colors['secondary.100'],
       }),
     },
-    defaultProps: {
-      borderColor: 'red',
-    },
   },
   Textarea: {
+    sizes: {
+      md: {
+        field: {
+          paddingLeft: '16px',
+          paddingRight: '16px',
+          borderRadius: '16px',
+        },
+      },
+    },
     variants: {
       outline: {
         paddingInlineStart: 2,
         paddingInlineEnd: 2,
-        borderRadius: '4px',
       },
     },
   },
