@@ -1,5 +1,5 @@
 import { Box, Container, Grid } from '@chakra-ui/react';
-import { PageHeader, PageLayout, SiteData, SiteNav } from 'components';
+import { PageHeader, PageLayout, SiteNav } from 'components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
