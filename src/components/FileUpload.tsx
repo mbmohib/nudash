@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { PreLoader } from '.';
+import { DeleteIcon } from '../assets/icons';
 import { maxImageSize } from '../config';
 import { FileType } from '../types';
 
@@ -21,15 +22,30 @@ interface PreviewProps {
 
 const Preview = ({ file, handleImageRemove }: PreviewProps) => {
   return (
-    <Box maxW="40%" mx="auto">
-      <Image borderRadius="16px" src={file.preview} />
-      <Button
-        mt="2"
-        onClick={() => handleImageRemove(file.name)}
-        variant="text"
-      >
-        Remove image
-      </Button>
+    <Box width="60%" mx="auto">
+      <Box position="relative" width="100%" height="100%">
+        <Image borderRadius="16px" src={file.preview} />
+        <Box
+          borderRadius="16px"
+          bg="secondary.100"
+          width="100%"
+          height="100%"
+          position="absolute"
+          left="0"
+          top="0"
+          opacity="0.7"
+        ></Box>
+        <Button
+          position="absolute"
+          onClick={() => handleImageRemove(file.name)}
+          variant="text"
+          top="50%"
+          left="50%"
+          sx={{ transform: 'translate(-50%, -50%)' }}
+        >
+          <DeleteIcon />
+        </Button>
+      </Box>
     </Box>
   );
 };
