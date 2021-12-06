@@ -24,7 +24,7 @@ export default function SiteNav() {
   return (
     <Box bgColor="secondary.500" rounded="base" p="4">
       <Text fontSize="lg" mb="2">
-        Site Nav
+        Primary Menu
       </Text>
       {menus?.map((menu, index) => (
         <SiteNavItem key={menu.id} menu={menu} index={index} />

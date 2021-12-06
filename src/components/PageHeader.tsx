@@ -3,7 +3,6 @@ import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 import { DeleteIcon, SaveIcon } from '../assets/icons';
 
 interface HeaderProps {
-  showActionButton?: boolean;
   handleSave?: () => void;
   handleDelete?: () => void;
   isSaving?: boolean;
@@ -16,7 +15,6 @@ export default function PageHeader({
   handleDelete,
   isSaving,
   pageName,
-  showActionButton,
 }: HeaderProps) {
   return (
     <Flex
@@ -30,8 +28,8 @@ export default function PageHeader({
           {pageName}
         </Heading>
       </Box>
-      {showActionButton && (
-        <Box>
+      <Box>
+        {handleSave && (
           <Button
             leftIcon={<SaveIcon />}
             onClick={handleSave}
@@ -40,6 +38,8 @@ export default function PageHeader({
           >
             Save
           </Button>
+        )}
+        {handleDelete && (
           <Button
             leftIcon={<DeleteIcon />}
             variant="outline"
@@ -47,8 +47,8 @@ export default function PageHeader({
           >
             Delete
           </Button>
-        </Box>
-      )}
+        )}
+      </Box>
     </Flex>
   );
 }

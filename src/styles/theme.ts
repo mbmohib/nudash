@@ -157,7 +157,7 @@ const components = {
       },
     },
     variants: {
-      outline: ({ colorMode }: { colorMode: string }) => ({
+      outline: () => ({
         borderColor: colors['secondary.100'],
       }),
     },

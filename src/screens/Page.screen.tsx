@@ -1,5 +1,5 @@
 import { useDisclosure } from '@chakra-ui/hooks';
-import { Box, Container, Grid } from '@chakra-ui/react';
+import { Container, Grid } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -93,7 +93,6 @@ export default function Page() {
               <Container maxW="container.lg">
                 <PageHeader
                   pageName={pageQuery.data?.name}
-                  showActionButton
                   handleSave={handleSave}
                 />
                 {sections.map((section, index) => (

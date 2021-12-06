@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { PlusIcon } from '../assets/icons';
 import { Pages } from '../types';
 
-interface PageSidebarProps {
+interface PageLayoutProps {
   children: React.ReactNode;
   heading: string;
   isLoading: boolean;
@@ -14,13 +14,13 @@ interface PageSidebarProps {
   menus?: Pages[];
 }
 
-export default function PageSidebar({
+export default function PageLayout({
   children,
   heading,
   isLoading,
   handleAdd,
   menus = [],
-}: PageSidebarProps) {
+}: PageLayoutProps) {
   return (
     <>
       <Box
@@ -45,7 +45,11 @@ export default function PageSidebar({
         ) : (
           <Box mt="28px" sx={{ listStyle: 'none' }}>
             {menus?.map(menu => (
-              <NavLink activeClassName="active" to={`${menu.path}`}>
+              <NavLink
+                key={menu.id}
+                activeClassName="active"
+                to={`${menu.path}`}
+              >
                 <Box
                   as="span"
                   display="block"
