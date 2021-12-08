@@ -5,7 +5,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  Text,
   Textarea,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -58,9 +57,6 @@ export default function SiteData({ data }: SiteDataProps) {
 
   return (
     <Box bgColor="secondary.500" rounded="base" p="4">
-      <Text fontSize="lg" mb="2">
-        Site Data
-      </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={!!errors.name} mb="2">
           <FormLabel htmlFor="name">Name</FormLabel>

@@ -47,7 +47,7 @@ export default function ButtonComponent({ field }: FieldProps) {
         </ComponentActionWithData>
       ) : (
         <Box>
-          <Grid gridTemplateColumns="1fr 3fr" gap="1" width="100%">
+          <Grid gridTemplateColumns="2fr 3fr" gap="1" width="100%">
             <Input
               onChange={event => setLabel(event.target.value)}
               type="text"

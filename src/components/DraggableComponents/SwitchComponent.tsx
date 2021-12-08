@@ -57,7 +57,7 @@ export default function SwitchComponent({ field }: FieldProps) {
           handleRemove={handleRemove}
         >
           <Flex alignItems="center" gridGap="2">
-            <Text>{field.data.label}: </Text>
+            <Text>{field.data.label}? </Text>
             <Switch
               size="md"
               onChange={handleSwitchValue}

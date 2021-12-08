@@ -17,6 +17,7 @@ export const colors = {
   white: '#fff',
   primary: '#8F2DE2',
   'primary.500': '#5C1594',
+  'secondary.10': '#424279',
   'secondary.50': '#383871',
   'secondary.100': '#2D2D6A',
   'secondary.200': '#242455',

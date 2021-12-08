@@ -42,8 +42,8 @@ export default function ButtonComponent({ field }: FieldProps) {
           handleEdit={toggleShowEditorView}
           handleRemove={handleRemove}
         >
-          <Text>{field.data.label}:</Text>
-          <Text mr="2">
+          <Text fontWeight="semibold">{field.data.label}:</Text>
+          <Text ml="2">
             {format(new Date(field.data.value as Date), 'dd/MM/yyyy')}
           </Text>
         </ComponentActionWithData>

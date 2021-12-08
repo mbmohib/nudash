@@ -45,9 +45,6 @@ function DropZonePlaceholder({
 }: DropZonePlaceholderProps) {
   return (
     <Box
-      border="1px dashed"
-      borderColor="secondary.100"
-      width="80%"
       mx="auto"
       p="1"
       my="1"
@@ -160,7 +157,6 @@ export default function DropZone({ dropZone }: DropZoneProps) {
       justifyContent="flex-start"
       alignItems="center"
       rounded="base"
-      mb="1"
       opacity={isActive ? '0.2' : '1'}
       bgColor={isActive ? 'white' : 'transparent'}
     >

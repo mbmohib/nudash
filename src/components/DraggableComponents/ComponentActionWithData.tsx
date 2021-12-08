@@ -15,8 +15,10 @@ export default function ComponentActionWithData({
 }: ComponentActionProps) {
   return (
     <Flex
+      mb="2"
       alignItems="center"
       position="relative"
+      width="100%"
       sx={{
         ':hover .filed-action-btn': {
           visibility: 'visible',
@@ -25,8 +27,14 @@ export default function ComponentActionWithData({
     >
       {children}
       <Box
+        position="absolute"
         className="filed-action-btn"
         alignSelf="flex-end"
+        right="0"
+        bottom="0"
+        bg="secondary.500"
+        pl="1"
+        opacity="0.95"
         visibility="hidden"
       >
         <Flex alignItems="center" gridGap="1" ml="1">
