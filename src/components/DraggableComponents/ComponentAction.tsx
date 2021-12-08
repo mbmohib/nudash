@@ -1,5 +1,7 @@
 import { Button, Flex } from '@chakra-ui/react';
 
+import { DeleteIcon, SaveIcon } from '../../assets/icons';
+
 interface ComponentActionProps {
   handleSave: () => void;
   handleCancel?: () => void;
@@ -15,16 +17,28 @@ export default function ComponentAction({
 }: ComponentActionProps) {
   return (
     <Flex justifyContent="flex-end" mt="1">
-      <Button variant="link" mr="1" onClick={handleSave}>
+      <Button
+        leftIcon={<SaveIcon width={12} height={13} />}
+        variant="ghost"
+        onClick={handleSave}
+      >
         Save
       </Button>
       {hasData && (
-        <Button variant="link" onClick={handleCancel}>
+        <Button
+          leftIcon={<SaveIcon width={12} height={13} />}
+          variant="ghost"
+          onClick={handleCancel}
+        >
           Cancel
         </Button>
       )}
       {!hasData && (
-        <Button variant="link" onClick={handleRemove}>
+        <Button
+          leftIcon={<DeleteIcon width={12} height={13} />}
+          variant="ghost"
+          onClick={handleRemove}
+        >
           Delete
         </Button>
       )}

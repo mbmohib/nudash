@@ -8,6 +8,7 @@ import {
   NumberIcon,
   SingleLineTextIcon,
   SwitchIcon,
+  SymbolIcon,
   TextIcon,
 } from '../assets/icons';
 import { FieldType } from '../config';
@@ -61,6 +62,13 @@ const fields: DraggableField[] = [
     info: {
       title: 'Image',
       icon: <NumberIcon />,
+    },
+  },
+  {
+    type: FieldType.Icon,
+    info: {
+      title: 'Icon',
+      icon: <SymbolIcon />,
     },
   },
   {

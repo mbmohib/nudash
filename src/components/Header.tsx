@@ -1,7 +1,8 @@
-import { Box, Button, Flex } from '@chakra-ui/react';
+import { Box, Button, Flex, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 import { LightIcon, NotificationIcon } from '../assets/icons';
+import logo from '../assets/images/logo.png';
 
 export default function Header() {
   return (
@@ -20,7 +21,7 @@ export default function Header() {
         px="2"
         height="64px"
       >
-        <Box>Logo</Box>
+        <Image src={logo} alt="Logo" />
         <Flex alignItems="center">
           <Button
             as={Link}

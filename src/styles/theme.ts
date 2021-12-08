@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { ThemeConfig, extendTheme } from '@chakra-ui/react';
 
 const config: ThemeConfig = {
@@ -14,8 +15,11 @@ export const colors = {
   transparent: 'transparent',
   black: '#000',
   white: '#fff',
-  primary: '#8C2CE2',
+  primary: '#8F2DE2',
+  'primary.500': '#5C1594',
+  'secondary.50': '#383871',
   'secondary.100': '#2D2D6A',
+  'secondary.200': '#242455',
   'secondary.400': '#191934',
   'secondary.500': '#141430',
   'secondary.600': '#101026',
@@ -113,32 +117,65 @@ const components = {
       md: {},
     },
     variants: {
-      solid: ({ colorMode }: { colorMode: string }) => ({
+      solid: ({
+        colorMode,
+        colorScheme,
+      }: {
+        colorMode: string;
+        colorScheme: string;
+      }) => ({
         padding: '0 24px',
         bg:
-          colorMode === 'dark'
-            ? 'radial-gradient(115.93% 115.93% at 50% 50%, #8E2DE2 0%, #4A00E0 100%)'
+          colorMode === 'dark' && colorScheme === 'secondary'
+            ? colors['secondary.50']
+            : colorMode === 'dark'
+            ? colors.primary
             : 'red.500',
+        color: colorMode === 'dark' ? colors.white : 'red.500',
         _hover: {
           bg:
-            colorMode === 'dark'
-              ? 'radial-gradient(115.93% 115.93% at 80% 80%, #8E2DE2 0%, #4A00E0 100%)'
+            colorMode === 'dark' && colorScheme === 'secondary'
+              ? colors['secondary.100']
+              : colorMode === 'dark'
+              ? colors['primary.500']
               : 'red.500',
         },
       }),
       outline: ({ colorMode }: { colorMode: string }) => ({
         padding: '0 24px',
         border: '2px solid',
-        borderColor: colorMode === 'dark' ? '#8C2CE2' : 'red.500',
-        color: colorMode === 'dark' ? '#8C2CE2' : 'red.500',
+        borderColor: colorMode === 'dark' ? colors.primary : 'red.500',
+        color: colorMode === 'dark' ? colors.primary : 'red.500',
         _hover: {
           bg: colorMode === 'dark' ? colors.primary : 'red.500',
           color: colorMode === 'dark' ? colors.white : 'red.500',
         },
       }),
+      ghost: ({ colorMode }: { colorMode: string }) => ({
+        padding: '0 16px',
+        color: colorMode === 'dark' ? colors.primary : 'red.500',
+        _hover: {
+          bg: 'transparent',
+          color: colorMode === 'dark' ? colors['primary.500'] : 'red.500',
+        },
+      }),
       icon: ({ colorMode }: { colorMode: string }) => ({
         bg: 'transparent',
         padding: 1,
+        color: colorMode === 'dark' ? colors.white : 'red.500',
+        _hover: {
+          color: colorMode === 'dark' ? colors.primary : 'red.500',
+        },
+      }),
+      iconSolid: ({ colorMode }: { colorMode: string }) => ({
+        bg: colors['secondary.200'],
+        padding: '0',
+        borderRadius: '2px',
+        border: '1px solid',
+        minWidth: '24px',
+        width: '24px',
+        height: '22px',
+        borderColor: colors['secondary.100'],
         color: colorMode === 'dark' ? colors.white : 'red.500',
         _hover: {
           color: colorMode === 'dark' ? colors.primary : 'red.500',

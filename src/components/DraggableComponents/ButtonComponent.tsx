@@ -41,7 +41,9 @@ export default function ButtonComponent({ field }: FieldProps) {
           handleEdit={toggleShowEditorView}
           handleRemove={handleRemove}
         >
-          <Button>{field.data.label}</Button>
+          <Button mt="3" colorScheme="secondary">
+            {field.data.label}
+          </Button>
         </ComponentActionWithData>
       ) : (
         <Box>

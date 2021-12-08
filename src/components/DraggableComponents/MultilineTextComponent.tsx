@@ -42,14 +42,12 @@ export default function ButtonComponent({ field }: FieldProps) {
           <Text>{field.data.value}</Text>
         </ComponentActionWithData>
       ) : (
-        <Box width="100%">
-          <Box>
-            <Textarea
-              onChange={event => setValue(event.target.value)}
-              type="text"
-              placeholder="Write here.."
-            />
-          </Box>
+        <Box mt="2" width="100%">
+          <Textarea
+            onChange={event => setValue(event.target.value)}
+            type="text"
+            placeholder="Write here.."
+          />
           <ComponentAction
             handleSave={handleSaveData}
             handleCancel={() => toggleShowEditorView(false)}

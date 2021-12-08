@@ -1,6 +1,6 @@
 import { Box, Button, Flex } from '@chakra-ui/react';
 
-import { DeleteIcon } from '../../assets/icons';
+import { DeleteIcon, EditIcon } from '../../assets/icons';
 
 interface ComponentActionProps {
   handleEdit: () => void;
@@ -14,31 +14,30 @@ export default function ComponentActionWithData({
   children,
 }: ComponentActionProps) {
   return (
-    <Box
+    <Flex
+      alignItems="center"
       position="relative"
       sx={{
         ':hover .filed-action-btn': {
-          display: 'block',
+          visibility: 'visible',
         },
       }}
     >
       {children}
       <Box
         className="filed-action-btn"
-        position="absolute"
-        right="-10px"
-        top="-15px"
-        display="none"
+        alignSelf="flex-end"
+        visibility="hidden"
       >
-        <Flex>
-          <Button variant="icon" size="xs" onClick={handleEdit}>
-            <DeleteIcon width={10} />
+        <Flex alignItems="center" gridGap="1" ml="1">
+          <Button variant="iconSolid" onClick={handleEdit}>
+            <EditIcon width={10} />
           </Button>
-          <Button variant="icon" size="xs" onClick={handleRemove}>
+          <Button variant="iconSolid" onClick={handleRemove}>
             <DeleteIcon width={10} />
           </Button>
         </Flex>
       </Box>
-    </Box>
+    </Flex>
   );
 }

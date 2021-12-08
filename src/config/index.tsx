@@ -12,6 +12,7 @@ export enum FieldType {
   MultilineText = 'multilineText',
   RichText = 'richText',
   Image = 'image',
+  Icon = 'icon',
   Number = 'number',
   Date = 'date',
   Switch = 'switch',

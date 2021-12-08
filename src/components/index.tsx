@@ -9,6 +9,7 @@ export { default as FileUploadComponent } from './DraggableComponents/FileUpload
 export { default as RichTextComponent } from './DraggableComponents/RichTextComponent';
 export { default as ComponentActionWithData } from './DraggableComponents/ComponentActionWithData';
 export { default as LinkComponent } from './DraggableComponents/LinkComponent';
+export { default as IconComponent } from './DraggableComponents/IconComponent';
 
 export { default as Layout } from './Layout';
 export { default as Sidebar } from './Sidebar';

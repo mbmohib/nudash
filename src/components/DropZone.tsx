@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
@@ -6,6 +6,7 @@ import {
   ButtonComponent,
   DateComponent,
   FileUploadComponent,
+  IconComponent,
   LinkComponent,
   MultilineTextComponent,
   NumberComponent,
@@ -13,6 +14,7 @@ import {
   SingleLineTextComponent,
   SwitchComponent,
 } from '.';
+import { DeleteIcon } from '../assets/icons';
 import { FieldType, ItemTypes } from '../config';
 import {
   useDebounce,
@@ -23,6 +25,7 @@ import {
 import {
   attachDropZoneId,
   handleAddDropZone,
+  removeColumn,
   removeLastDropZone,
 } from '../store/slices/page';
 import { DraggableItem } from '../types';
@@ -33,9 +36,13 @@ interface DropZoneProps {
 
 interface DropZonePlaceholderProps {
   isActive: boolean;
+  handleColumnRemove: () => void;
 }
 
-function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
+function DropZonePlaceholder({
+  isActive,
+  handleColumnRemove,
+}: DropZonePlaceholderProps) {
   return (
     <Box
       border="1px dashed"
@@ -43,12 +50,17 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
       width="80%"
       mx="auto"
       p="1"
+      my="1"
       height="80px"
       display="flex"
+      flexDirection="column"
       alignItems="center"
       justifyContent="center"
     >
-      <Text>{isActive ? `Release to drop` : `Drop a block here`}</Text>
+      <Button variant="iconSolid" mb="1">
+        <DeleteIcon width={10} onClick={handleColumnRemove} />
+      </Button>
+      <Text>{isActive ? `Release to drop` : `Drop a content here`}</Text>
     </Box>
   );
 }
@@ -89,6 +101,16 @@ export default function DropZone({ dropZone }: DropZoneProps) {
   );
   const isActive = canDrop && isOver;
   const debouncedHover = useDebounce(isOverCurrent, 100);
+
+  const handleColumnRemove = () => {
+    dispatch(
+      removeColumn({
+        sectionId,
+        rowId,
+        columnId,
+      }),
+    );
+  };
 
   useEffect(() => {
     if (
@@ -142,7 +164,12 @@ export default function DropZone({ dropZone }: DropZoneProps) {
       opacity={isActive ? '0.2' : '1'}
       bgColor={isActive ? 'white' : 'transparent'}
     >
-      {!fieldType && <DropZonePlaceholder isActive={isActive} />}
+      {!fieldType && (
+        <DropZonePlaceholder
+          isActive={isActive}
+          handleColumnRemove={handleColumnRemove}
+        />
+      )}
 
       {fieldType === FieldType.Text && (
         <SingleLineTextComponent field={dropZone} />
@@ -159,6 +186,7 @@ export default function DropZone({ dropZone }: DropZoneProps) {
       {fieldType === FieldType.Image && (
         <FileUploadComponent field={dropZone} />
       )}
+      {fieldType === FieldType.Icon && <IconComponent field={dropZone} />}
       {fieldType === FieldType.Date && <DateComponent field={dropZone} />}
       {fieldType === FieldType.Button && <ButtonComponent field={dropZone} />}
     </Flex>

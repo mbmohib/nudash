@@ -33,7 +33,6 @@ export default function PageHeader({
           <Button
             leftIcon={<SaveIcon />}
             onClick={handleSave}
-            mr="2"
             isLoading={isSaving}
           >
             Save
@@ -44,6 +43,7 @@ export default function PageHeader({
             leftIcon={<DeleteIcon />}
             variant="outline"
             onClick={handleDelete}
+            ml="2"
           >
             Delete
           </Button>
