@@ -14,7 +14,8 @@ import {
 const Routes = () => (
   <Layout>
     <Switch>
-      <Route exact path="/" component={Dashboard} />
+      <Redirect exact from="/" to="/dashboard/analytics" />
+      <Route exact path="/dashboard/analytics" component={Dashboard} />
       <Route exact path="/login" component={Login} />
       <Redirect exact from="/site" to="/site/meta-data" />
       <Route exact path="/site/meta-data" component={MetaData} />

@@ -3,14 +3,12 @@ import { PageHeader, PageLayout, SiteNav } from 'components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { useSelector } from '../hooks';
+import { siteMenus } from '../config';
 
 export default function Menus() {
-  const { menus } = useSelector(state => state.siteData);
-
   return (
     <Box>
-      <PageLayout isLoading={false} heading="Site" menus={menus}>
+      <PageLayout isLoading={false} heading="Site" menus={siteMenus}>
         <Container>
           <PageHeader pageName="Menus" />
 

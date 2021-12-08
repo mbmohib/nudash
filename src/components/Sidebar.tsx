@@ -18,7 +18,7 @@ export default function Sidebar() {
         alignItems="center"
         sx={{ flexGrow: 1 }}
       >
-        <Button to="/" variant="icon" mb="1" role="dashboard">
+        <Button as={Link} to="/" variant="icon" mb="1" role="dashboard">
           <DashboardIcon />
         </Button>
         <Button as={Link} to="/site" variant="icon" mb="1" role="site">
