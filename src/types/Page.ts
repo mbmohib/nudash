@@ -6,7 +6,7 @@ export default interface Page {
   name: string;
   path: string;
   sections: {
-    id: number;
+    id: string;
     rows: {
       id: number;
       columns: DraggableItem[][];

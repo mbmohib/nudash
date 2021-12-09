@@ -19,7 +19,7 @@ interface RowProps {
     id: number;
     columns: DraggableItem[][];
   };
-  sectionId: number;
+  sectionId: string;
   rowId: number;
 }
 

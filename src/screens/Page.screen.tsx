@@ -34,7 +34,7 @@ export default function Page() {
   const updatePage = useUpdatePage(pageQuery.data?.path);
   const { sections } = useSelector(state => state.page);
   const [rowId, setRowId] = useState<number>(0);
-  const [sectionId, setSectionId] = useState<number>(0);
+  const [sectionId, setSectionId] = useState<string | undefined>();
   const notInitialRow = sections[0]?.rows[0]?.columns?.length > 0;
 
   const handleSave = () => {
@@ -50,7 +50,7 @@ export default function Page() {
   const handleColumnLayout = (count: number) => {
     dispatch(
       handleAddColumn({
-        sectionId,
+        sectionId: sectionId || sections[0].id,
         rowId,
         columnCount: count,
       }),
@@ -61,7 +61,7 @@ export default function Page() {
 
   const handleOpenColumnLayout = (
     rowNumber: number,
-    sectionNumber: number,
+    sectionNumber: string,
   ): void => {
     setRowId(rowNumber);
     setSectionId(sectionNumber);

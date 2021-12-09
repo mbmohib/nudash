@@ -9,7 +9,7 @@ import { DraggableField } from '../types';
 
 interface DropResult {
   id: string;
-  sectionId: number;
+  sectionId: string;
   rowId: number;
   columnId: number;
 }

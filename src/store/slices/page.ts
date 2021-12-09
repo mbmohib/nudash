@@ -4,8 +4,10 @@ import { nanoid } from 'nanoid';
 import { FieldType } from '../../config';
 import { DraggableItem, FieldData, Page } from '../../types';
 
+const initialSectionId = nanoid();
+
 interface LastDropItem {
-  sectionId: number;
+  sectionId: string;
   columnId: number;
   rowId: number;
   hasField: boolean;
@@ -13,7 +15,7 @@ interface LastDropItem {
 }
 
 interface LastRowItem {
-  sectionId: number;
+  sectionId: string;
   rowId: number;
   hasColumn: boolean;
 }
@@ -30,7 +32,7 @@ const initialState: PageState = {
   path: 'page',
   sections: [
     {
-      id: 0,
+      id: initialSectionId,
       rows: [
         {
           id: 0,
@@ -40,7 +42,7 @@ const initialState: PageState = {
     },
   ],
   lastRowItemInfo: {
-    sectionId: 0,
+    sectionId: initialSectionId,
     rowId: 0,
     hasColumn: false,
   },
@@ -56,14 +58,17 @@ const pageSlice = createSlice({
     handleAddSection(
       state,
       action: PayloadAction<{
-        id: number;
+        id: string;
       }>,
     ) {
       const { id } = action.payload;
-      const position = id + 1;
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === id,
+      );
+      const position = sectionIndex + 1;
 
       state.sections.splice(position, 0, {
-        id: state.sections.length,
+        id: nanoid(),
         rows: [
           {
             id: 0,
@@ -75,7 +80,7 @@ const pageSlice = createSlice({
     handleRemoveSection(
       state,
       action: PayloadAction<{
-        id: number;
+        id: string;
       }>,
     ) {
       const { id } = action.payload;
@@ -85,7 +90,7 @@ const pageSlice = createSlice({
     handleAddRow(
       state,
       action: PayloadAction<{
-        sectionId: number;
+        sectionId: string;
         rowId: number;
       }>,
     ) {
@@ -114,7 +119,7 @@ const pageSlice = createSlice({
     handleAddColumn(
       state,
       action: PayloadAction<{
-        sectionId: number;
+        sectionId: string;
         rowId: number;
         columnCount: number;
       }>,
@@ -151,7 +156,7 @@ const pageSlice = createSlice({
       action: PayloadAction<{
         fieldType: FieldType;
         dropZoneId: string;
-        sectionId: number;
+        sectionId: string;
         rowId: number;
         columnId: number;
       }>,
@@ -194,7 +199,7 @@ const pageSlice = createSlice({
       state,
       action: PayloadAction<{
         dropZoneId: string;
-        sectionId: number;
+        sectionId: string;
         rowId: number;
         columnId: number;
         handlerId?: string;
@@ -245,7 +250,7 @@ const pageSlice = createSlice({
       state,
       action: PayloadAction<{
         dropZoneId: string;
-        sectionId: number;
+        sectionId: string;
         rowId: number;
         columnId: number;
         handlerId: string;
@@ -306,7 +311,12 @@ const pageSlice = createSlice({
     removeLastUnusedRow(state) {
       const { rowId, sectionId } = state.lastRowItemInfo as LastRowItem;
 
-      if (sectionId || (sectionId === 0 && rowId) || rowId === 0) {
+      if (
+        sectionId ||
+        rowId ||
+        sectionId === state.sections[0].id ||
+        rowId === 0
+      ) {
         const sectionIndex = state.sections.findIndex(
           section => section.id === sectionId,
         );
@@ -329,7 +339,7 @@ const pageSlice = createSlice({
       action: PayloadAction<{
         data: FieldData;
         dropZoneId: string;
-        sectionId: number;
+        sectionId: string;
         rowId: number;
         columnId: number;
       }>,
@@ -362,7 +372,7 @@ const pageSlice = createSlice({
       state,
       action: PayloadAction<{
         dropZoneId: string;
-        sectionId: number;
+        sectionId: string;
         rowId: number;
         columnId: number;
       }>,
@@ -395,7 +405,7 @@ const pageSlice = createSlice({
     removeRow(
       state,
       action: PayloadAction<{
-        sectionId: number;
+        sectionId: string;
         rowId: number;
       }>,
     ) {
@@ -413,7 +423,7 @@ const pageSlice = createSlice({
     removeColumn(
       state,
       action: PayloadAction<{
-        sectionId: number;
+        sectionId: string;
         rowId: number;
         columnId: number;
       }>,

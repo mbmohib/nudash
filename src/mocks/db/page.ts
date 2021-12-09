@@ -15,7 +15,7 @@ export const pageBuilder = build('Page', {
     path: 'home',
     sections: [
       {
-        id: 0,
+        id: nanoid(),
         rows: [
           {
             id: 0,

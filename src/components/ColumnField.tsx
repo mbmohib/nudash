@@ -8,11 +8,11 @@ import { removeLastUnusedRow } from '../store/slices/page';
 
 interface DropResult {
   id: number;
-  sectionId: number;
+  sectionId: string;
 }
 
 interface ColumnFieldProps {
-  handleOpenColumnLayout: (id: number, sectionId: number) => void;
+  handleOpenColumnLayout: (id: number, sectionId: string) => void;
 }
 export default function ColumnField({
   handleOpenColumnLayout,
@@ -21,7 +21,7 @@ export default function ColumnField({
   const { sections, lastRowItemInfo } = useSelector(state => state.page);
   const notInitialRow = sections[0]?.rows[0]?.columns[0].length > 0;
   const [didDrop, setDidDrop] = useState<boolean>();
-  const [sectionId, setSectionId] = useState<number>();
+  const [sectionId, setSectionId] = useState<string>();
 
   const [{ isDragging }, drag] = useDrag(
     () => ({

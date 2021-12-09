@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo } from 'react';
 
 interface ContextState {
-  sectionId: number;
+  sectionId: string;
   rowId: number;
   columnId: number;
 }

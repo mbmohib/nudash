@@ -88,7 +88,7 @@ const fields: DraggableField[] = [
 ];
 
 interface DraggableComponentsProps {
-  handleOpenColumnLayout: (id: number, sectionId: number) => void;
+  handleOpenColumnLayout: (id: number, sectionId: string) => void;
 }
 
 export default function DraggableComponents({
