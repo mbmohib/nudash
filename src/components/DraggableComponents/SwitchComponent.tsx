@@ -1,19 +1,53 @@
-import { Box, Flex, Grid, Input, Switch, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import {
+  Box,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  Grid,
+  Input,
+  Switch,
+  Text,
+} from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import { ComponentAction, ComponentActionWithData } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices/page';
 import { FieldProps } from '../../types';
 
+const schema = yup
+  .object({
+    value: yup.boolean().required('Please enter value'),
+    label: yup.string().required('Please enter label'),
+  })
+  .required();
+
 export default function SwitchComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSectionMeta();
-  const [value, setValue] = useState<boolean>(false);
-  const [label, setLabel] = useState<string>('');
   const dispatch = useDispatch();
   const [showEditorView, toggleShowEditorView] = useToggle();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      value: field?.data?.value ?? false,
+      label: field?.data?.label,
+    },
+  });
 
-  const handleSaveData = () => {
+  const handleSaveData = ({
+    value,
+    label,
+  }: {
+    value: string;
+    label: string;
+  }) => {
     dispatch(
       saveFieldData({
         dropZoneId: field.id,
@@ -31,18 +65,7 @@ export default function SwitchComponent({ field }: FieldProps) {
   };
 
   const handleSwitchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      saveFieldData({
-        dropZoneId: field.id,
-        sectionId,
-        rowId,
-        columnId,
-        data: {
-          value: event.target.checked,
-          label,
-        },
-      }),
-    );
+    setValue('value', event.target.checked);
   };
 
   const handleRemove = () => {
@@ -58,38 +81,46 @@ export default function SwitchComponent({ field }: FieldProps) {
         >
           <Flex alignItems="center" gridGap="2">
             <Text>{field.data.label}? </Text>
-            <Switch
-              size="md"
-              onChange={handleSwitchValue}
-              isChecked={!!field.data.value}
-            />
+            <Text>{field.data.value ? 'Yes' : 'No'} </Text>
           </Flex>
         </ComponentActionWithData>
       ) : (
-        <Box>
-          <Grid
-            gridTemplateColumns="2fr 2fr"
-            gap="2"
-            width="100%"
-            alignItems="center"
-          >
-            <Input
-              type="text"
-              placeholder="Add label"
-              onChange={event => setLabel(event.target.value)}
-              value={label}
+        <Box width="100%">
+          <form onSubmit={handleSubmit(handleSaveData)}>
+            <Grid
+              gridTemplateColumns="2fr 2fr"
+              gap="2"
+              width="100%"
+              alignItems="center"
+            >
+              <FormControl isInvalid={!!errors.label}>
+                <Input
+                  type="text"
+                  placeholder="label"
+                  id="label"
+                  {...register('label')}
+                />
+                <FormErrorMessage>
+                  {errors.label && errors.label.message}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={!!errors.value}>
+                <Switch
+                  size="md"
+                  {...register('value')}
+                  onChange={handleSwitchValue}
+                />
+                <FormErrorMessage>
+                  {errors.value && errors.value.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Grid>
+            <ComponentAction
+              handleCancel={() => toggleShowEditorView(false)}
+              handleRemove={handleRemove}
+              hasData={!!field?.data?.value}
             />
-            <Switch
-              size="md"
-              onChange={event => setValue(event.target.checked)}
-            />
-          </Grid>
-          <ComponentAction
-            handleSave={handleSaveData}
-            handleCancel={() => toggleShowEditorView(false)}
-            handleRemove={handleRemove}
-            hasData={!!field?.data?.value}
-          />
+          </form>
         </Box>
       )}
     </>

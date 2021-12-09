@@ -3,7 +3,7 @@ import { Button, Flex } from '@chakra-ui/react';
 import { DeleteIcon, SaveIcon } from '../../assets/icons';
 
 interface ComponentActionProps {
-  handleSave: () => void;
+  handleSave?: () => void;
   handleCancel?: () => void;
   handleRemove: () => void;
   hasData?: boolean;
@@ -21,6 +21,7 @@ export default function ComponentAction({
         leftIcon={<SaveIcon width={12} height={13} />}
         variant="ghost"
         onClick={handleSave}
+        type="submit"
       >
         Save
       </Button>

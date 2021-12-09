@@ -1,18 +1,43 @@
-import { Box, Input, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  Text,
+} from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import { ComponentAction, ComponentActionWithData } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices/page';
 import { FieldProps } from '../../types';
 
+const schema = yup
+  .object({
+    value: yup
+      .number()
+      .required('Please enter number')
+      .typeError('Please enter number'),
+  })
+  .required();
+
 export default function NumberComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSectionMeta();
   const dispatch = useDispatch();
-  const [number, setNumber] = useState<string>('');
   const [showEditorView, toggleShowEditorView] = useToggle();
-
-  const handleSaveData = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      value: field?.data?.value,
+    },
+  });
+  const handleSaveData = ({ value }: { value: string }) => {
     dispatch(
       saveFieldData({
         dropZoneId: field.id,
@@ -20,7 +45,7 @@ export default function NumberComponent({ field }: FieldProps) {
         rowId,
         columnId,
         data: {
-          value: number,
+          value,
         },
       }),
     );
@@ -43,19 +68,26 @@ export default function NumberComponent({ field }: FieldProps) {
         </ComponentActionWithData>
       ) : (
         <Box width="100%">
-          <Box>
-            <Input
-              onChange={event => setNumber(event.target.value)}
-              type="number"
-              placeholder="label"
+          <form onSubmit={handleSubmit(handleSaveData)}>
+            <Box>
+              <FormControl isInvalid={!!errors.value}>
+                <Input
+                  type="text"
+                  placeholder="label"
+                  id="value"
+                  {...register('value')}
+                />
+                <FormErrorMessage>
+                  {errors.value && errors.value.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Box>
+            <ComponentAction
+              handleCancel={() => toggleShowEditorView(false)}
+              handleRemove={handleRemove}
+              hasData={!!field?.data?.value}
             />
-          </Box>
-          <ComponentAction
-            handleSave={handleSaveData}
-            handleCancel={() => toggleShowEditorView(false)}
-            handleRemove={handleRemove}
-            hasData={!!field?.data?.value}
-          />
+          </form>
         </Box>
       )}
     </>

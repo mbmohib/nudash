@@ -1,22 +1,41 @@
-import { Box, Input, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  Text,
+} from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import { ComponentAction, ComponentActionWithData } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices/page';
 import { FieldProps } from '../../types';
 
-export default function ButtonComponent({ field }: FieldProps) {
+const schema = yup
+  .object({
+    value: yup.string().required('Please enter text'),
+  })
+  .required();
+
+export default function SingleLineTextComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSectionMeta();
   const dispatch = useDispatch();
-  const [value, setValue] = useState<string>('');
   const [showEditorView, toggleShowEditorView] = useToggle();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      value: field?.data?.value,
+    },
+  });
 
-  useEffect(() => {
-    setValue((field?.data?.value as string) ?? '');
-  }, []);
-
-  const handleSaveData = () => {
+  const handleSaveData = ({ value }: { value: string }) => {
     dispatch(
       saveFieldData({
         dropZoneId: field.id,
@@ -47,20 +66,26 @@ export default function ButtonComponent({ field }: FieldProps) {
         </ComponentActionWithData>
       ) : (
         <Box width="100%">
-          <Box>
-            <Input
-              onChange={event => setValue(event.target.value)}
-              type="text"
-              placeholder="label"
-              value={value}
+          <form onSubmit={handleSubmit(handleSaveData)}>
+            <Box>
+              <FormControl isInvalid={!!errors.value}>
+                <Input
+                  type="text"
+                  placeholder="write your text"
+                  id="value"
+                  {...register('value')}
+                />
+                <FormErrorMessage>
+                  {errors.value && errors.value.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Box>
+            <ComponentAction
+              handleCancel={() => toggleShowEditorView(false)}
+              handleRemove={handleRemove}
+              hasData={!!field?.data?.value}
             />
-          </Box>
-          <ComponentAction
-            handleSave={handleSaveData}
-            handleCancel={() => toggleShowEditorView(false)}
-            handleRemove={handleRemove}
-            hasData={!!field?.data?.value}
-          />
+          </form>
         </Box>
       )}
     </>

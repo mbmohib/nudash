@@ -1,19 +1,53 @@
-import { Box, Grid, Input, Link } from '@chakra-ui/react';
-import { useState } from 'react';
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  Grid,
+  Input,
+  Link,
+} from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import { ComponentAction, ComponentActionWithData } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices/page';
 import { FieldProps } from '../../types';
 
+const schema = yup
+  .object({
+    value: yup
+      .string()
+      .url('Please enter valid url')
+      .required('Please enter url'),
+    label: yup.string().required('Please enter label'),
+  })
+  .required();
+
 export default function ButtonComponent({ field }: FieldProps) {
   const { sectionId, rowId, columnId } = useSectionMeta();
   const dispatch = useDispatch();
-  const [label, setLabel] = useState<string>('');
-  const [value, setValue] = useState<string>('');
   const [showEditorView, toggleShowEditorView] = useToggle();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      value: field?.data?.value,
+      label: field?.data?.label,
+    },
+  });
 
-  const handleSaveData = () => {
+  const handleSaveData = ({
+    value,
+    label,
+  }: {
+    value: string;
+    label: string;
+  }) => {
     dispatch(
       saveFieldData({
         dropZoneId: field.id,
@@ -46,25 +80,38 @@ export default function ButtonComponent({ field }: FieldProps) {
           </Link>
         </ComponentActionWithData>
       ) : (
-        <Box>
-          <Grid gridTemplateColumns="2fr 3fr" gap="1" width="100%">
-            <Input
-              onChange={event => setLabel(event.target.value)}
-              type="text"
-              placeholder="label"
+        <Box width="100%">
+          <form onSubmit={handleSubmit(handleSaveData)}>
+            <Grid gridTemplateColumns="2fr 3fr" gap="1" width="100%">
+              <FormControl isInvalid={!!errors.label}>
+                <Input
+                  type="text"
+                  placeholder="label"
+                  id="label"
+                  {...register('label')}
+                />
+                <FormErrorMessage>
+                  {errors.label && errors.label.message}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={!!errors.value}>
+                <Input
+                  type="text"
+                  placeholder="url"
+                  id="value"
+                  {...register('value')}
+                />
+                <FormErrorMessage>
+                  {errors.value && errors.value.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Grid>
+            <ComponentAction
+              handleCancel={() => toggleShowEditorView(false)}
+              handleRemove={handleRemove}
+              hasData={!!field?.data?.value}
             />
-            <Input
-              type="text"
-              placeholder="Link"
-              onChange={event => setValue(event.target.value)}
-            />
-          </Grid>
-          <ComponentAction
-            handleSave={handleSaveData}
-            handleCancel={() => toggleShowEditorView(false)}
-            handleRemove={handleRemove}
-            hasData={!!field?.data?.value}
-          />
+          </form>
         </Box>
       )}
     </>

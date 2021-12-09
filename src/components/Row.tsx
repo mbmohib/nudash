@@ -102,7 +102,6 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
       role={`Row DropZone-${rowId}`}
       opacity={isOver ? '0.2' : '1'}
       bgColor={isOver ? 'white' : 'transparent'}
-      borderTop={rowId !== 0 ? '1px solid #2D2D6A' : 'none'}
       gridGap="2"
       p="2"
     >

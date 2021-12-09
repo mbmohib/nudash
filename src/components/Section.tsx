@@ -137,6 +137,7 @@ export default function Section({
       bgColor="secondary.500"
       rounded="base"
       mb="2"
+      p="2"
       ref={previewRef}
       opacity={opacity}
       data-handler-id={handlerId}
