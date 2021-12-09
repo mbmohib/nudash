@@ -52,7 +52,8 @@ export default function Section({
 }: SectionProps) {
   const dispatch = useDispatch();
   const [expand, setExpand] = useToggle(true);
-  const ref = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<HTMLDivElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
 
   const [{ handlerId }, drop] = useDrop({
     accept: ItemTypes.Section,
@@ -62,7 +63,7 @@ export default function Section({
       };
     },
     hover(item: DragItem, monitor: DropTargetMonitor) {
-      if (!ref.current) {
+      if (!dragRef.current) {
         return;
       }
       const draggedIndex = item.index;
@@ -74,7 +75,7 @@ export default function Section({
       }
 
       // Determine rectangle on screen
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverBoundingRect = dragRef.current?.getBoundingClientRect();
 
       // Get vertical middle
       const hoverMiddleY =
@@ -114,7 +115,7 @@ export default function Section({
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.Section,
     item: () => {
       return { id: section.id, index };
@@ -125,7 +126,8 @@ export default function Section({
   });
 
   const opacity = isDragging ? 0 : 1;
-  drag(drop(ref));
+  drag(dragRef);
+  drop(preview(previewRef));
 
   return (
     <Box
@@ -135,7 +137,7 @@ export default function Section({
       bgColor="secondary.500"
       rounded="base"
       mb="2"
-      ref={ref}
+      ref={previewRef}
       opacity={opacity}
       data-handler-id={handlerId}
     >
@@ -182,6 +184,7 @@ export default function Section({
         role="drag-row"
         position="absolute"
         left="-7"
+        ref={dragRef}
         sx={{
           top: '50%',
           transform: 'translateY(-50%)',
