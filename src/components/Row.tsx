@@ -1,12 +1,17 @@
-import { Flex } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { Column } from '.';
+import { DeleteIcon } from '../assets/icons';
 import { ItemTypes } from '../config';
 import { useDebounce, useDispatch, useSelector } from '../hooks';
 import { SectionContext } from '../hooks/useSectionMeta';
-import { handleAddRow, removeLastUnusedRow } from '../store/slices/page';
+import {
+  handleAddRow,
+  removeLastUnusedRow,
+  removeRow,
+} from '../store/slices/page';
 import { DraggableItem } from '../types';
 
 interface RowProps {
@@ -26,7 +31,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
     rowItem => rowItem.id === rowId,
   );
   const currentColumns = sections[sectionIndex].rows[rowIndex].columns[0];
-  const notInitialRow = sections[0].rows[0].columns[0].length > 0;
+  const notInitialRow = sections[sectionIndex].rows[0].columns[0].length > 0;
 
   const [{ canDrop, isOver, isOverCurrent }, drop] = useDrop(
     () => ({
@@ -80,6 +85,15 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
     }
   }, [debouncedHover]);
 
+  const handleRowRemove = () => {
+    dispatch(
+      removeRow({
+        sectionId,
+        rowId,
+      }),
+    );
+  };
+
   return (
     <Flex
       width="100%"
@@ -112,9 +126,15 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
           justifyContent="center"
           width="80%"
           mx="auto"
+          flexDirection="column"
           border="1px dashed"
           borderColor="secondary.100"
         >
+          {!isActive && sections[sectionIndex].rows.length > 1 && (
+            <Button variant="iconSolid" mb="1">
+              <DeleteIcon width={10} onClick={handleRowRemove} />
+            </Button>
+          )}
           {isActive ? `Release to drop` : `Drag & Drop Column here`}
         </Flex>
       )}

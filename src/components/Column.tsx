@@ -2,12 +2,8 @@ import { Box, Button, Flex } from '@chakra-ui/react';
 
 import { DropZone } from '.';
 import { DeleteIcon } from '../assets/icons';
-import { useDebounce, useDispatch, useSelector } from '../hooks';
-import {
-  handleAddRow,
-  removeLastUnusedRow,
-  removeRow,
-} from '../store/slices/page';
+import { useDispatch, useSectionMeta } from '../hooks';
+import { removeColumn } from '../store/slices/page';
 import { DraggableItem } from '../types';
 
 interface ColumnProps {
@@ -16,21 +12,22 @@ interface ColumnProps {
 
 export default function Column({ column }: ColumnProps) {
   const dispatch = useDispatch();
+  const { sectionId, rowId, columnId } = useSectionMeta();
 
-  const handleRowRemove = () => {
-    // dispatch(
-    //   removeRow({
-    //     // sectionId,
-    //     // rowId,
-    //   }),
-    // );
+  const handleRemoveColumn = () => {
+    dispatch(
+      removeColumn({
+        sectionId,
+        rowId,
+        columnId,
+      }),
+    );
   };
 
   return (
-    <Flex flexDirection="column" width="100%">
+    <Flex role={`column ${columnId}`} flexDirection="column" width="100%">
       <Box
         width="100%"
-        role="column"
         border="1px"
         borderColor="secondary.10"
         borderRadius="lg"
@@ -45,7 +42,7 @@ export default function Column({ column }: ColumnProps) {
       <Button
         leftIcon={<DeleteIcon width={15} />}
         variant="ghost"
-        onClick={handleRowRemove}
+        onClick={handleRemoveColumn}
         mt="2"
       >
         Delete Column

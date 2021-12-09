@@ -41,7 +41,7 @@ export default function PageLayout({
           )}
         </Flex>
         {isLoading ? (
-          <SkeletonText mt="4" noOfLines={4} spacing="2" />
+          <SkeletonText px="2" mt="4" noOfLines={4} spacing="2" />
         ) : (
           <Box mt="28px" sx={{ listStyle: 'none' }}>
             {menus?.map(menu => (

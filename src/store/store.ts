@@ -2,13 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import menus from './slices/menus';
 import page from './slices/page';
-import siteData from './slices/siteData';
 
 export const store = configureStore({
   reducer: {
     page,
     menus,
-    siteData,
   },
 });
 

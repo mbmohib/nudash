@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
@@ -14,7 +14,6 @@ import {
   SingleLineTextComponent,
   SwitchComponent,
 } from '.';
-import { DeleteIcon } from '../assets/icons';
 import { FieldType, ItemTypes } from '../config';
 import {
   useDebounce,
@@ -25,7 +24,6 @@ import {
 import {
   attachDropZoneId,
   handleAddDropZone,
-  removeColumn,
   removeLastDropZone,
 } from '../store/slices/page';
 import { DraggableItem } from '../types';
@@ -36,13 +34,9 @@ interface DropZoneProps {
 
 interface DropZonePlaceholderProps {
   isActive: boolean;
-  handleColumnRemove: () => void;
 }
 
-function DropZonePlaceholder({
-  isActive,
-  handleColumnRemove,
-}: DropZonePlaceholderProps) {
+function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
   return (
     <Box
       mx="auto"
@@ -50,13 +44,9 @@ function DropZonePlaceholder({
       my="1"
       height="80px"
       display="flex"
-      flexDirection="column"
       alignItems="center"
       justifyContent="center"
     >
-      <Button variant="iconSolid" mb="1">
-        <DeleteIcon width={10} onClick={handleColumnRemove} />
-      </Button>
       <Text>{isActive ? `Release to drop` : `Drop a content here`}</Text>
     </Box>
   );
@@ -98,16 +88,6 @@ export default function DropZone({ dropZone }: DropZoneProps) {
   );
   const isActive = canDrop && isOver;
   const debouncedHover = useDebounce(isOverCurrent, 100);
-
-  const handleColumnRemove = () => {
-    dispatch(
-      removeColumn({
-        sectionId,
-        rowId,
-        columnId,
-      }),
-    );
-  };
 
   useEffect(() => {
     if (
@@ -160,12 +140,7 @@ export default function DropZone({ dropZone }: DropZoneProps) {
       opacity={isActive ? '0.2' : '1'}
       bgColor={isActive ? 'white' : 'transparent'}
     >
-      {!fieldType && (
-        <DropZonePlaceholder
-          isActive={isActive}
-          handleColumnRemove={handleColumnRemove}
-        />
-      )}
+      {!fieldType && <DropZonePlaceholder isActive={isActive} />}
 
       {fieldType === FieldType.Text && (
         <SingleLineTextComponent field={dropZone} />
