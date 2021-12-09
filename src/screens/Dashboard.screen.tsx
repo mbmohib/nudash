@@ -1,4 +1,4 @@
-import { Box, Container, Grid } from '@chakra-ui/react';
+import { Box, Container, Grid, Heading } from '@chakra-ui/react';
 import {
   BarChart,
   LineChart,
@@ -21,10 +21,12 @@ export default function Dashboard() {
             <ProductStats />
             <ProductStats />
           </Grid>
+          <Heading mb="2">Product Download Comparison</Heading>
           <Box height="500px">
             <BarChart />
           </Box>
           <Box height="500px" mt="4">
+            <Heading mb="2">Downloads</Heading>
             <LineChart />
           </Box>
         </Container>
