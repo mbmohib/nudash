@@ -12,13 +12,10 @@ import {
   removeLastUnusedRow,
   removeRow,
 } from '../store/slices/page';
-import { DraggableItem } from '../types';
+import { Page } from '../types';
 
 interface RowProps {
-  row: {
-    id: number;
-    columns: DraggableItem[][];
-  };
+  row: Page['sections'][0]['rows'][0];
   sectionId: string;
   rowId: number;
 }

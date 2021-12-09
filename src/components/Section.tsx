@@ -23,18 +23,10 @@ import {
   handleRemoveSection,
   handleSectionOrder,
 } from '../store/slices/page';
-import { DraggableItem } from '../types';
-
-interface SectionTypes {
-  id: string;
-  rows: {
-    id: number;
-    columns: DraggableItem[][];
-  }[];
-}
+import { Page } from '../types';
 
 interface SectionProps {
-  section: SectionTypes;
+  section: Page['sections'][0];
   index: number;
   totalSection: number;
 }
