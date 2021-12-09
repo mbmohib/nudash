@@ -23,7 +23,7 @@ import {
   handleRemoveSection,
   handleSectionOrder,
 } from '../store/slices/page';
-import { DraggableItem, Page } from '../types';
+import { DraggableItem } from '../types';
 
 interface SectionTypes {
   id: string;
