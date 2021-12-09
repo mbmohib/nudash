@@ -11,11 +11,15 @@ export default function getPageBuilderIndexes(
 
   const sectionIndex = sections.findIndex(section => section.id === sectionId);
 
-  rowIndex = sections[sectionIndex].rows.findIndex(row => row.id === rowId);
+  if (rowId || rowId === 0) {
+    rowIndex = sections[sectionIndex].rows.findIndex(row => row.id === rowId);
+  }
 
-  columnIndex = sections[sectionIndex].rows[rowIndex].columns.findIndex(
-    (_, index) => index === columnId,
-  );
+  if (columnId || columnId === 0) {
+    columnIndex = sections[sectionIndex].rows[rowIndex].columns.findIndex(
+      (_, index) => index === columnId,
+    );
+  }
 
   return {
     sectionIndex,
