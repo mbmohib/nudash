@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
@@ -14,6 +14,7 @@ import {
   SingleLineTextComponent,
   SwitchComponent,
 } from '.';
+import { DeleteIcon } from '../assets/icons';
 import { FieldType, ItemTypes } from '../config';
 import {
   useDebounce,
@@ -24,19 +25,27 @@ import {
 import {
   attachDropZoneId,
   handleAddDropZone,
+  removeDropZone,
   removeLastDropZone,
 } from '../store/slices/page';
 import { DraggableItem } from '../types';
+import { getPageBuilderIndexes } from '../utils';
 
 interface DropZoneProps {
   dropZone: DraggableItem;
 }
 
 interface DropZonePlaceholderProps {
+  showRemoveButton: boolean;
   isActive: boolean;
+  handleDropZoneRemove: () => void;
 }
 
-function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
+function DropZonePlaceholder({
+  showRemoveButton,
+  isActive,
+  handleDropZoneRemove,
+}: DropZonePlaceholderProps) {
   return (
     <Box
       mx="auto"
@@ -46,7 +55,17 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      border="1px dotted"
+      borderColor="secondary.100"
+      width="90%"
+      borderRadius="md"
+      flexDirection="column"
     >
+      {showRemoveButton && (
+        <Button variant="iconSolid" mb="1" onClick={handleDropZoneRemove}>
+          <DeleteIcon width={10} />
+        </Button>
+      )}
       <Text>{isActive ? `Release to drop` : `Drop a content here`}</Text>
     </Box>
   );
@@ -55,7 +74,15 @@ function DropZonePlaceholder({ isActive }: DropZonePlaceholderProps) {
 export default function DropZone({ dropZone }: DropZoneProps) {
   const dispatch = useDispatch();
   const { sectionId, rowId, columnId } = useSectionMeta();
-  const { lastDropItemInfo } = useSelector(state => state.page);
+  const { lastDropItemInfo, sections } = useSelector(state => state.page);
+  const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes(
+    sections,
+    sectionId,
+    rowId,
+    columnId,
+  );
+  const totalDropZone =
+    sections[sectionIndex].rows[rowIndex].columns[columnIndex].length;
   const { fieldType } = dropZone;
   const [{ canDrop, isOver, handlerId, isOverCurrent }, drop] = useDrop(
     () => ({
@@ -129,6 +156,17 @@ export default function DropZone({ dropZone }: DropZoneProps) {
     }
   }, [dispatch, sectionId, columnId, rowId, dropZone.id, handlerId]);
 
+  const handleDropZoneRemove = () => {
+    dispatch(
+      removeDropZone({
+        sectionId,
+        columnId,
+        rowId,
+        dropZoneId: dropZone.id,
+      }),
+    );
+  };
+
   return (
     <Flex
       ref={drop}
@@ -140,7 +178,13 @@ export default function DropZone({ dropZone }: DropZoneProps) {
       opacity={isActive ? '0.2' : '1'}
       bgColor={isActive ? 'white' : 'transparent'}
     >
-      {!fieldType && <DropZonePlaceholder isActive={isActive} />}
+      {!fieldType && (
+        <DropZonePlaceholder
+          showRemoveButton={totalDropZone > 1}
+          isActive={isActive}
+          handleDropZoneRemove={handleDropZoneRemove}
+        />
+      )}
 
       {fieldType === FieldType.Text && (
         <SingleLineTextComponent field={dropZone} />

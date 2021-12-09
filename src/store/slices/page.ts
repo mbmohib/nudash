@@ -368,6 +368,34 @@ const pageSlice = createSlice({
           },
         );
     },
+    removeDropZone(
+      state,
+      action: PayloadAction<{
+        dropZoneId: string;
+        sectionId: string;
+        rowId: number;
+        columnId: number;
+      }>,
+    ) {
+      const { dropZoneId, rowId, sectionId, columnId } = action.payload;
+
+      const sectionIndex = state.sections.findIndex(
+        section => section.id === sectionId,
+      );
+
+      const rowIndex = state.sections[sectionIndex].rows.findIndex(
+        row => row.id === rowId,
+      );
+
+      const columnIndex = state.sections[sectionIndex].rows[
+        rowIndex
+      ].columns.findIndex((_, index) => index === columnId);
+
+      state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].filter(
+          dropZone => dropZone.id !== dropZoneId,
+        );
+    },
     removeField(
       state,
       action: PayloadAction<{
@@ -480,5 +508,6 @@ export const {
   removeRow,
   removeColumn,
   handleSectionOrder,
+  removeDropZone,
 } = pageSlice.actions;
 export default pageSlice.reducer;
