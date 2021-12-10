@@ -1,5 +1,4 @@
 import { FieldType } from '../config';
-import EditorBlock from './EditorBlock';
 
 export interface DraggableField {
   type: FieldType;
@@ -44,4 +43,8 @@ export interface Pages {
   id: string;
   name: string;
   path: string;
+}
+
+export interface FieldProps {
+  field: DraggableItem;
 }

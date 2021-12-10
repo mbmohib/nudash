@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { ComponentAction, ComponentActionWithData, DatePicker } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices/page';
-import { FieldProps } from '../../types';
+import { DraggableItem } from '../../types';
 
-export default function ButtonComponent({ field }: FieldProps) {
+export default function ButtonComponent({ field }: { field: DraggableItem }) {
   const { sectionId, rowId, columnId } = useSectionMeta();
   const dispatch = useDispatch();
   const [label, setLabel] = useState<string>('');

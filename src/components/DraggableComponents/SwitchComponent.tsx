@@ -15,7 +15,7 @@ import * as yup from 'yup';
 import { ComponentAction, ComponentActionWithData } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices/page';
-import { FieldProps } from '../../types';
+import { DraggableItem } from '../../types';
 
 const schema = yup
   .object({
@@ -24,7 +24,7 @@ const schema = yup
   })
   .required();
 
-export default function SwitchComponent({ field }: FieldProps) {
+export default function SwitchComponent({ field }: { field: DraggableItem }) {
   const { sectionId, rowId, columnId } = useSectionMeta();
   const dispatch = useDispatch();
   const [showEditorView, toggleShowEditorView] = useToggle();

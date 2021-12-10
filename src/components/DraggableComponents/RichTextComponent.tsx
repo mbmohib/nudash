@@ -4,13 +4,13 @@ import { useRef } from 'react';
 import { ComponentAction, ComponentActionWithData, RichText } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices/page';
-import { EditorBlock, FieldProps } from '../../types';
+import { DraggableItem, EditorBlock } from '../../types';
 
 interface EditorRef {
   handleSave: () => { blocks: EditorBlock; html: string };
 }
 
-export default function ButtonComponent({ field }: FieldProps) {
+export default function RichTextComponent({ field }: { field: DraggableItem }) {
   const { sectionId, rowId, columnId } = useSectionMeta();
   const dispatch = useDispatch();
   const editorRef = useRef<EditorRef>(null);

@@ -3,9 +3,9 @@ import { Box, Image } from '@chakra-ui/react';
 import { FileUpload } from '..';
 import { useDispatch, useSectionMeta } from '../../hooks';
 import { saveFieldData } from '../../store/slices/page';
-import { FieldProps, FileType } from '../../types';
+import { DraggableItem, FileType } from '../../types';
 
-export default function ButtonComponent({ field }: FieldProps) {
+export default function ButtonComponent({ field }: { field: DraggableItem }) {
   const { sectionId, rowId, columnId } = useSectionMeta();
   const dispatch = useDispatch();
 
