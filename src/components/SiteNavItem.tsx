@@ -69,9 +69,7 @@ export default function SiteNav({ menu, index }: SiteNavProps) {
       isOpenNew: menu.isOpenNew,
     },
   });
-
   const ref = useRef<HTMLDivElement>(null);
-
   const [{ handlerId }, drop] = useDrop({
     accept: ItemTypes.Menu,
     collect(monitor) {
@@ -131,7 +129,6 @@ export default function SiteNav({ menu, index }: SiteNavProps) {
       item.index = hoveredIndex;
     },
   });
-
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.Menu,
     item: () => {

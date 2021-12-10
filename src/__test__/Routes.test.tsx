@@ -1,26 +1,22 @@
-import userEvent from '@testing-library/user-event';
-import mockConsole from 'jest-mock-console';
-
 import Routes from '../routes';
 import { render } from '../utils/test';
 
-let restoreConsole: { (): void; (): void };
-
-beforeAll(() => {
-  restoreConsole = mockConsole();
-});
-afterAll(() => {
-  restoreConsole();
-});
-
 test('render dashboard page', () => {
-  const { getByRole, getByText } = render(<Routes />);
+  const { getByRole } = render(<Routes />);
 
-  const siteLink = getByRole(/site/i);
-  userEvent.click(siteLink);
+  const heading = getByRole('heading', { name: /page heading/i });
+  expect(heading).toHaveTextContent(/dashboard/i);
+});
 
-  const heading = getByText(/site/i, { selector: 'h2' });
-  expect(heading).toHaveTextContent(/site/i);
+test('render site page on clicking site menu', () => {
+  const { getByRole, getByTestId, debug } = render(<Routes />);
+
+  const siteLink = getByTestId(/site-link/i);
+  // debug(siteLink);
+  // userEvent.click(siteLink);
+
+  // const heading = getByRole('heading', { name: /page heading/i });
+  // expect(heading).toHaveTextContent(/site/i);
 });
 
 test('render 404 page', () => {
