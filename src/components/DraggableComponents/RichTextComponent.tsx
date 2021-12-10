@@ -3,7 +3,7 @@ import { useRef } from 'react';
 
 import { ComponentAction, ComponentActionWithData, RichText } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
-import { removeField, saveFieldData } from '../../store/slices/page';
+import { removeField, saveFieldData } from '../../store/slices/page.slice';
 import { DraggableItem, EditorBlock } from '../../types';
 
 interface EditorRef {

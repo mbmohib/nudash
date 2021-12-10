@@ -11,21 +11,20 @@ import {
   handleAddRow,
   removeLastUnusedRow,
   removeRow,
-} from '../store/slices/page';
-import { Page } from '../types';
+} from '../store/slices/page.slice';
+import { Row as RowType, Section } from '../types';
 
 interface RowProps {
-  row: Page['sections'][0]['rows'][0];
-  sectionId: string;
-  rowId: number;
+  row: RowType;
+  sectionId: Section['id'];
 }
 
-export default function Row({ sectionId, rowId, row }: RowProps) {
+export default function Row({ sectionId, row }: RowProps) {
   const dispatch = useDispatch();
   const { sections, lastRowItemInfo } = useSelector(state => state.page);
   const sectionIndex = sections.findIndex(section => section.id === sectionId);
   const rowIndex = sections[sectionIndex].rows.findIndex(
-    rowItem => rowItem.id === rowId,
+    rowItem => rowItem.id === row.id,
   );
   const currentColumns = sections[sectionIndex].rows[rowIndex].columns[0];
   const notInitialRow = sections[sectionIndex].rows[0].columns[0].length > 0;
@@ -34,7 +33,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
     () => ({
       accept: ItemTypes.Column,
       drop: (_, monitor) => ({
-        id: rowId,
+        id: row.id,
         sectionId,
         targetId: monitor.getHandlerId(),
       }),
@@ -76,7 +75,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
       dispatch(
         handleAddRow({
           sectionId,
-          rowId,
+          rowId: row.id,
         }),
       );
     }
@@ -86,7 +85,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
     dispatch(
       removeRow({
         sectionId,
-        rowId,
+        rowId: row.id,
       }),
     );
   };
@@ -96,7 +95,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
       width="100%"
       position="relative"
       ref={drop}
-      role={`Row DropZone-${rowId}`}
+      role={`Row-${row.id}`}
       opacity={isOver ? '0.2' : '1'}
       bgColor={isOver ? 'white' : 'transparent'}
       gridGap="2"
@@ -108,7 +107,7 @@ export default function Row({ sectionId, rowId, row }: RowProps) {
             key={columnIndex}
             value={{
               sectionId,
-              rowId,
+              rowId: row.id,
               columnId: columnIndex,
             }}
           >

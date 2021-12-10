@@ -2,7 +2,7 @@ import { Box, Image } from '@chakra-ui/react';
 
 import { FileUpload } from '..';
 import { useDispatch, useSectionMeta } from '../../hooks';
-import { saveFieldData } from '../../store/slices/page';
+import { saveFieldData } from '../../store/slices/page.slice';
 import { DraggableItem, FileType } from '../../types';
 
 export default function ButtonComponent({ field }: { field: DraggableItem }) {

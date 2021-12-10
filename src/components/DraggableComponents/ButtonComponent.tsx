@@ -12,7 +12,7 @@ import * as yup from 'yup';
 
 import { ComponentAction, ComponentActionWithData } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
-import { removeField, saveFieldData } from '../../store/slices/page';
+import { removeField, saveFieldData } from '../../store/slices/page.slice';
 import { DraggableItem } from '../../types';
 
 const schema = yup

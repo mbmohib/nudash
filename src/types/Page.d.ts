@@ -21,14 +21,14 @@ export interface DraggableItem {
   handlerId?: string;
 }
 
-export interface Rows {
+export interface Row {
   id: number;
   columns: DraggableItem[][];
 }
 
-export interface Sections {
+export interface Section {
   id: string;
-  rows: Rows[];
+  rows: Row[];
 }
 
 export interface Page {
@@ -36,15 +36,11 @@ export interface Page {
   pageId: string;
   name: string;
   path: string;
-  sections: Sections[];
+  sections: Section[];
 }
 
 export interface Pages {
   id: string;
   name: string;
   path: string;
-}
-
-export interface FieldProps {
-  field: DraggableItem;
 }

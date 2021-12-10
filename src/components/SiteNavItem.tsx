@@ -28,7 +28,11 @@ import * as yup from 'yup';
 
 import { ItemTypes } from '../config';
 import { useDispatch } from '../hooks';
-import { changeOrder, deleteMenu, updateMenu } from '../store/slices/menus';
+import {
+  changeOrder,
+  deleteMenu,
+  updateMenu,
+} from '../store/slices/menus.slice';
 import { SiteMenu } from '../types';
 
 const schema = yup

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { SiteNavItem } from '.';
 import { useDispatch, useSelector } from '../hooks';
 import { useSiteQuery } from '../hooks/useSite';
-import { addMenu, setMenus } from '../store/slices/menus';
+import { addMenu, setMenus } from '../store/slices/menus.slice';
 
 export default function SiteNav() {
   const dispatch = useDispatch();

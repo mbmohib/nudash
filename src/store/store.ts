@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import menus from './slices/menus';
-import page from './slices/page';
+import menus from './slices/menus.slice';
+import page from './slices/page.slice';
 
 export const store = configureStore({
   reducer: {

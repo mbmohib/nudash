@@ -4,7 +4,10 @@ import { useDrag } from 'react-dnd';
 
 import { ItemTypes } from '../config';
 import { useDispatch, useSelector } from '../hooks';
-import { handleFieldDrop, removeLastDropZone } from '../store/slices/page';
+import {
+  handleFieldDrop,
+  removeLastDropZone,
+} from '../store/slices/page.slice';
 import { DraggableField } from '../types';
 
 interface DropResult {

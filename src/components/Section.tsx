@@ -22,11 +22,11 @@ import {
   handleAddSection,
   handleRemoveSection,
   handleSectionOrder,
-} from '../store/slices/page';
-import { Page } from '../types';
+} from '../store/slices/page.slice';
+import { Section as SectionType } from '../types';
 
 interface SectionProps {
-  section: Page['sections'][0];
+  section: SectionType;
   index: number;
   totalSection: number;
 }
@@ -136,7 +136,7 @@ export default function Section({
     >
       <Box maxHeight={expand ? '100%' : '100px'} overflow="hidden">
         {section.rows.map(row => (
-          <Row key={row.id} rowId={row.id} sectionId={section.id} row={row} />
+          <Row key={row.id} sectionId={section.id} row={row} />
         ))}
       </Box>
 
