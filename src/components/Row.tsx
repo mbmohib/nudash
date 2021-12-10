@@ -1,4 +1,4 @@
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, useToast } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
@@ -24,17 +24,17 @@ export default function Row({ sectionId, row }: RowProps) {
   );
   const currentColumns = sections[sectionIndex].rows[rowIndex].columns[0];
   const notInitialRow = sections[sectionIndex].rows[0].columns[0].length > 0;
-
-  const [{ canDrop, isOver, isOverCurrent }, drop] = useDrop(
+  const toast = useToast();
+  const [{ canDrop, isOver, isOverCurrent, currentItem }, drop] = useDrop(
     () => ({
-      accept: ItemTypes.Column,
+      accept: [ItemTypes.Field, ItemTypes.Column],
       drop: (_, monitor) => ({
         id: row.id,
         sectionId,
         targetId: monitor.getHandlerId(),
       }),
-      canDrop() {
-        if (currentColumns.length !== 0) {
+      canDrop: (item: { type: string }) => {
+        if (currentColumns.length !== 0 || item.type !== ItemTypes.Column) {
           return false;
         }
         return true;
@@ -45,13 +45,14 @@ export default function Row({ sectionId, row }: RowProps) {
           handlerId: monitor.getHandlerId(),
           isOver: monitor.isOver(),
           canDrop: monitor.canDrop(),
+          currentItem: monitor.getItem(),
         };
       },
     }),
     [currentColumns.length],
   );
-
-  const isActive = canDrop && isOver;
+  const isAcceptedItem = currentItem && currentItem.type === ItemTypes.Column;
+  const isActive = canDrop && isOver && isAcceptedItem;
   const debouncedHover = useDebounce(isOverCurrent, 100);
 
   useEffect(() => {
@@ -67,13 +68,26 @@ export default function Row({ sectionId, row }: RowProps) {
   }, [debouncedHover]);
 
   useEffect(() => {
-    if (isOverCurrent && currentColumns.length !== 0) {
+    if (isAcceptedItem && isOverCurrent && currentColumns.length !== 0) {
       dispatch(
         handleAddRow({
           sectionId,
           rowId: row.id,
         }),
       );
+    }
+  }, [debouncedHover]);
+
+  useEffect(() => {
+    if (!isAcceptedItem && debouncedHover) {
+      toast({
+        title: 'Please add column first',
+        status: 'error',
+        isClosable: true,
+        variant: 'subtle',
+        position: 'bottom-right',
+        duration: 3000,
+      });
     }
   }, [debouncedHover]);
 
@@ -92,8 +106,15 @@ export default function Row({ sectionId, row }: RowProps) {
       position="relative"
       ref={drop}
       role={`Row-${row.id}`}
-      opacity={isOver ? '0.2' : '1'}
-      bgColor={isOver ? 'white' : 'transparent'}
+      opacity={isActive || (!isAcceptedItem && debouncedHover) ? '0.2' : '1'}
+      bgColor={
+        // eslint-disable-next-line no-nested-ternary
+        !isAcceptedItem && debouncedHover
+          ? 'error'
+          : isActive
+          ? 'white'
+          : 'transparent'
+      }
       gridGap="2"
       p="2"
     >

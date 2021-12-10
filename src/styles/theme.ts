@@ -25,6 +25,7 @@ export const colors = {
   'secondary.500': '#141430',
   'secondary.600': '#101026',
   tertiary: '#2e3039',
+  error: 'rgba(254, 178, 178)',
 };
 
 const space = {

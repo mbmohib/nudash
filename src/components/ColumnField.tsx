@@ -26,7 +26,7 @@ export default function ColumnField({
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.Column,
-      item: FieldType.Column,
+      item: { type: FieldType.Column },
       end: (item, monitor) => {
         const dropResult = monitor.getDropResult<DropResult>();
 
