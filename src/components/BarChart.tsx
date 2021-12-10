@@ -163,7 +163,7 @@ export default function BarChart() {
       ]}
       role="application"
       ariaLabel="Nivo bar chart demo"
-      barAriaLabel={function (e) {
+      barAriaLabel={e => {
         return `${e.id}: ${e.formattedValue} in country: ${e.indexValue}`;
       }}
     />

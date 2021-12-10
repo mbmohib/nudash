@@ -148,7 +148,7 @@ export default function Section({
           onClick={() =>
             dispatch(
               handleAddSection({
-                id: section.id,
+                sectionId: section.id,
               }),
             )
           }
@@ -164,7 +164,7 @@ export default function Section({
           onClick={() =>
             dispatch(
               handleRemoveSection({
-                id: section.id,
+                sectionId: section.id,
               }),
             )
           }

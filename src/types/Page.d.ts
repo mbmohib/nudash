@@ -44,3 +44,10 @@ export interface Pages {
   name: string;
   path: string;
 }
+
+export type PageSlicePayload = {
+  sectionId: Section['id'];
+  rowId: Row['id'];
+  dropZoneId: DraggableItem['id'];
+  columnId: number;
+};

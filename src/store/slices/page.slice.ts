@@ -2,22 +2,16 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
 import { FieldType } from '../../config';
-import { DraggableItem, FieldData, Page } from '../../types';
+import { DraggableItem, FieldData, Page, PageSlicePayload } from '../../types';
 import { getPageBuilderIndexes } from '../../utils';
 
 const initialSectionId = nanoid();
 
-interface LastDropItem {
-  sectionId: string;
-  columnId: number;
-  rowId: number;
+interface LastDropItem extends PageSlicePayload {
   hasField: boolean;
-  dropZoneId: string;
 }
 
-interface LastRowItem {
-  sectionId: string;
-  rowId: number;
+interface LastRowItem extends Pick<PageSlicePayload, 'sectionId' | 'rowId'> {
   hasColumn: boolean;
 }
 
@@ -53,19 +47,17 @@ const pageSlice = createSlice({
   name: 'page',
   initialState,
   reducers: {
-    setInitialState(state, action) {
+    setInitialState(_, action) {
       return action.payload;
     },
     handleAddSection(
       state,
-      action: PayloadAction<{
-        id: string;
-      }>,
+      action: PayloadAction<Pick<PageSlicePayload, 'sectionId'>>,
     ) {
-      const { id } = action.payload;
+      const { sectionId } = action.payload;
       const { sectionIndex } = getPageBuilderIndexes({
         sections: state.sections,
-        sectionId: id,
+        sectionId,
       });
       const position = sectionIndex + 1;
 
@@ -81,20 +73,17 @@ const pageSlice = createSlice({
     },
     handleRemoveSection(
       state,
-      action: PayloadAction<{
-        id: string;
-      }>,
+      action: PayloadAction<Pick<PageSlicePayload, 'sectionId'>>,
     ) {
-      const { id } = action.payload;
+      const { sectionId } = action.payload;
 
-      state.sections = state.sections.filter(section => section.id !== id);
+      state.sections = state.sections.filter(
+        section => section.id !== sectionId,
+      );
     },
     handleAddRow(
       state,
-      action: PayloadAction<{
-        sectionId: string;
-        rowId: number;
-      }>,
+      action: PayloadAction<Pick<PageSlicePayload, 'sectionId' | 'rowId'>>,
     ) {
       const { sectionId, rowId } = action.payload;
       const position = rowId + 1;
@@ -122,11 +111,11 @@ const pageSlice = createSlice({
     },
     handleAddColumn(
       state,
-      action: PayloadAction<{
-        sectionId: string;
-        rowId: number;
-        columnCount: number;
-      }>,
+      action: PayloadAction<
+        Pick<PageSlicePayload, 'sectionId' | 'rowId'> & {
+          columnCount: number;
+        }
+      >,
     ) {
       const { sectionId, rowId, columnCount } = action.payload;
       const { sectionIndex, rowIndex } = getPageBuilderIndexes({
@@ -155,13 +144,11 @@ const pageSlice = createSlice({
     },
     handleFieldDrop(
       state,
-      action: PayloadAction<{
-        fieldType: FieldType;
-        dropZoneId: string;
-        sectionId: string;
-        rowId: number;
-        columnId: number;
-      }>,
+      action: PayloadAction<
+        PageSlicePayload & {
+          fieldType: FieldType;
+        }
+      >,
     ) {
       const { fieldType, dropZoneId, sectionId, rowId, columnId } =
         action.payload;
@@ -194,13 +181,11 @@ const pageSlice = createSlice({
     },
     handleAddDropZone(
       state,
-      action: PayloadAction<{
-        dropZoneId: string;
-        sectionId: string;
-        rowId: number;
-        columnId: number;
-        handlerId?: string;
-      }>,
+      action: PayloadAction<
+        PageSlicePayload & {
+          handlerId?: string;
+        }
+      >,
     ) {
       const { dropZoneId, rowId, sectionId, columnId, handlerId } =
         action.payload;
@@ -239,13 +224,11 @@ const pageSlice = createSlice({
     },
     attachDropZoneId(
       state,
-      action: PayloadAction<{
-        dropZoneId: string;
-        sectionId: string;
-        rowId: number;
-        columnId: number;
-        handlerId: string;
-      }>,
+      action: PayloadAction<
+        PageSlicePayload & {
+          handlerId: string;
+        }
+      >,
     ) {
       const { dropZoneId, rowId, sectionId, columnId, handlerId } =
         action.payload;
@@ -314,13 +297,11 @@ const pageSlice = createSlice({
     },
     saveFieldData(
       state,
-      action: PayloadAction<{
-        data: FieldData;
-        dropZoneId: string;
-        sectionId: string;
-        rowId: number;
-        columnId: number;
-      }>,
+      action: PayloadAction<
+        PageSlicePayload & {
+          data: FieldData;
+        }
+      >,
     ) {
       const { data, dropZoneId, sectionId, rowId, columnId } = action.payload;
       const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
@@ -343,15 +324,7 @@ const pageSlice = createSlice({
           },
         );
     },
-    removeDropZone(
-      state,
-      action: PayloadAction<{
-        dropZoneId: string;
-        sectionId: string;
-        rowId: number;
-        columnId: number;
-      }>,
-    ) {
+    removeDropZone(state, action: PayloadAction<PageSlicePayload>) {
       const { dropZoneId, rowId, sectionId, columnId } = action.payload;
       const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
         sections: state.sections,
@@ -365,15 +338,7 @@ const pageSlice = createSlice({
           dropZone => dropZone.id !== dropZoneId,
         );
     },
-    removeField(
-      state,
-      action: PayloadAction<{
-        dropZoneId: string;
-        sectionId: string;
-        rowId: number;
-        columnId: number;
-      }>,
-    ) {
+    removeField(state, action: PayloadAction<PageSlicePayload>) {
       const { dropZoneId, sectionId, rowId, columnId } = action.payload;
       const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
         sections: state.sections,
@@ -398,10 +363,7 @@ const pageSlice = createSlice({
     },
     removeRow(
       state,
-      action: PayloadAction<{
-        sectionId: string;
-        rowId: number;
-      }>,
+      action: PayloadAction<Pick<PageSlicePayload, 'sectionId' | 'rowId'>>,
     ) {
       const { sectionId, rowId } = action.payload;
       const { sectionIndex } = getPageBuilderIndexes({
@@ -417,11 +379,7 @@ const pageSlice = createSlice({
     },
     removeColumn(
       state,
-      action: PayloadAction<{
-        sectionId: string;
-        rowId: number;
-        columnId: number;
-      }>,
+      action: PayloadAction<Omit<PageSlicePayload, 'dropZoneId'>>,
     ) {
       const { sectionId, rowId, columnId } = action.payload;
       const { sectionIndex, rowIndex } = getPageBuilderIndexes({
