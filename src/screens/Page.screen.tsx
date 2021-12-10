@@ -21,7 +21,7 @@ import {
   handleAddColumn,
   removeLastUnusedRow,
   setInitialState,
-} from '../store/slices/page.slice';
+} from '../store/slices';
 
 export default function Page() {
   const dispatch = useDispatch();

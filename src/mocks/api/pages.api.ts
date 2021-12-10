@@ -2,7 +2,7 @@ import { ResponseComposition, RestContext, RestRequest } from 'msw';
 import { nanoid } from 'nanoid';
 
 import { Page } from '../../types';
-import { pageData, pagesData } from '../db/page';
+import { pageData, pagesData } from '../db';
 
 export const getPages = (
   req: RestRequest,

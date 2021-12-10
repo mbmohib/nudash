@@ -22,7 +22,7 @@ import {
   handleAddSection,
   handleRemoveSection,
   handleSectionOrder,
-} from '../store/slices/page.slice';
+} from '../store/slices';
 import { Section as SectionType } from '../types';
 
 interface SectionProps {

@@ -7,11 +7,7 @@ import { DeleteIcon } from '../assets/icons';
 import { ItemTypes } from '../config';
 import { useDebounce, useDispatch, useSelector } from '../hooks';
 import { SectionContext } from '../hooks/useSectionMeta';
-import {
-  handleAddRow,
-  removeLastUnusedRow,
-  removeRow,
-} from '../store/slices/page.slice';
+import { handleAddRow, removeLastUnusedRow, removeRow } from '../store/slices';
 import { Row as RowType, Section } from '../types';
 
 interface RowProps {

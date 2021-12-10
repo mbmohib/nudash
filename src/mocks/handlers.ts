@@ -1,7 +1,13 @@
 import { rest } from 'msw';
 
-import { addPage, getPage, getPages, updatePage } from './api/pages';
-import { getSite, updateSite } from './api/sites';
+import {
+  addPage,
+  getPage,
+  getPages,
+  getSite,
+  updatePage,
+  updateSite,
+} from './api';
 
 export default [
   rest.get('/site', getSite),

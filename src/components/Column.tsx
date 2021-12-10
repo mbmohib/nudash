@@ -3,7 +3,7 @@ import { Box, Button, Flex } from '@chakra-ui/react';
 import { DropZone } from '.';
 import { DeleteIcon } from '../assets/icons';
 import { useDispatch, useSectionMeta } from '../hooks';
-import { removeColumn } from '../store/slices/page.slice';
+import { removeColumn } from '../store/slices';
 import { DraggableItem } from '../types';
 
 interface ColumnProps {

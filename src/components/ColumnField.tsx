@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd';
 
 import { FieldType, ItemTypes } from '../config';
 import { useDispatch, useSelector } from '../hooks';
-import { removeLastUnusedRow } from '../store/slices/page.slice';
+import { removeLastUnusedRow } from '../store/slices';
 
 interface DropResult {
   id: number;

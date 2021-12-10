@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { ComponentAction, ComponentActionWithData, DatePicker } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
-import { removeField, saveFieldData } from '../../store/slices/page.slice';
+import { removeField, saveFieldData } from '../../store/slices';
 import { DraggableItem } from '../../types';
 
 export default function ButtonComponent({ field }: { field: DraggableItem }) {

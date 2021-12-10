@@ -1,7 +1,7 @@
 import { ResponseComposition, RestContext, RestRequest } from 'msw';
 
 import { Site } from '../../types';
-import { siteData } from '../db/site';
+import { siteData } from '../db';
 
 export const updateSite = (
   req: RestRequest,

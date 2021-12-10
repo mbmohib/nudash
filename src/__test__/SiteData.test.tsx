@@ -4,8 +4,8 @@ import mockConsole from 'jest-mock-console';
 import { rest } from 'msw';
 
 import { SiteData } from '../components';
-import { siteFailed, updateSite } from '../mocks/api/sites';
-import { siteBuilder } from '../mocks/db/site';
+import { siteFailed, updateSite } from '../mocks/api/sites.api';
+import { siteBuilder } from '../mocks/db';
 import { server } from '../mocks/server';
 import { Site } from '../types';
 import { render } from '../utils/test';
@@ -24,7 +24,7 @@ afterEach(() => server.resetHandlers());
 const fakeSiteData = siteBuilder() as Site;
 
 function renderSiteData() {
-  render(<SiteData />);
+  render(<SiteData data={fakeSiteData} />);
 
   const name = screen.getByLabelText(/name/i);
   userEvent.clear(name);

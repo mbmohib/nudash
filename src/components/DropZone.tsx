@@ -27,7 +27,7 @@ import {
   handleAddDropZone,
   removeDropZone,
   removeLastDropZone,
-} from '../store/slices/page.slice';
+} from '../store/slices';
 import { DraggableItem } from '../types';
 
 interface DropZoneProps {
