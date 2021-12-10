@@ -29,10 +29,10 @@ import {
   removeLastDropZone,
 } from '../store/slices/page';
 import { DraggableItem } from '../types';
-import { getPageBuilderIndexes } from '../utils';
 
 interface DropZoneProps {
   dropZone: DraggableItem;
+  count: number;
 }
 
 interface DropZonePlaceholderProps {
@@ -71,18 +71,10 @@ function DropZonePlaceholder({
   );
 }
 
-export default function DropZone({ dropZone }: DropZoneProps) {
+export default function DropZone({ dropZone, count }: DropZoneProps) {
   const dispatch = useDispatch();
   const { sectionId, rowId, columnId } = useSectionMeta();
-  const { lastDropItemInfo, sections } = useSelector(state => state.page);
-  const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes(
-    sections,
-    sectionId,
-    rowId,
-    columnId,
-  );
-  const totalDropZone =
-    sections[sectionIndex].rows[rowIndex].columns[columnIndex].length;
+  const { lastDropItemInfo } = useSelector(state => state.page);
   const { fieldType } = dropZone;
   const [{ canDrop, isOver, handlerId, isOverCurrent }, drop] = useDrop(
     () => ({
@@ -180,7 +172,7 @@ export default function DropZone({ dropZone }: DropZoneProps) {
     >
       {!fieldType && (
         <DropZonePlaceholder
-          showRemoveButton={totalDropZone > 1}
+          showRemoveButton={count > 1}
           isActive={isActive}
           handleDropZoneRemove={handleDropZoneRemove}
         />

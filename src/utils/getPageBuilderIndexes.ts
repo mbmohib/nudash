@@ -1,11 +1,17 @@
 import { Page } from '../types';
 
-export default function getPageBuilderIndexes(
-  sections: Page['sections'],
-  sectionId: string,
-  rowId?: number,
-  columnId?: number,
-) {
+interface GetPageBuilderIndexes extends Pick<Page, 'sections'> {
+  sectionId: string;
+  rowId?: number;
+  columnId?: number;
+}
+
+export default function getPageBuilderIndexes({
+  sections,
+  sectionId,
+  rowId,
+  columnId,
+}: GetPageBuilderIndexes) {
   let rowIndex = 0;
   let columnIndex = 0;
 

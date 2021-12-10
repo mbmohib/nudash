@@ -35,7 +35,7 @@ export default function Column({ column }: ColumnProps) {
       >
         {column.map(dropZone => (
           <Box position="relative" key={dropZone.id}>
-            <DropZone dropZone={dropZone} />
+            <DropZone count={column.length} dropZone={dropZone} />
           </Box>
         ))}
       </Box>

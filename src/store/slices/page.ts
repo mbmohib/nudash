@@ -63,7 +63,10 @@ const pageSlice = createSlice({
       }>,
     ) {
       const { id } = action.payload;
-      const { sectionIndex } = getPageBuilderIndexes(state.sections, id);
+      const { sectionIndex } = getPageBuilderIndexes({
+        sections: state.sections,
+        sectionId: id,
+      });
       const position = sectionIndex + 1;
 
       state.sections.splice(position, 0, {
@@ -95,7 +98,10 @@ const pageSlice = createSlice({
     ) {
       const { sectionId, rowId } = action.payload;
       const position = rowId + 1;
-      const { sectionIndex } = getPageBuilderIndexes(state.sections, sectionId);
+      const { sectionIndex } = getPageBuilderIndexes({
+        sections: state.sections,
+        sectionId,
+      });
 
       const nextRow = state.sections[sectionIndex].rows[position];
       const isAddRow = !nextRow || nextRow.columns[0].length > 0;
@@ -123,11 +129,11 @@ const pageSlice = createSlice({
       }>,
     ) {
       const { sectionId, rowId, columnCount } = action.payload;
-      const { sectionIndex, rowIndex } = getPageBuilderIndexes(
-        state.sections,
+      const { sectionIndex, rowIndex } = getPageBuilderIndexes({
+        sections: state.sections,
         sectionId,
         rowId,
-      );
+      });
 
       const newColumns: DraggableItem[][] = [];
 
@@ -159,12 +165,12 @@ const pageSlice = createSlice({
     ) {
       const { fieldType, dropZoneId, sectionId, rowId, columnId } =
         action.payload;
-      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes(
-        state.sections,
+      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
+        sections: state.sections,
         sectionId,
         rowId,
         columnId,
-      );
+      });
 
       state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
         state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].map(
@@ -199,12 +205,12 @@ const pageSlice = createSlice({
       const { dropZoneId, rowId, sectionId, columnId, handlerId } =
         action.payload;
       const newDropZoneId = nanoid();
-      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes(
-        state.sections,
+      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
+        sections: state.sections,
         sectionId,
         rowId,
         columnId,
-      );
+      });
 
       const dropZoneIndex = state.sections[sectionIndex].rows[rowIndex].columns[
         columnIndex
@@ -243,12 +249,12 @@ const pageSlice = createSlice({
     ) {
       const { dropZoneId, rowId, sectionId, columnId, handlerId } =
         action.payload;
-      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes(
-        state.sections,
+      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
+        sections: state.sections,
         sectionId,
         rowId,
         columnId,
-      );
+      });
 
       const dropZoneIndex = state.sections[sectionIndex].rows[rowIndex].columns[
         columnIndex
@@ -262,12 +268,12 @@ const pageSlice = createSlice({
       const { dropZoneId, rowId, sectionId, columnId } =
         state.lastDropItemInfo as LastDropItem;
 
-      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes(
-        state.sections,
+      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
+        sections: state.sections,
         sectionId,
         rowId,
         columnId,
-      );
+      });
 
       const dropZoneIndex = state.sections[sectionIndex].rows[rowIndex].columns[
         columnIndex
@@ -291,11 +297,11 @@ const pageSlice = createSlice({
         sectionId === state.sections[0].id ||
         rowId === 0
       ) {
-        const { sectionIndex, rowIndex } = getPageBuilderIndexes(
-          state.sections,
+        const { sectionIndex, rowIndex } = getPageBuilderIndexes({
+          sections: state.sections,
           sectionId,
           rowId,
-        );
+        });
 
         if (
           state.sections[sectionIndex].rows[rowIndex].columns[0].length === 0
@@ -317,12 +323,12 @@ const pageSlice = createSlice({
       }>,
     ) {
       const { data, dropZoneId, sectionId, rowId, columnId } = action.payload;
-      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes(
-        state.sections,
+      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
+        sections: state.sections,
         sectionId,
         rowId,
         columnId,
-      );
+      });
 
       state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
         state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].map(
@@ -347,12 +353,12 @@ const pageSlice = createSlice({
       }>,
     ) {
       const { dropZoneId, rowId, sectionId, columnId } = action.payload;
-      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes(
-        state.sections,
+      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
+        sections: state.sections,
         sectionId,
         rowId,
         columnId,
-      );
+      });
 
       state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
         state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].filter(
@@ -369,12 +375,12 @@ const pageSlice = createSlice({
       }>,
     ) {
       const { dropZoneId, sectionId, rowId, columnId } = action.payload;
-      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes(
-        state.sections,
+      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
+        sections: state.sections,
         sectionId,
         rowId,
         columnId,
-      );
+      });
 
       state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
         state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].map(
@@ -398,7 +404,10 @@ const pageSlice = createSlice({
       }>,
     ) {
       const { sectionId, rowId } = action.payload;
-      const { sectionIndex } = getPageBuilderIndexes(state.sections, sectionId);
+      const { sectionIndex } = getPageBuilderIndexes({
+        sections: state.sections,
+        sectionId,
+      });
 
       if (state.sections[sectionIndex].rows.length > 1) {
         state.sections[sectionIndex].rows = state.sections[
@@ -415,11 +424,11 @@ const pageSlice = createSlice({
       }>,
     ) {
       const { sectionId, rowId, columnId } = action.payload;
-      const { sectionIndex, rowIndex } = getPageBuilderIndexes(
-        state.sections,
+      const { sectionIndex, rowIndex } = getPageBuilderIndexes({
+        sections: state.sections,
         sectionId,
         rowId,
-      );
+      });
 
       const columns = state.sections[sectionIndex].rows[
         rowIndex
