@@ -1,4 +1,4 @@
-import { EditorBlock } from '.';
+import EditorBlock from './EditorBlock';
 
 export default interface FieldData {
   label?: string;

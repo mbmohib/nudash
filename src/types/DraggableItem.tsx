@@ -1,5 +1,5 @@
-import { FieldData } from '.';
 import { FieldType } from '../config';
+import FieldData from './FieldData';
 
 export default interface DraggableItem {
   id: string;

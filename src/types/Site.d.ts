@@ -1,6 +1,11 @@
-import { SiteMenu } from '.';
+export interface SiteMenu {
+  id: string;
+  label: string;
+  url: string;
+  isOpenNew: boolean;
+}
 
-export default interface Site {
+export interface Site {
   id: string;
   name?: string;
   url?: string;
