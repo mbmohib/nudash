@@ -134,7 +134,10 @@ export default function Section({
       opacity={opacity}
       data-handler-id={handlerId}
     >
-      <Box maxHeight={expand ? '100%' : '100px'} overflow="hidden">
+      <Box
+        maxHeight={expand ? '100%' : '100px'}
+        overflow={expand ? 'visible' : 'hidden'}
+      >
         {section.rows.map(row => (
           <Row key={row.id} sectionId={section.id} row={row} />
         ))}

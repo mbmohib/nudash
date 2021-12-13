@@ -10,6 +10,7 @@ import editorjsHTML from 'editorjs-html';
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { createReactEditorJS } from 'react-editor-js';
 
+import '../assets/css/editor.css';
 import { EditorBlock } from '../types';
 
 interface TableParserProps {

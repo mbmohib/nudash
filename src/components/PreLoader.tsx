@@ -9,7 +9,7 @@ interface PreLoaderProps {
 const PreLoader = ({
   isLoading,
   children,
-  height = '100%',
+  height = '100vh',
 }: PreLoaderProps) => (
   <>
     {isLoading ? (

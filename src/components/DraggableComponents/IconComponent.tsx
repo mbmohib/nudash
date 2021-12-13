@@ -57,8 +57,9 @@ export default function IconComponent({ field }: { field: DraggableItem }) {
           />
         </ComponentActionWithData>
       ) : (
-        <Box width="full">
+        <Box width="full" mb="2">
           <ImageUploadComponent
+            placeholder="Drag 'n' drop icon here, or click to select icon"
             handleRemove={handleEdit}
             handleUpload={handleSaveData}
           />

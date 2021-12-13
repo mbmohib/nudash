@@ -7,11 +7,13 @@ import { DeleteIcon } from '../../assets/icons';
 import { maxImageSize } from '../../config';
 
 interface ImageUploadComponentProps {
+  placeholder?: string;
   handleUpload: (url: string) => void;
   handleRemove?: () => void;
 }
 
 export default function ImageUploadComponent({
+  placeholder,
   handleUpload,
   handleRemove,
 }: ImageUploadComponentProps) {
@@ -56,7 +58,8 @@ export default function ImageUploadComponent({
             borderRadius="16px"
           >
             <Text textAlign="center" mt="2">
-              Drag 'n' drop image here, or click to select image
+              {placeholder ||
+                `Drag 'n' drop image here, or click to select image`}
             </Text>
           </Box>
           {error && <Text color="error">{error}</Text>}
