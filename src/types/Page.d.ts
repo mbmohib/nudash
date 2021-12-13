@@ -12,6 +12,7 @@ export interface FieldData {
   label?: string;
   blocks?: EditorBlock;
   value: string | number | boolean | Date;
+  url?: string;
 }
 
 export interface DraggableItem {

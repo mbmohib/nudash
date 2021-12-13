@@ -6,10 +6,10 @@ import { useDispatch, useSectionMeta } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices';
 import { DraggableItem } from '../../types';
 
-export default function IconComponent({ field }: { field: DraggableItem }) {
-  const dispatch = useDispatch();
+export default function ImageComponent({ field }: { field: DraggableItem }) {
   const { sectionId, rowId, columnId } = useSectionMeta();
   const [imageUrl, setImageUrl] = useState<string | undefined>('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (field.data && field.data.url) {
@@ -47,20 +47,13 @@ export default function IconComponent({ field }: { field: DraggableItem }) {
           handleEdit={handleEdit}
           handleRemove={handleRemove}
         >
-          <Image
-            borderRadius="lg"
-            width="80px"
-            padding="2"
-            border="1px"
-            borderColor="secondary.50"
-            src={imageUrl}
-          />
+          <Image src={imageUrl} />
         </ComponentActionWithData>
       ) : (
         <Box width="full">
           <ImageUploadComponent
-            handleRemove={handleEdit}
             handleUpload={handleSaveData}
+            handleRemove={handleRemove}
           />
         </Box>
       )}

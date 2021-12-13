@@ -138,13 +138,20 @@ export default function Row({ sectionId, row }: RowProps) {
           justifyContent="center"
           width="80%"
           mx="auto"
-          flexDirection="column"
           border="1px dashed"
           borderColor="secondary.100"
+          position="relative"
         >
           {!isActive && sections[sectionIndex].rows.length > 1 && (
-            <Button variant="iconSolid" mb="1">
-              <DeleteIcon width={10} onClick={handleRowRemove} />
+            <Button
+              position="absolute"
+              transform="translateX(-50%)"
+              left="50%"
+              bottom="-17px"
+              variant="iconSolid"
+              mb="1"
+            >
+              <DeleteIcon width={13} onClick={handleRowRemove} />
             </Button>
           )}
           {isActive ? `Release to drop` : `Drag & Drop Column here`}

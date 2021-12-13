@@ -5,8 +5,8 @@ import { useDrop } from 'react-dnd';
 import {
   ButtonComponent,
   DateComponent,
-  FileUploadComponent,
   IconComponent,
+  ImageComponent,
   LinkComponent,
   MultilineTextComponent,
   NumberComponent,
@@ -190,9 +190,7 @@ export default function DropZone({ dropZone, count }: DropZoneProps) {
       {fieldType === FieldType.Number && <NumberComponent field={dropZone} />}
       {fieldType === FieldType.Link && <LinkComponent field={dropZone} />}
       {fieldType === FieldType.Switch && <SwitchComponent field={dropZone} />}
-      {fieldType === FieldType.Image && (
-        <FileUploadComponent field={dropZone} />
-      )}
+      {fieldType === FieldType.Image && <ImageComponent field={dropZone} />}
       {fieldType === FieldType.Icon && <IconComponent field={dropZone} />}
       {fieldType === FieldType.Date && <DateComponent field={dropZone} />}
       {fieldType === FieldType.Button && <ButtonComponent field={dropZone} />}

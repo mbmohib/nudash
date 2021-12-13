@@ -1,15 +1,20 @@
 import { Flex, Spinner } from '@chakra-ui/react';
 
 interface PreLoaderProps {
+  height?: string;
   isLoading: boolean;
   children: React.ReactNode;
 }
 
-const PreLoader = ({ isLoading, children }: PreLoaderProps) => (
+const PreLoader = ({
+  isLoading,
+  children,
+  height = '100%',
+}: PreLoaderProps) => (
   <>
     {isLoading ? (
       <Flex
-        height="100vh"
+        height={height}
         zIndex="docked"
         alignItems="center"
         justifyContent="center"

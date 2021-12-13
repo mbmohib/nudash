@@ -5,11 +5,12 @@ export { default as MultilineTextComponent } from './DraggableComponents/Multili
 export { default as NumberComponent } from './DraggableComponents/NumberComponent';
 export { default as SwitchComponent } from './DraggableComponents/SwitchComponent';
 export { default as DateComponent } from './DraggableComponents/DateComponent';
-export { default as FileUploadComponent } from './DraggableComponents/FileUploadComponent';
+export { default as ImageComponent } from './DraggableComponents/ImageComponent';
 export { default as RichTextComponent } from './DraggableComponents/RichTextComponent';
 export { default as ComponentActionWithData } from './DraggableComponents/ComponentActionWithData';
 export { default as LinkComponent } from './DraggableComponents/LinkComponent';
 export { default as IconComponent } from './DraggableComponents/IconComponent';
+export { default as ImageUploadComponent } from './DraggableComponents/ImageUploadComponent';
 
 export { default as Layout } from './Layout';
 export { default as Sidebar } from './Sidebar';
