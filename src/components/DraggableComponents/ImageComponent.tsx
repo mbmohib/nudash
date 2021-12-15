@@ -1,7 +1,7 @@
 import { Box, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-import { ComponentActionWithData, ImageUploadComponent } from '..';
+import { ComponentActionWithData, ImageUpload, ImageUploadComponent } from '..';
 import { useDispatch, useSectionMeta } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices';
 import { DraggableItem } from '../../types';
@@ -51,10 +51,7 @@ export default function ImageComponent({ field }: { field: DraggableItem }) {
         </ComponentActionWithData>
       ) : (
         <Box width="full">
-          <ImageUploadComponent
-            handleUpload={handleSaveData}
-            handleRemove={handleRemove}
-          />
+          <ImageUpload />
         </Box>
       )}
     </>

@@ -1,0 +1,31 @@
+.codex-editor__redactor {
+  padding: 16px;
+  padding-bottom: 16px !important;
+}
+.ce-inline-toolbar,
+.ce-conversion-toolbar {
+  background-color: var(--chakra-colors-secondary\.600);
+  border: none;
+}
+.ce-conversion-tool__icon,
+.ce-settings,
+.ce-toolbar__settings-btn {
+  background-color: var(--chakra-colors-secondary\.600);
+  border: none;
+}
+.ce-inline-tool,
+.cdx-settings-button,
+.ce-settings__button,
+.ce-toolbar__settings-btn {
+  color: var(--chakra-colors-white);
+}
+.ce-inline-tool:hover,
+.ce-inline-toolbar__dropdown:hover,
+.ce-conversion-tool:hover,
+.cdx-settings-button:hover,
+.ce-settings__button:hover {
+  background-color: var(--chakra-colors-secondary\.100);
+}
+.ce-toolbar__settings-btn:hover {
+  color: var(--chakra-colors-primary);
+}

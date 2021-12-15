@@ -39,3 +39,5 @@ export { default as PageLayout } from './PageLayout';
 export { default as BarChart } from './BarChart';
 export { default as LineChart } from './LineChart';
 export { default as ProductStats } from './ProductStats';
+export { default as ImageUpload } from './ImageUpload';
+export { default as Gallery } from './Gallery';

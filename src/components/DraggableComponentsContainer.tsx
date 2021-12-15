@@ -4,6 +4,7 @@ import { ColumnField, Field } from '.';
 import {
   ButtonIcon,
   CalenderIcon,
+  ImageIcon,
   MultilineIcon,
   NumberIcon,
   SingleLineTextIcon,
@@ -61,7 +62,7 @@ const fields: DraggableField[] = [
     type: FieldType.Image,
     info: {
       title: 'Image',
-      icon: <NumberIcon />,
+      icon: <ImageIcon />,
     },
   },
   {

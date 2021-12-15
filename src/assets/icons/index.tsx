@@ -20,3 +20,4 @@ export { default as SiteIcon } from './SiteIcon';
 export { default as ExpandIcon } from './ExpandIcon';
 export { default as CollapseIcon } from './CollapseIcon';
 export { default as SymbolIcon } from './SymbolIcon';
+export { default as ImageIcon } from './ImageIcon';
