@@ -5,4 +5,5 @@ export { default as Login } from './Login.screen';
 export { default as Dashboard } from './Dashboard.screen';
 export { default as NotFoundPage } from './NotFound.screen';
 export { default as Schema } from './Schema.screen';
-export { default as Gallery } from './Gallery.screens';
+export { default as GalleryImages } from './GalleryImages.screens';
+export { default as GalleryIcons } from './GalleryIcons.screens';
