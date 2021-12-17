@@ -60,3 +60,16 @@ export const dashboardMenus = [
     path: '/dashboard/analytics',
   },
 ];
+
+export const galleryMenus = [
+  {
+    id: '001',
+    name: 'Images',
+    path: '/gallery/images',
+  },
+  {
+    id: '002',
+    name: 'Icons',
+    path: '/gallery/icons',
+  },
+];

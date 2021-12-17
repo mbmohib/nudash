@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Layout } from '../components';
 import {
   Dashboard,
+  Gallery,
   Login,
   Menus,
   MetaData,
@@ -21,6 +22,8 @@ const Routes = () => (
       <Route exact path="/site/meta-data" component={MetaData} />
       <Route exact path="/site/menus" component={Menus} />
       <Route exact path="/schema" component={Schema} />
+      <Redirect exact from="/gallery" to="/gallery/images" />
+      <Route exact path="/gallery/images" component={Gallery} />
       <Redirect exact from="/pages" to="/pages/home" />
       <Route exact path="/pages/:page" component={Page} />
       <Route exact path="/404" component={NotFoundPage} />

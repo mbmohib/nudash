@@ -45,6 +45,15 @@ export default function Sidebar() {
         >
           <PageIcon />
         </Button>
+        <Button
+          as={Link}
+          to="/gallery"
+          variant="icon"
+          mb="1"
+          data-testid="gallery-link"
+        >
+          <PageIcon />
+        </Button>
       </Flex>
     </Flex>
   );

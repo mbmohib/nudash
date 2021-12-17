@@ -8,8 +8,8 @@ import { useGetImages } from '../hooks/useImage';
 import { Image as ImageType, imgType } from '../types';
 
 interface GalleryProps {
-  handleImageInsert: (image: ImageType) => void;
-  type: imgType;
+  handleImageInsert?: (image: ImageType) => void;
+  type?: imgType;
 }
 
 const activeStyle = {
@@ -18,12 +18,17 @@ const activeStyle = {
   boxShadow: 'glow',
 };
 
-export default function Gallery({ handleImageInsert, type }: GalleryProps) {
+export default function Gallery({
+  handleImageInsert,
+  type = 'image',
+}: GalleryProps) {
   const imagesQuery = useGetImages(type);
   const [selectedImage, setSelectedImage] = useState<ImageType | undefined>();
 
   const handleImageSelect = () => {
-    handleImageInsert(selectedImage as ImageType);
+    if (typeof handleImageInsert === 'function') {
+      handleImageInsert(selectedImage as ImageType);
+    }
   };
 
   return (
@@ -40,7 +45,8 @@ export default function Gallery({ handleImageInsert, type }: GalleryProps) {
               borderRadius="md"
               position="relative"
               cursor="pointer"
-              {...(selectedImage?.id === item.id && { ...activeStyle })}
+              {...(selectedImage?.id === item.id &&
+                handleImageInsert && { ...activeStyle })}
               onClick={() => setSelectedImage(item)}
               sx={{
                 ':hover .edit-image-btn': {
@@ -49,7 +55,7 @@ export default function Gallery({ handleImageInsert, type }: GalleryProps) {
               }}
             >
               <Image borderRadius="md" src={item.url} alt={item.alt} />
-              {selectedImage?.id === item.id && (
+              {selectedImage?.id === item.id && handleImageInsert && (
                 <Box position="absolute" top="2" left="2">
                   <FiCheck />
                 </Box>
@@ -68,9 +74,11 @@ export default function Gallery({ handleImageInsert, type }: GalleryProps) {
           ))}
         </Grid>
       </PreLoader>
-      <Box textAlign="right" mt="4">
-        <Button onClick={handleImageSelect}>Insert</Button>
-      </Box>
+      {handleImageInsert && (
+        <Box textAlign="right" mt="4">
+          <Button onClick={handleImageSelect}>Insert</Button>
+        </Box>
+      )}
     </Box>
   );
 }
