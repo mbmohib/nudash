@@ -1,10 +1,10 @@
 import { Box, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-import { ComponentActionWithData, ImageUpload, ImageUploadComponent } from '..';
+import { ComponentActionWithData, ImageUpload } from '..';
 import { useDispatch, useSectionMeta } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices';
-import { DraggableItem } from '../../types';
+import { DraggableItem, Image as ImageType } from '../../types';
 
 export default function ImageComponent({ field }: { field: DraggableItem }) {
   const { sectionId, rowId, columnId } = useSectionMeta();
@@ -17,7 +17,7 @@ export default function ImageComponent({ field }: { field: DraggableItem }) {
     }
   }, [field.data]);
 
-  const handleSaveData = (url: string) => {
+  const handleSaveData = (image: ImageType) => {
     dispatch(
       saveFieldData({
         dropZoneId: field.id,
@@ -25,8 +25,8 @@ export default function ImageComponent({ field }: { field: DraggableItem }) {
         rowId,
         columnId,
         data: {
-          value: 'default alt',
-          url,
+          value: image.alt,
+          url: image.url,
         },
       }),
     );
@@ -51,7 +51,7 @@ export default function ImageComponent({ field }: { field: DraggableItem }) {
         </ComponentActionWithData>
       ) : (
         <Box width="full">
-          <ImageUpload />
+          <ImageUpload handleSaveData={handleSaveData} />
         </Box>
       )}
     </>

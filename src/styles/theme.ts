@@ -57,6 +57,7 @@ const radii = {
 
 const shadows = {
   md: '0px 1px 8px rgba(0, 0, 0, 0.16)',
+  glow: '0px 2px 28px rgba(140, 44, 226, 0.2)',
 };
 
 const zIndices = {

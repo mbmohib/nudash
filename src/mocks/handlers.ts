@@ -2,11 +2,13 @@ import { rest } from 'msw';
 
 import {
   addPage,
+  getImages,
   getPage,
   getPages,
   getSite,
   updatePage,
   updateSite,
+  uploadImage,
 } from './api';
 
 export default [
@@ -18,4 +20,7 @@ export default [
 
   rest.post('/:site/pages', addPage),
   rest.post('/pages/:slug', updatePage),
+
+  rest.get('/images', getImages),
+  rest.post('/images', uploadImage),
 ];

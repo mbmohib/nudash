@@ -7,13 +7,11 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  ModalProps,
 } from '@chakra-ui/react';
 
-interface ModalExtendedProps {
+interface ModalExtendedProps extends ModalProps {
   heading?: string;
-  isOpen: boolean;
-  children: React.ReactNode;
-  onClose: () => void;
   showCloseBtn?: boolean;
 }
 
@@ -23,6 +21,7 @@ export default function ModalExtended({
   onClose,
   children,
   showCloseBtn,
+  size = 'lg',
 }: ModalExtendedProps) {
   return (
     <Modal
@@ -30,11 +29,15 @@ export default function ModalExtended({
       onClose={onClose}
       isOpen={isOpen}
       isCentered
-      size="lg"
+      size={size}
     >
       <ModalOverlay />
       <ModalContent bgColor="secondary.500">
-        {heading && <ModalHeader>{heading}</ModalHeader>}
+        {heading && (
+          <ModalHeader pt="3" pb="1">
+            {heading}
+          </ModalHeader>
+        )}
         <ModalCloseButton />
         <ModalBody pb="4">{children}</ModalBody>
         {showCloseBtn && (

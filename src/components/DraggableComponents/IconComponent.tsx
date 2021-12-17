@@ -1,10 +1,10 @@
 import { Box, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-import { ComponentActionWithData, ImageUploadComponent } from '..';
+import { ComponentActionWithData, ImageUpload } from '..';
 import { useDispatch, useSectionMeta } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices';
-import { DraggableItem } from '../../types';
+import { DraggableItem, Image as ImageType } from '../../types';
 
 export default function IconComponent({ field }: { field: DraggableItem }) {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function IconComponent({ field }: { field: DraggableItem }) {
     }
   }, [field.data]);
 
-  const handleSaveData = (url: string) => {
+  const handleSaveData = (image: ImageType) => {
     dispatch(
       saveFieldData({
         dropZoneId: field.id,
@@ -25,8 +25,8 @@ export default function IconComponent({ field }: { field: DraggableItem }) {
         rowId,
         columnId,
         data: {
-          value: 'default alt',
-          url,
+          value: image.alt,
+          url: image.url,
         },
       }),
     );
@@ -58,11 +58,7 @@ export default function IconComponent({ field }: { field: DraggableItem }) {
         </ComponentActionWithData>
       ) : (
         <Box width="full" mb="2">
-          <ImageUploadComponent
-            placeholder="Drag 'n' drop icon here, or click to select icon"
-            handleRemove={handleEdit}
-            handleUpload={handleSaveData}
-          />
+          <ImageUpload handleSaveData={handleSaveData} />
         </Box>
       )}
     </>

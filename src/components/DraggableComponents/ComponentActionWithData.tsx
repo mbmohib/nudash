@@ -20,7 +20,7 @@ export default function ComponentActionWithData({
       position="relative"
       width="100%"
       sx={{
-        ':hover .filed-action-btn': {
+        ':hover .filled-action-btn': {
           visibility: 'visible',
         },
       }}
@@ -28,7 +28,7 @@ export default function ComponentActionWithData({
       {children}
       <Box
         position="absolute"
-        className="filed-action-btn"
+        className="filled-action-btn"
         alignSelf="flex-end"
         right="0"
         bottom="0"

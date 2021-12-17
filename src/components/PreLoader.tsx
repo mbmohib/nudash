@@ -1,7 +1,7 @@
 import { Flex, Spinner } from '@chakra-ui/react';
 
 interface PreLoaderProps {
-  height?: string;
+  minHeight?: string;
   isLoading: boolean;
   children: React.ReactNode;
 }
@@ -9,12 +9,12 @@ interface PreLoaderProps {
 const PreLoader = ({
   isLoading,
   children,
-  height = '100vh',
+  minHeight = '100vh',
 }: PreLoaderProps) => (
   <>
     {isLoading ? (
       <Flex
-        height={height}
+        minHeight={minHeight}
         zIndex="docked"
         alignItems="center"
         justifyContent="center"

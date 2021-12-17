@@ -1,10 +1,10 @@
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Spinner, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { PreLoader } from '.';
-import { DeleteIcon } from '../assets/icons';
 import { maxImageSize } from '../config';
+import { useUploadImage } from '../hooks/useImage';
 import { FileType } from '../types';
 
 interface FileUploadProps {
@@ -13,18 +13,21 @@ interface FileUploadProps {
 }
 
 interface PreviewProps {
-  file: {
-    preview: string;
-    name: string;
-  };
-  handleImageRemove: (name: string) => void;
+  file: FileType | undefined;
 }
 
-const Preview = ({ file, handleImageRemove }: PreviewProps) => {
+const Preview = ({ file }: PreviewProps) => {
   return (
     <Box width="60%" mx="auto">
-      <Box position="relative" width="100%" height="100%">
-        <Image borderRadius="16px" src={file.preview} />
+      <Box
+        position="relative"
+        width="100%"
+        height="100%"
+        backgroundImage={file?.preview}
+        backgroundSize="cover"
+        backgroundRepeat="no-repeat"
+        borderRadius="16px"
+      >
         <Box
           borderRadius="16px"
           bg="secondary.100"
@@ -35,27 +38,23 @@ const Preview = ({ file, handleImageRemove }: PreviewProps) => {
           top="0"
           opacity="0.7"
         ></Box>
-        <Button
+        <Box
           position="absolute"
-          onClick={() => handleImageRemove(file.name)}
-          variant="text"
           top="50%"
           left="50%"
           sx={{ transform: 'translate(-50%, -50%)' }}
         >
-          <DeleteIcon />
-        </Button>
+          <Spinner color="red.500" />
+        </Box>
       </Box>
     </Box>
   );
 };
 
-export default function FileUpload({
-  isLoading,
-  handleUpload,
-}: FileUploadProps) {
+export default function FileUpload({ handleUpload }: FileUploadProps) {
   const [error, setError] = useState<string>('');
-  const [fieldValue, setFieldValue] = useState<FileType | null>();
+  const [fieldValue, setFieldValue] = useState<FileType | undefined>();
+  const uploadImage = useUploadImage();
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -72,15 +71,21 @@ export default function FileUpload({
       } else {
         setError('');
         setFieldValue(files[0]);
-        handleUpload(files[0]);
+        uploadImage.mutate(
+          {
+            data: { file: files[0] },
+          },
+          {
+            onSuccess: data => {
+              handleUpload(data.data);
+              setFieldValue(undefined);
+            },
+          },
+        );
       }
     },
     multiple: false,
   });
-
-  const handleImageRemove = () => {
-    setFieldValue(null);
-  };
 
   useEffect(
     () => () => {
@@ -94,35 +99,34 @@ export default function FileUpload({
 
   return (
     <Flex
-      width="100%"
+      height="full"
+      width="full"
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
     >
       <Flex
-        // hasFile={fieldValue.files.length !== 0}
+        width="full"
+        height="full"
         {...getRootProps({ className: 'file-upload' })}
       >
         <input {...getInputProps()} />
         {!fieldValue && (
-          <Box
+          <Flex
             border="1px dashed"
             borderColor="secondary.100"
             mx="auto"
             p="3"
+            width="full"
             borderRadius="16px"
+            alignItems="center"
+            justifyContent="center"
           >
-            <Text textAlign="center">
-              Drag 'n' drop image here, or click to select image
-            </Text>
-          </Box>
+            <Text>Drag 'n' drop image here, or click to select image</Text>
+          </Flex>
         )}
         {error && <Text color="error">{error}</Text>}
-        {fieldValue && (
-          <PreLoader isLoading={!!isLoading}>
-            <Preview file={fieldValue} handleImageRemove={handleImageRemove} />
-          </PreLoader>
-        )}
+        {uploadImage.isLoading && <Preview file={fieldValue} />}
       </Flex>
     </Flex>
   );
