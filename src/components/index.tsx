@@ -1,17 +1,17 @@
 export { default as ButtonComponent } from './DraggableComponents/ButtonComponent';
 export { default as SingleLineTextComponent } from './DraggableComponents/SingleLineTextComponent';
-export { default as ComponentAction } from './DraggableComponents/ComponentAction';
+export { default as ComponentButtons } from './DraggableComponents/ComponentButtons';
 export { default as MultilineTextComponent } from './DraggableComponents/MultilineTextComponent';
 export { default as NumberComponent } from './DraggableComponents/NumberComponent';
 export { default as SwitchComponent } from './DraggableComponents/SwitchComponent';
 export { default as DateComponent } from './DraggableComponents/DateComponent';
 export { default as ImageComponent } from './DraggableComponents/ImageComponent';
 export { default as RichTextComponent } from './DraggableComponents/RichTextComponent';
-export { default as ComponentActionWithData } from './ComponentActionWithData';
 export { default as LinkComponent } from './DraggableComponents/LinkComponent';
 export { default as IconComponent } from './DraggableComponents/IconComponent';
 
 export { default as Layout } from './Layout';
+export { default as ComponentAction } from './ComponentAction';
 export { default as Sidebar } from './Sidebar';
 export { default as PageHeader } from './PageHeader';
 export { default as Footer } from './Footer';

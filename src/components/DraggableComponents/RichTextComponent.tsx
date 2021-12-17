@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { useRef } from 'react';
 
-import { ComponentAction, ComponentActionWithData, RichText } from '..';
+import { ComponentActionWithData, ComponentButtons, RichText } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices';
 import { DraggableItem, EditorBlock } from '../../types';
@@ -58,7 +58,7 @@ export default function RichTextComponent({ field }: { field: DraggableItem }) {
               blocks={field.data?.blocks as EditorBlock}
             />
           </Box>
-          <ComponentAction
+          <ComponentButtons
             handleSave={handleSaveData}
             handleCancel={() => toggleShowEditorView(false)}
             handleRemove={handleRemove}

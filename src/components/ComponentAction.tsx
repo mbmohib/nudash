@@ -8,7 +8,7 @@ interface ComponentActionProps {
   children: React.ReactNode;
 }
 
-export default function ComponentActionWithData({
+export default function ComponentAction({
   handleEdit,
   handleRemove,
   children,

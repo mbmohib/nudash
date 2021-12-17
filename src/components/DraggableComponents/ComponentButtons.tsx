@@ -2,19 +2,19 @@ import { Button, Flex } from '@chakra-ui/react';
 
 import { DeleteIcon, SaveIcon } from '../../assets/icons';
 
-interface ComponentActionProps {
+interface ComponentButtonsProps {
   handleSave?: () => void;
   handleCancel?: () => void;
   handleRemove: () => void;
   hasData?: boolean;
 }
 
-export default function ComponentAction({
+export default function ComponentButtons({
   handleSave,
   handleCancel,
   handleRemove,
   hasData,
-}: ComponentActionProps) {
+}: ComponentButtonsProps) {
   return (
     <Flex justifyContent="flex-end" mt="1">
       <Button
