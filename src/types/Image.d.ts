@@ -3,3 +3,5 @@ export interface Image {
   url: string;
   alt: string;
 }
+
+export type imgType = 'image' | 'icon';

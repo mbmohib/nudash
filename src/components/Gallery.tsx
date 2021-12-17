@@ -5,10 +5,11 @@ import { FiCheck } from 'react-icons/fi';
 import { FileUpload, PreLoader } from '.';
 import { EditIcon } from '../assets/icons';
 import { useGetImages } from '../hooks/useImage';
-import { Image as ImageType } from '../types';
+import { Image as ImageType, imgType } from '../types';
 
 interface GalleryProps {
   handleImageInsert: (image: ImageType) => void;
+  type: imgType;
 }
 
 const activeStyle = {
@@ -17,8 +18,8 @@ const activeStyle = {
   boxShadow: 'glow',
 };
 
-export default function Gallery({ handleImageInsert }: GalleryProps) {
-  const imagesQuery = useGetImages();
+export default function Gallery({ handleImageInsert, type }: GalleryProps) {
+  const imagesQuery = useGetImages(type);
   const [selectedImage, setSelectedImage] = useState<ImageType | undefined>();
 
   const handleImageSelect = () => {
@@ -28,7 +29,7 @@ export default function Gallery({ handleImageInsert }: GalleryProps) {
   return (
     <Box>
       <Box height="200px" width="80%" mx="auto">
-        <FileUpload />
+        <FileUpload type={type} />
       </Box>
       <PreLoader isLoading={imagesQuery.isLoading} minHeight="200px">
         <Grid templateColumns="repeat(4, 1fr)" mt="6" gap="2" minHeight="200px">

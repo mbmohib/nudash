@@ -1,7 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { FileType, Image } from '../types';
+import { FileType, Image, imgType } from '../types';
 import useAxios from './useAxios';
 
 interface uploadImageData {
@@ -11,13 +11,13 @@ interface uploadImageData {
   };
 }
 
-export const useGetImages = () => {
+export const useGetImages = (type: imgType) => {
   const axios = useAxios();
 
   return useQuery<Image[], Error>(
     ['images'],
     async () => {
-      const { data } = await axios.get(`/images`);
+      const { data } = await axios.get(`/images?type=${type}`);
 
       return data;
     },

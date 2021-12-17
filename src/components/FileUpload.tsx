@@ -4,8 +4,11 @@ import { useDropzone } from 'react-dropzone';
 
 import { maxImageSize } from '../config';
 import { useUploadImage } from '../hooks/useImage';
-import { FileType } from '../types';
+import { FileType, imgType } from '../types';
 
+interface FileUploadProps {
+  type?: imgType;
+}
 interface PreviewProps {
   file: FileType | undefined;
 }
@@ -45,7 +48,7 @@ const Preview = ({ file }: PreviewProps) => {
   );
 };
 
-export default function FileUpload() {
+export default function FileUpload({ type }: FileUploadProps) {
   const [error, setError] = useState<string>('');
   const [fieldValue, setFieldValue] = useState<FileType | undefined>();
   const uploadImage = useUploadImage();
@@ -115,7 +118,10 @@ export default function FileUpload() {
             alignItems="center"
             justifyContent="center"
           >
-            <Text>Drag 'n' drop image here, or click to select image</Text>
+            <Text>
+              Drag 'n' drop {type === 'icon' ? 'icon' : 'image'} here, or click
+              to select {type === 'icon' ? 'icon' : 'image'}
+            </Text>
           </Flex>
         )}
         {error && <Text color="error">{error}</Text>}

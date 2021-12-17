@@ -2,21 +2,30 @@ import { useDisclosure } from '@chakra-ui/hooks';
 import { Flex, Image, Text } from '@chakra-ui/react';
 
 import { ComponentAction, Gallery, Modal } from '.';
-import { ImageIcon } from '../assets/icons';
-import { Image as ImageType } from '../types';
+import { ImageIcon, SymbolIcon } from '../assets/icons';
+import { Image as ImageType, imgType } from '../types';
 
 interface ImageUploadProps {
   src?: string;
+  type?: imgType;
   handleUpload: (image: ImageType) => void;
   handleEdit?: () => void;
   handleRemove?: () => void;
 }
+
+const iconStyle = {
+  width: '80px',
+  padding: '2',
+  border: '1px',
+  borderColor: 'secondary.50',
+};
 
 export default function ImageUpload({
   handleUpload,
   src,
   handleEdit,
   handleRemove,
+  type = 'image',
 }: ImageUploadProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -29,7 +38,11 @@ export default function ImageUpload({
     <>
       {src ? (
         <ComponentAction handleEdit={handleEdit} handleRemove={handleRemove}>
-          <Image borderRadius="lg" src={src} />
+          <Image
+            {...(type === 'icon' && { ...iconStyle })}
+            borderRadius="lg"
+            src={src}
+          />
         </ComponentAction>
       ) : (
         <Flex
@@ -43,14 +56,14 @@ export default function ImageUpload({
           cursor="pointer"
           onClick={onOpen}
         >
-          <ImageIcon />
+          {type === 'icon' ? <SymbolIcon /> : <ImageIcon />}
           <Text textAlign="center" mt="2">
-            Upload image
+            Upload {type === 'icon' ? 'Icon' : 'Image'}
           </Text>
         </Flex>
       )}
       <Modal size="6xl" isOpen={isOpen} onClose={onClose} heading="Gallery">
-        <Gallery handleImageInsert={handleImageInsert} />
+        <Gallery type={type} handleImageInsert={handleImageInsert} />
       </Modal>
     </>
   );
