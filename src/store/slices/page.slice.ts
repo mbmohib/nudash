@@ -361,6 +361,28 @@ const pageSlice = createSlice({
           },
         );
     },
+    removeData(state, action: PayloadAction<PageSlicePayload>) {
+      const { dropZoneId, sectionId, rowId, columnId } = action.payload;
+      const { sectionIndex, rowIndex, columnIndex } = getPageBuilderIndexes({
+        sections: state.sections,
+        sectionId,
+        rowId,
+        columnId,
+      });
+
+      state.sections[sectionIndex].rows[rowIndex].columns[columnIndex] =
+        state.sections[sectionIndex].rows[rowIndex].columns[columnIndex].map(
+          (dropZone: DraggableItem) => {
+            if (dropZone.id === dropZoneId) {
+              return {
+                ...dropZone,
+                data: undefined,
+              };
+            }
+            return dropZone;
+          },
+        );
+    },
     removeRow(
       state,
       action: PayloadAction<Pick<PageSlicePayload, 'sectionId' | 'rowId'>>,
@@ -433,5 +455,6 @@ export const {
   removeColumn,
   handleSectionOrder,
   removeDropZone,
+  removeData,
 } = pageSlice.actions;
 export default pageSlice.reducer;

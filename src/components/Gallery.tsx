@@ -21,11 +21,6 @@ export default function Gallery({ handleImageInsert }: GalleryProps) {
   const imagesQuery = useGetImages();
   const [selectedImage, setSelectedImage] = useState<ImageType | undefined>();
 
-  const handleUpload = () => {
-    //
-  };
-  console.log('selectedImage :>> ', selectedImage);
-
   const handleImageSelect = () => {
     handleImageInsert(selectedImage as ImageType);
   };
@@ -33,7 +28,7 @@ export default function Gallery({ handleImageInsert }: GalleryProps) {
   return (
     <Box>
       <Box height="200px" width="80%" mx="auto">
-        <FileUpload isLoading={false} handleUpload={handleUpload} />
+        <FileUpload />
       </Box>
       <PreLoader isLoading={imagesQuery.isLoading} minHeight="200px">
         <Grid templateColumns="repeat(4, 1fr)" mt="6" gap="2" minHeight="200px">

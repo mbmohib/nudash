@@ -11,9 +11,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { FileUpload } from '.';
+import { ImageUpload } from '.';
 import { useUpdateSite } from '../hooks/useSite';
-import { Site } from '../types';
+import { Image, Site } from '../types';
 
 interface SiteDataProps {
   data: Site;
@@ -33,6 +33,8 @@ export default function SiteData({ data }: SiteDataProps) {
   const updateSite = useUpdateSite();
 
   const {
+    getValues,
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
@@ -51,8 +53,12 @@ export default function SiteData({ data }: SiteDataProps) {
     updateSite.mutate({ data: values });
   };
 
-  const handleUpload = () => {
-    // updateSite.mutate({ data });
+  const handleImageUpload = (image: Image) => {
+    setValue('logo', image.url, { shouldValidate: true });
+  };
+
+  const handleImageRemove = () => {
+    setValue('logo', '', { shouldValidate: true });
   };
 
   return (
@@ -96,7 +102,11 @@ export default function SiteData({ data }: SiteDataProps) {
 
         <FormControl isInvalid={!!errors.logo} mb="2">
           <FormLabel htmlFor="description">Logo</FormLabel>
-          <FileUpload handleUpload={handleUpload} />
+          <ImageUpload
+            src={getValues().logo}
+            handleUpload={handleImageUpload}
+            handleRemove={handleImageRemove}
+          />
           <FormErrorMessage>
             {errors.logo && errors.logo.message}
           </FormErrorMessage>

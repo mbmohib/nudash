@@ -1,16 +1,10 @@
-import { Box, Button, Flex, Image, Spinner, Text } from '@chakra-ui/react';
+import { Box, Flex, Spinner, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-import { PreLoader } from '.';
 import { maxImageSize } from '../config';
 import { useUploadImage } from '../hooks/useImage';
 import { FileType } from '../types';
-
-interface FileUploadProps {
-  isLoading?: boolean;
-  handleUpload: (file: FileType) => void;
-}
 
 interface PreviewProps {
   file: FileType | undefined;
@@ -51,7 +45,7 @@ const Preview = ({ file }: PreviewProps) => {
   );
 };
 
-export default function FileUpload({ handleUpload }: FileUploadProps) {
+export default function FileUpload() {
   const [error, setError] = useState<string>('');
   const [fieldValue, setFieldValue] = useState<FileType | undefined>();
   const uploadImage = useUploadImage();
@@ -76,8 +70,7 @@ export default function FileUpload({ handleUpload }: FileUploadProps) {
             data: { file: files[0] },
           },
           {
-            onSuccess: data => {
-              handleUpload(data.data);
+            onSuccess: () => {
               setFieldValue(undefined);
             },
           },

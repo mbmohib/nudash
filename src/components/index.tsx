@@ -7,7 +7,7 @@ export { default as SwitchComponent } from './DraggableComponents/SwitchComponen
 export { default as DateComponent } from './DraggableComponents/DateComponent';
 export { default as ImageComponent } from './DraggableComponents/ImageComponent';
 export { default as RichTextComponent } from './DraggableComponents/RichTextComponent';
-export { default as ComponentActionWithData } from './DraggableComponents/ComponentActionWithData';
+export { default as ComponentActionWithData } from './ComponentActionWithData';
 export { default as LinkComponent } from './DraggableComponents/LinkComponent';
 export { default as IconComponent } from './DraggableComponents/IconComponent';
 

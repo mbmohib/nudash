@@ -58,7 +58,7 @@ export default function IconComponent({ field }: { field: DraggableItem }) {
         </ComponentActionWithData>
       ) : (
         <Box width="full" mb="2">
-          <ImageUpload handleSaveData={handleSaveData} />
+          <ImageUpload handleUpload={handleSaveData} />
         </Box>
       )}
     </>
