@@ -1,7 +1,7 @@
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Flex, Image, Text } from '@chakra-ui/react';
 
-import { ComponentActionWithData, Gallery, Modal } from '.';
+import { ComponentAction, Gallery, Modal } from '.';
 import { ImageIcon } from '../assets/icons';
 import { Image as ImageType } from '../types';
 
@@ -28,12 +28,9 @@ export default function ImageUpload({
   return (
     <>
       {src ? (
-        <ComponentActionWithData
-          handleEdit={handleEdit}
-          handleRemove={handleRemove}
-        >
+        <ComponentAction handleEdit={handleEdit} handleRemove={handleRemove}>
           <Image borderRadius="lg" src={src} />
-        </ComponentActionWithData>
+        </ComponentAction>
       ) : (
         <Flex
           border="1px dashed"

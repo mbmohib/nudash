@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { ComponentActionWithData, ComponentButtons } from '..';
+import { ComponentAction, ComponentButtons } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices';
 import { DraggableItem } from '../../types';
@@ -71,14 +71,14 @@ export default function ButtonComponent({ field }: { field: DraggableItem }) {
   return (
     <>
       {field.data && !showEditorView ? (
-        <ComponentActionWithData
+        <ComponentAction
           handleEdit={toggleShowEditorView}
           handleRemove={handleRemove}
         >
           <Link color="primary" to={field.data.value}>
             {field.data.label}
           </Link>
-        </ComponentActionWithData>
+        </ComponentAction>
       ) : (
         <Box width="100%">
           <form onSubmit={handleSubmit(handleSaveData)}>

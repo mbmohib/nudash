@@ -1,7 +1,7 @@
 import { Box, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-import { ComponentActionWithData, ImageUpload } from '..';
+import { ComponentAction, ImageUpload } from '..';
 import { useDispatch, useSectionMeta } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices';
 import { DraggableItem, Image as ImageType } from '../../types';
@@ -43,10 +43,7 @@ export default function IconComponent({ field }: { field: DraggableItem }) {
   return (
     <>
       {imageUrl ? (
-        <ComponentActionWithData
-          handleEdit={handleEdit}
-          handleRemove={handleRemove}
-        >
+        <ComponentAction handleEdit={handleEdit} handleRemove={handleRemove}>
           <Image
             borderRadius="lg"
             width="80px"
@@ -55,7 +52,7 @@ export default function IconComponent({ field }: { field: DraggableItem }) {
             borderColor="secondary.50"
             src={imageUrl}
           />
-        </ComponentActionWithData>
+        </ComponentAction>
       ) : (
         <Box width="full" mb="2">
           <ImageUpload handleUpload={handleSaveData} />

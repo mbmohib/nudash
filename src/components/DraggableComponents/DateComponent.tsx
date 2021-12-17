@@ -2,7 +2,7 @@ import { Box, Grid, Input, Text } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { useState } from 'react';
 
-import { ComponentActionWithData, ComponentButtons, DatePicker } from '..';
+import { ComponentAction, ComponentButtons, DatePicker } from '..';
 import { useDispatch, useSectionMeta, useToggle } from '../../hooks';
 import { removeField, saveFieldData } from '../../store/slices';
 import { DraggableItem } from '../../types';
@@ -38,7 +38,7 @@ export default function ButtonComponent({ field }: { field: DraggableItem }) {
   return (
     <>
       {field.data && !showEditorView ? (
-        <ComponentActionWithData
+        <ComponentAction
           handleEdit={toggleShowEditorView}
           handleRemove={handleRemove}
         >
@@ -46,7 +46,7 @@ export default function ButtonComponent({ field }: { field: DraggableItem }) {
           <Text ml="2">
             {format(new Date(field.data.value as Date), 'dd/MM/yyyy')}
           </Text>
-        </ComponentActionWithData>
+        </ComponentAction>
       ) : (
         <Box>
           <Grid gridTemplateColumns="1fr 3fr" gap="2">
