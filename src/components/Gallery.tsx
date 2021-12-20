@@ -39,37 +39,38 @@ export default function Gallery({
       <PreLoader isLoading={imagesQuery.isLoading} minHeight="200px">
         <Grid templateColumns="repeat(4, 1fr)" mt="6" gap="2" minHeight="200px">
           {imagesQuery?.data?.map(item => (
-            <Box
-              key={item.id}
-              p="1"
-              borderRadius="md"
-              position="relative"
-              cursor="pointer"
-              {...(selectedImage?.id === item.id &&
-                handleImageInsert && { ...activeStyle })}
-              onClick={() => setSelectedImage(item)}
-              sx={{
-                ':hover .edit-image-btn': {
-                  display: 'flex',
-                },
-              }}
-            >
-              <Image borderRadius="md" src={item.url} alt={item.alt} />
-              {selectedImage?.id === item.id && handleImageInsert && (
-                <Box position="absolute" top="2" left="2">
-                  <FiCheck />
-                </Box>
-              )}
-              <Button
-                className="edit-image-btn"
-                display="none"
-                variant="iconSolid"
-                position="absolute"
-                top="2"
-                right="2"
+            <Box key={item.id}>
+              <Box
+                p="1"
+                borderRadius="md"
+                position="relative"
+                cursor="pointer"
+                {...(selectedImage?.id === item.id &&
+                  handleImageInsert && { ...activeStyle })}
+                onClick={() => setSelectedImage(item)}
+                sx={{
+                  ':hover .edit-image-btn': {
+                    display: 'flex',
+                  },
+                }}
               >
-                <EditIcon />
-              </Button>
+                <Image borderRadius="md" src={item.url} alt={item.alt} />
+                {selectedImage?.id === item.id && handleImageInsert && (
+                  <Box position="absolute" top="2" left="2">
+                    <FiCheck />
+                  </Box>
+                )}
+                <Button
+                  className="edit-image-btn"
+                  display="none"
+                  variant="iconSolid"
+                  position="absolute"
+                  top="2"
+                  right="2"
+                >
+                  <EditIcon />
+                </Button>
+              </Box>
             </Box>
           ))}
         </Grid>

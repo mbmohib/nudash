@@ -24,7 +24,12 @@ export default function PageHeader({
       background="secondary.600"
     >
       <Box>
-        <Heading as="h1" fontSize="xl" textTransform="capitalize">
+        <Heading
+          aria-label="page heading"
+          as="h1"
+          fontSize="xl"
+          textTransform="capitalize"
+        >
           {pageName}
         </Heading>
       </Box>

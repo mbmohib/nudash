@@ -1,11 +1,14 @@
-import Routes from '../routes';
-import { render } from '../utils/test';
+import { screen } from '@testing-library/react';
 
-test('render dashboard page', () => {
-  const { getByRole } = render(<Routes />);
+import Routes from '../routes';
+import { renderWithRouter as render, userEvent } from '../utils/test';
+
+test('render dashboard analytics page', () => {
+  render(<Routes />);
+  const { getByRole } = screen;
 
   const heading = getByRole('heading', { name: /page heading/i });
-  expect(heading).toHaveTextContent(/dashboard/i);
+  expect(heading).toHaveTextContent(/site analytics/i);
 });
 
 test('render site page on clicking site menu', () => {
@@ -13,9 +16,9 @@ test('render site page on clicking site menu', () => {
 
   const siteLink = getByTestId(/site-link/i);
   // debug(siteLink);
-  // userEvent.click(siteLink);
+  userEvent.click(siteLink);
 
-  // const heading = getByRole('heading', { name: /page heading/i });
+  const heading = getByRole('heading', { name: /page heading/i });
   // expect(heading).toHaveTextContent(/site/i);
 });
 

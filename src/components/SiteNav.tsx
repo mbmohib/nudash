@@ -32,7 +32,7 @@ export default function SiteNav() {
       ))}
 
       <Box textAlign="right" mt="2">
-        <Button variant="icon" onClick={handleAddMenu}>
+        <Button role="add-nav" variant="icon" onClick={handleAddMenu}>
           <PlusIcon />
         </Button>
       </Box>

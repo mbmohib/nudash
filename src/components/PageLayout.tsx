@@ -31,7 +31,7 @@ export default function PageLayout({
         width="200px"
       >
         <Flex px="2" justifyContent="space-between" alignItems="center" mt="2">
-          <Heading aria-label="page heading" as="h2" fontSize="xl">
+          <Heading aria-label="sidebar heading" as="h2" fontSize="xl">
             {heading}
           </Heading>
           {handleAdd && (

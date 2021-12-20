@@ -1,3 +1,4 @@
+import { screen } from '@testing-library/react';
 import mockConsole from 'jest-mock-console';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -33,16 +34,18 @@ function RenderSiteNav() {
 }
 
 test('renders a nav form and add menu', async () => {
-  const { getByText, getAllByLabelText } = RenderSiteNav();
+  RenderSiteNav();
+  const { getByRole, getAllByLabelText } = screen;
 
-  const addBtn = getByText(/add/i);
+  const addBtn = getByRole(/add-nav/i);
   userEvent.click(addBtn);
 
   expect(getAllByLabelText(/label/i)).toHaveLength(1);
 });
 
 test('renders a nav form and  update menu', async () => {
-  const { getByText, getByLabelText } = RenderSiteNav();
+  RenderSiteNav();
+  const { getByText, getByLabelText } = screen;
 
   const label = getByLabelText(/label/i);
   userEvent.clear(label);
@@ -64,7 +67,8 @@ test('renders a nav form and  update menu', async () => {
 });
 
 test('renders a nav form and  delete menu', async () => {
-  const { getByText, queryAllByLabelText } = RenderSiteNav();
+  RenderSiteNav();
+  const { getByText, queryAllByLabelText } = screen;
 
   const deleteBtn = getByText(/delete/i);
   userEvent.click(deleteBtn);
