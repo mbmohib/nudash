@@ -15,8 +15,8 @@ import {
   Section,
 } from '../components';
 import { useDispatch, useSelector } from '../hooks';
-import { useGetPage, useGetPages, useUpdatePage } from '../hooks/usePage';
-import { useGetSite } from '../hooks/useSite';
+import { useGetPage, useGetPages, useUpdatePage } from '../hooks/usePageApi';
+import { useGetSite } from '../hooks/useSiteApi';
 import {
   handleAddColumn,
   removeLastUnusedRow,
