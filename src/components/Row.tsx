@@ -6,7 +6,7 @@ import { Column } from '.';
 import { DeleteIcon } from '../assets/icons';
 import { ItemTypes } from '../config';
 import { useDebounce, useDispatch, useSelector } from '../hooks';
-import { SectionContext } from '../hooks/useSectionMeta';
+import { SectionProvider } from '../hooks/useSectionMeta';
 import { handleAddRow, removeLastUnusedRow, removeRow } from '../store/slices';
 import { Row as RowType, Section } from '../types';
 
@@ -120,16 +120,16 @@ export default function Row({ sectionId, row }: RowProps) {
     >
       {row.columns[0].length ? (
         row.columns.map((column, columnIndex) => (
-          <SectionContext.Provider
+          <SectionProvider
             key={columnIndex}
-            value={{
+            initialState={{
               sectionId,
               rowId: row.id,
               columnId: columnIndex,
             }}
           >
             <Column column={column} />
-          </SectionContext.Provider>
+          </SectionProvider>
         ))
       ) : (
         <Flex

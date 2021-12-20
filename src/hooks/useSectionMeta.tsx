@@ -6,13 +6,17 @@ interface ContextState {
   columnId: number;
 }
 
+interface SectionProviderProps {
+  initialState: ContextState;
+  children: React.ReactNode;
+}
+
 export const SectionContext = createContext({} as ContextState);
 
 export function SectionProvider({
   initialState,
-}: {
-  initialState: ContextState;
-}) {
+  children,
+}: SectionProviderProps) {
   const contextValue = useMemo(
     () => ({
       sectionId: initialState?.sectionId,
@@ -24,7 +28,11 @@ export function SectionProvider({
     [initialState?.sectionId, initialState?.rowId, initialState?.columnId],
   );
 
-  return <SectionContext.Provider value={contextValue} />;
+  return (
+    <SectionContext.Provider value={contextValue}>
+      {children}
+    </SectionContext.Provider>
+  );
 }
 
 export default function useSectionMeta() {
