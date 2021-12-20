@@ -15,8 +15,8 @@ import {
   Section,
 } from '../components';
 import { useDispatch, useSelector } from '../hooks';
-import { usePageQueries, usePageQuery, useUpdatePage } from '../hooks/usePage';
-import { useSiteQuery } from '../hooks/useSite';
+import { useGetPage, useGetPages, useUpdatePage } from '../hooks/usePage';
+import { useGetSite } from '../hooks/useSite';
 import {
   handleAddColumn,
   removeLastUnusedRow,
@@ -28,9 +28,9 @@ export default function Page() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { page } = useParams<{ page?: string }>();
   const createPageModal = useDisclosure();
-  const siteQuery = useSiteQuery();
-  const pageQuery = usePageQuery(page);
-  const pageQueries = usePageQueries(siteQuery.data?.id);
+  const siteQuery = useGetSite();
+  const pageQuery = useGetPage(page);
+  const pageQueries = useGetPages(siteQuery.data?.id);
   const updatePage = useUpdatePage(pageQuery.data?.path);
   const { sections } = useSelector(state => state.page);
   const [rowId, setRowId] = useState<number>(0);

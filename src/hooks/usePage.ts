@@ -10,7 +10,7 @@ interface createPageData {
   };
 }
 
-export const usePageQuery = (slug: string | undefined) => {
+export const useGetPage = (slug: string | undefined) => {
   const axios = useAxios();
 
   return useQuery<Page, Error>(
@@ -26,7 +26,7 @@ export const usePageQuery = (slug: string | undefined) => {
   );
 };
 
-export const usePageQueries = (siteId: string | undefined) => {
+export const useGetPages = (siteId: string | undefined) => {
   const axios = useAxios();
 
   return useQuery<Pages[], Error>(

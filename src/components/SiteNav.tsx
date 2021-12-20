@@ -4,13 +4,13 @@ import { useEffect } from 'react';
 import { SiteNavItem } from '.';
 import { PlusIcon } from '../assets/icons';
 import { useDispatch, useSelector } from '../hooks';
-import { useSiteQuery } from '../hooks/useSite';
+import { useGetSite } from '../hooks/useSite';
 import { addMenu, setMenus } from '../store/slices/menus.slice';
 
 export default function SiteNav() {
   const dispatch = useDispatch();
   const menus = useSelector(state => state.menus);
-  const siteQuery = useSiteQuery();
+  const siteQuery = useGetSite();
 
   useEffect(() => {
     if (siteQuery.isFetched && siteQuery.isSuccess) {

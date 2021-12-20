@@ -2,11 +2,11 @@ import { Container } from '@chakra-ui/react';
 import { PageHeader, PageLayout, PreLoader, SiteData } from 'components';
 
 import { siteMenus } from '../config';
-import { useSiteQuery } from '../hooks/useSite';
+import { useGetSite } from '../hooks/useSite';
 import { Site } from '../types';
 
 export default function MetaData() {
-  const { data, isLoading } = useSiteQuery();
+  const { data, isLoading } = useGetSite();
 
   return (
     <PageLayout isLoading={isLoading} heading="Site" menus={siteMenus}>

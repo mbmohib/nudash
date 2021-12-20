@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Site } from '../types';
 import useAxios from './useAxios';
 
-export const useSiteQuery = () => {
+export const useGetSite = () => {
   const axios = useAxios();
 
   return useQuery<Site, Error>(
