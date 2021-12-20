@@ -1,7 +1,7 @@
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, Tooltip } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-import { DashboardIcon, PageIcon, SiteIcon } from '../assets/icons';
+import { DashboardIcon, ImageIcon, PageIcon, SiteIcon } from '../assets/icons';
 
 export default function Sidebar() {
   return (
@@ -18,42 +18,50 @@ export default function Sidebar() {
         alignItems="center"
         sx={{ flexGrow: 1 }}
       >
-        <Button
-          as={Link}
-          to="/"
-          variant="icon"
-          mb="1"
-          data-testid="dashboard-link"
-        >
-          <DashboardIcon />
-        </Button>
-        <Button
-          as={Link}
-          to="/site"
-          variant="icon"
-          mb="1"
-          data-testid="site-link"
-        >
-          <SiteIcon />
-        </Button>
-        <Button
-          as={Link}
-          to="/pages"
-          variant="icon"
-          mb="1"
-          data-testid="page-link"
-        >
-          <PageIcon />
-        </Button>
-        <Button
-          as={Link}
-          to="/gallery"
-          variant="icon"
-          mb="1"
-          data-testid="gallery-link"
-        >
-          <PageIcon />
-        </Button>
+        <Tooltip label="Dashboard">
+          <Button
+            as={Link}
+            to="/"
+            variant="icon"
+            mb="1"
+            data-testid="dashboard-link"
+          >
+            <DashboardIcon />
+          </Button>
+        </Tooltip>
+        <Tooltip label="Site">
+          <Button
+            as={Link}
+            to="/site"
+            variant="icon"
+            mb="1"
+            data-testid="site-link"
+          >
+            <SiteIcon />
+          </Button>
+        </Tooltip>
+        <Tooltip label="Pages">
+          <Button
+            as={Link}
+            to="/pages"
+            variant="icon"
+            mb="1"
+            data-testid="page-link"
+          >
+            <PageIcon />
+          </Button>
+        </Tooltip>
+        <Tooltip label="Gallery">
+          <Button
+            as={Link}
+            to="/gallery"
+            variant="icon"
+            mb="1"
+            data-testid="gallery-link"
+          >
+            <ImageIcon width={18} height={20} />
+          </Button>
+        </Tooltip>
       </Flex>
     </Flex>
   );

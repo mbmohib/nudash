@@ -1,6 +1,6 @@
 import { Button, Flex } from '@chakra-ui/react';
 
-import { DeleteIcon, SaveIcon } from '../../assets/icons';
+import { DeleteIcon, SaveIcon } from '../assets/icons';
 
 interface ComponentButtonsProps {
   handleSave?: () => void;

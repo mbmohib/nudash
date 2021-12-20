@@ -2,6 +2,7 @@ import { Box, Button, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 import { SiteNavItem } from '.';
+import { PlusIcon } from '../assets/icons';
 import { useDispatch, useSelector } from '../hooks';
 import { useSiteQuery } from '../hooks/useSite';
 import { addMenu, setMenus } from '../store/slices/menus.slice';
@@ -31,8 +32,8 @@ export default function SiteNav() {
       ))}
 
       <Box textAlign="right" mt="2">
-        <Button variant="link" mr="1" type="submit" onClick={handleAddMenu}>
-          Add
+        <Button variant="icon" onClick={handleAddMenu}>
+          <PlusIcon />
         </Button>
       </Box>
     </Box>

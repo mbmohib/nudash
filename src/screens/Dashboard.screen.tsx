@@ -21,14 +21,20 @@ export default function Dashboard() {
             <ProductStats />
             <ProductStats />
           </Grid>
-          <Heading mb="2">Product Download Comparison</Heading>
-          <Box height="500px">
-            <BarChart />
-          </Box>
-          <Box height="500px" mt="4">
-            <Heading mb="2">Downloads</Heading>
-            <LineChart />
-          </Box>
+          <Grid gridTemplateColumns="3fr 2fr" mt="8" gap="4">
+            <Box height="500px">
+              <Heading fontSize="xl" mb="2">
+                Downloads
+              </Heading>
+              <LineChart />
+            </Box>
+            <Box height="500px">
+              <Heading fontSize="xl" mb="2">
+                Product Comparison
+              </Heading>
+              <BarChart />
+            </Box>
+          </Grid>
         </Container>
       </PreLoader>
     </PageLayout>

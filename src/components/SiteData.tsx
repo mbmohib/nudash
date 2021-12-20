@@ -73,7 +73,7 @@ export default function SiteData({ data }: SiteDataProps) {
         </FormControl>
 
         <FormControl isInvalid={!!errors.url} mb="2">
-          <FormLabel htmlFor="url">Url</FormLabel>
+          <FormLabel htmlFor="url">Site URL</FormLabel>
           <Input id="url" placeholder="url" {...register('url')} />
           <FormErrorMessage>
             {errors.url && errors.url.message}

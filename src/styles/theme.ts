@@ -115,6 +115,9 @@ const components = {
       borderRadius: '16px',
       paddingLeft: '0',
       paddingInlineEnd: 0,
+      _focus: {
+        boxShadow: 'none',
+      },
     },
     sizes: {
       md: {},

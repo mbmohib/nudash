@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Button,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -26,6 +25,7 @@ import {
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
+import { ComponentButtons } from '.';
 import { ItemTypes } from '../config';
 import { useDispatch } from '../hooks';
 import {
@@ -173,11 +173,7 @@ export default function SiteNav({ menu, index }: SiteNavProps) {
             <form
               onSubmit={handleSubmit(values => handleSaveData(values, menu.id))}
             >
-              <Grid
-                gridTemplateColumns="3fr 1fr"
-                gridTemplateRows="1f 1fr"
-                gap="2"
-              >
+              <Grid gap="2">
                 <FormControl isInvalid={!!errors.label} mb="2">
                   <FormLabel htmlFor="label">Label</FormLabel>
                   <Input
@@ -190,14 +186,6 @@ export default function SiteNav({ menu, index }: SiteNavProps) {
                   </FormErrorMessage>
                 </FormControl>
 
-                <FormControl isInvalid={!!errors.isOpenNew} mb="2">
-                  <FormLabel htmlFor="isOpenNew">New?</FormLabel>
-                  <Switch id="isOpenNew" {...register('isOpenNew')} />
-                  <FormErrorMessage>
-                    {errors.isOpenNew && errors.isOpenNew.message}
-                  </FormErrorMessage>
-                </FormControl>
-
                 <FormControl isInvalid={!!errors.url} mb="2">
                   <FormLabel htmlFor="url">URL</FormLabel>
                   <Input id="url" placeholder="url" {...register('url')} />
@@ -205,15 +193,19 @@ export default function SiteNav({ menu, index }: SiteNavProps) {
                     {errors.url && errors.url.message}
                   </FormErrorMessage>
                 </FormControl>
+                <Flex alignItems="center">
+                  <FormControl isInvalid={!!errors.isOpenNew} mb="2">
+                    <FormLabel htmlFor="isOpenNew">Open in new tab?</FormLabel>
+                    <Switch id="isOpenNew" {...register('isOpenNew')} />
+                    <FormErrorMessage>
+                      {errors.isOpenNew && errors.isOpenNew.message}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <ComponentButtons
+                    handleRemove={() => handleDeleteNav(menu.id)}
+                  />
+                </Flex>
               </Grid>
-              <Flex justifyContent="flex-end" mt="1">
-                <Button variant="link" mr="1" type="submit">
-                  Save
-                </Button>
-                <Button variant="link" onClick={() => handleDeleteNav(menu.id)}>
-                  Delete
-                </Button>
-              </Flex>
             </form>
           </AccordionPanel>
         </AccordionItem>
