@@ -11,14 +11,14 @@ test('render dashboard analytics page', () => {
   expect(heading).toHaveTextContent(/site analytics/i);
 });
 
-test('render site page on clicking site menu', () => {
+test('render site page on clicking site menu', async () => {
   const { getByRole, getByTestId, debug } = render(<Routes />);
 
   const siteLink = getByTestId(/site-link/i);
   // debug(siteLink);
   userEvent.click(siteLink);
 
-  const heading = getByRole('heading', { name: /page heading/i });
+  // const heading = getByRole('heading', { name: /page heading/i });
   // expect(heading).toHaveTextContent(/site/i);
 });
 
