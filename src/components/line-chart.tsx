@@ -2,7 +2,7 @@
 // yarn add @nivo/core @nivo/line
 import { ResponsiveLine } from '@nivo/line';
 
-import chartTheme from '../styles/chartTheme';
+import chartTheme from '../styles/chart-theme';
 
 const data = [
   {

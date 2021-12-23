@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { useSectionMeta } from '../hooks';
-import { SectionProvider } from '../hooks/use-section-meta';
+import { useSectionMeta } from '..';
+import { SectionProvider } from '../use-section-meta';
 
 const fakeInitialState = {
   sectionId: '001',

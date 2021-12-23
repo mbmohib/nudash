@@ -1,9 +1,9 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { siteData } from '../mocks/db';
-import { server } from '../mocks/server';
-import { useGetSite, useUpdateSite } from '../services/site.api';
-import { createClientWrapper } from '../utils/test';
+import { siteData } from '../../mocks/db';
+import { server } from '../../mocks/server';
+import { createClientWrapper } from '../../utils/test';
+import { useGetSite, useUpdateSite } from '../site.api';
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' });

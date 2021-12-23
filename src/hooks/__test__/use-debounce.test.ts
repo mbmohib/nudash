@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { useDebounce } from '../hooks';
+import { useDebounce } from '..';
 
 test('get correct debounced value', () => {
   const fakeValue = 'Lets debounced!';

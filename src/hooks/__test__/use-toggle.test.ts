@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { useToggle } from '../hooks';
+import { useToggle } from '..';
 
 test('test toggle a boolean state', () => {
   const { result } = renderHook(useToggle);

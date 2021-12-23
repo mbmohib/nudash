@@ -2,8 +2,8 @@ import { screen, waitFor } from '@testing-library/react';
 import MatchMediaMock from 'jest-matchmedia-mock';
 import mockConsole from 'jest-mock-console';
 
+import Routes from '.';
 import { server } from '../mocks/server';
-import Routes from '../routes';
 import { renderWithRouter as render, userEvent } from '../utils/test';
 
 let restoreConsole: { (): void; (): void };

@@ -1,6 +1,6 @@
 import { ResponsiveBar } from '@nivo/bar';
 
-import chartTheme from '../styles/chartTheme';
+import chartTheme from '../styles/chart-theme';
 
 const data = [
   {

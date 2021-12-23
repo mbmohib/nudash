@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { Modal } from '../components';
+import { Modal } from '..';
 
 test('modal shows the children', () => {
   render(

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { screen, waitFor } from '@testing-library/react';
 
-import { CreatePage } from '../components';
-import { render, userEvent } from '../utils/test';
+import { CreatePage } from '..';
+import { render, userEvent } from '../../utils/test';
 
 const fakePage = {
   name: 'about us',
@@ -11,7 +11,7 @@ const fakePage = {
 
 const mockedMutate = jest.fn();
 
-jest.mock('../services/use-page.api.ts', () => ({
+jest.mock('../../services/page.api.ts', () => ({
   useAddPage: () => ({ mutate: mockedMutate }),
 }));
 
