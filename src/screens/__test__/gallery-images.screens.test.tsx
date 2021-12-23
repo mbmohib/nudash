@@ -30,7 +30,7 @@ test('show images from api', async () => {
 
   await waitFor(() => {
     imagesData.forEach(image => {
-      expect(screen.getAllByAltText(image.alt));
+      expect(screen.getByAltText(image.alt));
     });
   });
 });

@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 
 import { GalleryIcons } from '..';
-import { imagesData } from '../../mocks/db';
+import { iconsData } from '../../mocks/db';
 import { server } from '../../mocks/server';
 import { renderWithRouter as render } from '../../utils/test';
 
@@ -29,8 +29,8 @@ test('show images from api', async () => {
   render(<GalleryIcons />);
 
   await waitFor(() => {
-    imagesData.forEach(image => {
-      expect(screen.getAllByAltText(image.alt));
+    iconsData.forEach(icon => {
+      expect(screen.getByAltText(icon.alt));
     });
   });
 });
