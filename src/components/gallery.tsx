@@ -1,8 +1,9 @@
+import { useDisclosure } from '@chakra-ui/hooks';
 import { Box, Button, Grid, Image } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FiCheck } from 'react-icons/fi';
 
-import { FileUpload, PreLoader } from '.';
+import { FileUpload, ImageDetails, PreLoader } from '.';
 import { EditIcon } from '../assets/icons';
 import { useGetImages } from '../services/image.api';
 import { Image as ImageType, imgType } from '../types';
@@ -24,11 +25,16 @@ export default function Gallery({
 }: GalleryProps) {
   const imagesQuery = useGetImages(type);
   const [selectedImage, setSelectedImage] = useState<ImageType | undefined>();
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const handleImageSelect = () => {
     if (typeof handleImageInsert === 'function') {
       handleImageInsert(selectedImage as ImageType);
     }
+  };
+
+  const handleImageEditClick = (image: ImageType) => {
+    setSelectedImage(image);
+    onOpen();
   };
 
   return (
@@ -74,6 +80,8 @@ export default function Gallery({
                   position="absolute"
                   top="2"
                   right="2"
+                  data-testid="edit"
+                  onClick={() => handleImageEditClick(item)}
                 >
                   <EditIcon />
                 </Button>
@@ -87,6 +95,12 @@ export default function Gallery({
           <Button onClick={handleImageSelect}>Insert</Button>
         </Box>
       )}
+      <ImageDetails
+        type={type}
+        isOpen={isOpen}
+        onClose={onClose}
+        image={selectedImage}
+      />
     </Box>
   );
 }
