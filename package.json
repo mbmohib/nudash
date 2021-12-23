@@ -102,6 +102,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "faker": "^5.5.3",
     "husky": "^7.0.4",
+    "jest-matchmedia-mock": "^1.1.0",
     "jest-mock-console": "^1.2.3",
     "lint-staged": "^11.2.6",
     "msw": "^0.35.0",
