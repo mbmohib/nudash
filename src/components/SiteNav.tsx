@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { SiteNavItem } from '.';
 import { PlusIcon } from '../assets/icons';
 import { useDispatch, useSelector } from '../hooks';
-import { useGetSite } from '../services/use-site.api';
+import { useGetSite } from '../services/site.api';
 import { addMenu, setMenus } from '../store/slices/menus.slice';
 
 export default function SiteNav() {

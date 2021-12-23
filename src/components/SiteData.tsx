@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { ImageUpload } from '.';
-import { useUpdateSite } from '../services/use-site.api';
+import { useUpdateSite } from '../services/site.api';
 import { Image, Site } from '../types';
 
 interface SiteDataProps {

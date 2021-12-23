@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { maxImageSize } from '../config';
-import { useUploadImage } from '../services/use-image.api';
+import { useUploadImage } from '../services/image.api';
 import { FileType, imgType } from '../types';
 
 interface FileUploadProps {

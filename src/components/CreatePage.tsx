@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { Modal } from '.';
-import { useAddPage } from '../services/use-page.api';
+import { useAddPage } from '../services/page.api';
 
 interface CreatePageProps {
   siteId?: string;

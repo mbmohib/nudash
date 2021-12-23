@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 
 import { siteData } from '../mocks/db';
 import { server } from '../mocks/server';
-import { useGetSite, useUpdateSite } from '../services/use-site.api';
+import { useGetSite, useUpdateSite } from '../services/site.api';
 import { createClientWrapper } from '../utils/test';
 
 beforeAll(() => {

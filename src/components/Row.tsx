@@ -6,7 +6,7 @@ import { Column } from '.';
 import { DeleteIcon } from '../assets/icons';
 import { ItemTypes } from '../config';
 import { useDebounce, useDispatch, useSelector } from '../hooks';
-import { SectionProvider } from '../hooks/useSectionMeta';
+import { SectionProvider } from '../hooks/use-section-meta';
 import { handleAddRow, removeLastUnusedRow, removeRow } from '../store/slices';
 import { Row as RowType, Section } from '../types';
 

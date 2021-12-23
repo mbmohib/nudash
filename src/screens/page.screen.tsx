@@ -15,12 +15,8 @@ import {
   Section,
 } from '../components';
 import { useDispatch, useSelector } from '../hooks';
-import {
-  useGetPage,
-  useGetPages,
-  useUpdatePage,
-} from '../services/use-page.api';
-import { useGetSite } from '../services/use-site.api';
+import { useGetPage, useGetPages, useUpdatePage } from '../services/page.api';
+import { useGetSite } from '../services/site.api';
 import {
   handleAddColumn,
   removeLastUnusedRow,
