@@ -1,8 +1,8 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import { useGetSite, useUpdateSite } from '../hooks/useSiteApi';
 import { siteData } from '../mocks/db';
 import { server } from '../mocks/server';
+import { useGetSite, useUpdateSite } from '../services/use-site.api';
 import { createClientWrapper } from '../utils/test';
 
 beforeAll(() => {

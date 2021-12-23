@@ -1,8 +1,8 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
+import { useAxios } from '../hooks';
 import { FileType, Image, imgType } from '../types';
-import useAxios from './useAxios';
 
 interface uploadImageData {
   data: {

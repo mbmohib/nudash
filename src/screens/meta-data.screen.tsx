@@ -2,7 +2,7 @@ import { Container } from '@chakra-ui/react';
 import { PageHeader, PageLayout, PreLoader, SiteData } from 'components';
 
 import { siteMenus } from '../config';
-import { useGetSite } from '../hooks/useSiteApi';
+import { useGetSite } from '../services/use-site.api';
 import { Site } from '../types';
 
 export default function MetaData() {

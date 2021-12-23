@@ -11,7 +11,7 @@ const fakePage = {
 
 const mockedMutate = jest.fn();
 
-jest.mock('../hooks/usePageApi.ts', () => ({
+jest.mock('../services/use-page.api.ts', () => ({
   useAddPage: () => ({ mutate: mockedMutate }),
 }));
 

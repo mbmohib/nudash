@@ -1,8 +1,8 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
+import { useAxios } from '../hooks';
 import { Site } from '../types';
-import useAxios from './useAxios';
 
 export const useGetSite = () => {
   const axios = useAxios();

@@ -4,7 +4,7 @@ import { FiCheck } from 'react-icons/fi';
 
 import { FileUpload, PreLoader } from '.';
 import { EditIcon } from '../assets/icons';
-import { useGetImages } from '../hooks/useImageApi';
+import { useGetImages } from '../services/use-image.api';
 import { Image as ImageType, imgType } from '../types';
 
 interface GalleryProps {

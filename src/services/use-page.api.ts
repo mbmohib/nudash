@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
+import { useAxios } from '../hooks';
 import { Page, Pages } from '../types';
-import useAxios from './useAxios';
 
 interface createPageData {
   data: {
