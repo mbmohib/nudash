@@ -23,6 +23,9 @@ test('can create page', async () => {
   userEvent.type(name, fakePage.name);
   userEvent.type(slug, fakePage.slug);
 
+  expect(name).toHaveValue(fakePage.name);
+  expect(slug).toHaveValue(fakePage.slug);
+
   userEvent.click(screen.getByRole('button', { name: /create/i }));
 
   await waitFor(() => {
