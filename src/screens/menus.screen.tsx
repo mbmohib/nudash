@@ -11,7 +11,6 @@ export default function Menus() {
       <PageLayout isLoading={false} heading="Site" menus={siteMenus}>
         <Container>
           <PageHeader pageName="Menus" />
-
           <DndProvider backend={HTML5Backend}>
             <SiteNav />
           </DndProvider>
