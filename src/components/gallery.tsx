@@ -37,7 +37,14 @@ export default function Gallery({
         <FileUpload type={type} />
       </Box>
       <PreLoader isLoading={imagesQuery.isLoading} minHeight="200px">
-        <Grid templateColumns="repeat(4, 1fr)" mt="6" gap="2" minHeight="200px">
+        <Grid
+          templateColumns={
+            type === 'icon' ? 'repeat(6, 1fr)' : 'repeat(4, 1fr)'
+          }
+          mt="6"
+          gap="2"
+          minHeight="200px"
+        >
           {imagesQuery?.data?.map(item => (
             <Box key={item.id}>
               <Box

@@ -62,7 +62,12 @@ export default function ImageUpload({
           </Text>
         </Flex>
       )}
-      <Modal size="6xl" isOpen={isOpen} onClose={onClose} heading="Gallery">
+      <Modal
+        size="6xl"
+        isOpen={isOpen}
+        onClose={onClose}
+        heading={type === 'icon' ? 'Icon Gallery' : 'Image Gallery'}
+      >
         <Gallery type={type} handleImageInsert={handleImageInsert} />
       </Modal>
     </>

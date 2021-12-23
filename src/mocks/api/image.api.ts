@@ -2,7 +2,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { ResponseComposition, RestContext, RestRequest } from 'msw';
 
 import { FileType } from '../../types';
-import { imagesData } from '../db';
+import { iconsData, imagesData } from '../db';
 
 export const uploadImage = (
   req: RestRequest,
@@ -24,5 +24,10 @@ export const getImages = (
   res: ResponseComposition,
   ctx: RestContext,
 ) => {
-  return res(ctx.status(200), ctx.json(imagesData));
+  const type = req.url.searchParams.get('type');
+
+  return res(
+    ctx.status(200),
+    ctx.json(type === 'icon' ? iconsData : imagesData),
+  );
 };

@@ -14,7 +14,7 @@ export const useGetImages = (type: imgType) => {
   const axios = useAxios();
 
   return useQuery<Image[], Error>(
-    ['images'],
+    ['images', type],
     async () => {
       const { data } = await axios.get(`/images?type=${type}`);
 
