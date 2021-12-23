@@ -132,6 +132,7 @@ export default function Section({
       p="2"
       ref={previewRef}
       opacity={opacity}
+      role="section"
       data-handler-id={handlerId}
     >
       <Box

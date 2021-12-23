@@ -3,6 +3,7 @@ import MatchMediaMock from 'jest-matchmedia-mock';
 import mockConsole from 'jest-mock-console';
 
 import Routes from '.';
+import { pageData } from '../mocks/db/page.db';
 import { server } from '../mocks/server';
 import { renderWithRouter as render, userEvent } from '../utils/test';
 
@@ -52,7 +53,7 @@ test('render page builder on clicking page menu', async () => {
   await waitFor(() => {
     expect(
       screen.getByRole('heading', { name: /page heading/i }),
-    ).toHaveTextContent(/home/i);
+    ).toHaveTextContent(pageData.name);
   });
 });
 

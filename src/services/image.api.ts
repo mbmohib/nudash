@@ -1,7 +1,6 @@
-import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { useAxios } from '../hooks';
+import { useAxios, useToast } from '../hooks';
 import { FileType, Image, imgType } from '../types';
 
 interface uploadImageData {
@@ -29,20 +28,14 @@ export const useGetImages = (type: imgType) => {
 
 export const useUploadImage = () => {
   const axios = useAxios();
-  const toast = useToast();
+  const { showSuccessMessage } = useToast();
   const queryClient = useQueryClient();
 
   return useMutation(
     ({ data }: uploadImageData) => axios.post(`/images`, data),
     {
       onSuccess: data => {
-        toast({
-          title: 'Image uploaded successfully',
-          status: 'success',
-          isClosable: true,
-          variant: 'subtle',
-          position: 'bottom-right',
-        });
+        showSuccessMessage('Image uploaded successfully');
 
         queryClient.setQueryData(['images'], images => [
           ...(images as Image[]),

@@ -5,12 +5,10 @@ import {
   Dashboard,
   GalleryIcons,
   GalleryImages,
-  Login,
   Menus,
   MetaData,
   NotFoundPage,
   Page,
-  Schema,
 } from '../screens';
 
 const Routes = () => (
@@ -18,11 +16,9 @@ const Routes = () => (
     <Switch>
       <Redirect exact from="/" to="/dashboard/analytics" />
       <Route exact path="/dashboard/analytics" component={Dashboard} />
-      <Route exact path="/login" component={Login} />
       <Redirect exact from="/site" to="/site/meta-data" />
       <Route exact path="/site/meta-data" component={MetaData} />
       <Route exact path="/site/menus" component={Menus} />
-      <Route exact path="/schema" component={Schema} />
       <Redirect exact from="/gallery" to="/gallery/images" />
       <Route exact path="/gallery/images" component={GalleryImages} />
       <Route exact path="/gallery/icons" component={GalleryIcons} />

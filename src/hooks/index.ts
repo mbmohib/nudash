@@ -4,3 +4,4 @@ export { default as useSelector } from './use-selector';
 export { default as useToggle } from './use-toggle';
 export { default as useDebounce } from './use-debounce';
 export { default as useAxios } from './use-axios';
+export { default as useToast } from './use-toast';

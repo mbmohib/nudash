@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { useAxios } from '../hooks';
+import { useAxios, useToast } from '../hooks';
 import { Page, Pages } from '../types';
 
 interface createPageData {
@@ -59,6 +59,7 @@ export const useAddPage = (siteId: string | undefined) => {
 
 export const useUpdatePage = (slug: string | undefined) => {
   const axios = useAxios();
+  const { showSuccessMessage } = useToast();
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -66,6 +67,7 @@ export const useUpdatePage = (slug: string | undefined) => {
       axios.post(`/pages/${slug}`, data),
     {
       onSuccess: data => {
+        showSuccessMessage('Page updated successfully!');
         queryClient.setQueryData(['pages', slug], () => data.data);
       },
     },
