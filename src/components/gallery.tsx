@@ -9,6 +9,7 @@ import { useGetImages } from '../services/image.api';
 import { Image as ImageType, imgType } from '../types';
 
 interface GalleryProps {
+  selectable?: boolean;
   handleImageInsert?: (image: ImageType) => void;
   type?: imgType;
 }
@@ -20,12 +21,14 @@ const activeStyle = {
 };
 
 export default function Gallery({
+  selectable,
   handleImageInsert,
   type = 'image',
 }: GalleryProps) {
   const imagesQuery = useGetImages(type);
   const [selectedImage, setSelectedImage] = useState<ImageType | undefined>();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const handleImageSelect = () => {
     if (typeof handleImageInsert === 'function') {
       handleImageInsert(selectedImage as ImageType);
@@ -59,8 +62,12 @@ export default function Gallery({
                 position="relative"
                 cursor="pointer"
                 {...(selectedImage?.id === item.id &&
-                  handleImageInsert && { ...activeStyle })}
-                onClick={() => setSelectedImage(item)}
+                  selectable && { ...activeStyle })}
+                onClick={() =>
+                  selectable
+                    ? setSelectedImage(item)
+                    : handleImageEditClick(item)
+                }
                 sx={{
                   ':hover .edit-image-btn': {
                     display: 'flex',
@@ -68,8 +75,15 @@ export default function Gallery({
                 }}
               >
                 <Image borderRadius="md" src={item.url} alt={item.alt} />
-                {selectedImage?.id === item.id && handleImageInsert && (
-                  <Box position="absolute" top="2" left="2">
+                {selectedImage?.id === item.id && selectable && (
+                  <Box
+                    position="absolute"
+                    top="2"
+                    left="2"
+                    bgColor="secondary.200"
+                    p="4px"
+                    borderRadius="sm"
+                  >
                     <FiCheck />
                   </Box>
                 )}
@@ -90,9 +104,11 @@ export default function Gallery({
           ))}
         </Grid>
       </PreLoader>
-      {handleImageInsert && (
+      {selectable && (
         <Box textAlign="right" mt="4">
-          <Button onClick={handleImageSelect}>Insert</Button>
+          <Button disabled={!selectedImage?.id} onClick={handleImageSelect}>
+            Insert
+          </Button>
         </Box>
       )}
       <ImageDetails

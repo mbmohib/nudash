@@ -55,6 +55,7 @@ export default function ImageUpload({
           alignItems="center"
           cursor="pointer"
           onClick={onOpen}
+          mb="2"
         >
           {type === 'icon' ? <SymbolIcon /> : <ImageIcon />}
           <Text textAlign="center" mt="2">
@@ -68,7 +69,7 @@ export default function ImageUpload({
         onClose={onClose}
         heading={type === 'icon' ? 'Icon Gallery' : 'Image Gallery'}
       >
-        <Gallery type={type} handleImageInsert={handleImageInsert} />
+        <Gallery selectable type={type} handleImageInsert={handleImageInsert} />
       </Modal>
     </>
   );

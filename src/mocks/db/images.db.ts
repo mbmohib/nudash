@@ -30,7 +30,7 @@ export const iconBuilder = build('Image', {
   fields: {
     id: sequence(x => nanoid() + x),
     alt: fake(f => f.lorem.words()),
-    url: oneOf(...iconLinks),
+    url: '',
   },
 });
 
@@ -44,7 +44,19 @@ export const imagesData = [
 
 export const iconData = iconBuilder() as Image;
 export const iconsData = [
-  iconBuilder(),
-  iconBuilder(),
-  iconBuilder(),
+  iconBuilder({
+    overrides: {
+      url: iconLinks[0],
+    },
+  }),
+  iconBuilder({
+    overrides: {
+      url: iconLinks[1],
+    },
+  }),
+  iconBuilder({
+    overrides: {
+      url: iconLinks[2],
+    },
+  }),
 ] as Image[];

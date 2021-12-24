@@ -10,6 +10,12 @@ interface uploadImageData {
   };
 }
 
+interface updateImageData {
+  data: {
+    alt?: string;
+  };
+}
+
 export const useGetImages = (type: imgType) => {
   const axios = useAxios();
 
@@ -37,7 +43,27 @@ export const useUploadImage = () => {
       onSuccess: data => {
         showSuccessMessage('Image uploaded successfully');
 
-        queryClient.setQueryData(['images'], images => [
+        queryClient.setQueryData(['images', 'image'], images => [
+          ...(images as Image[]),
+          data.data,
+        ]);
+      },
+    },
+  );
+};
+
+export const useUpdateImage = (id: string | undefined) => {
+  const axios = useAxios();
+  const { showSuccessMessage } = useToast();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ data }: updateImageData) => axios.put(`/images/${id}`, data),
+    {
+      onSuccess: data => {
+        showSuccessMessage('Image updated successfully');
+
+        queryClient.setQueryData(['images', 'image'], (images = []) => [
           ...(images as Image[]),
           data.data,
         ]);

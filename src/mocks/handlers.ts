@@ -6,6 +6,7 @@ import {
   getPage,
   getPages,
   getSite,
+  updateImage,
   updatePage,
   updateSite,
   uploadImage,
@@ -23,4 +24,5 @@ export default [
 
   rest.get('/images', getImages),
   rest.post('/images', uploadImage),
+  rest.put('/images/:id', updateImage),
 ];

@@ -39,4 +39,4 @@ export { default as LineChart } from './line-chart';
 export { default as ProductStats } from './product-stats';
 export { default as ImageUpload } from './image-upload';
 export { default as Gallery } from './gallery';
-export { default as ImageDetails } from './Image-details';
+export { default as ImageDetails } from './image-details';

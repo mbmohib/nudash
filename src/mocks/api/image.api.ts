@@ -10,13 +10,27 @@ export const uploadImage = (
   ctx: RestContext,
 ) => {
   const { body } = req;
-  const { file, alt } = body as { file: FileType; alt: string };
+  const { alt } = body as { file: FileType; alt: string };
 
   return res(
     ctx.delay(3000),
     ctx.status(200),
-    ctx.json({ id: nanoid(), alt, url: file?.preview }),
+    ctx.json({ id: nanoid(), alt, url: imagesData[0].url }),
   );
+};
+
+export const updateImage = (
+  req: RestRequest,
+  res: ResponseComposition,
+  ctx: RestContext,
+) => {
+  const { body } = req || {};
+  const { id } = req.params;
+  const { alt } = body as { alt: string };
+
+  const image = imagesData.find(item => item.id === id);
+
+  return res(ctx.status(200), ctx.json({ ...image, alt }));
 };
 
 export const getImages = (

@@ -50,7 +50,7 @@ const Preview = ({ file }: PreviewProps) => {
 
 export default function FileUpload({ type }: FileUploadProps) {
   const [error, setError] = useState<string>('');
-  const [fieldValue, setFieldValue] = useState<FileType | undefined>();
+  const [fileValue, setFileValue] = useState<FileType | undefined>();
   const uploadImage = useUploadImage();
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -63,18 +63,18 @@ export default function FileUpload({ type }: FileUploadProps) {
       );
       if (files[0].size > maxImageSize) {
         setError(
-          `Please upload a image less than ${maxImageSize / 1024 / 1024}MB`,
+          `Please upload a file less than ${maxImageSize / 1024 / 1024}MB`,
         );
       } else {
         setError('');
-        setFieldValue(files[0]);
+        setFileValue(files[0]);
         uploadImage.mutate(
           {
             data: { file: files[0] },
           },
           {
             onSuccess: () => {
-              setFieldValue(undefined);
+              setFileValue(undefined);
             },
           },
         );
@@ -86,11 +86,11 @@ export default function FileUpload({ type }: FileUploadProps) {
   useEffect(
     () => () => {
       // Make sure to revoke the data uris to avoid memory leaks
-      if (fieldValue) {
-        URL.revokeObjectURL(fieldValue.preview);
+      if (fileValue) {
+        URL.revokeObjectURL(fileValue.preview);
       }
     },
-    [fieldValue],
+    [fileValue],
   );
 
   return (
@@ -100,6 +100,7 @@ export default function FileUpload({ type }: FileUploadProps) {
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
+      data-testid="drop-zone-wrapper"
     >
       <Flex
         width="full"
@@ -107,7 +108,7 @@ export default function FileUpload({ type }: FileUploadProps) {
         {...getRootProps({ className: 'file-upload' })}
       >
         <input {...getInputProps()} />
-        {!fieldValue && (
+        {!fileValue && (
           <Flex
             border="1px dashed"
             borderColor="secondary.100"
@@ -125,7 +126,7 @@ export default function FileUpload({ type }: FileUploadProps) {
           </Flex>
         )}
         {error && <Text color="error">{error}</Text>}
-        {uploadImage.isLoading && <Preview file={fieldValue} />}
+        {uploadImage.isLoading && <Preview file={fileValue} />}
       </Flex>
     </Flex>
   );

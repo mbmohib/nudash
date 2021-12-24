@@ -4,8 +4,7 @@ import { Modal } from '..';
 
 test('modal shows the children', () => {
   render(
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    <Modal isOpen={true} onClose={() => {}}>
+    <Modal isOpen={true} onClose={jest.fn()}>
       <div data-testid="test-modal" />
     </Modal>,
   );
@@ -15,8 +14,7 @@ test('modal shows the children', () => {
 
 test('modal not showing the children', () => {
   render(
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    <Modal isOpen={false} onClose={() => {}}>
+    <Modal isOpen={false} onClose={jest.fn()}>
       <div data-testid="test-modal" />
     </Modal>,
   );
