@@ -35,12 +35,11 @@ function RenderSiteNav() {
 
 test('renders a nav form and add menu', async () => {
   RenderSiteNav();
-  const { getByRole, getAllByLabelText } = screen;
 
-  const addBtn = getByRole(/add-nav/i);
+  const addBtn = screen.getByLabelText('add menu');
   userEvent.click(addBtn);
 
-  expect(getAllByLabelText(/label/i)).toHaveLength(1);
+  expect(screen.getAllByLabelText(/label/i)).toHaveLength(1);
 });
 
 test('renders a nav form and  update menu', async () => {

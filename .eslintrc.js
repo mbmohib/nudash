@@ -12,8 +12,8 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  extends: ['airbnb-base', 'prettier'],
-  plugins: ['prettier'],
+  extends: ['airbnb-base', 'prettier', 'plugin:jsx-a11y/recommended'],
+  plugins: ['prettier', 'jsx-a11y'],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',

@@ -105,7 +105,7 @@ export default function Row({ sectionId, row }: RowProps) {
       width="100%"
       position="relative"
       ref={drop}
-      role={`Row-${row.id}`}
+      id={`row-${row.id}`}
       opacity={isActive || (!isAcceptedItem && debouncedHover) ? '0.2' : '1'}
       bgColor={
         // eslint-disable-next-line no-nested-ternary

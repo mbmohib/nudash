@@ -25,7 +25,7 @@ export default function Column({ column }: ColumnProps) {
   };
 
   return (
-    <Flex role={`column ${columnId}`} flexDirection="column" width="100%">
+    <Flex id={`column ${columnId}`} flexDirection="column" width="100%">
       <Box
         width="100%"
         border="1px"

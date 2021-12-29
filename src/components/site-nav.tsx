@@ -32,7 +32,7 @@ export default function SiteNav() {
       ))}
 
       <Box textAlign="right" mt="2">
-        <Button role="add-nav" variant="icon" onClick={handleAddMenu}>
+        <Button variant="icon" onClick={handleAddMenu} aria-label="add menu">
           <PlusIcon />
         </Button>
       </Box>

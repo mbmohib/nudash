@@ -132,8 +132,9 @@ export default function Section({
       p="2"
       ref={previewRef}
       opacity={opacity}
-      role="section"
+      id="section"
       data-handler-id={handlerId}
+      aria-label="page section"
     >
       <Box
         maxHeight={expand ? '100%' : '100px'}
@@ -178,7 +179,7 @@ export default function Section({
       </Flex>
 
       <Box
-        role="drag-row"
+        aria-label="drag-row"
         position="absolute"
         left="-7"
         ref={dragRef}
@@ -198,7 +199,7 @@ export default function Section({
       </Box>
 
       <Box
-        role="expand"
+        aria-label="expand/collapse section"
         position="absolute"
         sx={{
           top: '-10px',

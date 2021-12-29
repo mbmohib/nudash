@@ -36,16 +36,16 @@ test('add/delete section on clicking add/delete button', async () => {
 
   userEvent.click(screen.getByText(/add section/i));
 
-  expect(screen.getAllByRole(/section/i)).toHaveLength(2);
+  expect(screen.getAllByLabelText(/page section/i)).toHaveLength(2);
 
   userEvent.click(screen.getAllByText(/delete section/i)[0]);
-  expect(screen.getAllByRole(/section/i)).toHaveLength(1);
+  expect(screen.getAllByLabelText(/page section/i)).toHaveLength(1);
 });
 
 test('disabled delete section if only one section exist', async () => {
   render(<Page />);
 
-  expect(screen.getAllByRole(/section/i)).toHaveLength(1);
+  expect(screen.getAllByLabelText(/page section/i)).toHaveLength(1);
   expect(screen.getByText(/delete section/i)).toBeDisabled();
 });
 

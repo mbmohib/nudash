@@ -24,13 +24,7 @@ export default function ModalExtended({
   size = 'lg',
 }: ModalExtendedProps) {
   return (
-    <Modal
-      autoFocus={false}
-      onClose={onClose}
-      isOpen={isOpen}
-      isCentered
-      size={size}
-    >
+    <Modal onClose={onClose} isOpen={isOpen} isCentered size={size}>
       <ModalOverlay />
       <ModalContent bgColor="secondary.500">
         {heading && (

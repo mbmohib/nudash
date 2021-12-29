@@ -162,7 +162,7 @@ export default function DropZone({ dropZone, count }: DropZoneProps) {
   return (
     <Flex
       ref={drop}
-      role={`DropZone-${dropZone.id}`}
+      id={`drop-zone-${dropZone.id}`}
       width="100%"
       justifyContent="flex-start"
       alignItems="center"
