@@ -60,18 +60,13 @@ export default function App() {
       <BarChart
         data={data}
         margin={{
-          top: 10,
+          top: 60,
           right: 30,
           left: 0,
           bottom: 0,
         }}
       >
-        <Legend
-          layout="horizontal"
-          verticalAlign="top"
-          align="right"
-          height={80}
-        />
+        <Legend layout="horizontal" verticalAlign="top" align="right" />
         <CartesianGrid stroke="#42427980" strokeDasharray="3 3" />
         <XAxis dataKey="name" stroke="#ffffff80" />
         <YAxis stroke="#ffffff80" />
