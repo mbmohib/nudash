@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Heading } from '@chakra-ui/react';
+import { Box, Grid, Heading } from '@chakra-ui/react';
 import {
   AreaChart,
   BarChart,
