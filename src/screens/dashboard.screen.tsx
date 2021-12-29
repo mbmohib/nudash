@@ -54,7 +54,7 @@ export default function Dashboard() {
   return (
     <PageLayout isLoading={false} heading="Dashboard" menus={dashboardMenus}>
       <PreLoader isLoading={false}>
-        <Container maxW="container.2xl">
+        <Box px="4">
           <PageHeader pageName="Site Analytics" />
           <Grid gridTemplateColumns="1fr 1fr 1fr 1fr" mb="4" gap="6">
             {stats.map((stat, index) => (
@@ -79,7 +79,7 @@ export default function Dashboard() {
               </Box>
             </Box>
           </Grid>
-        </Container>
+        </Box>
       </PreLoader>
     </PageLayout>
   );

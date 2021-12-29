@@ -1,5 +1,5 @@
 import { useDisclosure } from '@chakra-ui/hooks';
-import { Container, Grid } from '@chakra-ui/react';
+import { Box, Grid } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -90,7 +90,7 @@ export default function Page() {
         <PreLoader isLoading={pageQuery.isLoading}>
           <DndProvider backend={HTML5Backend}>
             <Grid gridTemplateColumns="1fr 350px">
-              <Container maxW="container.lg">
+              <Box px="4">
                 <PageHeader
                   pageName={pageQuery.data?.name}
                   handleSave={handleSave}
@@ -103,7 +103,7 @@ export default function Page() {
                     totalSection={sections.length}
                   />
                 ))}
-              </Container>
+              </Box>
               <DraggableComponentsContainer
                 handleOpenColumnLayout={handleOpenColumnLayout}
               />
