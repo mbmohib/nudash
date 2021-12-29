@@ -1,6 +1,6 @@
 import {
-  Bar,
-  BarChart,
+  Area,
+  AreaChart,
   CartesianGrid,
   Legend,
   ResponsiveContainer,
@@ -57,7 +57,7 @@ const data = [
 export default function App() {
   return (
     <ResponsiveContainer width="100%">
-      <BarChart
+      <AreaChart
         data={data}
         margin={{
           top: 10,
@@ -73,13 +73,25 @@ export default function App() {
           height={80}
         />
         <CartesianGrid stroke="#42427980" strokeDasharray="3 3" />
-        <XAxis dataKey="name" stroke="#ffffff80" />
+        <XAxis stroke="#ffffff80" dataKey="name" />
         <YAxis stroke="#ffffff80" />
         <Tooltip />
+        <Area
+          type="monotone"
+          dataKey="uv"
+          stackId="1"
+          stroke="#8F2DE290"
+          fill="#8F2DE290"
+        />
 
-        <Bar dataKey="pv" fill="#F7CE4690" />
-        <Bar dataKey="uv" fill="#5C159490" />
-      </BarChart>
+        <Area
+          type="monotone"
+          dataKey="amt"
+          stackId="1"
+          stroke="#246FFF90"
+          fill="#246FFF90"
+        />
+      </AreaChart>
     </ResponsiveContainer>
   );
 }
