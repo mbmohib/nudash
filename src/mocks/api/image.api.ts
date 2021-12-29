@@ -45,3 +45,11 @@ export const getImages = (
     ctx.json(type === 'icon' ? iconsData : imagesData),
   );
 };
+
+export const deleteImage = (
+  req: RestRequest,
+  res: ResponseComposition,
+  ctx: RestContext,
+) => {
+  return res(ctx.status(200));
+};

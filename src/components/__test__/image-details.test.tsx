@@ -36,10 +36,7 @@ test('update image alt value', async () => {
   userEvent.click(updateBtn);
 
   await waitFor(() => {
-    expect(name).toHaveDisplayValue(fakeAlt);
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      'Image updated successfully',
-    );
+    expect(screen.getByRole('alert')).toHaveTextContent(/successful/i);
   });
 });
 
@@ -49,9 +46,8 @@ test('delete image successfully', async () => {
   const deleteBtn = screen.getByRole('button', { name: /delete/i });
 
   userEvent.click(deleteBtn);
+
   await waitFor(() => {
-    expect(screen.getByRole('alert')).toHaveTextContent(
-      'Image deleted successfully',
-    );
+    expect(screen.getByRole('alert', { name: /deleted successfully/i }));
   });
 });

@@ -63,11 +63,35 @@ export const useUpdateImage = (id: string | undefined) => {
       onSuccess: data => {
         showSuccessMessage('Image updated successfully');
 
-        queryClient.setQueryData(['images', 'image'], (images = []) => [
-          ...(images as Image[]),
-          data.data,
-        ]);
+        queryClient.setQueryData(['images', 'image'], (images: Image[] = []) =>
+          images.map(image => {
+            if (image.id === id) {
+              return {
+                ...image,
+                ...data.data,
+              };
+            }
+
+            return image;
+          }),
+        );
       },
     },
   );
+};
+
+export const useDeleteImage = (id: string | undefined) => {
+  const axios = useAxios();
+  const { showSuccessMessage } = useToast();
+  const queryClient = useQueryClient();
+
+  return useMutation(() => axios.delete(`/images/${id}`), {
+    onSuccess: () => {
+      showSuccessMessage('Image deleted successfully');
+
+      queryClient.setQueryData(['images', 'image'], (images: Image[] = []) =>
+        images.filter(image => image.id !== id),
+      );
+    },
+  });
 };

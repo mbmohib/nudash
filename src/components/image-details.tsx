@@ -11,12 +11,13 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { Modal } from '.';
 import { DeleteIcon } from '../assets/icons';
-import { useUpdateImage } from '../services/image.api';
+import { useDeleteImage, useUpdateImage } from '../services/image.api';
 import { Image as ImageType, imgType } from '../types';
 
 interface ImageDetailsProps {
@@ -46,16 +47,21 @@ export default function ImageDetails({
   type = 'image',
 }: ImageDetailsProps) {
   const updateImage = useUpdateImage(image?.id);
+  const deleteImage = useDeleteImage(image?.id);
   const {
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      alt: image?.alt,
-    },
   });
+
+  useEffect(() => {
+    if (image?.alt) {
+      setValue('alt', image.alt, { shouldDirty: true });
+    }
+  }, [image]);
 
   const onSubmit = (data: { alt: string }) => {
     updateImage.mutate({
@@ -63,6 +69,11 @@ export default function ImageDetails({
         alt: data.alt,
       },
     });
+  };
+
+  const handleDeleteImage = async () => {
+    await deleteImage.mutate();
+    onClose();
   };
 
   return (
@@ -134,7 +145,8 @@ export default function ImageDetails({
               variant="solid"
               colorScheme="secondary"
               mt="4"
-              type="submit"
+              onClick={handleDeleteImage}
+              isLoading={deleteImage.isLoading}
             >
               Delete
             </Button>

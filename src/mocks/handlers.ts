@@ -2,6 +2,7 @@ import { rest } from 'msw';
 
 import {
   addPage,
+  deleteImage,
   getImages,
   getPage,
   getPages,
@@ -25,4 +26,5 @@ export default [
   rest.get('/images', getImages),
   rest.post('/images', uploadImage),
   rest.put('/images/:id', updateImage),
+  rest.delete('/images/:id', deleteImage),
 ];
