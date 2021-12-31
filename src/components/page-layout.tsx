@@ -47,7 +47,9 @@ export default function PageLayout({
             {menus?.map(menu => (
               <NavLink
                 key={menu.id}
-                activeClassName="active"
+                className={({ isActive }) =>
+                  isActive ? 'active' : 'undefined'
+                }
                 to={`${menu.path}`}
               >
                 <Box
@@ -55,7 +57,6 @@ export default function PageLayout({
                   display="block"
                   py="1"
                   px="2"
-                  key={menu.id}
                   sx={{
                     '.active &': {
                       bg: 'secondary.600',

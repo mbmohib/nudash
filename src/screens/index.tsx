@@ -5,3 +5,4 @@ export { default as Dashboard } from './dashboard.screen';
 export { default as NotFoundPage } from './not-found.screen';
 export { default as GalleryImages } from './gallery-images.screens';
 export { default as GalleryIcons } from './gallery-icons.screens';
+export { default as Login } from './login.screen';

@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import auth from './slices/auth.slice';
 import menus from './slices/menus.slice';
 import page from './slices/page.slice';
 
@@ -7,6 +8,7 @@ export const store = configureStore({
   reducer: {
     page,
     menus,
+    auth,
   },
 });
 

@@ -1,18 +1,22 @@
 import axios, { Axios, AxiosError, AxiosRequestConfig } from 'axios';
 import { useMemo } from 'react';
 
-// import { useAuth } from '.';
-// import { apiEndpoint } from '../config';
+import { useDispatch, useSelector } from '.';
+import { apiEndpoint } from '../config';
+import { removeAuth } from '../store/slices/auth.slice';
 
 export default function useAxios() {
-  // const { token, logout } = useAuth();
-  const token = undefined;
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const logout = () => {};
+  const { token } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(removeAuth);
+  };
 
   const axiosClient: Axios = useMemo(() => {
     const axiosInstance = axios.create({
-      baseURL: '/', // apiEndpoint,
+      baseURL: apiEndpoint,
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
