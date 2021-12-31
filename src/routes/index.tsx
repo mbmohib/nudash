@@ -37,8 +37,16 @@ export default function Router() {
             </RequireAuth>
           }
         />
+        <Route
+          path="/site"
+          element={
+            <RequireAuth>
+              <MetaData />
+            </RequireAuth>
+          }
+        />
         {/* <Navigate from="/site" to="/site/meta-data" /> */}
-        {/* <Route  path="/site/meta-data" component={MetaData} />
+        {/* 
       <Route  path="/site/menus" component={Menus} />
       <Navigate  from="/gallery" to="/gallery/images" />
       <Route  path="/gallery/images" component={GalleryImages} />

@@ -16,7 +16,7 @@ export const useLogin = () => {
 
   return useMutation(({ data }: loginData) => axios.post(`/login`, data), {
     onSuccess: data => {
-      dispatch(setAuth(data.data));
+      dispatch(setAuth(data.data.data));
     },
   });
 };
@@ -25,11 +25,14 @@ export const useRefreshToken = () => {
   const axios = useAxios();
   const dispatch = useDispatch();
 
-  return useMutation(() => axios.post(`/refresh-token`), {
-    onSuccess: data => {
-      dispatch(setAuth(data.data));
+  return useMutation(
+    ({ data }: { data: any }) => axios.post(`/refresh-token`),
+    {
+      onSuccess: data => {
+        dispatch(setAuth(data.data.data));
+      },
     },
-  });
+  );
 };
 
 export const useLogout = () => {

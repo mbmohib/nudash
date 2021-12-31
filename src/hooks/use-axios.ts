@@ -3,11 +3,11 @@ import { useMemo } from 'react';
 
 import { useDispatch, useSelector } from '.';
 import { apiEndpoint } from '../config';
-import { removeAuth } from '../store/slices/auth.slice';
+import { removeAuth, setAuth } from '../store/slices/auth.slice';
 
 export default function useAxios() {
-  const { token } = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  const { token, expiredIn } = useSelector(state => state.auth);
 
   const logout = () => {
     dispatch(removeAuth);
@@ -23,12 +23,20 @@ export default function useAxios() {
     });
 
     axiosInstance.interceptors.request.use(
-      (config: AxiosRequestConfig): AxiosRequestConfig => {
-        if (!config?.headers) {
-          return config;
-        }
+      async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+        if (token && expiredIn && Date.now() >= expiredIn * 1000) {
+          const { data, status } = await axios.post(
+            '/refresh-token',
+            {},
+            config,
+          );
+          dispatch(setAuth(data.data));
 
-        if (token) {
+          if (config.headers && status === 200) {
+            // eslint-disable-next-line no-param-reassign
+            config.headers.Authorization = `Bearer ${data.data.token}`;
+          }
+        } else if (token && config.headers) {
           // eslint-disable-next-line no-param-reassign
           config.headers.Authorization = `Bearer ${token}`;
         }

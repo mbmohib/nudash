@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import jwtDecode from 'jwt-decode';
 
-import { Auth } from '../../types';
+import { Auth, Token } from '../../types';
 
 const initialState = {
   isAuthorized: false,
@@ -11,7 +12,14 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuth(state, action: PayloadAction<Omit<Auth, 'isAuthorized'>>) {
-      return { isAuthorized: true, ...action.payload };
+      const { token, ...rest } = action.payload;
+      if (!token) {
+        return state;
+      }
+
+      const decoded: Token = jwtDecode(token);
+
+      return { isAuthorized: true, expiredIn: decoded.exp, token, ...rest };
     },
     removeAuth() {
       return { isAuthorized: false, user: {} };

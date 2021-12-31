@@ -8,11 +8,13 @@ import {
   Input,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
-import { useLogin, useRefreshToken } from '../services/auth.api';
+import { useSelector } from '../hooks';
+import { useLogin } from '../services/auth.api';
 
 const schema = yup
   .object({
@@ -23,8 +25,8 @@ const schema = yup
 
 export default function LoginPage() {
   const login = useLogin();
-  const refreshToken = useRefreshToken();
   const navigate = useNavigate();
+  const { isAuthorized } = useSelector(state => state.auth);
   // const location = useLocation();
 
   const {
@@ -36,20 +38,18 @@ export default function LoginPage() {
   });
 
   const onSubmit = (data: { email: string; password: string }) => {
-    login.mutate(
-      {
-        data,
-      },
-      {
-        onSuccess() {
-          // const from = location.state?.from?.pathname || '/';
-          const from = '/';
-          navigate(from, { replace: true });
-          refreshToken.mutate();
-        },
-      },
-    );
+    login.mutate({
+      data,
+    });
   };
+
+  useEffect(() => {
+    if (isAuthorized) {
+      // const from = location.state?.from?.pathname || '/';
+      const from = '/';
+      navigate(from, { replace: true });
+    }
+  }, [isAuthorized]);
 
   return (
     <Container>

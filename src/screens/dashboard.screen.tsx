@@ -17,6 +17,7 @@ import revenueImage from '../assets/images/revenue.png';
 import timeGraphImage from '../assets/images/time-graph.png';
 import timeImage from '../assets/images/time.png';
 import { dashboardMenus } from '../config';
+import { useGetSite } from '../services/site.api';
 import { ProductStat } from '../types';
 
 const stats: ProductStat[] = [
@@ -51,6 +52,8 @@ const stats: ProductStat[] = [
 ];
 
 export default function Dashboard() {
+  const getSite = useGetSite();
+
   return (
     <PageLayout isLoading={false} heading="Dashboard" menus={dashboardMenus}>
       <PreLoader isLoading={false}>
