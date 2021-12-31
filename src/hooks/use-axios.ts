@@ -9,10 +9,6 @@ export default function useAxios() {
   const dispatch = useDispatch();
   const { token, expiredIn } = useSelector(state => state.auth);
 
-  const logout = () => {
-    dispatch(removeAuth);
-  };
-
   const axiosClient: Axios = useMemo(() => {
     const axiosInstance = axios.create({
       baseURL: apiEndpoint,
@@ -51,7 +47,7 @@ export default function useAxios() {
         const statusCode = error.response ? error.response.status : null;
 
         if (statusCode === 401) {
-          logout();
+          dispatch(removeAuth());
         }
 
         return Promise.reject(error);

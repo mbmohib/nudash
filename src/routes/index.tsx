@@ -44,17 +44,55 @@ export default function Router() {
               <MetaData />
             </RequireAuth>
           }
-        />
-        {/* <Navigate from="/site" to="/site/meta-data" /> */}
-        {/* 
-      <Route  path="/site/menus" component={Menus} />
-      <Navigate  from="/gallery" to="/gallery/images" />
-      <Route  path="/gallery/images" component={GalleryImages} />
-      <Route  path="/gallery/icons" component={GalleryIcons} />
-      <Navigate  from="/pages" to="/pages/home" />
-      <Route  path="/pages/:page" component={Page} />
-      <Route  path="/404" component={NotFoundPage} /> */}
-        {/* <Navigate to="/404" /> */}
+        >
+          <Route
+            path="meta-data"
+            element={
+              <RequireAuth>
+                <MetaData />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="menus"
+            element={
+              <RequireAuth>
+                <Menus />
+              </RequireAuth>
+            }
+          />
+        </Route>
+        <Route path="/gallery" element={<Navigate to="/gallery/images" />} />
+        <Route path="/gallery">
+          <Route
+            path="images"
+            element={
+              <RequireAuth>
+                <GalleryImages />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="icons"
+            element={
+              <RequireAuth>
+                <GalleryIcons />
+              </RequireAuth>
+            }
+          />
+        </Route>
+        <Route path="/pages" element={<Navigate to="/pages/home" />} />
+        <Route path="/pages">
+          <Route
+            path=":page"
+            element={
+              <RequireAuth>
+                <Page />
+              </RequireAuth>
+            }
+          />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Layout>
   );
