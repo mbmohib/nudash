@@ -60,7 +60,9 @@ export function renderWithRouter(
       <Provider store={store}>
         <QueryClientProvider client={client}>
           <ChakraProvider theme={theme}>
-            <Router history={history}>{children}</Router>
+            <Router location={history.location} navigator={history}>
+              {children}
+            </Router>
           </ChakraProvider>
         </QueryClientProvider>
       </Provider>
