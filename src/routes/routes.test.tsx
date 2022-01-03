@@ -3,15 +3,22 @@ import MatchMediaMock from 'jest-matchmedia-mock';
 import mockConsole from 'jest-mock-console';
 
 import Routes from '.';
+import { authData } from '../mocks/db';
 import { pageData } from '../mocks/db/page.db';
 import { server } from '../mocks/server';
+import { removeAuth, setAuth } from '../store/slices/auth.slice';
+import { store } from '../store/store';
 import { renderWithRouter as render, userEvent } from '../utils/test';
 
 let restoreConsole: { (): void; (): void };
 let matchMedia: MatchMediaMock;
 
+beforeEach(() => {
+  //
+});
+
 beforeAll(() => {
-  restoreConsole = mockConsole();
+  // restoreConsole = mockConsole();
   server.listen({ onUnhandledRequest: 'error' });
   matchMedia = new MatchMediaMock();
 });
@@ -19,21 +26,33 @@ beforeAll(() => {
 afterEach(() => {
   server.resetHandlers();
   matchMedia.clear();
+  store.dispatch(removeAuth());
 });
+
 afterAll(() => {
   server.close();
-  restoreConsole();
+  // restoreConsole();
 });
 
-test('render dashboard analytics page', () => {
-  render(<Routes />);
-  const { getByRole } = screen;
+test('render dashboard analytics page', async () => {
+  store.dispatch(setAuth(authData));
+  render(<Routes />, { route: '/dashboard/analytics' });
 
-  const heading = getByRole('heading', { name: /page heading/i });
-  expect(heading).toHaveTextContent(/site analytics/i);
+  await waitFor(() => {
+    expect(
+      screen.getByRole('heading', { name: /page heading/i }),
+    ).toHaveTextContent(/site analytics/i);
+  });
+});
+
+test('redirect to login page if not authenticated', () => {
+  render(<Routes />, { route: '/dashboard/analytics' });
+
+  expect(screen.getByRole('heading')).toHaveTextContent(/here you can login/i);
 });
 
 test('render site page on clicking site menu', async () => {
+  store.dispatch(setAuth(authData));
   render(<Routes />);
 
   userEvent.click(screen.getByTestId('site-link'));
@@ -70,7 +89,7 @@ test('render images page on clicking gallery menu', async () => {
 });
 
 test('render 404 page', () => {
-  render(<Routes />, { route: 'no-match-page' });
+  render(<Routes />, { route: '/no-match-page' });
 
   const heading = screen.getByRole(/heading/i);
   expect(heading).toHaveTextContent(/404/i);

@@ -16,6 +16,7 @@ export const colors = {
   black: '#000',
   white: '#fff',
   primary: '#8F2DE2',
+  'gray.500': '#ccc',
   'primary.500': '#5C1594',
   'secondary.10': '#424279',
   'secondary.50': '#383871',

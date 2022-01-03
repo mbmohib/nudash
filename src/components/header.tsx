@@ -2,7 +2,7 @@ import { Box, Button, Flex, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 import { LightIcon, NotificationIcon } from '../assets/icons';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logo.svg';
 
 export default function Header() {
   return (
