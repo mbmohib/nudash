@@ -10,11 +10,12 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { useSelector } from '../hooks';
 import { useLogin } from '../services/auth.api';
+import { Location } from '../types';
 
 const schema = yup
   .object({
@@ -27,7 +28,7 @@ export default function LoginPage() {
   const login = useLogin();
   const navigate = useNavigate();
   const { isAuthorized } = useSelector(state => state.auth);
-  // const location = useLocation();
+  const location = useLocation() as Location;
 
   const {
     register,
@@ -45,8 +46,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthorized) {
-      // const from = location.state?.from?.pathname || '/';
-      const from = '/';
+      const from = location.state?.from?.pathname || '/';
       navigate(from, { replace: true });
     }
   }, [isAuthorized]);

@@ -1,4 +1,5 @@
 import { SVGProps } from 'react';
+import { Location as LocationType } from 'react-router-dom';
 
 import { colors } from '../styles/theme';
 
@@ -29,5 +30,11 @@ export interface EditorBlock {
     withBorder: boolean;
     stretched: boolean;
     withBackground: boolean;
+  };
+}
+
+export interface Location extends LocationType {
+  state: {
+    from: { pathname: string };
   };
 }
