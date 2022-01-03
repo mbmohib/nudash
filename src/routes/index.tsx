@@ -30,21 +30,21 @@ export default function Router() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route
-          path="/"
-          element={
-            <RequireAuth>
-              <Dashboard />
-            </RequireAuth>
-          }
+          path="/dashboard"
+          element={<Navigate to="/dashboard/analytics" />}
         />
-        <Route
-          path="/site"
-          element={
-            <RequireAuth>
-              <MetaData />
-            </RequireAuth>
-          }
-        >
+        <Route path="/">
+          <Route
+            path="/dashboard/analytics"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+        </Route>
+        <Route path="/site" element={<Navigate to="/site/meta-data" />} />
+        <Route path="/site">
           <Route
             path="meta-data"
             element={

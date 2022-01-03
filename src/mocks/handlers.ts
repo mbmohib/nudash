@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 
+import { apiEndpoint } from '../config';
 import {
   addPage,
   deleteImage,
@@ -14,17 +15,17 @@ import {
 } from './api';
 
 export default [
-  rest.get('/site', getSite),
-  rest.post('/sites', updateSite),
+  rest.get(`${apiEndpoint}/site`, getSite),
+  rest.post(`${apiEndpoint}/sites`, updateSite),
 
-  rest.get('/pages/:slug', getPage),
-  rest.get('/:site/pages', getPages),
+  rest.get(`${apiEndpoint}/pages/:slug`, getPage),
+  rest.get(`${apiEndpoint}/:site/pages`, getPages),
 
-  rest.post('/:site/pages', addPage),
-  rest.post('/pages/:slug', updatePage),
+  rest.post(`${apiEndpoint}/:site/pages`, addPage),
+  rest.post(`${apiEndpoint}/pages/:slug`, updatePage),
 
-  rest.get('/images', getImages),
-  rest.post('/images', uploadImage),
-  rest.put('/images/:id', updateImage),
-  rest.delete('/images/:id', deleteImage),
+  rest.get(`${apiEndpoint}/images`, getImages),
+  rest.post(`${apiEndpoint}/images`, uploadImage),
+  rest.put(`${apiEndpoint}/images/:id`, updateImage),
+  rest.delete(`${apiEndpoint}/images/:id`, deleteImage),
 ];

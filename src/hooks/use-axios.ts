@@ -26,9 +26,9 @@ export default function useAxios() {
             {},
             config,
           );
-          dispatch(setAuth(data.data));
 
           if (config.headers && status === 200) {
+            dispatch(setAuth(data.data));
             // eslint-disable-next-line no-param-reassign
             config.headers.Authorization = `Bearer ${data.data.token}`;
           }
