@@ -14,7 +14,7 @@ export default function ProductStats({ stat }: ProductStatsProps) {
       p="2"
       shadow="-12px 20px 60px rgba(0, 0, 0, 0.55)"
     >
-      <Grid gridTemplateColumns="1fr 1fr" gap="2">
+      <Grid gridTemplateColumns="2fr 1fr" gap="2">
         <Box>
           <Image ml="-1" src={stat.image} alt={stat.label} />
           <Heading fontSize="4xl" as="h2" mt="1">

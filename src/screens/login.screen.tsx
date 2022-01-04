@@ -19,6 +19,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import loginBg from '../assets/images/login-bg.png';
+import logoinBottomBg from '../assets/images/login-bottom-bg.png';
 import logo from '../assets/images/logo.svg';
 import { useSelector } from '../hooks';
 import { useLogin } from '../services/auth.api';
@@ -59,7 +60,23 @@ export default function LoginPage() {
   }, [isAuthorized]);
 
   return (
-    <Flex height="100vh" alignItems="center" width="full">
+    <Flex
+      height="100vh"
+      alignItems="center"
+      width="full"
+      bgColor="secondary.600"
+      position="relative"
+    >
+      <Box
+        backgroundImage={logoinBottomBg}
+        position="absolute"
+        bottom="0"
+        left="0"
+        width="full"
+        height="80vh"
+        backgroundSize="100% 100%"
+        zIndex="docked"
+      />
       <Container maxW="6xl">
         <Grid gridTemplateColumns="1fr 1fr" gap="6">
           <Flex flexDirection="column" alignItems="center" pr="8">
@@ -74,7 +91,14 @@ export default function LoginPage() {
             <Image width="350px" src={logo} alt="logo" mb="4" />
             <Image src={loginBg} alt="" />
           </Flex>
-          <Box bgColor="secondary.500" p="6" borderRadius="md" pt="7">
+          <Box
+            bgColor="secondary.500"
+            p="6"
+            borderRadius="md"
+            pt="7"
+            zIndex="dropdown"
+            boxShadow="0px 20px 60px rgba(0, 0, 0, 0.2)"
+          >
             <Heading fontSize="xl" mb="6">
               Here you can login
             </Heading>

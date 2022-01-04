@@ -19,7 +19,7 @@ const authSlice = createSlice({
 
       const decoded: Token = jwtDecode(token);
 
-      return { isAuthorized: false, expiredIn: decoded.exp, token, ...rest };
+      return { isAuthorized: true, expiredIn: decoded.exp, token, ...rest };
     },
     removeAuth() {
       return { isAuthorized: false, user: {} };
