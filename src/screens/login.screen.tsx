@@ -128,6 +128,16 @@ export default function LoginPage() {
                 </FormErrorMessage>
               </FormControl>
 
+              {login.isError && (
+                <Text textColor="error">
+                  Email or password is not matched. Please try again
+                </Text>
+              )}
+
+              {!login.isError && (
+                <Text textColor="primary">Type any email or password.</Text>
+              )}
+
               <Button
                 isFullWidth
                 variant="solid"

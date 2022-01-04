@@ -32,7 +32,7 @@ export default function App() {
   const handleSyncLogout = (event: StorageEvent) => {
     if (event.key === 'logout') {
       dispatch(removeAuth());
-      navigate('/login');
+      // navigate('/login');
     }
   };
 
