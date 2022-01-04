@@ -56,7 +56,11 @@ export default function Dashboard() {
       <PreLoader isLoading={false}>
         <Box px="4">
           <PageHeader pageName="Site Analytics" />
-          <Grid gridTemplateColumns="1fr 1fr 1fr 1fr" mb="4" gap="6">
+          <Grid
+            gridTemplateColumns="1fr 1fr 1fr 1fr"
+            mb="4"
+            gap={{ base: '2', '2xl': '6' }}
+          >
             {stats.map((stat, index) => (
               <ProductStats key={index} stat={stat} />
             ))}

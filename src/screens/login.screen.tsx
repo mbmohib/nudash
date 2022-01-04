@@ -79,7 +79,12 @@ export default function LoginPage() {
       />
       <Container maxW="6xl">
         <Grid gridTemplateColumns="1fr 1fr" gap="6">
-          <Flex flexDirection="column" alignItems="center" pr="8">
+          <Flex
+            flexDirection="column"
+            alignItems="center"
+            pr="8"
+            zIndex="dropdown"
+          >
             <Text
               textAlign="center"
               mb="2"

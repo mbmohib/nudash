@@ -42,6 +42,8 @@ export const useLogout = () => {
   return useMutation(() => axios.post(`/logout`), {
     onSuccess: () => {
       dispatch(removeAuth());
+
+      window.localStorage.setItem('logout', Date.now().toString());
     },
   });
 };
