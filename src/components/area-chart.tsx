@@ -70,7 +70,16 @@ export default function App() {
         <CartesianGrid stroke="#42427980" strokeDasharray="3 3" />
         <XAxis stroke="#ffffff80" dataKey="name" />
         <YAxis stroke="#ffffff80" />
-        <Tooltip />
+        <Tooltip
+          wrapperStyle={{
+            borderRadius: '16px',
+          }}
+          contentStyle={{
+            background: '#191934',
+            border: 'none',
+            borderRadius: '8px',
+          }}
+        />
         <Area
           type="monotone"
           dataKey="uv"
