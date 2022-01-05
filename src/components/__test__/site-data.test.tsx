@@ -4,7 +4,7 @@ import mockConsole from 'jest-mock-console';
 import { rest } from 'msw';
 
 import { SiteData } from '..';
-import { siteFailed, updateSite } from '../../mocks/api/sites.api';
+import { siteFailed, updateSite } from '../../mocks/api/sites.mock';
 import { siteBuilder } from '../../mocks/db';
 import { server } from '../../mocks/server';
 import { Site } from '../../types';

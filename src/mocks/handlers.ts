@@ -8,6 +8,9 @@ import {
   getPage,
   getPages,
   getSite,
+  login,
+  logout,
+  refreshToken,
   updateImage,
   updatePage,
   updateSite,
@@ -15,6 +18,10 @@ import {
 } from './api';
 
 export default [
+  rest.post(`${apiEndpoint}/login`, login),
+  rest.post(`${apiEndpoint}/refresh-token`, refreshToken),
+  rest.post(`${apiEndpoint}/logout`, logout),
+
   rest.get(`${apiEndpoint}/site`, getSite),
   rest.post(`${apiEndpoint}/sites`, updateSite),
 
