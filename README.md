@@ -15,6 +15,7 @@
 - Implement Refresh token workflow to improve security
 - Implement MockJS to mock api and test
 - Include Recharts for info graphic
+- Add run test, format, lint code on commit using Husky
 
 ### Tech
 
