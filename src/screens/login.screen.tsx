@@ -19,7 +19,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import loginBg from '../assets/images/login-bg.png';
-import logoinBottomBg from '../assets/images/login-bottom-bg.png';
+import loginBottomBg from '../assets/images/login-bottom-bg.png';
 import logo from '../assets/images/logo.svg';
 import { useSelector } from '../hooks';
 import { useLogin } from '../services/auth.api';
@@ -68,7 +68,7 @@ export default function LoginPage() {
       position="relative"
     >
       <Box
-        backgroundImage={logoinBottomBg}
+        backgroundImage={loginBottomBg}
         position="absolute"
         bottom="0"
         left="0"
