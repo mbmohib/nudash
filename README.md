@@ -1,6 +1,6 @@
 # NuDash &middot; [![GitHub license](https://img.shields.io/github/license/bdTechies/book-manager.svg?style=popout)](https://github.com/bdTechies/book-manager/blob/master/LICENSE.md)
 
-### An open-source Dashboard, including page builder, sparkles to use as a backend for GatsbyJS, ReactJS, NestJS build with React, TypeScript
+##### An open-source Dashboard, including page builder, sparkles to use as a backend for GatsbyJS, ReactJS, NestJS marketing site built with React, TypeScript
 
 
 
@@ -36,6 +36,7 @@ https://user-images.githubusercontent.com/20377400/148324686-21157a51-7037-43dc-
 - MockJS
 - React Testing Library
 - Recharts
+- TypeScript
 
 ### TODO
 
@@ -52,7 +53,13 @@ https://user-images.githubusercontent.com/20377400/148324686-21157a51-7037-43dc-
 $ git clone git@github.com:mbmohib/nudash.git
 ```
 
-2.  Then install the dependencies:
+2.  Then go to the folder:
+
+```bash
+$ cd nudash
+```
+
+3.  Then install the dependencies:
 
 ```bash
 $ npm install
@@ -64,4 +71,12 @@ $ npm install
 
 ```bash
 $ npm start
+```
+
+4.  Run test:
+
+- For Linux and Mac users:
+
+```bash
+$ npm run test
 ```
