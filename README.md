@@ -2,6 +2,13 @@
 
 ### An open-source Dashboard, including page builder, sparkles to use as a backend for GatsbyJS, ReactJS, NestJS build with React, TypeScript
 
+
+
+### Page builder video preview
+https://user-images.githubusercontent.com/20377400/148324686-21157a51-7037-43dc-9990-4ff08cbccae5.mov
+
+
+
 ### Live URL: https://nudash.mohib.me
 
 ### UI Designed by [Nurshad Rahman](https://behance.net/nurshadrahman), [Behance link]()
