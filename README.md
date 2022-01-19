@@ -2,12 +2,9 @@
 
 ##### An open-source Dashboard, including page builder, sparkles to use as a backend for GatsbyJS, ReactJS, NestJS marketing site built with React, TypeScript
 
-
-
 ### Page builder video preview
+
 https://user-images.githubusercontent.com/20377400/148324686-21157a51-7037-43dc-9990-4ff08cbccae5.mov
-
-
 
 ### Live URL: https://nudash.mohib.me
 
@@ -22,7 +19,7 @@ https://user-images.githubusercontent.com/20377400/148324686-21157a51-7037-43dc-
 - Implement Refresh token workflow to improve security
 - Implement MockJS to mock api and test
 - Include Recharts for info graphic
-- Add run test, format, lint code on commit using Husky
+- Run test, format, lint code on commit using Husky
 
 ### Tech
 
@@ -33,8 +30,10 @@ https://user-images.githubusercontent.com/20377400/148324686-21157a51-7037-43dc-
 - Chakra UI
 - React DnD
 - Immer
+- Recharts
 - MockJS
 - React Testing Library
+- Cypress
 - Recharts
 - TypeScript
 
