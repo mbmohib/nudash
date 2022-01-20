@@ -119,6 +119,7 @@ export default function LoginPage() {
               <FormControl isInvalid={!!errors.password} mb="4">
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
+                  type="password"
                   id="password"
                   placeholder="password"
                   {...register('password')}

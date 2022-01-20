@@ -1,6 +1,6 @@
 import { build, fake } from '@jackfranklin/test-data-bot';
 
-import { Auth } from '../../types';
+import { Auth, User } from '../../types';
 
 export const authBuilder = build('Auth', {
   fields: {
@@ -12,4 +12,12 @@ export const authBuilder = build('Auth', {
   },
 });
 
+export const loginBuilder = build('User', {
+  fields: {
+    email: fake(f => f.internet.email()),
+    password: fake(f => f.internet.password()),
+  },
+});
+
 export const authData = authBuilder() as Auth;
+export const loginData = loginBuilder() as User;

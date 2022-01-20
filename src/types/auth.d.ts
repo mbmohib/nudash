@@ -3,6 +3,7 @@ export interface User {
   name?: string;
   avatar?: string;
   role?: string;
+  password?: string;
 }
 
 export interface Auth {
